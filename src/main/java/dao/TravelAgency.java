@@ -2,9 +2,11 @@ package dao;
 
 import dao.abstracts.BaseEntity;
 
+import java.util.UUID;
+
 public class TravelAgency extends BaseEntity {
 
-    private Long id;
+    private UUID id;
     private String name;
     private String address;
     private Integer countTour;
@@ -12,12 +14,12 @@ public class TravelAgency extends BaseEntity {
     public TravelAgency(){}
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

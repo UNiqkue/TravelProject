@@ -1,24 +1,28 @@
 package dao.abstracts;
 
-import dao.abstracts.BaseEntity;
+import dao.enums.Role;
+
+import java.util.Set;
+import java.util.UUID;
 
 public abstract class User extends BaseEntity {
 
-    protected Long id;
-    protected String firstName;
-    protected String lastName;
-    protected String username;
-    protected String password;
-    protected String email;
-    protected String activationCode;
+    private UUID id;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
+    private String email;
+    private String activationCode;
+    private Set<Role> role;
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -68,5 +72,13 @@ public abstract class User extends BaseEntity {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
     }
 }

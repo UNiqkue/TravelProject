@@ -2,9 +2,11 @@ package dao;
 
 import dao.abstracts.User;
 
+import java.util.UUID;
+
 public class TravelAgent extends User {
 
-    private Long id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String username;
@@ -18,12 +20,12 @@ public class TravelAgent extends User {
     public TravelAgent(){}
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

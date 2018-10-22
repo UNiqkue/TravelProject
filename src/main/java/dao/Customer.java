@@ -3,10 +3,11 @@ package dao;
 import dao.abstracts.User;
 
 import java.sql.Date;
+import java.util.UUID;
 
 public class Customer extends User {
 
-    private Long id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String username;
@@ -22,12 +23,12 @@ public class Customer extends User {
     public Customer(){}
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -5,10 +5,11 @@ import dao.enums.TypeTour;
 
 import java.sql.Date;
 import java.util.Set;
+import java.util.UUID;
 
 public class Tour extends BaseEntity {
 
-    private Long id;
+    private UUID id;
     private String name;
     private String description;
     private Set<TypeTour> type;
@@ -22,12 +23,12 @@ public class Tour extends BaseEntity {
     public Tour(){}
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
     @Override
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
