@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class Tour extends BaseEntity {
 
-    private UUID id;
+//    private UUID id;
     private String name;
     private String description;
     private Set<TypeTour> type;
@@ -18,19 +18,18 @@ public class Tour extends BaseEntity {
     private Date endDate;
     private TravelAgency travelAgency;
     private double price;
-    private Integer countCustomer;
 
     public Tour(){}
 
-    @Override
-    public UUID getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(UUID id) {
-        this.id = id;
-    }
+//    @Override
+//    public UUID getId() {
+//        return id;
+//    }
+//
+//    @Override
+//    public void setId(UUID id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -96,11 +95,4 @@ public class Tour extends BaseEntity {
         this.price = price;
     }
 
-    public Integer getCountCustomer() {
-        return countCustomer;
-    }
-
-    public void setCountCustomer(Integer countCustomer) {
-        this.countCustomer = countCustomer;
-    }
 }

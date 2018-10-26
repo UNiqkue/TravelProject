@@ -1,10 +1,12 @@
 package dao;
 
-import dao.abstracts.User;
+import dao.abstracts.BaseEntity;
+import dao.enums.Role;
 
+import java.util.Set;
 import java.util.UUID;
 
-public class TravelAgent extends User {
+public class User extends BaseEntity {
 
     private UUID id;
     private String firstName;
@@ -13,11 +15,7 @@ public class TravelAgent extends User {
     private String password;
     private String email;
     private String activationCode;
-    private String phoneNumber;
-    private String position;
-    private TravelAgency travelAgency;
-
-    public TravelAgent(){}
+    private Set<Role> role;
 
     @Override
     public UUID getId() {
@@ -29,87 +27,59 @@ public class TravelAgent extends User {
         this.id = id;
     }
 
-    @Override
     public String getFirstName() {
         return firstName;
     }
 
-    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
 
-    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
 
-    @Override
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
     public String getEmail() {
         return email;
     }
 
-    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @Override
     public String getActivationCode() {
         return activationCode;
     }
 
-    @Override
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public Set<Role> getRole() {
+        return role;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public TravelAgency getTravelAgency() {
-        return travelAgency;
-    }
-
-    public void setTravelAgency(TravelAgency travelAgency) {
-        this.travelAgency = travelAgency;
+    public void setRole(Set<Role> role) {
+        this.role = role;
     }
 }

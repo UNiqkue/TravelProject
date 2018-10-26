@@ -1,11 +1,8 @@
 package dao;
 
-import dao.abstracts.User;
-
-import java.sql.Date;
 import java.util.UUID;
 
-public class Customer extends User {
+public class TravelAgent extends User {
 
     private UUID id;
     private String firstName;
@@ -15,12 +12,10 @@ public class Customer extends User {
     private String email;
     private String activationCode;
     private String phoneNumber;
-    private Date dateOfBirth;
-    private String address;
-    private long cardNumber;
-    private String passportInfo;
+    private String position;
+    private TravelAgency travelAgency;
 
-    public Customer(){}
+    public TravelAgent(){}
 
     @Override
     public UUID getId() {
@@ -100,35 +95,19 @@ public class Customer extends User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public String getPosition() {
+        return position;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
-    public String getAddress() {
-        return address;
+    public TravelAgency getTravelAgency() {
+        return travelAgency;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public long getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(long cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getPassportInfo() {
-        return passportInfo;
-    }
-
-    public void setPassportInfo(String passportInfo) {
-        this.passportInfo = passportInfo;
+    public void setTravelAgency(TravelAgency travelAgency) {
+        this.travelAgency = travelAgency;
     }
 }

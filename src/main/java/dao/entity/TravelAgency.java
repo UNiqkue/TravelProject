@@ -10,6 +10,7 @@ public class TravelAgency extends BaseEntity {
     private String name;
     private String address;
     private Integer countTour;
+    private Integer countTravelAgent;
 
     public TravelAgency(){}
 
@@ -45,5 +46,13 @@ public class TravelAgency extends BaseEntity {
 
     public void setCountTour(Integer countTour) {
         this.countTour = countTour;
+    }
+
+    public Integer getCountTravelAgent() {
+        return countTravelAgent;
+    }
+
+    public void setCountTravelAgent(Integer countTravelAgent) {
+        this.countTravelAgent = countTravelAgent;
     }
 }
