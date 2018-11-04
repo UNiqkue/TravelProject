@@ -7,7 +7,7 @@ import java.util.Objects;
 public class TravelAgency extends BaseEntity {
 
     private String name;
-    private String address;
+    private Address address;
     private Integer countTour;
     private Integer countTravelAgent;
 
@@ -21,11 +21,11 @@ public class TravelAgency extends BaseEntity {
         this.name = name;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

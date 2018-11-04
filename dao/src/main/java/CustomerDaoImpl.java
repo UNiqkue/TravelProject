@@ -9,13 +9,17 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
 
     private List<Customer> customers = new ArrayList<>();
 
-    private static CustomerDaoImpl instance;
+    private static volatile CustomerDaoImpl instance;
 
     private CustomerDaoImpl(){}
 
     public static CustomerDaoImpl getInstance(){
-        if(instance==null){
-            instance = new CustomerDaoImpl();
+        if (instance == null) {
+            synchronized (CustomerDaoImpl.class) {
+                if (instance == null) {
+                    instance = new CustomerDaoImpl();
+                }
+            }
         }
         return instance;
     }

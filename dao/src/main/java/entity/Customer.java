@@ -8,7 +8,7 @@ public class Customer extends User{
 
     private String phoneNumber;
     private Date dateOfBirth;
-    private String address;
+    private Address address;
     private String cardNumber;
     private String passportInfo;
     private List<Tour> listOfTours;
@@ -31,11 +31,11 @@ public class Customer extends User{
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

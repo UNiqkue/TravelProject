@@ -9,13 +9,17 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
     private List<TravelAgent> travelAgents = new ArrayList<>();
     
-    private static TravelAgentDaoImpl instance;
+    private static volatile TravelAgentDaoImpl instance;
 
     private TravelAgentDaoImpl(){}
 
     public static TravelAgentDaoImpl getInstance(){
-        if(instance==null){
-            instance = new TravelAgentDaoImpl();
+        if (instance == null) {
+            synchronized (TravelAgentDaoImpl.class) {
+                if (instance == null) {
+                    instance = new TravelAgentDaoImpl();
+                }
+            }
         }
         return instance;
     }

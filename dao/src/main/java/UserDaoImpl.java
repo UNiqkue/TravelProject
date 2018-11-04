@@ -10,13 +10,17 @@ public class UserDaoImpl implements AbstractDao<User> {
 
     private List<User> users = new ArrayList<>();
 
-    private static UserDaoImpl instance;
+    private static volatile UserDaoImpl instance;
 
     private UserDaoImpl(){}
 
     public static UserDaoImpl getInstance(){
-        if(instance==null){
-            instance = new UserDaoImpl();
+        if (instance == null) {
+            synchronized (UserDaoImpl.class) {
+                if (instance == null) {
+                    instance = new UserDaoImpl();
+                }
+            }
         }
         return instance;
     }

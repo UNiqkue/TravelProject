@@ -9,13 +9,17 @@ public class TourDaoImpl implements AbstractDao<Tour> {
 
     private List<Tour> tours = new ArrayList<>();
 
-    private static TourDaoImpl instance;
+    private static volatile TourDaoImpl instance;
 
     private TourDaoImpl(){}
 
     public static TourDaoImpl getInstance(){
-        if(instance==null){
-            instance = new TourDaoImpl();
+        if (instance == null) {
+            synchronized (TourDaoImpl.class) {
+                if (instance == null) {
+                    instance = new TourDaoImpl();
+                }
+            }
         }
         return instance;
     }
