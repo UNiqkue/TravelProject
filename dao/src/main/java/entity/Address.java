@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Address {
 
     private String country;
@@ -48,5 +50,34 @@ public class Address {
 
     public void setNumberRoom(Integer numberRoom) {
         this.numberRoom = numberRoom;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(getCountry(), address.getCountry()) &&
+                Objects.equals(getCity(), address.getCity()) &&
+                Objects.equals(getStreet(), address.getStreet()) &&
+                Objects.equals(getNumberHouse(), address.getNumberHouse()) &&
+                Objects.equals(getNumberRoom(), address.getNumberRoom());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getCountry(), getCity(), getStreet(), getNumberHouse(), getNumberRoom());
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", numberHouse=" + numberHouse +
+                ", numberRoom=" + numberRoom +
+                '}';
     }
 }
