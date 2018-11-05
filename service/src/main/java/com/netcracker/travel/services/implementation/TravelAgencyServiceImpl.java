@@ -7,9 +7,13 @@ import com.netcracker.travel.services.interfaces.AbstractService;
 import java.util.List;
 import java.util.UUID;
 
-public class TravelAgencyServiceImpl<TravelAgency> implements AbstractService<TravelAgencyDto> {
+public class TravelAgencyServiceImpl<T> implements AbstractService<TravelAgencyDto> {
 
     private TravelAgencyDaoImpl travelAgencyDaoImpl;
+
+    public TravelAgencyServiceImpl(){
+        travelAgencyDaoImpl = TravelAgencyDaoImpl.getInstance();
+    }
 
     public TravelAgencyDto getById(UUID id) {
         return null;

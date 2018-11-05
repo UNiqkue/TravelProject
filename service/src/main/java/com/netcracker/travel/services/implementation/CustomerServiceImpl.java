@@ -11,9 +11,13 @@ import com.netcracker.travel.services.interfaces.AuthenticationService;
 import java.util.List;
 import java.util.UUID;
 
-public class CustomerServiceImpl<Customer> implements AbstractService<CustomerDto>, AuthenticationService {
+public class CustomerServiceImpl<T> implements AbstractService<CustomerDto>, AuthenticationService {
 
     private CustomerDaoImpl customerDaoImpl;
+
+    public CustomerServiceImpl(){
+        customerDaoImpl = CustomerDaoImpl.getInstance();
+    }
 
     public CustomerDto getById(UUID id) {
         return null;

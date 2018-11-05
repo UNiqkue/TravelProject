@@ -8,9 +8,13 @@ import com.netcracker.travel.services.interfaces.AbstractService;
 import java.util.List;
 import java.util.UUID;
 
-public class TourServiceImpl<Tour> implements AbstractService<TourDto> {
+public class TourServiceImpl<T> implements AbstractService<TourDto> {
 
     private TourDaoImpl tourDaoImpl;
+
+    public TourServiceImpl(){
+        tourDaoImpl = TourDaoImpl.getInstance();
+    }
 
     public TourDto getById(UUID id) {
         return null;
