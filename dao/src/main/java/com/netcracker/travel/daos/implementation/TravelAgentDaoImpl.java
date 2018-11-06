@@ -1,13 +1,12 @@
 package com.netcracker.travel.daos.implementation;
 
-import com.netcracker.travel.entity.TravelAgent;
 import com.netcracker.travel.daos.interfaces.AbstractDao;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TravelAgentDaoImpl<T> implements AbstractDao<TravelAgent> {
+public class TravelAgentDaoImpl<TravelAgent> implements AbstractDao<TravelAgent> {
 
     private List<TravelAgent> travelAgents = new ArrayList<>();
     

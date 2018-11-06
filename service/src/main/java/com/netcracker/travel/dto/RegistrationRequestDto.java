@@ -7,6 +7,15 @@ public class RegistrationRequestDto {
     private String email;
     private String alias;
 
+    public RegistrationRequestDto(){}
+
+    public RegistrationRequestDto(String username, String password, String email, String alias) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.alias = alias;
+    }
+
     public String getUsername() {
         return username;
     }

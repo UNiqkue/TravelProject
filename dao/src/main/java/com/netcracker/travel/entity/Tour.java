@@ -6,6 +6,7 @@ import com.netcracker.travel.entity.enums.TypeTour;
 import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 public class Tour extends BaseEntity {
 
@@ -19,7 +20,19 @@ public class Tour extends BaseEntity {
     private TravelAgency travelAgency;
     private Customer customer;
 
-    public Tour(){}
+    public Tour(){
+    }
+
+    public Tour(UUID id, String name, String description, Double price, Set<TypeTour> type, String country, Date startDate, Date endDate) {
+        super(id);
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.type = type;
+        this.country = country;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     public String getName() {
         return name;

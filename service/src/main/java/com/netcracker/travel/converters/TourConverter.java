@@ -1,9 +1,7 @@
 package com.netcracker.travel.converters;
 
 import com.netcracker.travel.dto.TourDto;
-import com.netcracker.travel.entity.Customer;
 import com.netcracker.travel.entity.Tour;
-import com.netcracker.travel.entity.TravelAgency;
 
 public class TourConverter {
 
@@ -19,13 +17,13 @@ public class TourConverter {
         tour.setStartDate(tourDto.getStartDate());
         tour.setEndDate(tourDto.getEndDate());
 
-        TravelAgency travelAgency = new TravelAgency();
+      /*  TravelAgency travelAgency = new TravelAgency();
         travelAgency.setName(tourDto.getNameTravelAgency());
         tour.setTravelAgency(travelAgency);
 
         Customer customer = new Customer();
         customer.setUsername(tourDto.getUsername());
-        tour.setCustomer(customer);
+        tour.setCustomer(customer);*/
 
         return tour;
     }
@@ -42,13 +40,13 @@ public class TourConverter {
         tourDto.setStartDate(tour.getStartDate());
         tourDto.setEndDate(tour.getEndDate());
 
-        if (tour.getTravelAgency() != null) {
+      /*  if (tour.getTravelAgency() != null) {
             tourDto.setNameTravelAgency(tour.getTravelAgency().getName());
         }
 
         if (tour.getCustomer() != null) {
             tourDto.setUsername(tour.getCustomer().getUsername());
-        }
+        }*/
 
         return tourDto;
     }

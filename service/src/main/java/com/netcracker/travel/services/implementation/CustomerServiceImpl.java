@@ -1,7 +1,6 @@
 package com.netcracker.travel.services.implementation;
 
 import com.netcracker.travel.daos.implementation.CustomerDaoImpl;
-import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.LoginResponseDto;
 import com.netcracker.travel.dto.TourDto;
@@ -11,9 +10,9 @@ import com.netcracker.travel.services.interfaces.AuthenticationService;
 import java.util.List;
 import java.util.UUID;
 
-public class CustomerServiceImpl<T> implements AbstractService<CustomerDto>, AuthenticationService {
+public class CustomerServiceImpl<CustomerDto, Customer> implements AbstractService<CustomerDto>, AuthenticationService {
 
-    private CustomerDaoImpl customerDaoImpl;
+    private CustomerDaoImpl<Customer> customerDaoImpl;
 
     public CustomerServiceImpl(){
         customerDaoImpl = CustomerDaoImpl.getInstance();

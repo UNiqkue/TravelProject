@@ -2,6 +2,7 @@ package com.netcracker.travel.controllers;
 
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.entity.Customer;
 import com.netcracker.travel.services.implementation.CustomerServiceImpl;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 public class CustomerController {
 
-    private CustomerServiceImpl customerServiceImpl;
+    private CustomerServiceImpl<CustomerDto, Customer> customerServiceImpl;
 
     public CustomerDto getById(UUID id) {
         return null;

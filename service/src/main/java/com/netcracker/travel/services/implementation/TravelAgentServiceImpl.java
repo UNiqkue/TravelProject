@@ -2,15 +2,16 @@ package com.netcracker.travel.services.implementation;
 
 import com.netcracker.travel.daos.implementation.TravelAgentDaoImpl;
 import com.netcracker.travel.dto.*;
+import com.netcracker.travel.entity.TravelAgent;
 import com.netcracker.travel.services.interfaces.AbstractService;
 import com.netcracker.travel.services.interfaces.AuthenticationService;
 
 import java.util.List;
 import java.util.UUID;
 
-public class TravelAgentServiceImpl<T> implements AbstractService<TravelAgentDto>, AuthenticationService {
+public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, AuthenticationService {
 
-    private TravelAgentDaoImpl travelAgentDaoImpl;
+    private TravelAgentDaoImpl<TravelAgent> travelAgentDaoImpl;
 
     public TravelAgentServiceImpl(){
         travelAgentDaoImpl = TravelAgentDaoImpl.getInstance();

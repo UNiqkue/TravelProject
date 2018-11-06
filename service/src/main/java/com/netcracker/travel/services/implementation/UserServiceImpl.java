@@ -14,7 +14,7 @@ import com.netcracker.travel.services.interfaces.RegistrationService;
 import java.util.List;
 import java.util.UUID;
 
-public class UserServiceImpl<T> implements AbstractService<UserDto>, RegistrationService, AuthenticationService {
+public class UserServiceImpl implements AbstractService<UserDto>, RegistrationService, AuthenticationService {
 
     private UserDaoImpl userDaoImpl;
     private UserConverter userConverter = new UserConverter();

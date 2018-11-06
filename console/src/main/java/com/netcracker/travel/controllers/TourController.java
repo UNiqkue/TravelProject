@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class TourController {
 
-    private TourServiceImpl tourServiceImpl;
+    private TourServiceImpl tourServiceImpl = new TourServiceImpl();
 
     public TourDto getTourById(UUID id) {
         return null;
@@ -20,7 +20,7 @@ public class TourController {
     }
 
     public List<TourDto> getAllTours() {
-        return null;
+        return tourServiceImpl.getAll();
     }
 
     public TourDto save(TourDto tourDto) {
