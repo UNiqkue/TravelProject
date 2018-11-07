@@ -8,9 +8,9 @@ public class Customer extends User{
 
     private String phoneNumber;
     private Date dateOfBirth;
-    private Address address;
     private String cardNumber;
     private String passportInfo;
+    private Address address;
     private List<Tour> listOfTours;
 
     public Customer(){}
