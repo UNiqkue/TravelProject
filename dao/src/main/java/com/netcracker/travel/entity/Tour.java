@@ -1,7 +1,7 @@
 package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.abstracts.BaseEntity;
-import com.netcracker.travel.entity.enums.TypeTour;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 
 import java.sql.Date;
 import java.util.Objects;

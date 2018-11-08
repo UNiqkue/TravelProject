@@ -1,6 +1,6 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.entity.enums.TypeTour;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 
 import java.sql.Date;
 import java.util.Objects;

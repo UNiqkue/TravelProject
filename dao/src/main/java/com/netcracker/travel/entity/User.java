@@ -1,7 +1,7 @@
 package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.abstracts.BaseEntity;
-import com.netcracker.travel.entity.enums.Role;
+import com.netcracker.travel.entity.enumeration.Role;
 
 import java.util.Objects;
 import java.util.Set;

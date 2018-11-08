@@ -1,6 +1,6 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.entity.enums.Role;
+import com.netcracker.travel.entity.enumeration.Role;
 
 import java.util.Objects;
 import java.util.Set;
