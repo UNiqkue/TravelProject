@@ -3,14 +3,14 @@ package com.netcracker.travel.dao.implementation;
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgent;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
-    private Map<Integer, TravelAgent> travelAgents = new HashMap<Integer, TravelAgent>();
+    private Map<UUID, TravelAgent> travelAgentMap = getEntityMap();
     
     private static volatile TravelAgentDaoImpl instance;
 
@@ -27,23 +27,39 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         return instance;
     }
 
+    public Collection<TravelAgent> getEntityMapValues(){
+        return travelAgentMap.values();
+    }
+
+    private Map getEntityMap(){
+        return AbstractDao.entityMap;
+    }
+
     public TravelAgent getById(UUID id) {
-        return null;
+        return travelAgentMap.get(id);
     }
 
-    public TravelAgent getByName(String name) {
-        return null;
+    public Collection<TravelAgent> getByName(String name) {
+        return getEntityMapValues()
+                .stream()
+                .filter(travelAgent -> travelAgent.getUsername().equals(name))
+                .collect(Collectors.toList());
     }
 
-    public List<TravelAgent> getAll() {
-        return null;
+    public Collection<TravelAgent> getAll() {
+        return getEntityMapValues();
     }
 
-    public TravelAgent save(TravelAgent travelAgent) {
-        return null;
+    public void save(TravelAgent travelAgent) {
+        if(travelAgentMap.isEmpty()){
+            travelAgent.setId(UUID.randomUUID());
+            travelAgentMap.put(travelAgent.getId(), travelAgent);
+        }
     }
 
-    public void update(TravelAgent travelAgent) {
+    public TravelAgent update(TravelAgent travelAgent) {
+        travelAgentMap.put(travelAgent.getId(), travelAgent);
+        return travelAgent;
     }
 
     public void delete(UUID id) {

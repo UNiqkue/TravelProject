@@ -3,15 +3,15 @@ package com.netcracker.travel.dao.implementation;
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.User;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 public class UserDaoImpl implements AbstractDao<User> {
 
-    private Map<Integer, User> users = new HashMap<Integer, User>();
+    private Map<UUID, User> userMap = getEntityMap();
 
     private static volatile UserDaoImpl instance;
 
@@ -28,25 +28,42 @@ public class UserDaoImpl implements AbstractDao<User> {
         return instance;
     }
 
+    public Collection<User> getEntityMapValues(){
+        return userMap.values();
+    }
+
+    private Map getEntityMap() {
+        return AbstractDao.entityMap;
+    }
+
     public User getById(UUID id) {
-        return null;
+        return userMap.get(id);
     }
 
-    public User getByName(String name) {
-        return null;
+    public Collection<User> getByName(String name) {
+        return getEntityMapValues()
+                .stream()
+                .filter(user -> user.getUsername().equals(name))
+                .collect(Collectors.toList());
     }
 
-    public List<User> getAll() {
-        return null;
+    public Collection<User> getAll() {
+        return getEntityMapValues();
     }
 
-    public User save(User user) {
-        return null;
+    public void save(User user) {
+        if(userMap.isEmpty()){
+            user.setId(UUID.randomUUID());
+            userMap.put(user.getId(), user);
+        }
     }
 
-    public void update(User user) {
+    public User update(User user) {
+        userMap.put(user.getId(), user);
+        return user;
     }
 
     public void delete(UUID id) {
+        userMap.remove(id);
     }
 }

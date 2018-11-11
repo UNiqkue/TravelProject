@@ -1,14 +1,16 @@
 package com.netcracker.travel.dao.implementation;
 
+import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Tour;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class TourDaoImpl{ //implements AbstractDao<Tour> {
+public class TourDaoImpl implements AbstractDao<Tour> {
 
-    private Map<Integer, Tour> tours = new HashMap<Integer, Tour>();
+    private Map<UUID, Tour> tourMap = getEntityMap();
 
     private static volatile TourDaoImpl instance;
 
@@ -25,34 +27,44 @@ public class TourDaoImpl{ //implements AbstractDao<Tour> {
         return instance;
     }
 
+    public Collection<Tour> getEntityMapValues(){
+        return tourMap.values();
+    }
+
+    private Map getEntityMap() {
+        return AbstractDao.entityMap;
+    }
+
     public Tour getById(UUID id) {
-
-        return null;
+        return tourMap.get(id);
     }
 
-    public Tour getByName(String name) {
-        return null;
+    public Collection<Tour> getByName(String name) {
+        return getEntityMapValues()
+                .stream()
+                .filter(tour -> tour.getName().equals(name))
+                .collect(Collectors.toList());
     }
 
-    public HashMap<Integer, Tour> getAll() {
-        return null;
-//        tours.stream()
-//                .filter(Objects::nonNull)
-//                .collect(Collectors.toList());
+
+    public Collection<Tour> getAll() {
+        return getEntityMapValues();
     }
 
-    public String save(Tour tour) {
-        tour.setId(UUID.randomUUID());
-      //  tours.add(tour);
-        return tour.getId().toString();
+    public void save(Tour tour) {
+        if (tourMap.isEmpty()) {
+            tour.setId(UUID.randomUUID());
+            tourMap.put(tour.getId(), tour); 
+        }
     }
 
-    public void update(Tour tour) {
-      //  tours.set(tours.indexOf(tour), tour);
+    public Tour update(Tour tour) {
+        tourMap.put(tour.getId(), tour);
+        return tour;
     }
 
-    public void delete(Tour tour) {
-       // tours.set(tours.indexOf(tour), null);
+    public void delete(UUID id) {
+        tourMap.remove(id);
     }
 }
 

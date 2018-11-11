@@ -2,16 +2,15 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Customer;
-import com.netcracker.travel.entity.Tour;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CustomerDaoImpl implements AbstractDao<Customer> {
 
-    private Map<Integer, Tour> customers = new HashMap<>();
+    private Map<UUID, Customer> customerMap = getEntityMap();
 
     private static volatile CustomerDaoImpl instance;
 
@@ -29,25 +28,43 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
         return instance;
     }
 
+    public Collection<Customer> getEntityMapValues(){
+        return customerMap.values();
+    }
+
+    private Map getEntityMap() {
+        return AbstractDao.entityMap;
+    }
+
+
     public Customer getById(UUID id) {
-        return null;
+        return customerMap.get(id);
     }
 
-    public Customer getByName(String name) {
-        return null;
+    public Collection<Customer> getByName(String name) {
+        return getEntityMapValues()
+                .stream()
+                .filter(customer -> customer.getUsername().equals(name))
+                .collect(Collectors.toList());
     }
 
-    public List<Customer> getAll() {
-        return null;
+    public Collection<Customer> getAll() {
+        return getEntityMapValues();
     }
 
-    public Customer save(Customer customer) {
-        return null;
+    public void save(Customer customer) {
+        if (customerMap.isEmpty()) {
+            customer.setId(UUID.randomUUID());
+            customerMap.put(customer.getId(), customer);
+        }
     }
 
-    public void update(Customer customer) {
+    public Customer update(Customer customer) {
+        customerMap.put(customer.getId(), customer);
+        return customer;
     }
 
     public void delete(UUID id) {
+        customerMap.remove(id);
     }
 }
