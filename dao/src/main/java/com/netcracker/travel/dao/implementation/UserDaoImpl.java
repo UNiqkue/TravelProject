@@ -66,4 +66,5 @@ public class UserDaoImpl implements AbstractDao<User> {
     public void delete(UUID id) {
         userMap.remove(id);
     }
+
 }

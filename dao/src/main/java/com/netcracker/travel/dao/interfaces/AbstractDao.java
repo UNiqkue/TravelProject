@@ -12,7 +12,6 @@ public interface AbstractDao<T extends BaseEntity>{
     Map<UUID, ? extends BaseEntity> entityMap = new HashMap<>();
 
     Collection<T> getEntityMapValues();
-
     T getById(UUID id);
     Collection<T> getByName(String name);
     Collection<T> getAll();

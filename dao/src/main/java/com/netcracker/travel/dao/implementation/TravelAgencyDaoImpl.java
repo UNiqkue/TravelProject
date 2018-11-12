@@ -3,7 +3,9 @@ package com.netcracker.travel.dao.implementation;
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgency;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
@@ -66,4 +68,6 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     public void delete(UUID id) {
         travelAgencyMap.remove(id);
     }
+
+
 }

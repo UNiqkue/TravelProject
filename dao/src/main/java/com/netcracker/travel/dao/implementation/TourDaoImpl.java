@@ -66,6 +66,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     public void delete(UUID id) {
         tourMap.remove(id);
     }
+
 }
 
 /*
