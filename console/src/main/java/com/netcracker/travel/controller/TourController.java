@@ -4,7 +4,7 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.implementation.TourServiceImpl;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
 
 public class TourController {
@@ -19,7 +19,7 @@ public class TourController {
         return null;
     }
 
-    public List<TourDto> getAllTours() {
+    public Collection<TourDto> getAllTours() {
         return tourServiceImpl.getAll();
     }
 
