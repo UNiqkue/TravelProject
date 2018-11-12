@@ -1,12 +1,10 @@
 package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.UserConverter;
-import com.netcracker.travel.dao.implementation.UserDaoImpl;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.LoginResponseDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.UserDto;
-import com.netcracker.travel.entity.User;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
@@ -16,11 +14,9 @@ import java.util.UUID;
 
 public class UserServiceImpl implements AbstractService<UserDto>, RegistrationService, AuthenticationService {
 
-    private UserDaoImpl userDaoImpl;
     private UserConverter userConverter = new UserConverter();
 
     public UserServiceImpl(){
-        userDaoImpl = UserDaoImpl.getInstance();
     }
 
     public UserDto getById(UUID id) {
@@ -37,11 +33,8 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
         return null;
     }
 
-    public UserDto save(UserDto userDto) {
-        User user = userConverter.convert(userDto);
-        userDaoImpl.save(user);
-
-        return null;
+    public void save(UserDto userDto) {
+    //    userDaoImpl.save(userConverter.convert(userDto));
     }
 
     public void update(UserDto userDto) {
@@ -50,7 +43,9 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
     public void delete(UUID id) {
     }
 
-    public RegistrationRequestDto registration(RegistrationRequestDto registrationRequestDto){ return null;}
+    public RegistrationRequestDto registration(RegistrationRequestDto registrationRequestDto){
+        return null;
+    }
 
     public boolean activate(String str){
         return false;

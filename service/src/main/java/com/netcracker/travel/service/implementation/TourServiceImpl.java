@@ -6,17 +6,13 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class TourServiceImpl implements AbstractService<TourDto> {
 
-    private TourDaoImpl tourDaoImpl;
     private TourConverter tourConverter;
-
-    public TourServiceImpl(){
-        tourDaoImpl = TourDaoImpl.getInstance();
-    }
 
     public TourDto getById(UUID id) {
         return null;
@@ -26,17 +22,17 @@ public class TourServiceImpl implements AbstractService<TourDto> {
         return null;
     }
 
-    public List<TourDto> getAll() {
-      //  tourDaoImpl.save();
-//        return tourDaoImpl.getAll()
-//                .stream()
-//                .map(tour -> tourConverter.convert(tour))
-//                .collect(Collectors.toList());
-        return null;
+    public Collection<TourDto> getAll() {
+        TourDaoImpl tourDaoImpl = TourDaoImpl.getInstance();
+        return tourDaoImpl.getAll()
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
     }
 
-    public TourDto save(TourDto tourDto) {
-        return null;
+    public void save(TourDto tourDto) {
+        TourDaoImpl tourDaoImpl = TourDaoImpl.getInstance();
+        tourDaoImpl.save(tourConverter.convert(tourDto));
     }
 
     public void update(TourDto tourDto) {

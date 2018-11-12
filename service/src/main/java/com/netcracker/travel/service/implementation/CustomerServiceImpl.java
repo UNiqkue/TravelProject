@@ -13,10 +13,7 @@ import java.util.UUID;
 
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, AuthenticationService {
 
-    private CustomerDaoImpl customerDaoImpl;
-
     public CustomerServiceImpl(){
-        customerDaoImpl = CustomerDaoImpl.getInstance();
     }
 
     public CustomerDto getById(UUID id) {
@@ -25,7 +22,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
 
     public CustomerDto getByName(String name) {
         CustomerDaoImpl.getInstance();
-        customerDaoImpl.getByName("Lucas");
+      //  customerDaoImpl.getByName("Lucas");
         return null;
     }
 
@@ -33,8 +30,8 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
         return null;
     }
 
-    public CustomerDto save(CustomerDto customerDto) {
-        return null;
+    public void save(CustomerDto customerDto) {
+
     }
 
     public void update(CustomerDto customerDto) {
