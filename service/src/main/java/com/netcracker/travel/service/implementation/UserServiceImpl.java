@@ -44,7 +44,13 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
     }
 
     public RegistrationRequestDto registration(RegistrationRequestDto registrationRequestDto){
-        return null;
+        UserDto userDto = new UserDto();
+        userDto.setUsername(registrationRequestDto.getUsername());
+        userDto.setEmail(registrationRequestDto.getEmail());
+        userDto.setPassword(registrationRequestDto.getPassword());
+        userDto.setActivationCode(registrationRequestDto.getAlias());
+        userDto.setId(UUID.randomUUID());
+        return registrationRequestDto;
     }
 
     public boolean activate(String str){

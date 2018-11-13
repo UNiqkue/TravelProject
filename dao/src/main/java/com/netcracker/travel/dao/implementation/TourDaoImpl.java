@@ -1,5 +1,6 @@
 package com.netcracker.travel.dao.implementation;
 
+import com.netcracker.travel.dao.FileEntityMap;
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Tour;
 
@@ -24,10 +25,12 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 }
             }
         }
+
         return instance;
     }
 
     public Collection<Tour> getEntityMapValues(){
+        FileEntityMap.readEntityMap("README.md");
         return tourMap.values();
     }
 

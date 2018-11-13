@@ -25,6 +25,7 @@ public class FileEntityMap {
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
+        System.out.println(tempMemoryMap);
         AbstractDao.entityMap.putAll(tempMemoryMap);
     }
 }
