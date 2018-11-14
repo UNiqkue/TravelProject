@@ -18,7 +18,8 @@ public class TourDto {
     private Date startDate;
     private Date endDate;
     private String nameTravelAgency;
-    private String username;
+    private UUID customerId;
+    private boolean free;
 
     public TourDto(){}
 
@@ -94,12 +95,20 @@ public class TourDto {
         this.nameTravelAgency = nameTravelAgency;
     }
 
-    public String getUsername() {
-        return username;
+    public UUID getCustomerId() {
+        return customerId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCustomerId(UUID customerId) {
+        this.customerId = customerId;
+    }
+
+    public boolean isFree() {
+        return free;
+    }
+
+    public void setFree(boolean free) {
+        this.free = free;
     }
 
     @Override
@@ -128,7 +137,6 @@ public class TourDto {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", nameTravelAgency='" + nameTravelAgency + '\'' +
-                ", username='" + username + '\'' +
                 '}';
     }
 }

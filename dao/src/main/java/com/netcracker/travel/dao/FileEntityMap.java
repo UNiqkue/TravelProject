@@ -1,12 +1,7 @@
 package com.netcracker.travel.dao;
 
-import com.netcracker.travel.dao.interfaces.AbstractDao;
-
-import java.io.*;
-import java.util.Map;
-
 public class FileEntityMap {
-
+/*
     public static void writeEntityMap(String path) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(new File(path))) {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -27,5 +22,5 @@ public class FileEntityMap {
         }
         System.out.println(tempMemoryMap);
         AbstractDao.entityMap.putAll(tempMemoryMap);
-    }
+    }*/
 }

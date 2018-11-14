@@ -3,71 +3,130 @@ package com.netcracker.travel.dao.implementation;
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgency;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
 
-    private Map<UUID, TravelAgency> travelAgencyMap = getEntity();
+    private Connection connection;
 
     private static volatile TravelAgencyDaoImpl instance;
 
-    private TravelAgencyDaoImpl(){}
+    private TravelAgencyDaoImpl(Connection connection){
+        this.connection = connection;
+    }
 
-    public static TravelAgencyDaoImpl getInstance(){
+    public static TravelAgencyDaoImpl getInstance(Connection connection){
         if (instance == null) {
             synchronized (TravelAgencyDaoImpl.class) {
                 if (instance == null) {
-                    instance = new TravelAgencyDaoImpl();
+                    instance = new TravelAgencyDaoImpl(connection);
                 }
             }
         }
         return instance;
     }
 
-    public Collection<TravelAgency> getEntityMapValues(){
-        return travelAgencyMap.values();
+    private TravelAgency setResultTravelAgency(ResultSet resultSet) throws SQLException {
+        TravelAgency travelAgency = new TravelAgency();
+        travelAgency.setId(UUID.fromString(resultSet.getString("id")));
+        travelAgency.setName(resultSet.getString("name"));
+        travelAgency.setCountTour(Integer.valueOf(resultSet.getString("countTour")));
+        travelAgency.setCountTravelAgent(Integer.valueOf(resultSet.getString("countTravelAgents")));
+
+        return travelAgency;
     }
 
-    private Map getEntity(){
-        return AbstractDao.entityMap;
+    public TravelAgency getById(UUID id) throws SQLException {
+        TravelAgency travelAgency = null;
+        String uuid = id.toString();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "SELECT * FROM travelagency WHERE uuid=?");
+        preparedStatement.setString(1, uuid);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            travelAgency = setResultTravelAgency(resultSet);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        return travelAgency;
     }
 
-    public TravelAgency getById(UUID id) {
-        return travelAgencyMap.get(id);
-    }
-
-    public Collection<TravelAgency> getByName(String name) {
-
+    /*public Collection<travelAgency> getByName(String name) {
         return getEntityMapValues()
                 .stream()
-                .filter(travelAgency -> travelAgency.getName().equals(name))
+                .filter(travelAgency -> travelAgency.setResultTravelAgencyname().equals(name))
                 .collect(Collectors.toList());
-    }
+    }*/
 
-    public Collection<TravelAgency> getAll() {
-        return getEntityMapValues();
-    }
-
-    public void save(TravelAgency travelAgency) {
-        if(travelAgencyMap.isEmpty()){
-            travelAgency.setId(UUID.randomUUID());
-            travelAgencyMap.get(travelAgency.getId());
+    public Collection<TravelAgency> getAll() throws SQLException {
+        Collection<TravelAgency> travelAgenciesList = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "SELECT * FROM travelagency");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            travelAgenciesList.add(setResultTravelAgency(resultSet));
         }
-
+        resultSet.close();
+        preparedStatement.close();
+        return travelAgenciesList;
     }
 
-    public TravelAgency update(TravelAgency travelAgency) {
-        travelAgencyMap.put(travelAgency.getId(), travelAgency);
+    public TravelAgency save(TravelAgency entity) throws SQLException {
+        TravelAgency travelAgency = null;
+        PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "INSERT INTO travelAgency(name, countTour, countTravelAgents)" +
+                "VALUES(?, ?, ?)");
+        preparedStatement.setString(1, entity.getName());
+        preparedStatement.setInt(2, entity.getCountTour());
+        preparedStatement.setInt(3, entity.getCountTravelAgent());
+
+        preparedStatement.execute();
+        preparedStatement = connection.prepareStatement("" +
+                "SELECT * FROM travelagency WHERE id=?");
+        preparedStatement.setString(1, entity.getId().toString());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            travelAgency = setResultTravelAgency(resultSet);
+        }
+        resultSet.close();
+        preparedStatement.close();
+         return travelAgency;
+    }
+
+    public TravelAgency update(TravelAgency entity) throws SQLException {
+        TravelAgency travelAgency = null;
+        PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "UPDATE travelAgency SET name=?, countTour=?, countTravelAgents=? WHERE id=?");
+        preparedStatement.setString(1, entity.getName());
+        preparedStatement.setInt(2, entity.getCountTour());
+        preparedStatement.setInt(3, entity.getCountTravelAgent());
+        preparedStatement.execute();
+        preparedStatement = connection.prepareStatement("" +
+                "SELECT * FROM travelagency WHERE id=?");
+        preparedStatement.setString(1, entity.getId().toString());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            travelAgency = setResultTravelAgency(resultSet);
+        }
+        resultSet.close();
+        preparedStatement.close();
         return travelAgency;
-
     }
 
-    public void delete(UUID id) {
-        travelAgencyMap.remove(id);
+    public void delete(UUID id) throws SQLException {
+
+        String uuid = id.toString();
+        PreparedStatement preparedStatement = connection.prepareStatement("" +
+                "DELETE FROM travelagency WHERE  id=?");
+        preparedStatement.setString(1, uuid);
+        preparedStatement.execute();
+        preparedStatement.close();
     }
-
-
 }

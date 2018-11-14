@@ -17,8 +17,9 @@ public class Tour extends BaseEntity {
     private String country;
     private Date startDate;
     private Date endDate;
-    private TravelAgency travelAgency;
-    private Customer customer;
+    private UUID travelAgencyId;
+    private UUID customerId;
+    private boolean free;
 
     public Tour(){
     }
@@ -82,14 +83,6 @@ public class Tour extends BaseEntity {
         this.endDate = endDate;
     }
 
-    public TravelAgency getTravelAgency() {
-        return travelAgency;
-    }
-
-    public void setTravelAgency(TravelAgency travelAgency) {
-        this.travelAgency = travelAgency;
-    }
-
     public Double getPrice() {
         return price;
     }
@@ -98,12 +91,28 @@ public class Tour extends BaseEntity {
         this.price = price;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public UUID getTravelAgencyId() {
+        return travelAgencyId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setTravelAgencyId(UUID travelAgencyId) {
+        this.travelAgencyId = travelAgencyId;
+    }
+
+    public UUID getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(UUID customerId) {
+        this.customerId = customerId;
+    }
+
+    public boolean isFree() {
+        return free;
+    }
+
+    public void setFree(boolean free) {
+        this.free = free;
     }
 
     @Override
@@ -130,8 +139,6 @@ public class Tour extends BaseEntity {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", travelAgency=" + travelAgency +
-                ", customer=" + customer +
                 '}';
     }
 }

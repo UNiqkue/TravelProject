@@ -2,9 +2,9 @@ package com.netcracker.travel;
 
 import com.netcracker.travel.controller.AuthenticationController;
 import com.netcracker.travel.controller.RegistrationController;
-import com.netcracker.travel.controller.TourController;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
+import com.netcracker.travel.service.implementation.UserServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,8 +26,8 @@ public class Menu {
                 int x = Integer.parseInt(reader.readLine());
                 switch (x) {
                     case 1:
-                        TourController tourController = new TourController();
-                        System.out.println(tourController.getAllTours());
+                        UserServiceImpl userService = new UserServiceImpl();
+                        System.out.println(userService.watchTours());
                         break;
                     case 2:
                         AuthenticationController authenticationController = new AuthenticationController();
