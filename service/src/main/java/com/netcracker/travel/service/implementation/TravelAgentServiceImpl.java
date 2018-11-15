@@ -1,64 +1,68 @@
 package com.netcracker.travel.service.implementation;
 
+import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgencyConverter;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgentDaoImpl;
-import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.dto.LoginResponseDto;
-import com.netcracker.travel.dto.TravelAgencyDto;
-import com.netcracker.travel.entity.Tour;
-import com.netcracker.travel.entity.TravelAgent;
+import com.netcracker.travel.dto.*;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class TravelAgentServiceImpl implements AbstractService<TravelAgent>, AuthenticationService {
+public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, AuthenticationService {
 
-    private TourDaoImpl tourDao;
-    private TravelAgencyDaoImpl travelAgencyDao;
-    private TravelAgentDaoImpl travelAgentDao;
-    private TravelAgencyConverter converter;
+    private TourDaoImpl tourDao = TourDaoImpl.getInstance();
+    private TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
+    private TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
+    private TravelAgencyConverter travelAgencyConverter = new TravelAgencyConverter();
+    private TourConverter tourConverter = new TourConverter();
 
 
-    public Tour createTour(Tour tour, UUID customerId) {
-        tour.setCustomerId(customerId);
-        Tour temp = null;
+    public TourDto createTour(TourDto tourDto) {
+        TourDto temp = null;
         try {
-            temp = tourDao.save(tour);
+            temp = tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return temp;
     }
 
-    public Collection<Tour> checkExistenceTours(){
-        Collection<Tour> tours = null;
+    public List<TourDto> checkExistenceTours(){
+        List<TourDto> tours = null;
         try {
-            tours = tourDao.getAll();
+            tours = tourDao.getAll()
+                    .stream()
+                    .map(tour -> tourConverter.convert(tour))
+                    .collect(Collectors.toList());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return tours;
     }
 
-    public Tour editTour(Tour tour) {
-            Tour temp = null;
+    public TourDto editTour(TourDto tourDto) {
+            TourDto temp = null;
             try {
-                temp = tourDao.update(tour);
+                temp = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return temp;
     }
 
-    public Collection<Tour> viewOrderHystory(UUID clientId){
-        Collection<Tour> temp = null;
+    public List<TourDto> viewOrderHystory(UUID clientId){
+        List<TourDto> temp = null;
         try {
-            temp = tourDao.getTourByCustomerId(clientId);
+            temp = tourDao.getToursById(clientId)
+                    .stream()
+                    .map(tour -> tourConverter.convert(tour))
+                    .collect(Collectors.toList());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,10 +77,15 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgent>, Aut
     public TravelAgencyDto getTravelAgency(UUID id){
             TravelAgencyDto temp = null;
             try {
-                temp = converter.convert(travelAgencyDao.getById(id));
+                temp = travelAgencyConverter.convert(travelAgencyDao.getById(id));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return temp;
+    }
+
+    @Override
+    public List<TravelAgentDto> getAll() {
+        return null;
     }
 }

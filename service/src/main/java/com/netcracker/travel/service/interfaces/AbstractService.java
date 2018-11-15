@@ -1,12 +1,9 @@
 package com.netcracker.travel.service.interfaces;
 
+import java.util.List;
+
 public interface AbstractService<T> {
 
-   /* T getById(UUID id);
-    T getByName(String name);
-    Collection<T> getAll();
-    void save(T t);
-    void update(T t);
-    void delete(UUID id);*/
+    List<T> getAll();
 
 }

@@ -18,15 +18,15 @@ public class UserDaoImpl implements AbstractDao<User> {
 
     private static volatile UserDaoImpl instance;
 
-    private UserDaoImpl(Connection connection){
-        this.connection = connection;
+    private UserDaoImpl(){
+
     }
 
-    public static UserDaoImpl getInstance(Connection connection){
+    public static UserDaoImpl getInstance(){
         if (instance == null) {
             synchronized (UserDaoImpl.class) {
                 if (instance == null) {
-                    instance = new UserDaoImpl(connection);
+                    instance = new UserDaoImpl();
                 }
             }
         }

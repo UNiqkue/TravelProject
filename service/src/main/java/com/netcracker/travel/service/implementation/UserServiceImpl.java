@@ -1,14 +1,10 @@
 package com.netcracker.travel.service.implementation;
 
+import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.UserConverter;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dao.implementation.UserDaoImpl;
-import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.dto.LoginResponseDto;
-import com.netcracker.travel.dto.RegistrationRequestDto;
-import com.netcracker.travel.dto.UserDto;
-import com.netcracker.travel.entity.Tour;
-import com.netcracker.travel.entity.User;
+import com.netcracker.travel.dto.*;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
@@ -16,20 +12,26 @@ import com.netcracker.travel.service.interfaces.RegistrationService;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class UserServiceImpl implements AbstractService<User>, RegistrationService, AuthenticationService {
+public class UserServiceImpl implements AbstractService<UserDto>, RegistrationService, AuthenticationService {
 
-    private UserDaoImpl userDao;
-    private TourDaoImpl tourDao;
+
+    private UserDaoImpl userDao = UserDaoImpl.getInstance();
+    private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private UserConverter userConverter = new UserConverter();
+    private TourConverter tourConverter = new TourConverter();
 
     public UserServiceImpl(){
     }
 
-    public List<User> getAll() {
-        List<User> users = null;
+    public List<UserDto> getAll() {
+        List<UserDto> users = null;
         try {
-            users = userDao.getAll();
+            users = userDao.getAll()
+                    .stream()
+                    .map(user -> userConverter.convert(user))
+                    .collect(Collectors.toList());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,10 +53,13 @@ public class UserServiceImpl implements AbstractService<User>, RegistrationServi
         return false;
     }
 
-    public List<Tour> watchTours() {
-        List<Tour> tours = null;
+    public List<TourDto> watchTours() {
+        List<TourDto> tours = null;
         try {
-            tours = tourDao.getAll();
+            tours = tourDao.getAll()
+                    .stream()
+                    .map(tour -> tourConverter.convert(tour))
+                    .collect(Collectors.toList());
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e){
@@ -87,5 +92,18 @@ public class UserServiceImpl implements AbstractService<User>, RegistrationServi
         return null;
     }
 
+
+    public List<TourDto> getAllOrderedTours(UUID customerId){
+        List<TourDto> tours = null;
+        try {
+            tours = tourDao.getToursById(customerId)
+                    .stream()
+                    .map(tour -> tourConverter.convert(tour))
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tours;
+    }
 
 }

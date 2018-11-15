@@ -17,15 +17,15 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
 
     private static volatile TravelAgencyDaoImpl instance;
 
-    private TravelAgencyDaoImpl(Connection connection){
-        this.connection = connection;
+    private TravelAgencyDaoImpl(){
+
     }
 
-    public static TravelAgencyDaoImpl getInstance(Connection connection){
+    public static TravelAgencyDaoImpl getInstance(){
         if (instance == null) {
             synchronized (TravelAgencyDaoImpl.class) {
                 if (instance == null) {
-                    instance = new TravelAgencyDaoImpl(connection);
+                    instance = new TravelAgencyDaoImpl();
                 }
             }
         }

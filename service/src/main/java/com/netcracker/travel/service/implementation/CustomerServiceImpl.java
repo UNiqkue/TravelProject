@@ -4,26 +4,30 @@ import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
+import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.LoginResponseDto;
 import com.netcracker.travel.dto.TourDto;
-import com.netcracker.travel.entity.Customer;
-import com.netcracker.travel.entity.Tour;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class CustomerServiceImpl implements AbstractService<Customer>, AuthenticationService {
+public class CustomerServiceImpl implements AbstractService<CustomerDto>, AuthenticationService {
 
-    private TourDaoImpl tourDao;
-    private CustomerDaoImpl customerDao;
-    private CustomerConverter customerConverter;
-    private TourConverter tourConverter;
+    private TourDaoImpl tourDao = TourDaoImpl.getInstance();
+    private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
+    private CustomerConverter customerConverter = new CustomerConverter();
+    private TourConverter tourConverter = new TourConverter();
 
     public CustomerServiceImpl(){
+    }
+
+    public List<CustomerDto> getAll(){
+        return null;
     }
 
     public TourDto bookTour(TourDto tourDto, UUID customerId) {
@@ -60,10 +64,13 @@ public class CustomerServiceImpl implements AbstractService<Customer>, Authentic
         return temp;
     }
 
-    public List<Tour> viewOrderedTours(UUID id){
-        List<Tour> tours = null;
+    public List<TourDto> viewOrderedTours(UUID id){
+        List<TourDto> tours = null;
         try {
-            tours = tourDao.getToursById(id);
+            tours = tourDao.getToursById(id)
+                    .stream()
+                    .map(tour -> tourConverter.convert(tour))
+                    .collect(Collectors.toList());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,13 +81,5 @@ public class CustomerServiceImpl implements AbstractService<Customer>, Authentic
         return null;
     }
 
-    public List<Tour> getTours(UUID customerId){
-        List<Tour> tours = null;
-        try {
-            tours = tourDao.getToursById(customerId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tours;
-    }
+
 }

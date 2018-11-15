@@ -17,15 +17,14 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
 
     private static volatile CustomerDaoImpl instance;
 
-    private CustomerDaoImpl(Connection connection){
-        this.connection = connection;
+    private CustomerDaoImpl(){
     }
 
-    public static CustomerDaoImpl getInstance(Connection connection){
+    public static CustomerDaoImpl getInstance(){
         if (instance == null) {
             synchronized (CustomerDaoImpl.class) {
                 if (instance == null) {
-                    instance = new CustomerDaoImpl(connection);
+                    instance = new CustomerDaoImpl();
 
                 }
             }

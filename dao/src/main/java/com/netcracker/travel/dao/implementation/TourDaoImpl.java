@@ -14,15 +14,15 @@ public class TourDaoImpl implements AbstractDao<Tour> {
 
     private static volatile TourDaoImpl instance;
 
-    private TourDaoImpl(Connection connection){
-        this.connection = connection;
+    private TourDaoImpl(){
+
     }
 
-    public static TourDaoImpl getInstance(Connection connection){
+    public static TourDaoImpl getInstance(){
         if (instance == null) {
             synchronized (TourDaoImpl.class) {
                 if (instance == null) {
-                    instance = new TourDaoImpl(connection);
+                    instance = new TourDaoImpl();
                 }
             }
         }
@@ -197,7 +197,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         preparedStatement.close();
     }
 
-    public List<Tour> setResultToursById(UUID customerId) throws SQLException {
+    public List<Tour> getToursById(UUID customerId) throws SQLException {
         List<Tour> tours = new ArrayList<>();
         String uuid = customerId.toString();
         PreparedStatement preparedStatement = connection.prepareStatement("" +
@@ -211,8 +211,8 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         preparedStatement.close();
         return tours;
     }
-
-    public List<Tour> setResultTourByCustomerId(UUID customerId) throws SQLException {
+/*
+    public List<Tour> getTourByCustomerId(UUID customerId) throws SQLException {
         List<Tour> toursList = new ArrayList<>();
         String uuid = customerId.toString();
         PreparedStatement preparedStatement = connection.prepareStatement("" +
@@ -225,7 +225,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         resultSet.close();
         preparedStatement.close();
         return toursList;
-    }
+    }*/
 
 }
 
