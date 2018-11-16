@@ -14,7 +14,7 @@ public class TravelAgentDto {
     private String activationCode;
     private String phoneNumber;
     private String position;
-    private String nameTravelAgency;
+    private UUID travelAgencyId;
 
     public UUID getId() {
         return id;
@@ -88,12 +88,12 @@ public class TravelAgentDto {
         this.position = position;
     }
 
-    public String getNameTravelAgency() {
-        return nameTravelAgency;
+    public UUID getTravelAgencyId() {
+        return travelAgencyId;
     }
 
-    public void setNameTravelAgency(String nameTravelAgency) {
-        this.nameTravelAgency = nameTravelAgency;
+    public void setTravelAgencyId(UUID travelAgencyId) {
+        this.travelAgencyId = travelAgencyId;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class TravelAgentDto {
                 ", activationCode='" + activationCode + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
-                ", nameTravelAgency='" + nameTravelAgency + '\'' +
+                ", travelAgencyId='" + travelAgencyId + '\'' +
                 '}';
     }
 }
