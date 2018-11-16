@@ -11,7 +11,6 @@ import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,13 +38,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
     public TourDto buyTour(TourDto tourDto, UUID customerId) {
         tourDto.setCustomerId(customerId);
         tourDto.setFree(false);
-        TourDto temp = null;
-        try {
-            temp = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return temp;
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
     public void searchTour(){
@@ -53,33 +46,23 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
     }
 
     public TourDto cancelTour(UUID id){
-        TourDto temp = null;
-        try {
+
             TourDto tourDto = tourConverter.convert(tourDao.getById(id));
             tourDto.setFree(true);
-            temp = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return temp;
+
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> viewOrderedTours(UUID id){
-        List<TourDto> tours = null;
-        try {
-            tours = tourDao.getToursById(id)
-                    .stream()
-                    .map(tour -> tourConverter.convert(tour))
-                    .collect(Collectors.toList());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tours;
+
+        return tourDao.getToursById(id)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         return null;
     }
-
 
 }

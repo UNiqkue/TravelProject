@@ -9,7 +9,6 @@ import com.netcracker.travel.dto.*;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,64 +23,40 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
 
 
     public TourDto createTour(TourDto tourDto) {
-        TourDto temp = null;
-        try {
-            temp = tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return temp;
+
+        return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> checkExistenceTours(){
-        List<TourDto> tours = null;
-        try {
-            tours = tourDao.getAll()
-                    .stream()
-                    .map(tour -> tourConverter.convert(tour))
-                    .collect(Collectors.toList());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tours;
+
+        return tourDao.getAll()
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
     }
 
     public TourDto editTour(TourDto tourDto) {
-            TourDto temp = null;
-            try {
-                temp = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return temp;
+
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public List<TourDto> viewOrderHystory(UUID clientId){
-        List<TourDto> temp = null;
-        try {
-            temp = tourDao.getToursById(clientId)
-                    .stream()
-                    .map(tour -> tourConverter.convert(tour))
-                    .collect(Collectors.toList());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return temp;
+    public List<TourDto> viewOrderHystory(UUID clientId) {
+
+        return  tourDao.getToursById(clientId)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
 
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+
         return null;
     }
 
     public TravelAgencyDto getTravelAgency(UUID id){
-            TravelAgencyDto temp = null;
-            try {
-                temp = travelAgencyConverter.convert(travelAgencyDao.getById(id));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return temp;
+
+        return travelAgencyConverter.convert(travelAgencyDao.getById(id));
     }
 
     @Override
