@@ -27,11 +27,11 @@ public class TravelAgent extends User{
         this.position = position;
     }
 
-    public UUID getTravelAgency() {
+    public UUID getTravelAgencyId() {
         return travelAgencyId;
     }
 
-    public void setTravelAgency(UUID travelAgencyId) {
+    public void setTravelAgencyId(UUID travelAgencyId) {
         this.travelAgencyId = travelAgencyId;
     }
 

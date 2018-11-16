@@ -41,11 +41,11 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
 
     public RegistrationRequestDto registration(RegistrationRequestDto registrationRequestDto){
         UserDto userDto = new UserDto();
+        userDto.setId(UUID.randomUUID());
         userDto.setUsername(registrationRequestDto.getUsername());
         userDto.setEmail(registrationRequestDto.getEmail());
         userDto.setPassword(registrationRequestDto.getPassword());
-        userDto.setActivationCode(registrationRequestDto.getAlias());
-        userDto.setId(UUID.randomUUID());
+        userDto.setActivationCode(registrationRequestDto.getActivationCode());
         return registrationRequestDto;
     }
 
@@ -61,8 +61,6 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
                     .map(tour -> tourConverter.convert(tour))
                     .collect(Collectors.toList());
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
             e.printStackTrace();
         }
         return tours;

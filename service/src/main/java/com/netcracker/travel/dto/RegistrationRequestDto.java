@@ -2,18 +2,38 @@ package com.netcracker.travel.dto;
 
 public class RegistrationRequestDto {
 
+    private String firstName;
+    private String lastName;
     private String username;
     private String password;
     private String email;
-    private String alias;
+    private String activationCode;
 
     public RegistrationRequestDto(){}
 
-    public RegistrationRequestDto(String username, String password, String email, String alias) {
+    public RegistrationRequestDto(String firstName, String lastName, String username, String password, String email, String activationCode) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.alias = alias;
+        this.activationCode = activationCode;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -40,11 +60,11 @@ public class RegistrationRequestDto {
         this.email = email;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getActivationCode() {
+        return activationCode;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 }
