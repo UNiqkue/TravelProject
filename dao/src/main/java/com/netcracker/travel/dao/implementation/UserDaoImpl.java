@@ -3,24 +3,15 @@ package com.netcracker.travel.dao.implementation;
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class UserDaoImpl implements AbstractDao<User> {
 
-    private Connection connection;
-
     private static volatile UserDaoImpl instance;
 
-    private UserDaoImpl(){
-
-    }
+    private UserDaoImpl(){}
 
     public static UserDaoImpl getInstance(){
         if (instance == null) {
@@ -33,109 +24,42 @@ public class UserDaoImpl implements AbstractDao<User> {
         return instance;
     }
 
-
-    private User setResultUser(ResultSet resultSet) throws SQLException {
-        User user = new User();
-        user.setId(UUID.fromString(resultSet.getString("id")));
-        user.setFirstName(resultSet.getString("fisrtName"));
-        user.setLastName(resultSet.getString("lastName"));
-        user.setUsername(resultSet.getString("username"));
-        user.setPassword(resultSet.getString("password"));
-        user.setEmail(resultSet.getString("email"));
-        user.setActivationCode(resultSet.getString("activationCode"));
-        return user;
+    public User getById(UUID id) {
+        Map<UUID, User> userMap = new HashMap<>();
+        return userMap.get(id);
     }
 
-    public User getById(UUID id) throws SQLException {
-        User user = null;
-        String uuid = id.toString();
-
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE uuid=?");
-        preparedStatement.setString(1, uuid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            user = setResultUser(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return user;
-    }
-
-    /*public Collection<User> getByName(String name) {
-        return getEntityMapValues()
+    public List<User> getByName(String name) {
+        Map<UUID, User> userMap = new HashMap<>();
+        return userMap.values()
                 .stream()
                 .filter(user -> user.getUsername().equals(name))
                 .collect(Collectors.toList());
-    }*/
-
-    public List<User> getAll() throws SQLException {
-        List<User> usersList = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            usersList.add(setResultUser(resultSet));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return usersList;
     }
 
-    public User save(User entity) throws SQLException {
-        User user = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "INSERT INTO user(firstName, lastName, username, password, email, activationCode)" +
-                "VALUES(?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, entity.getFirstName());
-        preparedStatement.setString(2, entity.getLastName());
-        preparedStatement.setString(3, entity.getUsername());
-        preparedStatement.setString(4, entity.getPassword());
-        preparedStatement.setString(5, entity.getEmail());
-        preparedStatement.setString(6, entity.getActivationCode());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            user = setResultUser(resultSet);
+    public List<User> getAll() {
+        Map<UUID, User> userMap = new HashMap<>();
+        return new ArrayList<>(userMap.values());
+    }
+
+    public User save(User user) {
+        Map<UUID, User> userMap = new HashMap<>();
+        if(userMap.isEmpty()){
+            user.setId(UUID.randomUUID());
+            userMap.put(user.getId(), user);
         }
-        resultSet.close();
-        preparedStatement.close();
         return user;
     }
 
-    public User update(User entity) throws SQLException {
-        User user = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "UPDATE user SET firstName=?, lastName=?, username=?, password=?, email=?, activationCode=? WHERE id=?");
-        preparedStatement.setString(1, entity.getFirstName());
-        preparedStatement.setString(2, entity.getLastName());
-        preparedStatement.setString(3, entity.getUsername());
-        preparedStatement.setString(4, entity.getPassword());
-        preparedStatement.setString(5, entity.getEmail());
-        preparedStatement.setString(6, entity.getActivationCode());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            user = setResultUser(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
+    public User update(User user) {
+        Map<UUID, User> userMap = new HashMap<>();
+        userMap.put(user.getId(), user);
         return user;
     }
 
-    public void delete(UUID id) throws SQLException {
-        String uuid = id.toString();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "DELETE FROM user WHERE  id=?");
-        preparedStatement.setString(1, uuid);
-        preparedStatement.execute();
-        preparedStatement.close();
+    public void delete(UUID id) {
+        Map<UUID, User> userMap = new HashMap<>();
+        userMap.remove(id);
     }
 
 }
