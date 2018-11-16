@@ -32,7 +32,7 @@ public class TravelAgentConverter {
         travelAgentDto.setActivationCode(travelAgent.getActivationCode());
         travelAgentDto.setPhoneNumber(travelAgent.getPhoneNumber());
         travelAgentDto.setPosition(travelAgent.getPosition());
-        travelAgentDto.setTravelAgencyId(travelAgent.getId());
+        travelAgentDto.setTravelAgencyId(travelAgent.getTravelAgencyId());
 
         return travelAgentDto;
     }
