@@ -1,7 +1,6 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.TravelAgentDto;
-import com.netcracker.travel.entity.TravelAgency;
 import com.netcracker.travel.entity.TravelAgent;
 
 public class TravelAgentConverter {
@@ -17,10 +16,7 @@ public class TravelAgentConverter {
         travelAgent.setActivationCode(travelAgentDto.getActivationCode());
         travelAgent.setPhoneNumber(travelAgentDto.getPhoneNumber());
         travelAgent.setPosition(travelAgentDto.getPosition());
-
-        TravelAgency travelAgency = new TravelAgency();
-        travelAgency.setName(travelAgentDto.getNameTravelAgency());
-        travelAgent.setTravelAgency(travelAgency);
+        travelAgent.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
 
         return travelAgent;
     }
@@ -36,12 +32,7 @@ public class TravelAgentConverter {
         travelAgentDto.setActivationCode(travelAgent.getActivationCode());
         travelAgentDto.setPhoneNumber(travelAgent.getPhoneNumber());
         travelAgentDto.setPosition(travelAgent.getPosition());
-
-        if (travelAgent.getTravelAgency() != null) {
-            travelAgentDto.setNameTravelAgency(travelAgent.getTravelAgency().getName());
-        }
-
-
+        travelAgentDto.setTravelAgencyId(travelAgent.getId());
 
         return travelAgentDto;
     }

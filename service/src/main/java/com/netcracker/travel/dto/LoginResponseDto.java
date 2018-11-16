@@ -3,20 +3,20 @@ package com.netcracker.travel.dto;
 public class LoginResponseDto {
 
     private String token;
-    private String alias;
+    private String activationCode;
 
-    public LoginResponseDto(String token, String alias) {
+    public LoginResponseDto(String token, String activationCode) {
         this.token = token;
-        this.alias = alias;
+        this.activationCode = activationCode;
     }
 
 
-    public String getAlias() {
-        return alias;
+    public String getActivationCode() {
+        return activationCode;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 
     public String getToken() {

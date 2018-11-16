@@ -31,7 +31,7 @@ public class TravelAgent extends User{
         return travelAgencyId;
     }
 
-    public void setTravelAgency(UUID travelAgencyId) {
+    public void setTravelAgencyId(UUID travelAgencyId) {
         this.travelAgencyId = travelAgencyId;
     }
 
