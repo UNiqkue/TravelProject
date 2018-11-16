@@ -52,6 +52,7 @@ public class Menu {
             } catch (NumberFormatException e) {
                 System.out.println("Wrong input");
             }
+            /**/
         }
     }
 }
