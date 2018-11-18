@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
@@ -62,7 +63,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         return travelAgent;
     }
 
-    /*public Collection<travelAgent> getByName(String name) {
+    /*public Collection<ravelAgent> getByName(String name) {
         return getEntityMapValues()
                 .stream()
                 .filter(travelAgent -> travelAgent.setResultTravelAgentname().equals(name))

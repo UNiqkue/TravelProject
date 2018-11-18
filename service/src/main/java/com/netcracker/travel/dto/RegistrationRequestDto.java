@@ -7,17 +7,15 @@ public class RegistrationRequestDto {
     private String username;
     private String password;
     private String email;
-    private String activationCode;
 
     public RegistrationRequestDto(){}
 
-    public RegistrationRequestDto(String firstName, String lastName, String username, String password, String email, String activationCode) {
+    public RegistrationRequestDto(String firstName, String lastName, String username, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.activationCode = activationCode;
     }
 
     public String getFirstName() {
@@ -60,11 +58,4 @@ public class RegistrationRequestDto {
         this.email = email;
     }
 
-    public String getActivationCode() {
-        return activationCode;
-    }
-
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
-    }
 }

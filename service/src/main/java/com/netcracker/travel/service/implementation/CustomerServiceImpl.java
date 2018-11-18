@@ -6,7 +6,6 @@ import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.dto.LoginResponseDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
@@ -20,6 +19,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
+
     private CustomerConverter customerConverter = new CustomerConverter();
     private TourConverter tourConverter = new TourConverter();
 
@@ -36,50 +36,45 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
         return temp;
     }
 
-    public TourDto buyTour(TourDto tourDto, UUID customerId) {
+    public TourDto buyTour(TourDto tourDto, UUID customerId) throws SQLException{
         tourDto.setCustomerId(customerId);
         tourDto.setFree(false);
-        TourDto temp = null;
-        try {
-            temp = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return temp;
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public void searchTour(){
+    public void searchTourByName(){
+        // TourDaoImpl getByName, Date, Type, Country
+    }
+    public void searchTourByDate(){
+        // TourDaoImpl getByName, Date, Type, Country
+    }
+    public void searchTourByType(){
+        // TourDaoImpl getByName, Date, Type, Country
+    }
+    public void searchTourByCountry(){
         // TourDaoImpl getByName, Date, Type, Country
     }
 
-    public TourDto cancelTour(UUID id){
-        TourDto temp = null;
-        try {
-            TourDto tourDto = tourConverter.convert(tourDao.getById(id));
-            tourDto.setFree(true);
-            temp = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public TourDto cancelTour(UUID id) throws SQLException{
+        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+        tourDto.setFree(true);
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+    }
+
+    public List<TourDto> viewOrderedTours(UUID id) throws SQLException{
+        return tourDao.getToursById(id)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+    }
+
+    public boolean login(LoginRequestDto loginRequestDto) {
+        CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
+        if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
+            return true;
         }
-        return temp;
+        return false;
     }
-
-    public List<TourDto> viewOrderedTours(UUID id){
-        List<TourDto> tours = null;
-        try {
-            tours = tourDao.getToursById(id)
-                    .stream()
-                    .map(tour -> tourConverter.convert(tour))
-                    .collect(Collectors.toList());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tours;
-    }
-
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        return null;
-    }
-
 
 }
+
