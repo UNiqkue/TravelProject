@@ -2,7 +2,6 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Tour;
-import com.netcracker.travel.util.FileEntityMap;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,8 +73,6 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             tour.setId(UUID.randomUUID());
             tourMap.put(tour.getId(), tour);
         }
-        FileEntityMap<Map<UUID, Tour>> fileEntityMap = new FileEntityMap<>();
-        fileEntityMap.writeEntity(tourMap, tour.returnName());
         return tour;
     }
 
