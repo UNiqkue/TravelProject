@@ -141,4 +141,5 @@ public class Tour extends BaseEntity {
                 ", endDate=" + endDate +
                 '}';
     }
+
 }

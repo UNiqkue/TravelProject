@@ -6,7 +6,6 @@ import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.dto.LoginResponseDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
@@ -19,6 +18,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
+
     private CustomerConverter customerConverter = new CustomerConverter();
     private TourConverter tourConverter = new TourConverter();
 
@@ -41,28 +41,38 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public void searchTour(){
+    public void searchTourByName(){
+        // TourDaoImpl getByName, Date, Type, Country
+    }
+    public void searchTourByDate(){
+        // TourDaoImpl getByName, Date, Type, Country
+    }
+    public void searchTourByType(){
+        // TourDaoImpl getByName, Date, Type, Country
+    }
+    public void searchTourByCountry(){
         // TourDaoImpl getByName, Date, Type, Country
     }
 
     public TourDto cancelTour(UUID id){
-
-            TourDto tourDto = tourConverter.convert(tourDao.getById(id));
-            tourDto.setFree(true);
-
+        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+        tourDto.setFree(true);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> viewOrderedTours(UUID id){
-
         return tourDao.getToursById(id)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        return null;
+    public boolean login(LoginRequestDto loginRequestDto) {
+        CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
+        if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
+            return true;
+        }
+        return false;
     }
 
 }

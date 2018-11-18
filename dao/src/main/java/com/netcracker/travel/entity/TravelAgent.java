@@ -58,4 +58,5 @@ public class TravelAgent extends User{
                 ", travelAgencyId=" + travelAgencyId +
                 '}';
     }
+
 }

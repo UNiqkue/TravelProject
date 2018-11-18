@@ -2,6 +2,7 @@ package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgencyConverter;
+import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgentDaoImpl;
@@ -18,17 +19,17 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
     private TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
+
     private TravelAgencyConverter travelAgencyConverter = new TravelAgencyConverter();
     private TourConverter tourConverter = new TourConverter();
+    private TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
 
 
     public TourDto createTour(TourDto tourDto) {
-
         return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> checkExistenceTours(){
-
         return tourDao.getAll()
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
@@ -36,12 +37,10 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     }
 
     public TourDto editTour(TourDto tourDto) {
-
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> viewOrderHystory(UUID clientId) {
-
         return  tourDao.getToursById(clientId)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
@@ -49,13 +48,15 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
 
     }
 
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-
-        return null;
+    public boolean login(LoginRequestDto loginRequestDto) {
+        TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
+        if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
+            return true;
+        }
+        return false;
     }
 
     public TravelAgencyDto getTravelAgency(UUID id){
-
         return travelAgencyConverter.convert(travelAgencyDao.getById(id));
     }
 
