@@ -29,11 +29,11 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         return travelAgentMap.get(id);
     }
 
-    public List<TravelAgent> getByName(String name) {
+    public List<TravelAgent> getByName(String lastName) {
         Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
         return travelAgentMap.values()
                 .stream()
-                .filter(travelAgent -> travelAgent.getUsername().equals(name))
+                .filter(travelAgent -> travelAgent.getLastName().equals(lastName))
                 .collect(Collectors.toList());
     }
 
@@ -60,6 +60,13 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     public void delete(UUID id) {
         Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
         travelAgentMap.remove(id);
+    }
+
+    public TravelAgent getByUsername(String username) {
+        Map<UUID, TravelAgent> customerMap = new HashMap<>();
+        return (TravelAgent) customerMap.values()
+                .stream()
+                .filter(customer -> customer.getUsername().equals(username));
     }
 
 

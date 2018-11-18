@@ -28,11 +28,11 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
         return customerMap.get(id);
     }
 
-    public List<Customer> getByName(String name) {
+    public List<Customer> getByName(String lastName) {
         Map<UUID, Customer> customerMap = new HashMap<>();
         return customerMap.values()
                 .stream()
-                .filter(customer -> customer.getUsername().equals(name))
+                .filter(customer -> customer.getUsername().equals(lastName))
                 .collect(Collectors.toList());
     }
 
@@ -62,4 +62,10 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
     }
 
 
+    public Customer getByUsername(String username) {
+        Map<UUID, Customer> customerMap = new HashMap<>();
+        return (Customer) customerMap.values()
+                .stream()
+                .filter(customer -> customer.getUsername().equals(username));
+    }
 }

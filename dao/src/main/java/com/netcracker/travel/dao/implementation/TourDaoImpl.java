@@ -2,6 +2,7 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Tour;
+import com.netcracker.travel.util.FileEntityMap;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,11 +24,6 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         return instance;
     }
 
-  /*  public Collection<Tour> getEntityMapValues(){
-        FileEntityMap.readEntityMap("dao\\\\src\\\\main\\\\resources\\\\resources.properties");
-        return tourMap.values();
-    }*/
-
     public Tour getById(UUID id) {
         Map<UUID, Tour> tourMap = new HashMap<>();
         return tourMap.get(id);
@@ -41,7 +37,31 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 .collect(Collectors.toList());
     }
 
-    /**getByDate, getByCountry, getByType**/
+    public List<Tour> getByDate(Date startDate, Date endDate) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getStartDate().equals(startDate))
+                .filter(tour -> tour.getEndDate().equals(endDate))
+                .collect(Collectors.toList());
+    }
+
+    public List<Tour> getByCountry(String country) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getCountry().equals(country))
+                .collect(Collectors.toList());
+    }
+
+            /**String to EnumType**/
+    public List<Tour> getByType(String type) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getType().equals(type))
+                .collect(Collectors.toList());
+    }
 
     public List<Tour> getAll() {
         Map<UUID, Tour> tourMap = new HashMap<>();
@@ -54,6 +74,8 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             tour.setId(UUID.randomUUID());
             tourMap.put(tour.getId(), tour);
         }
+        FileEntityMap<Map<UUID, Tour>> fileEntityMap = new FileEntityMap<>();
+        fileEntityMap.writeEntity(tourMap, tour.returnName());
         return tour;
     }
 
