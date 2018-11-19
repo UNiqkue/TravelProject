@@ -48,7 +48,7 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
         userDto.setEmail(registrationRequestDto.getEmail());
         userDto.setPassword(registrationRequestDto.getPassword());
         userDto.setActivationCode(UUID.randomUUID().toString());
-        userDto.setRole(Collections.singleton(Role.ANONYMUSER));
+        userDto.setRole(Collections.singleton(Role.GUEST));
         userDao.save(userConverter.convert(userDto));
         return registrationRequestDto;
     }
@@ -79,7 +79,7 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
             return false;
         }
 
-        userDto.setRole(Collections.singleton(Role.ANONYMUSER));
+        userDto.setRole(Collections.singleton(Role.GUEST));
         userDto.setActivationCode(null);
 
         return true;

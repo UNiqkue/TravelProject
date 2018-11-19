@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class CustomerDaoImpl implements AbstractDao<Customer> {
 
+    private static String filePath = "dao\\src\\main\\resources\\storage\\customer.json";
+
     private static volatile CustomerDaoImpl instance;
 
     private CustomerDaoImpl(){}

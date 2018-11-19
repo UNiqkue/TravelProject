@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
 
+    private static String filePath = "dao\\src\\main\\resources\\storage\\travelagency.json";
+
     private static volatile TravelAgencyDaoImpl instance;
 
     private TravelAgencyDaoImpl(){}
