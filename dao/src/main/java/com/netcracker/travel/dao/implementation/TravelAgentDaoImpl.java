@@ -60,8 +60,6 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     }
 
     public void delete(UUID id) {
-        Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
-        travelAgentMap.remove(id);
     }
 
     public TravelAgent getByUsername(String username) {
