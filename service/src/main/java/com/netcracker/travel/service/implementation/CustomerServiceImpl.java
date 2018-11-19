@@ -10,9 +10,9 @@ import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, AuthenticationService {
 
@@ -23,6 +23,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
     private TourConverter tourConverter = new TourConverter();
 
     public CustomerServiceImpl(){
+
     }
 
     public List<CustomerDto> getAll(){
@@ -30,48 +31,38 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
     }
 
     public TourDto bookTour(TourDto tourDto, UUID customerId) {
-        TourDto temp = buyTour(tourDto, customerId);
-        System.out.println("You have 3 days to pay for the tour");
-        return temp;
+        return null;
     }
 
     public TourDto buyTour(TourDto tourDto, UUID customerId) {
-        tourDto.setCustomerId(customerId);
-        tourDto.setFree(false);
-        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+        return null;
     }
 
     public void searchTourByName(){
-        // TourDaoImpl getByName, Date, Type, Country
+
     }
+
     public void searchTourByDate(){
-        // TourDaoImpl getByName, Date, Type, Country
+
     }
+
     public void searchTourByType(){
-        // TourDaoImpl getByName, Date, Type, Country
+
     }
+
     public void searchTourByCountry(){
-        // TourDaoImpl getByName, Date, Type, Country
+
     }
 
     public TourDto cancelTour(UUID id){
-        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
-        tourDto.setFree(true);
-        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+        return null;
     }
 
     public List<TourDto> viewOrderedTours(UUID id){
-        return tourDao.getToursById(id)
-                .stream()
-                .map(tour -> tourConverter.convert(tour))
-                .collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     public boolean login(LoginRequestDto loginRequestDto) {
-        CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
-        if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
-            return true;
-        }
         return false;
     }
 

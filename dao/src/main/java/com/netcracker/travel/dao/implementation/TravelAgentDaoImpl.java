@@ -4,11 +4,8 @@ import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgent;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
-
-    private static String filePath = "dao\\src\\main\\resources\\storage\\travelagent.json";
 
     private static volatile TravelAgentDaoImpl instance;
 
@@ -25,48 +22,34 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         return instance;
     }
 
-
     public TravelAgent getById(UUID id) {
-        Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
-        return travelAgentMap.get(id);
+        return null;
     }
 
     public List<TravelAgent> getByName(String lastName) {
-        Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
-        return travelAgentMap.values()
-                .stream()
-                .filter(travelAgent -> travelAgent.getLastName().equals(lastName))
-                .collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     public List<TravelAgent> getAll() {
-        Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
-        return new ArrayList<>(travelAgentMap.values());
+
+        return new ArrayList<>();
     }
 
     public TravelAgent save(TravelAgent travelAgent) {
-        Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
-        if(travelAgentMap.isEmpty()){
-            travelAgent.setId(UUID.randomUUID());
-            travelAgentMap.get(travelAgent.getId());
-        }
-        return travelAgent;
+        return null;
     }
 
     public TravelAgent update(TravelAgent travelAgent) {
-        Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
-        travelAgentMap.put(travelAgent.getId(), travelAgent);
-        return travelAgent;
+
+        return null;
     }
 
     public void delete(UUID id) {
     }
 
     public TravelAgent getByUsername(String username) {
-        Map<UUID, TravelAgent> customerMap = new HashMap<>();
-        return (TravelAgent) customerMap.values()
-                .stream()
-                .filter(customer -> customer.getUsername().equals(username));
+
+        return null;
     }
 
 

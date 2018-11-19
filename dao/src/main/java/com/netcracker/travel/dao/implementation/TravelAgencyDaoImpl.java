@@ -4,11 +4,8 @@ import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgency;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
-
-    private static String filePath = "dao\\src\\main\\resources\\storage\\travelagency.json";
 
     private static volatile TravelAgencyDaoImpl instance;
 
@@ -26,42 +23,26 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     }
 
     public TravelAgency getById(UUID id) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        return travelAgencyMap.get(id);
+        return null;
     }
 
     public List<TravelAgency> getByName(String name) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        return travelAgencyMap.values()
-                .stream()
-                .filter(travelAgency -> travelAgency.getName().equals(name))
-                .collect(Collectors.toList());
+        return new ArrayList<>();
     }
 
     public List<TravelAgency> getAll() {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        return new ArrayList<>(travelAgencyMap.values());
+        return new ArrayList<>();
     }
 
     public TravelAgency save(TravelAgency travelAgency) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        if(travelAgencyMap.isEmpty()){
-            travelAgency.setId(UUID.randomUUID());
-            travelAgencyMap.get(travelAgency.getId());
-        }
         return travelAgency;
     }
 
     public TravelAgency update(TravelAgency travelAgency) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        travelAgencyMap.put(travelAgency.getId(), travelAgency);
         return travelAgency;
     }
 
     public void delete(UUID id) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        travelAgencyMap.remove(id);
     }
-
 
 }
