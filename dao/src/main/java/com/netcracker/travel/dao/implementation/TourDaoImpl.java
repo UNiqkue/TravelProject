@@ -2,21 +2,23 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Tour;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TourDaoImpl implements AbstractDao<Tour> {
 
-    private Connection connection;
+    private static String filePath = "dao\\src\\main\\resources\\storage\\tour.json";
 
     private static volatile TourDaoImpl instance;
 
-    private TourDaoImpl(){
-
-    }
+    private TourDaoImpl(){}
 
     public static TourDaoImpl getInstance(){
         if (instance == null) {
@@ -26,206 +28,177 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 }
             }
         }
-
         return instance;
     }
 
-   /* public Collection<Tour> getEntityMapValues(){
-        FileEntityMap.readEntityMap("README.md");
-        return tourMap.values();
+    public Tour getById(UUID id) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.get(id);
     }
 
-    private Map getEntityMap() {
-        return AbstractDao.entityMap;
-    }*/
+    public List<Tour> getByName(String name) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getName().equals(name))
+                .collect(Collectors.toList());
+    }
 
-    private Tour setResultTour(ResultSet resultSet) throws SQLException {
+    public List<Tour> getByDate(Date startDate, Date endDate) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getStartDate().equals(startDate))
+                .filter(tour -> tour.getEndDate().equals(endDate))
+                .collect(Collectors.toList());
+    }
+
+    public List<Tour> getByCountry(String country) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getCountry().equals(country))
+                .collect(Collectors.toList());
+    }
+
+            /**String to EnumType**/
+    public List<Tour> getByType(String type) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getType().equals(type))
+                .collect(Collectors.toList());
+    }
+
+    public List<Tour> getAll() {
+        List<Tour> list = new ArrayList<Tour>();
+        try {
+            Scanner scanner = new Scanner(new File(filePath));
+            while (scanner.hasNextLine()) {
+                Tour tour = new Tour();
+                JSONObject jsonObject = new JSONObject(scanner.nextLine());
+
+                tour.setId(UUID.fromString(jsonObject.get("id").toString()));
+                tour.setName((String) jsonObject.get("name"));
+                tour.setDescription((String) jsonObject.get("description"));
+                tour.setPrice(Double.valueOf((String) jsonObject.get("price")));
+//                tour.setType((Set<TypeTour>) jsonObject.get("type"));
+                tour.setCountry((String) jsonObject.get("country"));
+                tour.setStartDate(java.sql.Date.valueOf(String.valueOf(jsonObject.get("startDate"))));
+                tour.setEndDate(java.sql.Date.valueOf(String.valueOf(jsonObject.get("endDate"))));
+                tour.setTravelAgencyId(UUID.fromString(jsonObject.get("travelAgencyId").toString()));
+                tour.setCustomerId(UUID.fromString(jsonObject.get("customerId").toString()));
+                tour.setFree((boolean) jsonObject.get("free"));
+                list.add(tour);
+
+            }
+            scanner.close();
+
+        } catch(FileNotFoundException fnf){
+            System.out.println(fnf + "Unable to open file ");
+        } catch(IOException e){
+            System.out.println("Error while reading to file: " + e);
+        }
+        return list;
+    }
+
+    public Tour save(Tour tour) {
+        try {
+            FileWriter fileWriter = new FileWriter(filePath, true);
+            JSONObject jsonTour = new JSONObject();
+            jsonTour.put("id", UUID.randomUUID().toString());
+            if (tour.getName() != null) {
+                jsonTour.put("name", tour.getName());
+            } else {
+                jsonTour.put("name", "null");
+            }
+            if (tour.getDescription() != null) {
+                jsonTour.put("description", tour.getDescription());
+            } else {
+                jsonTour.put("description", "null");
+            }
+            if (tour.getPrice() != null) {
+                jsonTour.put("price", tour.getPrice());
+            } else {
+                jsonTour.put("price", "100.0");
+            }
+
+            jsonTour.put("type", tour.getType());
+
+            if (tour.getCountry() != null) {
+                jsonTour.put("country", tour.getCountry());
+            } else {
+                jsonTour.put("country", "null");
+            }
+            if (tour.getStartDate() != null) {
+                jsonTour.put("startDate", tour.getStartDate());
+            } else {
+                jsonTour.put("startDate", "2000-10-10");
+            }
+            if (tour.getEndDate() != null) {
+                jsonTour.put("endDate", tour.getEndDate());
+            } else {
+                jsonTour.put("endDate", "2000-11-11");
+            }
+            if (tour.getTravelAgencyId() != null) {
+                jsonTour.put("travelAgencyId", tour.getTravelAgencyId());
+            } else {
+                jsonTour.put("travelAgencyId", UUID.randomUUID().toString());
+            }
+            if (tour.getCustomerId() != null) {
+                jsonTour.put("customerId", tour.getCustomerId());
+            } else {
+                jsonTour.put("customerId", UUID.randomUUID().toString());
+            }
+            if (String.valueOf(tour.isFree()) != null) {
+                jsonTour.put("free", tour.isFree());
+            } else {
+                jsonTour.put("free", "null");
+            }
+            fileWriter.write(jsonTour.toString() + "\n");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch(JSONException e1) {
+            e1.printStackTrace();
+        } catch(FileNotFoundException fnf){
+            System.out.println(fnf + "File not found ");
+        } catch(IOException ioe){
+            System.out.println("Error while writing to file: " + ioe);
+        }
+        return tour;
+    }
+
+    public static void main(String[] args){
+        TourDaoImpl tourDao = TourDaoImpl.getInstance();
         Tour tour = new Tour();
-        tour.setId(UUID.fromString(resultSet.getString("id")));
-        tour.setName(resultSet.getString("name"));
-        tour.setDescription(resultSet.getString("description"));
-        tour.setPrice(resultSet.getDouble("price"));
-        tour.setCountry(resultSet.getString("country"));
-        tour.setStartDate(resultSet.getDate("startDate"));
-        tour.setEndDate(resultSet.getDate("endDate"));
+        tourDao.save(tour);
+        List<Tour> list = tourDao.getAll();
+        for(int i=0; i<list.size(); i++)
+            System.out.println(list.get(i));
+        while (true){
+
+        }
+    }
+
+    public Tour update(Tour tour) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        tourMap.put(tour.getId(), tour);
         return tour;
     }
 
-    public Tour getById(UUID id) throws SQLException {
-        Tour tour = null;
-        String uuid = id.toString();
-
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM tour WHERE uuid=?");
-        preparedStatement.setString(1, uuid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            tour = setResultTour(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return tour;
+    public void delete(UUID id) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        tourMap.remove(id);
     }
 
-   public Tour getByName(String name) throws SQLException {
-       Tour tour = null;
-       PreparedStatement preparedStatement = connection.prepareStatement("" +
-               "SELECT * FROM tour WHERE name=?");
-       preparedStatement.setString(1, name);
-       ResultSet resultSet = preparedStatement.executeQuery();
-       if (resultSet.next()) {
-           tour = setResultTour(resultSet);
-       }
-       resultSet.close();
-       preparedStatement.close();
-       return tour;
+    public List<Tour> getToursById(UUID customerId) {
+        Map<UUID, Tour> tourMap = new HashMap<>();
+        return tourMap.values()
+                .stream()
+                .filter(tour -> tour.getCustomerId().equals(customerId))
+                .collect(Collectors.toList());
     }
 
-    public Tour getByDate(Date startDate, Date endDate) throws SQLException {
-        Tour tour = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM tour WHERE startDate=? and endDate=?");
-        preparedStatement.setDate(1, startDate);
-        preparedStatement.setDate(2, endDate);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            tour = setResultTour(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return tour;
-    }
-
-    public Tour getByCountry(String country) throws SQLException {
-        Tour tour = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM tour WHERE country=?");
-        preparedStatement.setString(1, country);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            tour = setResultTour(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return tour;
-    }
-
-    /****Изменить на Enum
-    public Tour getByType(String type) throws SQLException {
-        Tour tour = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM tour WHERE type=?");
-        preparedStatement.setString(1, type);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            tour = setResultTour(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return tour;
-    }
-     */////
-
-    public List<Tour> getAll() throws SQLException {
-        List<Tour> toursList = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM tour");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            toursList.add(setResultTour(resultSet));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return toursList;
-    }
-
-    public Tour save(Tour entity) throws SQLException {
-        Tour tour = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "INSERT INTO user(name, description, price, country, startDate, endDate)" +
-                "VALUES(?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, entity.getName());
-        preparedStatement.setString(2, entity.getDescription());
-        preparedStatement.setDouble(3, entity.getPrice());
-        preparedStatement.setString(4, entity.getCountry());
-        preparedStatement.setDate(5, entity.getStartDate());
-        preparedStatement.setDate(6, entity.getEndDate());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            tour = setResultTour(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return tour;
-    }
-
-    public Tour update(Tour entity) throws SQLException {
-        Tour tour = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "UPDATE tour SET name=?, description=?, price=?, country=?, startDate=?, endDate=? WHERE id=?");
-        preparedStatement.setString(1, entity.getName());
-        preparedStatement.setString(2, entity.getDescription());
-        preparedStatement.setDouble(3, entity.getPrice());
-        preparedStatement.setString(4, entity.getCountry());
-        preparedStatement.setDate(5, entity.getStartDate());
-        preparedStatement.setDate(6, entity.getEndDate());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM tour WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            tour = setResultTour(resultSet);
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return tour;
-    }
-
-
-    public void delete(UUID id) throws SQLException {
-
-        String uuid = id.toString();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "DELETE FROM tour WHERE  id=?");
-        preparedStatement.setString(1, uuid);
-        preparedStatement.execute();
-        preparedStatement.close();
-    }
-
-    public List<Tour> getToursById(UUID customerId) throws SQLException {
-        List<Tour> tours = new ArrayList<>();
-        String uuid = customerId.toString();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM tour WHERE customerId=?");
-        preparedStatement.setString(1, uuid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            tours.add(setResultTour(resultSet));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return tours;
-    }
-/*
-    public List<Tour> getTourByCustomerId(UUID customerId) throws SQLException {
-        List<Tour> toursList = new ArrayList<>();
-        String uuid = customerId.toString();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT id FROM tour WHERE customer_id IN (SELECT id FROM user WHERE id=?)");
-        preparedStatement.setString(1, uuid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            toursList.add(setResultTour(resultSet));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return toursList;
-    }*/
 
 }
 

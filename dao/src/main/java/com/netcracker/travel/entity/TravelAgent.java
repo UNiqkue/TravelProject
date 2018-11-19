@@ -1,12 +1,13 @@
 package com.netcracker.travel.entity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class TravelAgent extends User{
 
     private String phoneNumber;
     private String position;
-    private TravelAgency travelAgency;
+    private UUID travelAgencyId;
 
     public TravelAgent(){ }
 
@@ -26,12 +27,12 @@ public class TravelAgent extends User{
         this.position = position;
     }
 
-    public TravelAgency getTravelAgency() {
-        return travelAgency;
+    public UUID getTravelAgencyId() {
+        return travelAgencyId;
     }
 
-    public void setTravelAgency(TravelAgency travelAgency) {
-        this.travelAgency = travelAgency;
+    public void setTravelAgencyId(UUID travelAgencyId) {
+        this.travelAgencyId = travelAgencyId;
     }
 
     @Override
@@ -54,7 +55,8 @@ public class TravelAgent extends User{
         return "TravelAgent{" +
                 "phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
-                ", travelAgency=" + travelAgency +
+                ", travelAgencyId=" + travelAgencyId +
                 '}';
     }
+
 }

@@ -89,7 +89,8 @@ public class User extends BaseEntity {
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "id='" + getId() + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -98,4 +99,5 @@ public class User extends BaseEntity {
                 ", role=" + role +
                 '}';
     }
+
 }
