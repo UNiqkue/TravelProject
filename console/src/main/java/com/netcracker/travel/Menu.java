@@ -36,7 +36,7 @@ public class Menu {
                         break;
                     case 3:
                         RegistrationController registrationController = new RegistrationController();
-                        RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto("User", "12345", "awd@gmail.com", "/user/id");
+                        RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
                         registrationController.registration(registrationRequestDto);
                         break;
 
