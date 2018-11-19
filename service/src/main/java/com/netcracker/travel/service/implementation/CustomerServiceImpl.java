@@ -7,11 +7,14 @@ import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, AuthenticationService {
@@ -23,7 +26,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
     private TourConverter tourConverter = new TourConverter();
 
     public CustomerServiceImpl(){
-
     }
 
     public List<CustomerDto> getAll(){
@@ -38,20 +40,20 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
         return null;
     }
 
-    public void searchTourByName(){
-
+    public List<TourDto> searchTourByName(String name){
+          return new ArrayList<>();
     }
 
-    public void searchTourByDate(){
-
+    public List<TourDto> searchTourByDate(Date startDate, Date endDate){
+        return new ArrayList<>();
     }
 
-    public void searchTourByType(){
-
+    public List<TourDto> searchTourByType(Set<TypeTour> type){
+        return new ArrayList<>();
     }
 
-    public void searchTourByCountry(){
-
+    public List<TourDto> searchTourByCountry(String coutnry){
+        return new ArrayList<>();
     }
 
     public TourDto cancelTour(UUID id){
