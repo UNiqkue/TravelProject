@@ -4,7 +4,10 @@ import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.UserConverter;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dao.implementation.UserDaoImpl;
-import com.netcracker.travel.dto.*;
+import com.netcracker.travel.dto.LoginRequestDto;
+import com.netcracker.travel.dto.RegistrationRequestDto;
+import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.dto.UserDto;
 import com.netcracker.travel.entity.User;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
@@ -20,7 +23,6 @@ import java.util.stream.Collectors;
 
 public class UserServiceImpl implements AbstractService<UserDto>, RegistrationService, AuthenticationService {
 
-
     private UserDaoImpl userDao = UserDaoImpl.getInstance();
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
 
@@ -30,13 +32,16 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
     public UserServiceImpl(){
     }
 
+    public User getByUsername(String username) {
+        return userDao.getByUsername(username);
+    }
+
     public List<UserDto> getAll() {
         return userDao.getAll()
                 .stream()
                 .map(user -> userConverter.convert(user))
                 .collect(Collectors.toList());
     }
-
 
     public RegistrationRequestDto registration(RegistrationRequestDto registrationRequestDto){
         checkExisting(registrationRequestDto);
@@ -66,8 +71,8 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
     }
 
     private void checkEmailExist(String email) {
-        User user = userDao.getByEmail(email);
-        if (user != null) {
+        UserDto userDto = userConverter.convert(userDao.getByEmail(email));
+        if (userDto != null) {
             throw new EmailExistException();
         }
     }

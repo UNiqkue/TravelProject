@@ -10,6 +10,7 @@ import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,16 +42,16 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public void searchTourByName(){
+    public void searchTourByName(String name){
         // TourDaoImpl getByName, Date, Type, Country
     }
-    public void searchTourByDate(){
+    public void searchTourByDate(Date startDate, Date endDate){
         // TourDaoImpl getByName, Date, Type, Country
     }
-    public void searchTourByType(){
+    public void searchTourByType(int x){
         // TourDaoImpl getByName, Date, Type, Country
     }
-    public void searchTourByCountry(){
+    public void searchTourByCountry(String country){
         // TourDaoImpl getByName, Date, Type, Country
     }
 
