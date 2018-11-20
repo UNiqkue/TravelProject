@@ -2,7 +2,10 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgency;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,42 +29,115 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     }
 
     public TravelAgency getById(UUID id) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        return travelAgencyMap.get(id);
+        return getAll()
+                .stream()
+                .filter(travelAgency -> travelAgency.getId().toString().equals(id.toString()))
+                .collect(Collectors.toList()).get(0);
     }
 
     public List<TravelAgency> getByName(String name) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        return travelAgencyMap.values()
+        return getAll()
                 .stream()
                 .filter(travelAgency -> travelAgency.getName().equals(name))
                 .collect(Collectors.toList());
     }
 
     public List<TravelAgency> getAll() {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        return new ArrayList<>(travelAgencyMap.values());
+        List<TravelAgency> list = new ArrayList<TravelAgency>();
+        try {
+            Scanner scanner = new Scanner(new File(filePath));
+            while (scanner.hasNextLine()) {
+                TravelAgency travelAgency = new TravelAgency();
+                JSONObject jsonObject = new JSONObject(scanner.nextLine());
+                travelAgency.setId(UUID.fromString(jsonObject.get("id").toString()));
+                travelAgency.setName((String) jsonObject.get("name"));
+                travelAgency.setCountTour(Integer.valueOf(jsonObject.get("countTour").toString()));
+                travelAgency.setCountTravelAgent(Integer.valueOf(jsonObject.get("countTravelAgent").toString()));
+                list.add(travelAgency);
+            }
+            scanner.close();
+        } catch(FileNotFoundException fnf){
+            System.out.println(fnf + "Unable to open file ");
+        } catch(IOException e){
+            System.out.println("Error while reading to file: " + e);
+        }
+        return list;
     }
 
     public TravelAgency save(TravelAgency travelAgency) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        if(travelAgencyMap.isEmpty()){
-            travelAgency.setId(UUID.randomUUID());
-            travelAgencyMap.get(travelAgency.getId());
+        try {
+            FileWriter fileWriter = new FileWriter(filePath, true);
+            JSONObject jsonTravelAgency = new JSONObject();
+            if (travelAgency.getId() != null) {
+                jsonTravelAgency.put("id", travelAgency.getId());
+            } else {
+                jsonTravelAgency.put("id", UUID.randomUUID().toString());
+            }
+            if (travelAgency.getName() != null) {
+                jsonTravelAgency.put("name", travelAgency.getName());
+            } else {
+                jsonTravelAgency.put("name", "null");
+            }
+            if (travelAgency.getAddress() != null) {
+                jsonTravelAgency.put("address", travelAgency.getAddress());
+            } else {
+                jsonTravelAgency.put("address", "null");
+            }
+            if (travelAgency.getCountTour() != null) {
+                jsonTravelAgency.put("countTour", travelAgency.getCountTour());
+            } else {
+                jsonTravelAgency.put("countTour", "0");
+            }
+            if (travelAgency.getCountTravelAgent() != null) {
+                jsonTravelAgency.put("countTravelAgent", travelAgency.getCountTravelAgent());
+            } else {
+                jsonTravelAgency.put("countTravelAgent", "0");
+            }
+
+            fileWriter.write(jsonTravelAgency.toString() + "\n");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch(JSONException e1) {
+            e1.printStackTrace();
+        } catch(FileNotFoundException fnf){
+            System.out.println(fnf + "File not found ");
+        } catch(IOException ioe){
+            System.out.println("Error while writing to file: " + ioe);
         }
         return travelAgency;
     }
 
     public TravelAgency update(TravelAgency travelAgency) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        travelAgencyMap.put(travelAgency.getId(), travelAgency);
+        ///
         return travelAgency;
     }
 
     public void delete(UUID id) {
-        Map<UUID, TravelAgency> travelAgencyMap = new HashMap<>();
-        travelAgencyMap.remove(id);
+        List<TravelAgency> list = getAll();
+        int i;
+        for(i=0; i<=list.size()-1; i++){
+            if(list.get(i).getId().toString().equals(id.toString())){
+                System.out.println("TravelAgency found");
+                break;
+            }
+        }
+        list.remove(i);
+        try {
+            clean();
+        } catch (IOException e) {
+            System.out.println("Error while writing to file: " + e);
+        }
+        for(i=0; i<=list.size()-1; i++){
+            save(list.get(i));
+        }
     }
 
+    private void clean() throws IOException {
+        File file = new File(filePath);
+        if (file.exists()) {
+            RandomAccessFile raf = new RandomAccessFile(file, "rw");
+            raf.setLength(0);
+        }
+    }
 
 }

@@ -5,6 +5,7 @@ import com.netcracker.travel.entity.enumeration.Role;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 public class User extends BaseEntity {
 
@@ -15,6 +16,18 @@ public class User extends BaseEntity {
     private String email;
     private String activationCode;
     private Set<Role> role;
+
+    public User(){}
+
+    public User(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.activationCode = activationCode;
+    }
 
     public String getFirstName() {
         return firstName;

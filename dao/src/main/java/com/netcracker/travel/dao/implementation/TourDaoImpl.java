@@ -5,10 +5,7 @@ import com.netcracker.travel.entity.Tour;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,21 +29,21 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     }
 
     public Tour getById(UUID id) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        return tourMap.get(id);
+        return getAll()
+                .stream()
+                .filter(tour -> tour.getId().toString().equals(id.toString()))
+                .collect(Collectors.toList()).get(0);
     }
 
     public List<Tour> getByName(String name) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        return tourMap.values()
+        return getAll()
                 .stream()
                 .filter(tour -> tour.getName().equals(name))
                 .collect(Collectors.toList());
     }
 
     public List<Tour> getByDate(Date startDate, Date endDate) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        return tourMap.values()
+        return getAll()
                 .stream()
                 .filter(tour -> tour.getStartDate().equals(startDate))
                 .filter(tour -> tour.getEndDate().equals(endDate))
@@ -54,8 +51,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     }
 
     public List<Tour> getByCountry(String country) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        return tourMap.values()
+        return getAll()
                 .stream()
                 .filter(tour -> tour.getCountry().equals(country))
                 .collect(Collectors.toList());
@@ -63,8 +59,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
 
             /**String to EnumType**/
     public List<Tour> getByType(String type) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        return tourMap.values()
+        return getAll()
                 .stream()
                 .filter(tour -> tour.getType().equals(type))
                 .collect(Collectors.toList());
@@ -106,7 +101,11 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonTour = new JSONObject();
-            jsonTour.put("id", UUID.randomUUID().toString());
+            if (tour.getId() != null) {
+                jsonTour.put("id", tour.getId());
+            } else {
+                jsonTour.put("id", UUID.randomUUID().toString());
+            }
             if (tour.getName() != null) {
                 jsonTour.put("name", tour.getName());
             } else {
@@ -143,12 +142,12 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             if (tour.getTravelAgencyId() != null) {
                 jsonTour.put("travelAgencyId", tour.getTravelAgencyId());
             } else {
-                jsonTour.put("travelAgencyId", UUID.randomUUID().toString());
+                jsonTour.put("travelAgencyId", "00000000-0000-0000-0000-000000000000");
             }
             if (tour.getCustomerId() != null) {
                 jsonTour.put("customerId", tour.getCustomerId());
             } else {
-                jsonTour.put("customerId", UUID.randomUUID().toString());
+                jsonTour.put("customerId", "00000000-0000-0000-0000-000000000000");
             }
             if (String.valueOf(tour.isFree()) != null) {
                 jsonTour.put("free", tour.isFree());
@@ -168,38 +167,45 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         return tour;
     }
 
-    public static void main(String[] args){
-        TourDaoImpl tourDao = TourDaoImpl.getInstance();
-        Tour tour = new Tour();
-        tourDao.save(tour);
-        List<Tour> list = tourDao.getAll();
-        for(int i=0; i<list.size(); i++)
-            System.out.println(list.get(i));
-        while (true){
-
-        }
-    }
-
     public Tour update(Tour tour) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        tourMap.put(tour.getId(), tour);
+        ///
         return tour;
     }
 
     public void delete(UUID id) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        tourMap.remove(id);
+        List<Tour> list = getAll();
+        int i;
+        for(i=0; i<=list.size()-1; i++){
+            if(list.get(i).getId().toString().equals(id.toString())){
+                System.out.println("Tour found");
+                break;
+            }
+        }
+        list.remove(i);
+        try {
+            clean();
+        } catch (IOException e) {
+            System.out.println("Error while writing to file: " + e);
+        }
+        for(i=0; i<=list.size()-1; i++){
+            save(list.get(i));
+        }
     }
 
     public List<Tour> getToursById(UUID customerId) {
-        Map<UUID, Tour> tourMap = new HashMap<>();
-        return tourMap.values()
+        return getAll()
                 .stream()
                 .filter(tour -> tour.getCustomerId().equals(customerId))
                 .collect(Collectors.toList());
     }
 
-
+    private void clean() throws IOException{
+        File file = new File(filePath);
+        if (file.exists()) {
+            RandomAccessFile raf = new RandomAccessFile(file, "rw");
+            raf.setLength(0);
+        }
+    }
 }
 
 /*
