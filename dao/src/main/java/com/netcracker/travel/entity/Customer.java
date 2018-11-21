@@ -1,5 +1,7 @@
 package com.netcracker.travel.entity;
 
+import com.netcracker.travel.entity.enumeration.Role;
+
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,11 @@ public class Customer extends User{
     private List<Tour> listOfTours;
 
     public Customer(){}
+
+    @Override
+    public void setRole(Role role) {
+        super.setRole(Role.CUSTOMER);
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

@@ -2,12 +2,12 @@ package com.netcracker.travel;
 
 import com.netcracker.travel.controller.AuthenticationController;
 import com.netcracker.travel.controller.RegistrationController;
-import com.netcracker.travel.converter.UserConverter;
+import com.netcracker.travel.converter.AdminConverter;
+import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
-import com.netcracker.travel.dto.UserDto;
+import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
-import com.netcracker.travel.service.implementation.UserServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,23 +26,12 @@ public class Menu {
                 int x = Integer.parseInt(reader.readLine());
                 switch (x) {
                     case 1:
-                        UserServiceImpl userService = new UserServiceImpl();
-                        System.out.println(userService.watchTours());
+                        AdminServiceImpl adminService = new AdminServiceImpl();
+                        System.out.println(adminService.watchTours());
                         break;
                     case 2:
                         AuthenticationController authenticationController = new AuthenticationController();
-                    //    LoginRequestDto loginRequestDto = new LoginRequestDto("User", "12345");
-                      //  authenticationController.login();
-
-
-                        //если аутентификация прошла успешно
-                     /*** Логин -> проверяет класс или роль и в зависимости от этого в if else выбирается метод который вызывает юзер функциональность***/
-                        //если аутентификация прошла успешно
-                        customerConsole();
-                      //  travelAgentConsole();
-                       // adminConsole();
-
-
+                        authenticationController.login();
                         break;
                     case 3:
                         RegistrationController registrationController = new RegistrationController();
@@ -56,18 +45,17 @@ public class Menu {
                     default:
                         printMesInput();
                 }
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
-            } catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Wrong input");
             }
         }
-
     }
 
-    public static void adminConsole(){
+    public static void adminConsole() {
         BufferedReader reader = getBufferedReader();
-        UserServiceImpl userService = new UserServiceImpl();
+        AdminServiceImpl adminService = new AdminServiceImpl();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         try {
             printAdminMenu();
@@ -82,7 +70,7 @@ public class Menu {
                         System.out.println("Input customerId");
                         UUID id = UUID.fromString(reader.readLine());
                         //customerService.updateCustomerInformation(id);
-                        userService.updateUserInfo(id);
+                        customerService.updateInfo(id);
 
 
                         break;
@@ -93,14 +81,14 @@ public class Menu {
                         printMesInput();
                 }
             }
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Wrong input");
         }
     }
 
-    public static void travelAgentConsole(){
+    public static void travelAgentConsole() {
         BufferedReader reader = getBufferedReader();
         TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         try {
@@ -146,7 +134,6 @@ public class Menu {
                         }
 
 
-
                         break;
                     case 3:
                         travelAgentService.checkExistenceTours();
@@ -161,19 +148,18 @@ public class Menu {
                         printMesInput();
                 }
             }
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Wrong input");
         }
     }
 
-    public static void customerConsole(){
+    public static void customerConsole() {
         BufferedReader reader = getBufferedReader();
-        UserConverter userConverter = new UserConverter();
+        AdminConverter adminConverter = new AdminConverter();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
-        UserDto userDto = new UserDto();
-        // System.out.println("Hello! " + userService.getByUsername(userDto.getFirstName()));
+        AdminDto adminDto = new AdminDto();
         try {
             boolean exit2 = false;
             while (!exit2) {
@@ -264,7 +250,7 @@ public class Menu {
                         //customerService.buyTour();
                         break;
                     case 4:
-                        customerService.viewOrderedTours(userDto.getId());
+                        customerService.viewOrderedTours(adminDto.getId());
                         break;
                     case 5:
                         //  customerService.cancelTour();
@@ -288,34 +274,35 @@ public class Menu {
         return new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public static void printMenu(){
+    public static void printMenu() {
         System.out.println("Hello! You are in TravelSystem! Please, choose the action number: \n 1. Watch tours \n 2. Log in \n 3. Registration \n 0. Exit");
     }
 
-    public static void printUserMenu(){
-        System.out.println("Choose the action number: \n 1. Search tours \n 2. Book a tour \n 3. Buy a tour \n 4. View ordered tours \n 5. Cancel a trip \n 0. Exit");
+    public static void printUserMenu() {
+        System.out.println("Choose the action number: \n 1. Search tours \n 2. Book a tour \n 3. Buy a tour \n 4. View ordered tours \n 5. Cancel a trip \n 0 - Log out");
     }
-    public static void printUserMenuSearchTour(){
+
+    public static void printUserMenuSearchTour() {
         System.out.println("Choose search: \n 1. By country \n 2. By Date \n 3. By name \n 4. By Type \n 0. Exit");
     }
 
-    public static void printUserTypeMenu(){
+    public static void printUserTypeMenu() {
         System.out.println("Please, choose the type: \n 1. HOTELRESTTOUR \n 2. SHOPTOUR \n 3. EXCURSION \n 4. CRUISE \n 5. SANATORIUM \n 0. Exit");
     }
 
-    public static void printMesInput(){
+    public static void printMesInput() {
         System.out.println("Input 1, 2 ... - action and 0 - exit");
     }
 
-    public static void printAdminMenu(){
-        System.out.println("Admin, choose number: \n 1. Watch customers \n 2. Update customer information \n 0 - exit");
+    public static void printAdminMenu() {
+        System.out.println("Admin, choose number: \n 1. Watch customers \n 2. Update customer information \n 0 - Log out");
     }
 
     private static void printTravelAgentMenu() {
-        System.out.println("TravelAgent, choose number: \n 1. View history of orders \n 2. Edit tour \n 3. Check all tours \n 4. Make a discount to regular customers \n 0 - exit");
+        System.out.println("TravelAgent, choose number: \n 1. View history of orders \n 2. Edit tour \n 3. Check all tours \n 4. Make a discount to regular customers \n 0 - Log out");
     }
 
-    private static void printTravelAgentUpdateTour(){
+    private static void printTravelAgentUpdateTour() {
         System.out.println("Input action number: \n 1. Create tour \n 2. Update tour \n 3. Delete tour \n 0 - exit");
     }
 

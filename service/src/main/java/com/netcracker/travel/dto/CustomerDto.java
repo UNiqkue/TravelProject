@@ -1,6 +1,7 @@
 package com.netcracker.travel.dto;
 
 import com.netcracker.travel.entity.Tour;
+import com.netcracker.travel.entity.enumeration.Role;
 
 import java.sql.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ public class CustomerDto {
     private String password;
     private String email;
     private String activationCode;
+    private Role role;
     private String country;
     private String city;
     private String street;
@@ -163,6 +165,14 @@ public class CustomerDto {
 
     public void setListOfTours(List<Tour> listOfTours) {
         this.listOfTours = listOfTours;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

@@ -5,17 +5,15 @@ import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
-import com.netcracker.travel.service.interfaces.AuthenticationService;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CustomerServiceImpl implements AbstractService<CustomerDto>, AuthenticationService {
+public class CustomerServiceImpl implements AbstractService<CustomerDto> {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
@@ -68,15 +66,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
                 .collect(Collectors.toList());
     }
 
-    public boolean login(LoginRequestDto loginRequestDto) {
-        CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
-        if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
-            return true;
-        }
-        return false;
-    }
-
-    public CustomerDto updateCustomerInformation(UUID id) {
+    public CustomerDto updateInfo(UUID id) {
         return customerConverter.convert(customerDao.update(customerDao.getById(id)));
     }
 }

@@ -2,6 +2,7 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Customer;
+import com.netcracker.travel.entity.enumeration.Role;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,6 +67,12 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
                 .collect(Collectors.toList()).get(0);
     }
 
+    public static void main(String[] args){
+        CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
+        customerDao.save(new Customer());
+        System.out.println(customerDao.getByUsername("qwerty"));
+    }
+
     public List<Customer> getAll() {
         List<Customer> list = new ArrayList<Customer>();
         Customer customer;
@@ -82,12 +89,13 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
                 customer.setPassword((String) jsonObject.get("password"));
                 customer.setEmail((String) jsonObject.get("email"));
                 customer.setActivationCode((String) jsonObject.get("activationCode"));
-/*                customer.setPhoneNumber((String) jsonObject.get("phoneNumber"));
+                customer.setRole(Role.valueOf((String) jsonObject.get("role")));
+                customer.setPhoneNumber((String) jsonObject.get("phoneNumber"));
                 customer.setDateOfBirth(java.sql.Date.valueOf(String.valueOf(jsonObject.get("dateOfBirth"))));
                 customer.setCardNumber((String) (jsonObject.get("cardNumber")));
                 customer.setPassportInfo((String) (jsonObject.get("passportInfo")));
-                customer.setAddress((Address) (jsonObject.get("address")));
-                customer.setListOfTours((List<Tour>) (jsonObject.get("listOfTours")));*/
+           //     customer.setAddress((Address)(jsonObject.get("address")).toString());
+           //     customer.setListOfTours((List<Tour>) (jsonObject.get("listOfTours")));
                 list.add(customer);
 
             }
@@ -139,19 +147,22 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             if (customer.getActivationCode() != null) {
                 jsonUser.put("activationCode", customer.getActivationCode());
             } else {
-                jsonUser.put("activationCode", "null");
+                jsonUser.put("activationCode", "00000000-0000-0000-0000-000000000000");
             }
-            jsonUser.put("role", customer.getRole());
-
+            if (customer.getRole() != null) {
+                jsonUser.put("role", customer.getRole());
+            } else {
+                jsonUser.put("role", Role.CUSTOMER);
+            }
             if (customer.getPhoneNumber() != null) {
                 jsonUser.put("phoneNumber", customer.getPhoneNumber());
             } else {
-                jsonUser.put("phoneNumber", "null");
+                jsonUser.put("phoneNumber", "+375-00-000-00-00");
             }
             if (customer.getDateOfBirth() != null) {
                 jsonUser.put("dateOfBirth", customer.getDateOfBirth());
             } else {
-                jsonUser.put("dateOfBirth", "null");
+                jsonUser.put("dateOfBirth", "2018-10-10");
             }
             if (customer.getCardNumber() != null) {
                 jsonUser.put("cardNumber", customer.getCardNumber());
@@ -162,11 +173,6 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
                 jsonUser.put("passportInfo", customer.getPassportInfo());
             } else {
                 jsonUser.put("passportInfo", "null");
-            }
-            if (customer.getAddress() != null) {
-                jsonUser.put("address", customer.getAddress());
-            } else {
-                jsonUser.put("address", "null");
             }
 
             jsonUser.put("listOfTours", customer.getListOfTours());

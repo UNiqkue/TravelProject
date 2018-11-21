@@ -78,11 +78,6 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
             } else {
                 jsonTravelAgency.put("name", "null");
             }
-            if (travelAgency.getAddress() != null) {
-                jsonTravelAgency.put("address", travelAgency.getAddress());
-            } else {
-                jsonTravelAgency.put("address", "null");
-            }
             if (travelAgency.getCountTour() != null) {
                 jsonTravelAgency.put("countTour", travelAgency.getCountTour());
             } else {

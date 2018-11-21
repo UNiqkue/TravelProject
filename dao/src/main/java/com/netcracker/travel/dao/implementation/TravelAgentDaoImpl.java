@@ -58,9 +58,9 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
                 travelAgent.setPassword((String) jsonObject.get("password"));
                 travelAgent.setEmail((String) jsonObject.get("email"));
                 travelAgent.setActivationCode((String) jsonObject.get("activationCode"));
-                travelAgent.setPhoneNumber((String) jsonObject.get("phoneNumber"));
+               /* travelAgent.setPhoneNumber((String) jsonObject.get("phoneNumber"));
                 travelAgent.setPosition((String) jsonObject.get("phoneNumber"));
-                travelAgent.setTravelAgencyId(UUID.fromString(jsonObject.get("travelAgencyId").toString()));
+                travelAgent.setTravelAgencyId(UUID.fromString(jsonObject.get("travelAgencyId").toString()));*/
 
                 list.add(travelAgent);
             }
@@ -112,14 +112,14 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             if (travelAgent.getActivationCode() != null) {
                 jsonTravelAgent.put("activationCode", travelAgent.getActivationCode());
             } else {
-                jsonTravelAgent.put("activationCode", "null");
+                jsonTravelAgent.put("activationCode", "00000000-0000-0000-0000-000000000000");
             }
             jsonTravelAgent.put("role", travelAgent.getRole());
 
             if (travelAgent.getPhoneNumber() != null) {
                 jsonTravelAgent.put("phoneNumber", travelAgent.getPhoneNumber());
             } else {
-                jsonTravelAgent.put("phoneNumber", "null");
+                jsonTravelAgent.put("phoneNumber", "+375-00-000-00-00");
             }
             if (travelAgent.getTravelAgencyId() != null) {
                 jsonTravelAgent.put("customerId", travelAgent.getTravelAgencyId());
@@ -167,10 +167,10 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     }
 
     public TravelAgent getByUsername(String username) {
-        Map<UUID, TravelAgent> travelAgentMap = new HashMap<>();
-        return (TravelAgent) travelAgentMap.values()
+        return getAll()
                 .stream()
-                .filter(travelAgent -> travelAgent.getUsername().equals(username));
+                .filter(travelAgent -> travelAgent.getUsername().equals(username))
+                .collect(Collectors.toList()).get(0);
     }
 
     private void clean() throws IOException {

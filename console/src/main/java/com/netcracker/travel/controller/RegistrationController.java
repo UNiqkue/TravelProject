@@ -2,11 +2,11 @@ package com.netcracker.travel.controller;
 
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
-import com.netcracker.travel.service.implementation.UserServiceImpl;
+import com.netcracker.travel.service.implementation.AdminServiceImpl;
 
 public class RegistrationController {
 
-    private UserServiceImpl userServiceImpl;
+    private AdminServiceImpl AdminServiceImpl;
 
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto){
         return null;

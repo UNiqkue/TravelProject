@@ -6,15 +6,16 @@ import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgentDaoImpl;
-import com.netcracker.travel.dto.*;
+import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.dto.TravelAgencyDto;
+import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
-import com.netcracker.travel.service.interfaces.AuthenticationService;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, AuthenticationService {
+public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
@@ -50,14 +51,6 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
 
-    }
-
-    public boolean login(LoginRequestDto loginRequestDto) {
-        TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
-        if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
-            return true;
-        }
-        return false;
     }
 
     public TravelAgencyDto getTravelAgency(UUID id){
