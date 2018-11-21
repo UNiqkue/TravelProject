@@ -1,13 +1,15 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
-import com.netcracker.travel.entity.Address;
 import com.netcracker.travel.entity.Customer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CustomerDaoImpl implements AbstractDao<Customer> {
@@ -80,12 +82,12 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
                 customer.setPassword((String) jsonObject.get("password"));
                 customer.setEmail((String) jsonObject.get("email"));
                 customer.setActivationCode((String) jsonObject.get("activationCode"));
-                customer.setPhoneNumber((String) jsonObject.get("phoneNumber"));
+/*                customer.setPhoneNumber((String) jsonObject.get("phoneNumber"));
                 customer.setDateOfBirth(java.sql.Date.valueOf(String.valueOf(jsonObject.get("dateOfBirth"))));
                 customer.setCardNumber((String) (jsonObject.get("cardNumber")));
                 customer.setPassportInfo((String) (jsonObject.get("passportInfo")));
                 customer.setAddress((Address) (jsonObject.get("address")));
-             //   customer.setListOfTours((List<Tour>) (jsonObject.get("listOfTours")));
+                customer.setListOfTours((List<Tour>) (jsonObject.get("listOfTours")));*/
                 list.add(customer);
 
             }

@@ -6,7 +6,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -80,6 +83,7 @@ public class UserDaoImpl implements AbstractDao<User> {
                 user.setPassword((String) jsonObject.get("password"));
                 user.setEmail((String) jsonObject.get("email"));
                 user.setActivationCode((String) jsonObject.get("activationCode"));
+//                user.setRole(Role.valueOf((String) jsonObject.get("role")));
                 list.add(user);
 
             }

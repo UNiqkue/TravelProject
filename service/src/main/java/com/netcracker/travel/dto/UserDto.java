@@ -3,7 +3,6 @@ package com.netcracker.travel.dto;
 import com.netcracker.travel.entity.enumeration.Role;
 
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 public class UserDto {
@@ -15,7 +14,7 @@ public class UserDto {
     private String password;
     private String email;
     private String activationCode;
-    private Set<Role> role;
+    private Role role;
 
     public UserDto(){}
 
@@ -75,11 +74,11 @@ public class UserDto {
         this.activationCode = activationCode;
     }
 
-    public Set<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Set<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

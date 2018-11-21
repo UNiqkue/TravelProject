@@ -77,7 +77,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 tour.setName((String) jsonObject.get("name"));
                 tour.setDescription((String) jsonObject.get("description"));
                 tour.setPrice(Double.valueOf((String) jsonObject.get("price")));
-//                tour.setType((Set<TypeTour>) jsonObject.get("type"));
+//                tour.setType(TypeTour.valueOf((String) jsonObject.get("type")));
                 tour.setCountry((String) jsonObject.get("country"));
                 tour.setStartDate(java.sql.Date.valueOf(String.valueOf(jsonObject.get("startDate"))));
                 tour.setEndDate(java.sql.Date.valueOf(String.valueOf(jsonObject.get("endDate"))));

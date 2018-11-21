@@ -16,7 +16,6 @@ import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,7 +52,7 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
         userDto.setEmail(registrationRequestDto.getEmail());
         userDto.setPassword(registrationRequestDto.getPassword());
         userDto.setActivationCode(UUID.randomUUID().toString());
-        userDto.setRole(Collections.singleton(Role.GUEST));
+        userDto.setRole(Role.GUEST);
         userDao.save(userConverter.convert(userDto));
         return registrationRequestDto;
     }
@@ -84,7 +83,7 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
             return false;
         }
 
-        userDto.setRole(Collections.singleton(Role.GUEST));
+        userDto.setRole(Role.GUEST);
         userDto.setActivationCode(null);
 
         return true;
@@ -97,8 +96,8 @@ public class UserServiceImpl implements AbstractService<UserDto>, RegistrationSe
                 .collect(Collectors.toList());
     }
 
-    public UserDto updateUserInfo(UserDto userDto){
-        return userConverter.convert(userDao.update(userConverter.convert(userDto)));
+    public UserDto updateUserInfo(UUID id){
+        return userConverter.convert(userDao.update(userDao.getById(id)));
     }
 
     public UserDto checkUserInfo(UUID id){

@@ -76,4 +76,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Authen
         return false;
     }
 
+    public CustomerDto updateCustomerInformation(UUID id) {
+        return customerConverter.convert(customerDao.update(customerDao.getById(id)));
+    }
 }
