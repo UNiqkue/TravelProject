@@ -42,7 +42,7 @@ public class AdminList {
         return list;
     }
 
-    public void write(Admin admin) {
+    public Admin write(Admin admin) {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonAdmin = new JSONObject();
@@ -98,14 +98,14 @@ public class AdminList {
         } catch (IOException ioe) {
             System.out.println("Error while writing to file: " + ioe);
         }
+        return admin;
     }
 
     private Scanner getScanner() throws IOException {
         return new Scanner(new File(filePath));
     }
 
-
-    private void clean() throws IOException {
+    public void clean() throws IOException {
         File file = new File(filePath);
         if (file.exists()) {
             RandomAccessFile raf = new RandomAccessFile(file, "rw");

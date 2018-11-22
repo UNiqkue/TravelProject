@@ -12,32 +12,65 @@ import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
 
+import java.util.NoSuchElementException;
+
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private AdminDaoImpl adminDao = AdminDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
     private TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
+
     private AdminConverter adminConverter = new AdminConverter();
     private CustomerConverter customerConverter = new CustomerConverter();
     private TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
 
-    public AuthenticationServiceImpl(){}
+    public AuthenticationServiceImpl() {
+    }
 
     public int login(LoginRequestDto loginRequestDto) {
-        CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
-        AdminDto adminDto = adminConverter.convert(adminDao.getByUsername(loginRequestDto.getUsername()));
-        TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
+        int exit = 0;
+            try {
+                try {
+                    CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
+                    if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
+                        return 2;
+                    }
 
-        if(adminDto.getPassword().equals(loginRequestDto.getPassword())){
-            return 1;
-        }
-        if(customerDto.getPassword().equals(loginRequestDto.getPassword())){
-            return 2;
-        }
-        if(travelAgentDto.getPassword().equals(loginRequestDto.getPassword())){
-            return 3;
-        }
-        return 10;
+                } catch (NoSuchElementException e) {
+                    System.out.println("Load...");
+                }
+
+                try {
+                    AdminDto adminDto = adminConverter.convert(adminDao.getByUsername(loginRequestDto.getUsername()));
+                    if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
+                        return 1;
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println("Load...");
+                }
+
+                TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
+                if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
+                    exit = 3;
+                }
+
+            } catch (NoSuchElementException e) {
+                System.out.println("Input true username and password: " + e);
+            }
+
+        return exit;
+    }
+
+    public static void main(String[] args) {
+        AdminDaoImpl adminDao = AdminDaoImpl.getInstance();
+        CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
+        TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
+
+        AdminConverter adminConverter = new AdminConverter();
+        CustomerConverter customerConverter = new CustomerConverter();
+        TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
+
+        System.out.println(customerConverter.convert(customerDao.getByUsername("ukky3")));
     }
 
 }

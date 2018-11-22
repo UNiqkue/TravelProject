@@ -67,12 +67,30 @@ public class Menu {
                         customerService.getAll();
                         break;
                     case 2:
-                        System.out.println("Input customerId");
-                        UUID id = UUID.fromString(reader.readLine());
-                        //customerService.updateCustomerInformation(id);
-                        customerService.updateInfo(id);
-
-
+                        String username = "";
+                        boolean exit2 = false;
+                        while (!exit2) {
+                            try {
+                                System.out.println("Input customer username");
+                                username = reader.readLine();
+                                boolean exit3 = false;
+                                while (!exit3) {
+                                    try {
+                                        System.out.println("You can change phoneNumber");
+                                        String phoneNumber = reader.readLine();
+                                        customerService.updatePhoneNumber(username, phoneNumber);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Wrong input");
+                                    }
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (NumberFormatException e) {
+                                System.out.println("Wrong input");
+                            }
+                        }
                         break;
                     case 0:
                         exit1 = true;

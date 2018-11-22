@@ -43,9 +43,7 @@ public class AuthenticationController {
 
             } catch (IOException e) {
                 e.printStackTrace();
-            }/* catch (IndexOutOfBoundsException e) {
-                System.out.println("Check your input username and password ");
-            }*/
+            }
         }
     }
 

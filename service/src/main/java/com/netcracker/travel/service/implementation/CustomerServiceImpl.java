@@ -24,8 +24,15 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto> {
     public CustomerServiceImpl(){
     }
 
+    public CustomerDto getByUsername(String username) {
+        return customerConverter.convert(customerDao.getByUsername(username));
+    }
+
     public List<CustomerDto> getAll(){
-        return null;
+        return customerDao.getAll()
+                .stream()
+                .map(customer -> customerConverter.convert(customer))
+                .collect(Collectors.toList());
     }
 
     public TourDto bookTour(TourDto tourDto, UUID customerId) {
@@ -66,7 +73,17 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto> {
                 .collect(Collectors.toList());
     }
 
-    public CustomerDto updateInfo(UUID id) {
-        return customerConverter.convert(customerDao.update(customerDao.getById(id)));
+    public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
+        CustomerDto customerDto = getByUsername(username);
+        customerDto.setPhoneNumber(phoneNumber);
+        return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
+    }
+
+    public static void main(String[] args){
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+//        customerService.updatePhoneNumber("kili1", "+375-44-234-57-13");
+       // CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
+       // System.out.println(customerDao.getByUsername("ukky3"));
+        System.out.println(customerService.getByUsername("ukky3"));
     }
 }

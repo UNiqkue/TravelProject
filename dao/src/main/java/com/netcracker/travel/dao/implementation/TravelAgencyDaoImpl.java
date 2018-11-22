@@ -1,17 +1,15 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
+import com.netcracker.travel.dao.storage.TravelAgencyList;
 import com.netcracker.travel.entity.TravelAgency;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
-
-    private static String filePath = "dao\\src\\main\\resources\\storage\\travelagency.json";
 
     private static volatile TravelAgencyDaoImpl instance;
 
@@ -32,7 +30,7 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         return getAll()
                 .stream()
                 .filter(travelAgency -> travelAgency.getId().toString().equals(id.toString()))
-                .collect(Collectors.toList()).get(0);
+                .findFirst().get();
     }
 
     public List<TravelAgency> getByName(String name) {
@@ -43,63 +41,13 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     }
 
     public List<TravelAgency> getAll() {
-        List<TravelAgency> list = new ArrayList<TravelAgency>();
-        try {
-            Scanner scanner = new Scanner(new File(filePath));
-            while (scanner.hasNextLine()) {
-                TravelAgency travelAgency = new TravelAgency();
-                JSONObject jsonObject = new JSONObject(scanner.nextLine());
-                travelAgency.setId(UUID.fromString(jsonObject.get("id").toString()));
-                travelAgency.setName((String) jsonObject.get("name"));
-                travelAgency.setCountTour(Integer.valueOf(jsonObject.get("countTour").toString()));
-                travelAgency.setCountTravelAgent(Integer.valueOf(jsonObject.get("countTravelAgent").toString()));
-                list.add(travelAgency);
-            }
-            scanner.close();
-        } catch(FileNotFoundException fnf){
-            System.out.println(fnf + "Unable to open file ");
-        } catch(IOException e){
-            System.out.println("Error while reading to file: " + e);
-        }
-        return list;
+        TravelAgencyList list = new TravelAgencyList();
+        return list.read();
     }
 
     public TravelAgency save(TravelAgency travelAgency) {
-        try {
-            FileWriter fileWriter = new FileWriter(filePath, true);
-            JSONObject jsonTravelAgency = new JSONObject();
-            if (travelAgency.getId() != null) {
-                jsonTravelAgency.put("id", travelAgency.getId());
-            } else {
-                jsonTravelAgency.put("id", UUID.randomUUID().toString());
-            }
-            if (travelAgency.getName() != null) {
-                jsonTravelAgency.put("name", travelAgency.getName());
-            } else {
-                jsonTravelAgency.put("name", "null");
-            }
-            if (travelAgency.getCountTour() != null) {
-                jsonTravelAgency.put("countTour", travelAgency.getCountTour());
-            } else {
-                jsonTravelAgency.put("countTour", "0");
-            }
-            if (travelAgency.getCountTravelAgent() != null) {
-                jsonTravelAgency.put("countTravelAgent", travelAgency.getCountTravelAgent());
-            } else {
-                jsonTravelAgency.put("countTravelAgent", "0");
-            }
-
-            fileWriter.write(jsonTravelAgency.toString() + "\n");
-            fileWriter.flush();
-            fileWriter.close();
-        } catch(JSONException e1) {
-            e1.printStackTrace();
-        } catch(FileNotFoundException fnf){
-            System.out.println(fnf + "File not found ");
-        } catch(IOException ioe){
-            System.out.println("Error while writing to file: " + ioe);
-        }
-        return travelAgency;
+        TravelAgencyList list = new TravelAgencyList();
+        return list.write(travelAgency);
     }
 
     public TravelAgency update(TravelAgency travelAgency) {
@@ -118,7 +66,8 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         }
         list.remove(i);
         try {
-            clean();
+            TravelAgencyList travelAgencyList = new TravelAgencyList();
+            travelAgencyList.clean();
         } catch (IOException e) {
             System.out.println("Error while writing to file: " + e);
         }
@@ -127,12 +76,6 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         }
     }
 
-    private void clean() throws IOException {
-        File file = new File(filePath);
-        if (file.exists()) {
-            RandomAccessFile raf = new RandomAccessFile(file, "rw");
-            raf.setLength(0);
-        }
-    }
+
 
 }

@@ -7,7 +7,6 @@ import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
-import com.netcracker.travel.entity.User;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.UsernameExistException;
@@ -29,8 +28,8 @@ public class AdminServiceImpl implements AbstractService<AdminDto>, Registration
     public AdminServiceImpl(){
     }
 
-    public User getByUsername(String username) {
-        return adminDao.getByUsername(username);
+    public AdminDto getByUsername(String username) {
+        return adminConverter.convert(adminDao.getByUsername(username));
     }
 
     public List<AdminDto> getAll() {
