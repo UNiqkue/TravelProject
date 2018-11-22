@@ -50,7 +50,7 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
         return getAll()
                 .stream()
                 .filter(customer -> customer.getUsername().equals(username))
-                .collect(Collectors.toList()).get(0);
+                .findFirst().get();
     }
 
     public Customer getByEmail(String email) {

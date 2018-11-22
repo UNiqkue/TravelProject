@@ -48,7 +48,7 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         return getAll()
                 .stream()
                 .filter(admin -> admin.getUsername().equals(username))
-                .collect(Collectors.toList()).get(0);
+                .findFirst().get();
     }
 
     public Admin getByEmail(String email) {
