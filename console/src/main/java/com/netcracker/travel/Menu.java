@@ -2,8 +2,9 @@ package com.netcracker.travel;
 
 import com.netcracker.travel.controller.AuthenticationController;
 import com.netcracker.travel.controller.RegistrationController;
-import com.netcracker.travel.converter.AdminConverter;
-import com.netcracker.travel.dto.AdminDto;
+import com.netcracker.travel.dto.CustomerDto;
+import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
@@ -12,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Menu {
@@ -26,7 +28,12 @@ public class Menu {
                 switch (x) {
                     case 1:
                         AdminServiceImpl adminService = new AdminServiceImpl();
-                        System.out.println(adminService.watchTours());
+
+                        List<TourDto> list = adminService.watchTours();
+                        for(int i=0; i<list.size(); i++)
+                            System.out.println(i+1 + " " + list.get(i));
+
+                     //   System.out.println(adminService.watchTours().stream().map(tour -> System.out.println(tour + "\n")));
                         break;
                     case 2:
                         AuthenticationController authenticationController = new AuthenticationController();
@@ -77,16 +84,14 @@ public class Menu {
                                         System.out.println("You can change phoneNumber");
                                         String phoneNumber = reader.readLine();
                                         customerService.updatePhoneNumber(username, phoneNumber);
+                                        exit3 = true;
                                     } catch (IOException e) {
                                         e.printStackTrace();
-                                    } catch (NumberFormatException e) {
-                                        System.out.println("Wrong input");
                                     }
                                 }
+                                exit2 = true;
                             } catch (IOException e) {
                                 e.printStackTrace();
-                            } catch (NumberFormatException e) {
-                                System.out.println("Wrong input");
                             }
                         }
                         break;
@@ -171,11 +176,10 @@ public class Menu {
         }
     }
 
-    public static void customerConsole() {
+    public static void customerConsole(String username) {
         BufferedReader reader = getBufferedReader();
-        AdminConverter adminConverter = new AdminConverter();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
-        AdminDto adminDto = new AdminDto();
+        CustomerDto customerDto = customerService.getByUsername(username);
         try {
             boolean exit2 = false;
             while (!exit2) {
@@ -191,7 +195,7 @@ public class Menu {
                                 int z = Integer.parseInt(reader.readLine());
                                 switch (z) {
                                     case 1:
-                                        System.out.println("Please, input the country");
+                                        System.out.println("Input the country Please, choose the country: \n 1. Greece \n 2. Ukr");
                                         customerService.searchTourByCountry(reader.readLine());
                                         break;
                                     case 2:
@@ -216,21 +220,22 @@ public class Menu {
                                             try {
                                                 printUserTypeMenu();
                                                 int type = Integer.parseInt(reader.readLine());
+                                                System.out.println("Choose, the number type: \n 1. HOTELRESTTOUR \n 2. SHOPTOUR \n 3. EXCURSION \n 4. CRUISE \n 5. SANATORIUM");
                                                 switch (type) {
                                                     case 1:
-                                                        customerService.searchTourByType(1);
+                                                        customerService.searchTourByType(String.valueOf(TypeTour.HOTELRESTTOUR));
                                                         break;
                                                     case 2:
-                                                        customerService.searchTourByType(2);
+                                                        customerService.searchTourByType(String.valueOf(TypeTour.SHOPTOUR));
                                                         break;
                                                     case 3:
-                                                        customerService.searchTourByType(3);
+                                                        customerService.searchTourByType(String.valueOf(TypeTour.EXCURSION));
                                                         break;
                                                     case 4:
-                                                        customerService.searchTourByType(4);
+                                                        customerService.searchTourByType(String.valueOf(TypeTour.CRUISE));
                                                         break;
                                                     case 5:
-                                                        customerService.searchTourByType(5);
+                                                        customerService.searchTourByType(String.valueOf(TypeTour.SANATORIUM));
                                                         break;
                                                     case 0:
                                                         exit4 = true;
@@ -260,16 +265,25 @@ public class Menu {
 
                         break;
                     case 2:
-                        // customerService.bookTour();
+                        String tourId = "00000000-0000-0000-0000-000000000000";
+                        UUID tourUid = UUID.fromString(tourId);
+                        tourUid = inputTourUid(tourId, tourUid);
+                        customerService.bookTour(tourUid, customerDto.getId());
                         break;
                     case 3:
-                        //customerService.buyTour();
+                        tourId = "00000000-0000-0000-0000-000000000000";
+                        tourUid = UUID.fromString(tourId);
+                        tourUid = inputTourUid(tourId, tourUid);
+                        customerService.buyTour(tourUid, customerDto.getId());
                         break;
                     case 4:
-                        customerService.viewOrderedTours(adminDto.getId());
+                        customerService.viewOrderedTours(customerDto.getId());
                         break;
                     case 5:
-                        //  customerService.cancelTour();
+                        tourId = "00000000-0000-0000-0000-000000000000";
+                        tourUid = UUID.fromString(tourId);
+                        tourUid = inputTourUid(tourId, tourUid);
+                        customerService.cancelTour(tourUid);
                         break;
                     case 0:
                         exit2 = true;
@@ -278,12 +292,38 @@ public class Menu {
                         printMesInput();
                 }
             }
-        } catch (IOException e) {
+        } catch (
+                IOException e)
+
+        {
             e.printStackTrace();
-        } catch (NumberFormatException e) {
+        } catch (
+                NumberFormatException e)
+
+        {
             System.out.println("Wrong input");
         }
 
+    }
+
+    private static UUID inputTourUid(String tourId, UUID tourUid){
+        BufferedReader reader = getBufferedReader();
+        boolean exitid1 = false;
+        while (!exitid1) {
+            System.out.println("Input tour id");
+            try {
+                tourUid = UUID.fromString(reader.readLine());
+                tourId = tourUid.toString();
+            } catch (IOException | IllegalArgumentException e) {
+                System.out.println("Not corrected id");
+            }
+            if (tourId.equals("00000000-0000-0000-0000-000000000000")) {
+                exitid1 = false;
+            } else {
+                exitid1 = true;
+            }
+        }
+        return tourUid;
     }
 
     private static BufferedReader getBufferedReader() {

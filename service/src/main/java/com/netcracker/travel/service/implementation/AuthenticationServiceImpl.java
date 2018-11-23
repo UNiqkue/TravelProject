@@ -61,16 +61,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return exit;
     }
 
-    public static void main(String[] args) {
-        AdminDaoImpl adminDao = AdminDaoImpl.getInstance();
-        CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
-        TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
 
-        AdminConverter adminConverter = new AdminConverter();
-        CustomerConverter customerConverter = new CustomerConverter();
-        TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
-
-        System.out.println(customerConverter.convert(customerDao.getByUsername("ukky3")));
-    }
 
 }

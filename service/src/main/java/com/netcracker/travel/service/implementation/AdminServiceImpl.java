@@ -50,11 +50,4 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
     }
 
 
-    public List<TourDto> getAllOrderedTours(UUID customerId){
-        return tourDao.getToursById(customerId)
-                .stream()
-                .map(tour -> tourConverter.convert(tour))
-                .collect(Collectors.toList());
-    }
-
 }

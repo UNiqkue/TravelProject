@@ -8,8 +8,6 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.entity.enumeration.Role;
-import com.netcracker.travel.exception.EmailExistException;
-import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 
@@ -40,39 +38,62 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .collect(Collectors.toList());
     }
 
-    public TourDto bookTour(TourDto tourDto, UUID customerId) {
-        TourDto temp = buyTour(tourDto, customerId);
+    public TourDto bookTour(UUID id, UUID customerId) {
+        TourDto temp = buyTour(id, customerId);
         System.out.println("You have 3 days to pay for the tour");
         return temp;
     }
 
-    public TourDto buyTour(TourDto tourDto, UUID customerId) {
+    public TourDto buyTour(UUID id, UUID customerId) {
+        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setCustomerId(customerId);
         tourDto.setFree(false);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public void searchTourByName(String name){
-        // TourDaoImpl getByName, Date, Type, Country
+    public List<TourDto> searchTourByName(String name){
+        return tourDao.getByName(name)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
     }
-    public void searchTourByDate(Date startDate, Date endDate){
-        // TourDaoImpl getByName, Date, Type, Country
-    }
-    public void searchTourByType(int x){
-        // TourDaoImpl getByName, Date, Type, Country
-    }
-    public void searchTourByCountry(String country){
-        // TourDaoImpl getByName, Date, Type, Country
+    public List<TourDto> searchTourByDate(Date startDate, Date endDate){
+        return tourDao.getByDate(startDate, endDate)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
     }
 
-    public TourDto cancelTour(UUID id){
-        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+    public List<TourDto> searchTourByType(String type){
+        return tourDao.getByType(type)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+    }
+
+    public List<TourDto> searchTourByCountry(String country){
+        return tourDao.getByCountry(country)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+    }
+
+    public TourDto cancelTour(UUID tourId){
+        TourDto tourDto = tourConverter.convert(tourDao.getById(tourId));
+        tourDto.setCustomerId(null);
         tourDto.setFree(true);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> viewOrderedTours(UUID id){
         return tourDao.getToursById(id)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+    }
+
+    public List<TourDto> getAllOrderedTours(UUID customerId){
+        return tourDao.getToursById(customerId)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
@@ -85,7 +106,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto){
-        checkExisting(registrationRequestDto);
+     //   checkExisting(registrationRequestDto);
         CustomerDto customerDto= new CustomerDto();
         customerDto.setId(UUID.randomUUID());
         customerDto.setFirstName(registrationRequestDto.getFirstName());
@@ -102,7 +123,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         return customerConverter.convert(customerDao.save(customerConverter.convert(customerDto)));
     }
 
-    private void checkExisting(RegistrationRequestDto registrationRequestDto) {
+   /* private void checkExisting(RegistrationRequestDto registrationRequestDto) {
         checkUsernameExist(registrationRequestDto.getUsername());
         checkEmailExist(registrationRequestDto.getEmail());
     }
@@ -119,7 +140,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         if (customerDto!= null) {
             throw new EmailExistException();
         }
-    }
+    }*/
 
     public boolean activate(String str){
         CustomerDto customerDto = customerConverter.convert(customerDao.getByActivationCode(str));

@@ -32,7 +32,7 @@ public class AuthenticationController {
                         Menu.adminConsole();
                         break;
                     case 2:
-                        Menu.customerConsole();
+                        Menu.customerConsole(loginRequestDto.getUsername());
                         break;
                     case 3:
                         Menu.travelAgentConsole();

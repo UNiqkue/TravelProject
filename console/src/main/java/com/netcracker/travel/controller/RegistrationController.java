@@ -16,7 +16,7 @@ public class RegistrationController {
     public CustomerDto registration() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
-
+        boolean exit = false;
         try {
             System.out.println("Please, input the firstName");
             registrationRequestDto.setFirstName(reader.readLine());
@@ -28,8 +28,14 @@ public class RegistrationController {
             registrationRequestDto.setPassword(reader.readLine());
             System.out.println("Please, input email");
             registrationRequestDto.setEmail(reader.readLine());
-            System.out.println("Please, input date of birth");
-            registrationRequestDto.setDateOfBirth(java.sql.Date.valueOf(reader.readLine()));
+            while(exit==false) {
+                try {
+                    System.out.println("Please, input date of birth");
+                    registrationRequestDto.setDateOfBirth(java.sql.Date.valueOf(reader.readLine()));
+                } catch(IllegalArgumentException e){
+                    System.out.println("You input not corrected date. Example: 2000-10-10");
+                }
+            }
             System.out.println("Please, input the phoneNumber");
             registrationRequestDto.setPhoneNumber(reader.readLine());
             System.out.println("Please, input the cardNumber");
