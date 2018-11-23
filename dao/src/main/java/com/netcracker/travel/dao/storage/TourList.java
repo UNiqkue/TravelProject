@@ -1,6 +1,7 @@
 package com.netcracker.travel.dao.storage;
 
 import com.netcracker.travel.entity.Tour;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,14 +28,16 @@ public class TourList {
                 tour.setName((String) jsonObject.get("name"));
                 tour.setDescription((String) jsonObject.get("description"));
                 tour.setPrice(Double.valueOf((String) jsonObject.get("price")));
-//                tour.setType(TypeTour.valueOf((String) jsonObject.get("type")));
+                tour.setType(TypeTour.valueOf((String) jsonObject.get("type")));
                 tour.setCountry((String) jsonObject.get("country"));
                 tour.setStartDate(java.sql.Date.valueOf(String.valueOf(jsonObject.get("startDate"))));
                 tour.setEndDate(java.sql.Date.valueOf(String.valueOf(jsonObject.get("endDate"))));
                 tour.setTravelAgencyId(UUID.fromString(jsonObject.get("travelAgencyId").toString()));
                 tour.setCustomerId(UUID.fromString(jsonObject.get("customerId").toString()));
                 tour.setFree((boolean) jsonObject.get("free"));
+
                 list.add(tour);
+
 
             }
             scanner.close();
@@ -47,7 +50,7 @@ public class TourList {
         return list;
     }
 
-    public Tour write(Tour tour){
+    public Tour write(Tour tour) {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonTour = new JSONObject();
@@ -67,9 +70,9 @@ public class TourList {
                 jsonTour.put("description", "null");
             }
             if (tour.getPrice() != null) {
-                jsonTour.put("price", tour.getPrice());
+                jsonTour.put("price", tour.getPrice().toString());
             } else {
-                jsonTour.put("price", "100.0");
+                jsonTour.put("price", "111.50");
             }
 
             jsonTour.put("type", tour.getType());

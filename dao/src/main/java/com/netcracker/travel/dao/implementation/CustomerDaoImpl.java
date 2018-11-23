@@ -1,7 +1,6 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
-import com.netcracker.travel.dao.storage.AdminList;
 import com.netcracker.travel.dao.storage.CustomerList;
 import com.netcracker.travel.entity.Customer;
 
@@ -76,8 +75,8 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
     public Customer update(Customer customer) {
         removeById(customer.getId());
         try {
-            AdminList adminList = new AdminList();
-            adminList.clean();
+            CustomerList customerList = new CustomerList();
+            customerList.clean();
         } catch (IOException e) {
             System.out.println("Error while writing to file: " + e);
         }

@@ -138,6 +138,7 @@ public class Tour extends BaseEntity {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", customerId=" + customerId +
                 '}';
     }
 

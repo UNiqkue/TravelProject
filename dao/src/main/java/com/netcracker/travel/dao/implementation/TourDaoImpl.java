@@ -57,9 +57,6 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * String to EnumType
-     **/
     public List<Tour> getByType(String type) {
         return getAll()
                 .stream()
@@ -78,30 +75,45 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     }
 
     public Tour update(Tour tour) {
-        ///
-        return tour;
+        removeById(tour.getId());
+        return save(tour);
     }
 
     public void delete(UUID id) {
+        removeById(id);
+    }
+
+    public Tour removeById(UUID id) {
         List<Tour> list = getAll();
+        Tour tour = new Tour();
         int i;
         for (i = 0; i <= list.size() - 1; i++) {
             if (list.get(i).getId().toString().equals(id.toString())) {
-                System.out.println("Tour found");
+                tour = list.remove(i);
+                System.out.println("Customer found");
                 break;
             }
         }
-        list.remove(i);
+        saveList(list);
+        return tour;
+    }
+
+    private void saveList(List<Tour> list) {
+        clean();
+        for (int i = 0; i <= list.size() - 1; i++) {
+            save(list.get(i));
+        }
+    }
+
+    private void clean() {
+        TourList tourList = new TourList();
         try {
-            TourList tourList = new TourList();
             tourList.clean();
         } catch (IOException e) {
             System.out.println("Error while writing to file: " + e);
         }
-        for (i = 0; i <= list.size() - 1; i++) {
-            save(list.get(i));
-        }
     }
+
 
     public List<Tour> getToursById(UUID customerId) {
         return getAll()
@@ -127,3 +139,8 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 999.50, Collections.singleton(TypeTour.HOTELRESTTOUR), "Greece",
                 Date.valueOf("2019-06-20"), Date.valueOf("2019-07-04")));
  */
+
+/*{"country":"null","endDate":"2000-11-11","travelAgencyId":"28f9d5dd-83ba-4056-a0dd-ed1ca736a6ce","price":15.0,"name":"null","customerId":"ec1e0615-04f1-402a-ac9e-51775feb5760","description":"null","id":"0a876ff1-333e-4031-8735-3076b550be72","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}
+{"country":"null","endDate":"2000-11-11","travelAgencyId":"47636e55-9b16-4808-a342-9f3e02ac3db8","price":16.0,"name":"null","customerId":"96338867-4e04-4609-98aa-5300e9e80d3a","description":"null","id":"f01dc2bf-a20a-4da7-8cbd-96d22e69cbba","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}
+{"country":"null","endDate":"2000-11-11","travelAgencyId":"00000000-0000-0000-0000-000000000000","price":17.0,"name":"null","customerId":"00000000-0000-0000-0000-000000000000","description":"null","id":"a8828cbf-44b0-4a36-93b3-ecd9cc4bd93e","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}
+{"country":"null","endDate":"2000-11-11","travelAgencyId":"00000000-0000-0000-0000-000000000000","price":18.0,"name":"null","customerId":"00000000-0000-0000-0000-000000000000","description":"null","id":"4398a453-5857-4d8c-9a06-7a5296c5eb4b","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}*/

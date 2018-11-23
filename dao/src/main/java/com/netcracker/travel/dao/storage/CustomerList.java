@@ -17,21 +17,17 @@ public class CustomerList {
 
     public List<Customer> read() {
         List<Customer> list = new ArrayList<>();
+
         Customer customer;
         try {
             Scanner scanner = new Scanner(new File(filePath));
             while (scanner.hasNextLine()) {
                 customer = new Customer();
                 JSONObject jsonObject = new JSONObject(scanner.nextLine());
-
                 customer.setId(UUID.fromString(jsonObject.get("id").toString()));
                 customer.setFirstName((String) jsonObject.get("firstName"));
-                customer.setFirstName((String) jsonObject.get("lastName"));
-                if(jsonObject.get("username")=="null"){
-                    customer.setUsername("null");
-                } else {
-                    customer.setUsername((String) jsonObject.get("username"));
-                }
+                customer.setLastName((String) jsonObject.get("lastName"));
+                customer.setUsername((String) jsonObject.get("username"));
                 customer.setPassword((String) jsonObject.get("password"));
                 customer.setEmail((String) jsonObject.get("email"));
                 customer.setActivationCode((String) jsonObject.get("activationCode"));
