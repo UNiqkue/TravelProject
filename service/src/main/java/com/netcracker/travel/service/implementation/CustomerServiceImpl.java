@@ -5,15 +5,20 @@ import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
+import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.exception.EmailExistException;
+import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
+import com.netcracker.travel.service.interfaces.RegistrationService;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CustomerServiceImpl implements AbstractService<CustomerDto> {
+public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
@@ -79,11 +84,55 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto> {
         return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
     }
 
-    public static void main(String[] args){
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
-//        customerService.updatePhoneNumber("kili1", "+375-44-234-57-13");
-       // CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
-       // System.out.println(customerDao.getByUsername("ukky3"));
-        System.out.println(customerService.getByUsername("ukky3"));
+    public CustomerDto registration(RegistrationRequestDto registrationRequestDto){
+        checkExisting(registrationRequestDto);
+        CustomerDto customerDto= new CustomerDto();
+        customerDto.setId(UUID.randomUUID());
+        customerDto.setFirstName(registrationRequestDto.getFirstName());
+        customerDto.setLastName(registrationRequestDto.getLastName());
+        customerDto.setUsername(registrationRequestDto.getUsername());
+        customerDto.setEmail(registrationRequestDto.getEmail());
+        customerDto.setPassword(registrationRequestDto.getPassword());
+        customerDto.setActivationCode(registrationRequestDto.getActivationCode());
+        customerDto.setRole(Role.GUEST);
+        customerDto.setPassportInfo(registrationRequestDto.getPassportInfo());
+        customerDto.setCardNumber(registrationRequestDto.getCardNumber());
+        customerDto.setDateOfBirth(registrationRequestDto.getDateOfBirth());
+        customerDto.setPhoneNumber(registrationRequestDto.getPhoneNumber());
+        return customerConverter.convert(customerDao.save(customerConverter.convert(customerDto)));
     }
+
+    private void checkExisting(RegistrationRequestDto registrationRequestDto) {
+        checkUsernameExist(registrationRequestDto.getUsername());
+        checkEmailExist(registrationRequestDto.getEmail());
+    }
+
+    private void checkUsernameExist(String username) {
+        CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(username));
+        if (customerDto!= null) {
+            throw new UsernameExistException();
+        }
+    }
+
+    private void checkEmailExist(String email) {
+        CustomerDto customerDto = customerConverter.convert(customerDao.getByEmail(email));
+        if (customerDto!= null) {
+            throw new EmailExistException();
+        }
+    }
+
+    public boolean activate(String str){
+        CustomerDto customerDto = customerConverter.convert(customerDao.getByActivationCode(str));
+
+        if(customerDto== null){
+            return false;
+        }
+
+        customerDto.setRole(Role.CUSTOMER);
+        customerDto.setActivationCode(null);
+
+        return true;
+    }
+
+
 }

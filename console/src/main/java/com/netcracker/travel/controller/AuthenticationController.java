@@ -39,6 +39,7 @@ public class AuthenticationController {
                         break;
                     default:
                         System.out.println("You input not corrected password");
+                        break;
                 }
 
             } catch (IOException e) {

@@ -1,7 +1,6 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.entity.Address;
 import com.netcracker.travel.entity.Customer;
 
 public class CustomerConverter {
@@ -15,14 +14,6 @@ public class CustomerConverter {
         customer.setPassword(customerDto.getPassword());
         customer.setEmail(customerDto.getEmail());
         customer.setActivationCode(customerDto.getActivationCode());
-
-        Address address = new Address();
-        address.setCountry(customerDto.getCountry());
-        address.setCity(customerDto.getCity());
-        address.setStreet(customerDto.getStreet());
-        address.setNumberHouse(customerDto.getNumberHouse());
-        address.setNumberRoom(customerDto.getNumberRoom());
-        customer.setAddress(address);
 
         customer.setPhoneNumber(customerDto.getPhoneNumber());
         customer.setCardNumber(customerDto.getCardNumber());
@@ -41,14 +32,6 @@ public class CustomerConverter {
         customerDto.setPassword(customer.getPassword());
         customerDto.setEmail(customer.getEmail());
         customerDto.setActivationCode(customer.getActivationCode());
-
-        if (customer.getAddress() != null) {
-            customerDto.setCountry(customer.getAddress().getCountry());
-            customerDto.setCity(customer.getAddress().getCity());
-            customerDto.setStreet(customer.getAddress().getStreet());
-            customerDto.setNumberHouse(customer.getAddress().getNumberHouse());
-            customerDto.setNumberRoom(customer.getAddress().getNumberRoom());
-        }
 
         customerDto.setPhoneNumber(customer.getPhoneNumber());
         customerDto.setCardNumber(customer.getCardNumber());

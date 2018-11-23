@@ -34,6 +34,8 @@ public class AdminList {
                 list.add(admin);
             }
             scanner.close();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "Unable to open file ");
         } catch (IOException e) {

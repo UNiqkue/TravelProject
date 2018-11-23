@@ -15,7 +15,7 @@ public class CustomerList {
 
     private static String filePath = "dao\\src\\main\\resources\\storage\\customer.json";
 
-    public List<Customer> read(){
+    public List<Customer> read() {
         List<Customer> list = new ArrayList<>();
         Customer customer;
         try {
@@ -26,8 +26,12 @@ public class CustomerList {
 
                 customer.setId(UUID.fromString(jsonObject.get("id").toString()));
                 customer.setFirstName((String) jsonObject.get("firstName"));
-                customer.setLastName((String) jsonObject.get("lastName"));
-                customer.setUsername((String) jsonObject.get("username"));
+                customer.setFirstName((String) jsonObject.get("lastName"));
+                if(jsonObject.get("username")=="null"){
+                    customer.setUsername("null");
+                } else {
+                    customer.setUsername((String) jsonObject.get("username"));
+                }
                 customer.setPassword((String) jsonObject.get("password"));
                 customer.setEmail((String) jsonObject.get("email"));
                 customer.setActivationCode((String) jsonObject.get("activationCode"));
@@ -36,22 +40,21 @@ public class CustomerList {
                 customer.setDateOfBirth(java.sql.Date.valueOf(String.valueOf(jsonObject.get("dateOfBirth"))));
                 customer.setCardNumber((String) (jsonObject.get("cardNumber")));
                 customer.setPassportInfo((String) (jsonObject.get("passportInfo")));
-                //     customer.setAddress((Address)(jsonObject.get("address")).toString());
                 //     customer.setListOfTours((List<Tour>) (jsonObject.get("listOfTours")));
                 list.add(customer);
 
             }
             scanner.close();
 
-        } catch(FileNotFoundException fnf){
+        } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "Unable to open file ");
-        } catch(IOException e){
+        } catch (IOException e) {
             System.out.println("Error while reading to file: " + e);
         }
         return list;
     }
 
-    public Customer write(Customer customer){
+    public Customer write(Customer customer) {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonUser = new JSONObject();
@@ -123,11 +126,11 @@ public class CustomerList {
             fileWriter.flush();
             fileWriter.close();
 
-        } catch(JSONException e1) {
+        } catch (JSONException e1) {
             e1.printStackTrace();
-        } catch(FileNotFoundException fnf){
+        } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "File not found ");
-        } catch(IOException ioe){
+        } catch (IOException ioe) {
             System.out.println("Error while writing to file: " + ioe);
         }
         return customer;

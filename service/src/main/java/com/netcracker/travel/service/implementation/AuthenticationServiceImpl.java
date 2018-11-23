@@ -46,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         return 1;
                     }
                 } catch (NoSuchElementException e) {
-                    System.out.println("Load...");
+                    System.out.println("Loaddd.....");
                 }
 
                 TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
@@ -55,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 }
 
             } catch (NoSuchElementException e) {
-                System.out.println("Input true username and password: " + e);
+                System.out.println("Loaddddd.......");
             }
 
         return exit;

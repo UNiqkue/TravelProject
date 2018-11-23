@@ -4,7 +4,6 @@ import com.netcracker.travel.controller.AuthenticationController;
 import com.netcracker.travel.controller.RegistrationController;
 import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.dto.AdminDto;
-import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
@@ -35,8 +34,7 @@ public class Menu {
                         break;
                     case 3:
                         RegistrationController registrationController = new RegistrationController();
-                        RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
-                        registrationController.registration(registrationRequestDto);
+                        registrationController.registration();
                         break;
 
                     case 0:

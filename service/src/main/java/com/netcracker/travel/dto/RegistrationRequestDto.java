@@ -1,5 +1,7 @@
 package com.netcracker.travel.dto;
 
+import java.sql.Date;
+
 public class RegistrationRequestDto {
 
     private String firstName;
@@ -7,15 +9,13 @@ public class RegistrationRequestDto {
     private String username;
     private String password;
     private String email;
+    private String activationCode;
+    private String phoneNumber;
+    private Date dateOfBirth;
+    private String cardNumber;
+    private String passportInfo;
 
-    public RegistrationRequestDto(){}
-
-    public RegistrationRequestDto(String firstName, String lastName, String username, String password, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
+    public RegistrationRequestDto() {
     }
 
     public String getFirstName() {
@@ -58,4 +58,59 @@ public class RegistrationRequestDto {
         this.email = email;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getPassportInfo() {
+        return passportInfo;
+    }
+
+    public void setPassportInfo(String passportInfo) {
+        this.passportInfo = passportInfo;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationRequestDto{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", activationCode='" + activationCode + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", passportInfo='" + passportInfo + '\'' +
+                '}';
+    }
 }
