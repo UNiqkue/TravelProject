@@ -75,7 +75,7 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         for (i = 0; i <= list.size() - 1; i++) {
             if (list.get(i).getId().toString().equals(id.toString())) {
                 admin = list.remove(i);
-                System.out.println("Customer found");
+                System.out.println("Admin found");
                 break;
             }
         }

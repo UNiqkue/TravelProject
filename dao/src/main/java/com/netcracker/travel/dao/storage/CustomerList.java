@@ -1,6 +1,7 @@
 package com.netcracker.travel.dao.storage;
 
 import com.netcracker.travel.entity.Customer;
+import com.netcracker.travel.entity.Tour;
 import com.netcracker.travel.entity.enumeration.Role;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class CustomerList {
                 customer.setDateOfBirth(java.sql.Date.valueOf(String.valueOf(jsonObject.get("dateOfBirth"))));
                 customer.setCardNumber((String) (jsonObject.get("cardNumber")));
                 customer.setPassportInfo((String) (jsonObject.get("passportInfo")));
-                //     customer.setListOfTours((List<Tour>) (jsonObject.get("listOfTours")));
+                customer.setListOfTours((List<Tour>) (jsonObject.get("listOfTours")));
                 list.add(customer);
 
             }

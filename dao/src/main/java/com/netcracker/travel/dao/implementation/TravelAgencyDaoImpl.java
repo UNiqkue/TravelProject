@@ -66,7 +66,7 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         for (i = 0; i <= list.size() - 1; i++) {
             if (list.get(i).getId().toString().equals(id.toString())) {
                 travelAgency = list.remove(i);
-                System.out.println("Customer found");
+                System.out.println("TravelAgency found");
                 break;
             }
         }

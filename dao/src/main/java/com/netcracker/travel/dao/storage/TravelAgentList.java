@@ -30,9 +30,9 @@ public class TravelAgentList {
                 travelAgent.setPassword((String) jsonObject.get("password"));
                 travelAgent.setEmail((String) jsonObject.get("email"));
                 travelAgent.setActivationCode((String) jsonObject.get("activationCode"));
-               /* travelAgent.setPhoneNumber((String) jsonObject.get("phoneNumber"));
+                travelAgent.setPhoneNumber((String) jsonObject.get("phoneNumber"));
                 travelAgent.setPosition((String) jsonObject.get("phoneNumber"));
-                travelAgent.setTravelAgencyId(UUID.fromString(jsonObject.get("travelAgencyId").toString()));*/
+                travelAgent.setTravelAgencyId(UUID.fromString(jsonObject.get("travelAgencyId").toString()));
 
                 list.add(travelAgent);
             }
