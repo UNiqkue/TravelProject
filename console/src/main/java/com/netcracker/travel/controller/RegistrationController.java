@@ -32,15 +32,15 @@ public class RegistrationController {
             registrationRequestDto.setPassword(reader.readLine());
             System.out.println("Please, input email");
             registrationRequestDto.setEmail(reader.readLine());
-            while(exit==false) {
+            while (exit == false) {
                 try {
                     System.out.println("Please, input date of birth");
                     registrationRequestDto.setDateOfBirth(java.sql.Date.valueOf(reader.readLine()));
-                } catch(IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     System.out.println("You input not corrected date. Example: 2000-10-10");
                 }
-                if(registrationRequestDto.getDateOfBirth()!=null){
-                    exit=true;
+                if (registrationRequestDto.getDateOfBirth() != null) {
+                    exit = true;
                 }
             }
             boolean exit3 = false;
@@ -77,7 +77,4 @@ public class RegistrationController {
         return customerServiceImpl.registration(registrationRequestDto);
     }
 
-    public boolean activate(RegistrationRequestDto registrationRequestDto) {
-        return customerServiceImpl.activate(registrationRequestDto.getActivationCode());
-    }
 }

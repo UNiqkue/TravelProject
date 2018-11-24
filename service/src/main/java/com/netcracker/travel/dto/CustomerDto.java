@@ -158,7 +158,6 @@ public class CustomerDto {
                 ", dateOfBirth=" + dateOfBirth +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", passportInfo='" + passportInfo + '\'' +
-                ", listOfTours=" + listOfTours +
                 '}';
     }
 }

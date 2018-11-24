@@ -332,7 +332,10 @@ public class Menu {
                                                 System.out.println("Wrong input");
                                             }
                                         }
-
+                                    case 5:
+                                        System.out.println("Please, input the TravelAgency name");
+                                        printTours(customerService.searchTourByTravelAgency(reader.readLine()));
+                                        break;
                                     case 0:
                                         exit3 = true;
                                         break;
@@ -428,7 +431,7 @@ public class Menu {
     }
 
     public static void printUserMenuSearchTour() {
-        System.out.println("Choose search: \n 1. By country \n 2. By Date \n 3. By name \n 4. By Type \n 0. Exit");
+        System.out.println("Choose search: \n 1. By country \n 2. By Date \n 3. By name \n 4. By Type \n 5. By TravelAgency \n 0. Exit");
     }
 
     public static void printUserTypeMenu() {

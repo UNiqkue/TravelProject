@@ -51,7 +51,6 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
                 .filter(tour -> !(tour.getCustomerId().toString().equals(clientId)))
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
-
     }
 
     public TravelAgencyDto getTravelAgency(UUID id){
