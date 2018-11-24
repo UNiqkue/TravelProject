@@ -4,7 +4,6 @@ import com.netcracker.travel.entity.enumeration.TypeTour;
 
 import java.sql.Date;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 public class TourDto {
@@ -13,7 +12,7 @@ public class TourDto {
     private String name;
     private String description;
     private Double price;
-    private Set<TypeTour> type;
+    private TypeTour type;
     private String country;
     private Date startDate;
     private Date endDate;
@@ -55,11 +54,11 @@ public class TourDto {
         this.price = price;
     }
 
-    public Set<TypeTour> getType() {
+    public TypeTour getType() {
         return type;
     }
 
-    public void setType(Set<TypeTour> type) {
+    public void setType(TypeTour type) {
         this.type = type;
     }
 

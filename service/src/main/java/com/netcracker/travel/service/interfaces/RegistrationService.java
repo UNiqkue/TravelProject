@@ -4,7 +4,6 @@ import com.netcracker.travel.dto.*;
 
 public interface RegistrationService {
 
-    RegistrationRequestDto registration(RegistrationRequestDto registrationRequestDto);
-    boolean activate(String str);
+    CustomerDto registration(RegistrationRequestDto registrationRequestDto);
 
 }

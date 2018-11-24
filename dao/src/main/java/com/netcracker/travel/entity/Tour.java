@@ -5,7 +5,6 @@ import com.netcracker.travel.entity.enumeration.TypeTour;
 
 import java.sql.Date;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 public class Tour extends BaseEntity {
@@ -13,7 +12,7 @@ public class Tour extends BaseEntity {
     private String name;
     private String description;
     private Double price;
-    private Set<TypeTour> type;
+    private TypeTour type;
     private String country;
     private Date startDate;
     private Date endDate;
@@ -24,7 +23,7 @@ public class Tour extends BaseEntity {
     public Tour(){
     }
 
-    public Tour(UUID id, String name, String description, Double price, Set<TypeTour> type, String country, Date startDate, Date endDate) {
+    public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate) {
         super(id);
         this.name = name;
         this.description = description;
@@ -51,11 +50,11 @@ public class Tour extends BaseEntity {
         this.description = description;
     }
 
-    public Set<TypeTour> getType() {
+    public TypeTour getType() {
         return type;
     }
 
-    public void setType(Set<TypeTour> type) {
+    public void setType(TypeTour type) {
         this.type = type;
     }
 
@@ -139,6 +138,7 @@ public class Tour extends BaseEntity {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", customerId=" + customerId +
                 '}';
     }
 

@@ -1,5 +1,7 @@
 package com.netcracker.travel.entity;
 
+import com.netcracker.travel.entity.enumeration.Role;
+
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
@@ -10,10 +12,14 @@ public class Customer extends User{
     private Date dateOfBirth;
     private String cardNumber;
     private String passportInfo;
-    private Address address;
     private List<Tour> listOfTours;
 
     public Customer(){}
+
+    @Override
+    public void setRole(Role role) {
+        super.setRole(Role.CUSTOMER);
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -29,14 +35,6 @@ public class Customer extends User{
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public String getCardNumber() {
@@ -79,12 +77,18 @@ public class Customer extends User{
     @Override
     public String toString() {
         return "Customer{" +
-                "phoneNumber='" + phoneNumber + '\'' +
+                "id='" + getId() + '\'' +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", username='" + getUsername() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", activationCode='" + getActivationCode() + '\'' +
+                ", role=" + getRole() +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", address='" + address + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", passportInfo='" + passportInfo + '\'' +
-                ", listOfTours=" + listOfTours +
                 '}';
     }
 

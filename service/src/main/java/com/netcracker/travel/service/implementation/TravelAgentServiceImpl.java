@@ -6,18 +6,20 @@ import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgentDaoImpl;
+<<<<<<< HEAD
 import com.netcracker.travel.dto.LoginRequestDto;
+=======
+>>>>>>> task3
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
-import com.netcracker.travel.service.interfaces.AuthenticationService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, AuthenticationService {
+public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
@@ -28,10 +30,13 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     private TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
 
     public TravelAgentServiceImpl(){}
+<<<<<<< HEAD
 
     public List<TravelAgentDto> getAll() {
         return null;
     }
+=======
+>>>>>>> task3
 
     public TourDto createTour(TourDto tourDto) {
         return null;
@@ -41,6 +46,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
         return new ArrayList<>();
     }
 
+<<<<<<< HEAD
     public TourDto editTour(TourDto tourDto) {
         return null;
     }
@@ -58,4 +64,42 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
         return null;
     }
 
+=======
+    public TourDto editTour(UUID id, String description) {
+        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+        tourDto.setDescription(description);
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+    }
+
+    public List<TourDto> viewOrderHystory() {
+        String clientId = "00000000-0000-0000-0000-000000000000";
+        return  tourDao.getAll()
+                .stream()
+                .filter(tour -> !(tour.getCustomerId().toString().equals(clientId)))
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+    }
+
+    public TravelAgencyDto getTravelAgency(UUID id){
+        return travelAgencyConverter.convert(travelAgencyDao.getById(id));
+    }
+
+    public TravelAgentDto getByUsername(String username){
+        return  travelAgentConverter.convert(travelAgentDao.getByUsername(username));
+    }
+
+    public List<TravelAgentDto> getAll() {
+        return null;
+    }
+
+    public TourDto makeDiscount(UUID id, Double price) {
+            TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+            tourDto.setPrice(price);
+            return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+    }
+
+    public void deleteTour(UUID id) {
+        tourDao.delete(id);
+    }
+>>>>>>> task3
 }

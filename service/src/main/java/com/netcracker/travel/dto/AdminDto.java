@@ -3,10 +3,9 @@ package com.netcracker.travel.dto;
 import com.netcracker.travel.entity.enumeration.Role;
 
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
-public class UserDto {
+public class AdminDto{
 
     private UUID id;
     private String firstName;
@@ -15,9 +14,9 @@ public class UserDto {
     private String password;
     private String email;
     private String activationCode;
-    private Set<Role> role;
+    private Role role;
 
-    public UserDto(){}
+    public AdminDto(){}
 
     public UUID getId() {
         return id;
@@ -75,11 +74,11 @@ public class UserDto {
         this.activationCode = activationCode;
     }
 
-    public Set<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Set<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -87,8 +86,8 @@ public class UserDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserDto userDto = (UserDto) o;
-        return Objects.equals(getId(), userDto.getId());
+       AdminDto adminDto= (AdminDto) o;
+        return Objects.equals(getId(), adminDto.getId());
     }
 
     @Override

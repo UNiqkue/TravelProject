@@ -4,9 +4,9 @@ import com.netcracker.travel.entity.abstracts.BaseEntity;
 import com.netcracker.travel.entity.enumeration.Role;
 
 import java.util.Objects;
-import java.util.Set;
+import java.util.UUID;
 
-public class User extends BaseEntity {
+public abstract class User extends BaseEntity {
 
     private String firstName;
     private String lastName;
@@ -14,7 +14,20 @@ public class User extends BaseEntity {
     private String password;
     private String email;
     private String activationCode;
-    private Set<Role> role;
+    private Role role;
+
+    public User(){}
+
+    public User(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.activationCode = activationCode;
+
+    }
 
     public String getFirstName() {
         return firstName;
@@ -64,11 +77,11 @@ public class User extends BaseEntity {
         this.activationCode = activationCode;
     }
 
-    public Set<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Set<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

@@ -23,4 +23,16 @@
         </plugins>
     </build>
 
+<<<<<<< HEAD
+=======
+    <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20171018</version>
+        </dependency>
+    </dependencies>
+
+
+>>>>>>> task3
 </project>

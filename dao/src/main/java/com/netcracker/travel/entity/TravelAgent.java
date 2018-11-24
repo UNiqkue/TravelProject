@@ -1,5 +1,7 @@
 package com.netcracker.travel.entity;
 
+import com.netcracker.travel.entity.enumeration.Role;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,6 +12,11 @@ public class TravelAgent extends User{
     private UUID travelAgencyId;
 
     public TravelAgent(){ }
+
+    @Override
+    public void setRole(Role role) {
+        super.setRole(Role.TRAVELAGENT);
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
