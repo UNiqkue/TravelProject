@@ -8,12 +8,18 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.exception.EmailExistException;
+import com.netcracker.travel.exception.PhoneNumberException;
+import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService {
@@ -57,6 +63,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
+
     public List<TourDto> searchTourByDate(Date startDate, Date endDate){
         return tourDao.getByDate(startDate, endDate)
                 .stream()
@@ -92,21 +99,26 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> getAllOrderedTours(UUID customerId){
-        return tourDao.getToursById(customerId)
-                .stream()
-                .map(tour -> tourConverter.convert(tour))
-                .collect(Collectors.toList());
-    }
-
     public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
         CustomerDto customerDto = getByUsername(username);
         customerDto.setPhoneNumber(phoneNumber);
         return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
     }
 
+    public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {
+        Pattern pattern = Pattern.compile("((80|\\+375)[\\s|-]?(29|25|33|44))[\\s|-]?(\\d{7}|\\d{3}[\\s|-]?\\d{2}[\\s|-]?\\d{2})");
+        Matcher matcher = pattern.matcher(phoneNumber);
+        boolean bl = matcher.matches();
+        System.out.println(bl);
+        if(!bl){
+            throw new PhoneNumberException("Invalid phone number");
+        }
+    }
+
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto){
-     //   checkExisting(registrationRequestDto);
+        if(checkExisting(registrationRequestDto)==false){
+            return null;
+        }
         CustomerDto customerDto= new CustomerDto();
         customerDto.setId(UUID.randomUUID());
         customerDto.setFirstName(registrationRequestDto.getFirstName());
@@ -123,24 +135,38 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         return customerConverter.convert(customerDao.save(customerConverter.convert(customerDto)));
     }
 
-   /* private void checkExisting(RegistrationRequestDto registrationRequestDto) {
-        checkUsernameExist(registrationRequestDto.getUsername());
-        checkEmailExist(registrationRequestDto.getEmail());
+    private boolean checkExisting(RegistrationRequestDto registrationRequestDto) {
+        try {
+            checkUsernameExist(registrationRequestDto.getUsername());
+            checkEmailExist(registrationRequestDto.getEmail());
+            return true;
+        }catch(UsernameExistException e){
+            System.out.println("User with such username exists");
+        }catch(EmailExistException e){
+            System.out.println("User with such email exists");
+        }
+        return false;
     }
 
     private void checkUsernameExist(String username) {
-        CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(username));
-        if (customerDto!= null) {
-            throw new UsernameExistException();
+        try {
+            CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(username));
+            if (customerDto != null) {
+                throw new UsernameExistException();
+            }
+        } catch (NoSuchElementException e){
         }
     }
 
     private void checkEmailExist(String email) {
-        CustomerDto customerDto = customerConverter.convert(customerDao.getByEmail(email));
-        if (customerDto!= null) {
-            throw new EmailExistException();
+        try {
+            CustomerDto customerDto = customerConverter.convert(customerDao.getByEmail(email));
+            if (customerDto != null) {
+                throw new EmailExistException();
+            }
+        }catch (NoSuchElementException e){
         }
-    }*/
+    }
 
     public boolean activate(String str){
         CustomerDto customerDto = customerConverter.convert(customerDao.getByActivationCode(str));

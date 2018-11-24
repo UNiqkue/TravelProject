@@ -27,8 +27,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
     public TravelAgentServiceImpl(){}
 
-    public TourDto createTour() {
-        TourDto tourDto = new TourDto();
+    public TourDto createTour(TourDto tourDto) {
         return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
@@ -39,8 +38,10 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
                 .collect(Collectors.toList());
     }
 
-    public TourDto editTour(UUID id) {
-        return tourConverter.convert(tourDao.update(tourDao.getById(id)));
+    public TourDto editTour(UUID id, String description) {
+        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+        tourDto.setDescription(description);
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> viewOrderHystory() {
@@ -57,11 +58,18 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
         return travelAgencyConverter.convert(travelAgencyDao.getById(id));
     }
 
+    public TravelAgentDto getByUsername(String username){
+        return  travelAgentConverter.convert(travelAgentDao.getByUsername(username));
+    }
+
     public List<TravelAgentDto> getAll() {
         return null;
     }
 
-    public void makeDiscount() {
+    public TourDto makeDiscount(UUID id, Double price) {
+            TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+            tourDto.setPrice(price);
+            return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
     public void deleteTour(UUID id) {

@@ -35,10 +35,10 @@ public class AuthenticationController {
                         Menu.customerConsole(loginRequestDto.getUsername());
                         break;
                     case 3:
-                        Menu.travelAgentConsole();
+                        Menu.travelAgentConsole(loginRequestDto.getUsername());
                         break;
                     default:
-                        System.out.println("You input not corrected password");
+                        System.out.println("You input incorrect username or password");
                         break;
                 }
 
