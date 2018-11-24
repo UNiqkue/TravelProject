@@ -49,20 +49,6 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
                 .findFirst().get();
     }
 
-    public Admin getByEmail(String email) {
-        return getAll()
-                .stream()
-                .filter(admin -> admin.getEmail().equals(email))
-                .findFirst().get();
-    }
-
-    public Admin getByActivationCode(String activationCode) {
-        return getAll()
-                .stream()
-                .filter(admin -> admin.getActivationCode().equals(activationCode))
-                .findFirst().get();
-    }
-
     public List<Admin> getAll() {
         AdminList adminList = new AdminList();
         return adminList.read();

@@ -40,6 +40,13 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
                 .collect(Collectors.toList());
     }
 
+    public TravelAgent getByUsername(String username) {
+        return getAll()
+                .stream()
+                .filter(travelAgent -> travelAgent.getUsername().equals(username))
+                .findFirst().get();
+    }
+
     public List<TravelAgent> getAll() {
         TravelAgentList list = new TravelAgentList();
         return list.read();
@@ -88,13 +95,6 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         } catch (IOException e) {
             System.out.println("Error while writing to file: " + e);
         }
-    }
-
-    public TravelAgent getByUsername(String username) {
-        return getAll()
-                .stream()
-                .filter(travelAgent -> travelAgent.getUsername().equals(username))
-                .findFirst().get();
     }
 
 

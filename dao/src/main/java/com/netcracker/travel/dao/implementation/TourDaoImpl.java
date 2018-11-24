@@ -64,6 +64,14 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 .collect(Collectors.toList());
     }
 
+    public Tour getByTravelAgencyId(UUID id) {
+        return getAll()
+                .stream()
+                .filter(tour -> tour.getTravelAgencyId().toString().equals(id.toString()))
+                .findFirst().get();
+    }
+
+
     public List<Tour> getAll() {
         TourList list = new TourList();
         return list.read();
