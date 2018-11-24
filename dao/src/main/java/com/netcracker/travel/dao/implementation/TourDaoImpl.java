@@ -64,11 +64,11 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 .collect(Collectors.toList());
     }
 
-    public Tour getByTravelAgencyId(UUID id) {
+    public List<Tour> getByTravelAgencyId(UUID id) {
         return getAll()
                 .stream()
                 .filter(tour -> tour.getTravelAgencyId().toString().equals(id.toString()))
-                .findFirst().get();
+                .collect(Collectors.toList());
     }
 
 
@@ -133,22 +133,3 @@ public class TourDaoImpl implements AbstractDao<Tour> {
 
 }
 
-/*
- tours.add(new Tour(UUID.randomUUID().toString(), "Тур с отдыхом в Испании на 12 дней",
-                    "Раннее бронирование до 1-го марта. 8 дней на море в Испании+Барселона",
-                         310.0, Collections.singleton(TypeTour.CRUISE), "Испания",
-                             Date.valueOf("2018-10-28"), Date.valueOf("2018-11-07")));
-        tours.add(new Tour(UUID.randomUUID().toString(),"Тур в Португалию на 14 дней",
-                "Раннее бронирование до 1-го марта. Эксклюзив! Франкфурт-Париж-Мадрид-6 дней в Португалии-Барселона-Женева-Страсбург.",
-                475.0, Collections.singleton(TypeTour.EXCURSION), "Португалия",
-                Date.valueOf("2018-10-30"), Date.valueOf("2018-11-13")));
-        tours.add(new Tour(UUID.randomUUID().toString();,"Отдых на Крите",
-                "самый большой остров в Греции и пятый по величине в Средиземноморье.",
-                999.50, Collections.singleton(TypeTour.HOTELRESTTOUR), "Greece",
-                Date.valueOf("2019-06-20"), Date.valueOf("2019-07-04")));
- */
-
-/*{"country":"null","endDate":"2000-11-11","travelAgencyId":"28f9d5dd-83ba-4056-a0dd-ed1ca736a6ce","price":15.0,"name":"null","customerId":"ec1e0615-04f1-402a-ac9e-51775feb5760","description":"null","id":"0a876ff1-333e-4031-8735-3076b550be72","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}
-{"country":"null","endDate":"2000-11-11","travelAgencyId":"47636e55-9b16-4808-a342-9f3e02ac3db8","price":16.0,"name":"null","customerId":"96338867-4e04-4609-98aa-5300e9e80d3a","description":"null","id":"f01dc2bf-a20a-4da7-8cbd-96d22e69cbba","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}
-{"country":"null","endDate":"2000-11-11","travelAgencyId":"00000000-0000-0000-0000-000000000000","price":17.0,"name":"null","customerId":"00000000-0000-0000-0000-000000000000","description":"null","id":"a8828cbf-44b0-4a36-93b3-ecd9cc4bd93e","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}
-{"country":"null","endDate":"2000-11-11","travelAgencyId":"00000000-0000-0000-0000-000000000000","price":18.0,"name":"null","customerId":"00000000-0000-0000-0000-000000000000","description":"null","id":"4398a453-5857-4d8c-9a06-7a5296c5eb4b","type":"HOTELRESTTOUR","free":true,"startDate":"2000-10-10"}*/

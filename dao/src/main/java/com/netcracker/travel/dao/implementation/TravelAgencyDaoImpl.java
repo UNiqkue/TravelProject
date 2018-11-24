@@ -13,9 +13,10 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
 
     private static volatile TravelAgencyDaoImpl instance;
 
-    private TravelAgencyDaoImpl(){}
+    private TravelAgencyDaoImpl() {
+    }
 
-    public static TravelAgencyDaoImpl getInstance(){
+    public static TravelAgencyDaoImpl getInstance() {
         if (instance == null) {
             synchronized (TravelAgencyDaoImpl.class) {
                 if (instance == null) {
@@ -89,7 +90,6 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
             System.out.println("Error while writing to file: " + e);
         }
     }
-
 
 
 }
