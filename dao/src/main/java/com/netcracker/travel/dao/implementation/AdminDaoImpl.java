@@ -74,53 +74,47 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
     }
 
     public Admin update(Admin admin) {
-        List<Admin> list = getAll();
-        int i;
-        for (i = 0; i <= list.size() - 1; i++) {
-            if (list.get(i).getId().toString().equals(admin.getId().toString())) {
-                System.out.println("User found");
-                break;
-            }
-        }
-
-        list.set(i, admin);
-        try {
-            AdminList adminList = new AdminList();
-            adminList.clean();
-        } catch (IOException e) {
-            System.out.println("Error while writing to file: " + e);
-        }
-        for (i = 0; i <= list.size() - 1; i++) {
-            save(list.get(i));
-        }
-        return admin;
+        removeById(admin.getId());
+        return save(admin);
     }
 
     public void delete(UUID id) {
+        removeById(id);
+    }
+
+    public Admin removeById(UUID id) {
         List<Admin> list = getAll();
+        Admin admin = new Admin();
         int i;
         for (i = 0; i <= list.size() - 1; i++) {
             if (list.get(i).getId().toString().equals(id.toString())) {
-                System.out.println("User found");
+                admin = list.remove(i);
+                System.out.println("Customer found");
                 break;
             }
         }
-        list.remove(i);
+        saveList(list);
+        return admin;
+    }
+
+    private void saveList(List<Admin> list) {
+        clean();
+        for (int i = 0; i <= list.size() - 1; i++) {
+            save(list.get(i));
+        }
+    }
+
+    private void clean() {
+        AdminList adminList = new AdminList();
         try {
-            AdminList adminList = new AdminList();
             adminList.clean();
         } catch (IOException e) {
             System.out.println("Error while writing to file: " + e);
         }
-        for (i = 0; i <= list.size() - 1; i++) {
-            save(list.get(i));
-        }
-
     }
 
-
-
-
-
-
 }
+
+
+
+

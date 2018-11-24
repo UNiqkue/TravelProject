@@ -51,28 +51,42 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     }
 
     public TravelAgency update(TravelAgency travelAgency) {
-        ///
-        return travelAgency;
+        removeById(travelAgency.getId());
+        return save(travelAgency);
     }
 
     public void delete(UUID id) {
+        removeById(id);
+    }
+
+    public TravelAgency removeById(UUID id) {
         List<TravelAgency> list = getAll();
+        TravelAgency travelAgency = new TravelAgency();
         int i;
-        for(i=0; i<=list.size()-1; i++){
-            if(list.get(i).getId().toString().equals(id.toString())){
-                System.out.println("TravelAgency found");
+        for (i = 0; i <= list.size() - 1; i++) {
+            if (list.get(i).getId().toString().equals(id.toString())) {
+                travelAgency = list.remove(i);
+                System.out.println("Customer found");
                 break;
             }
         }
-        list.remove(i);
+        saveList(list);
+        return travelAgency;
+    }
+
+    private void saveList(List<TravelAgency> list) {
+        clean();
+        for (int i = 0; i <= list.size() - 1; i++) {
+            save(list.get(i));
+        }
+    }
+
+    private void clean() {
+        TravelAgencyList travelAgencyList = new TravelAgencyList();
         try {
-            TravelAgencyList travelAgencyList = new TravelAgencyList();
             travelAgencyList.clean();
         } catch (IOException e) {
             System.out.println("Error while writing to file: " + e);
-        }
-        for(i=0; i<=list.size()-1; i++){
-            save(list.get(i));
         }
     }
 

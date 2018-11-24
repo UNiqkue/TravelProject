@@ -74,12 +74,6 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
 
     public Customer update(Customer customer) {
         removeById(customer.getId());
-        try {
-            CustomerList customerList = new CustomerList();
-            customerList.clean();
-        } catch (IOException e) {
-            System.out.println("Error while writing to file: " + e);
-        }
         return save(customer);
     }
 

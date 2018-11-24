@@ -6,24 +6,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class TourList {
 
 
     private static String filePath = "dao\\src\\main\\resources\\storage\\tour.json";
 
-    public List<Tour> read() {
+    public List<Tour> read()  {
         List<Tour> list = new ArrayList<Tour>();
         try {
             Scanner scanner = new Scanner(new File(filePath));
             while (scanner.hasNextLine()) {
                 Tour tour = new Tour();
                 JSONObject jsonObject = new JSONObject(scanner.nextLine());
-
                 tour.setId(UUID.fromString(jsonObject.get("id").toString()));
                 tour.setName((String) jsonObject.get("name"));
                 tour.setDescription((String) jsonObject.get("description"));
@@ -35,13 +31,12 @@ public class TourList {
                 tour.setTravelAgencyId(UUID.fromString(jsonObject.get("travelAgencyId").toString()));
                 tour.setCustomerId(UUID.fromString(jsonObject.get("customerId").toString()));
                 tour.setFree((boolean) jsonObject.get("free"));
-
                 list.add(tour);
-
-
             }
             scanner.close();
 
+        } catch (JSONException e1) {
+            e1.printStackTrace();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "Unable to open file ");
         } catch (IOException e) {
@@ -74,9 +69,11 @@ public class TourList {
             } else {
                 jsonTour.put("price", "111.50");
             }
-
-            jsonTour.put("type", tour.getType());
-
+            if (tour.getPrice() != null) {
+                jsonTour.put("type", tour.getType());
+            } else {
+                jsonTour.put("type", "HOTELRESTTOUR");
+            }
             if (tour.getCountry() != null) {
                 jsonTour.put("country", tour.getCountry());
             } else {
@@ -105,7 +102,7 @@ public class TourList {
             if (String.valueOf(tour.isFree()) != null) {
                 jsonTour.put("free", tour.isFree());
             } else {
-                jsonTour.put("free", "null");
+                jsonTour.put("free", "true");
             }
             fileWriter.write(jsonTour.toString() + "\n");
             fileWriter.flush();

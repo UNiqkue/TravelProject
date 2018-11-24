@@ -60,7 +60,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     public List<Tour> getByType(String type) {
         return getAll()
                 .stream()
-                .filter(tour -> tour.getType().equals(type))
+                .filter(tour -> tour.getType().toString().equals(type))
                 .collect(Collectors.toList());
     }
 
@@ -90,7 +90,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         for (i = 0; i <= list.size() - 1; i++) {
             if (list.get(i).getId().toString().equals(id.toString())) {
                 tour = list.remove(i);
-                System.out.println("Customer found");
+                System.out.println("Tour found");
                 break;
             }
         }
@@ -118,7 +118,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     public List<Tour> getToursById(UUID customerId) {
         return getAll()
                 .stream()
-                .filter(tour -> tour.getCustomerId().equals(customerId))
+                .filter(tour -> tour.getCustomerId().toString().equals(customerId.toString()))
                 .collect(Collectors.toList());
     }
 
