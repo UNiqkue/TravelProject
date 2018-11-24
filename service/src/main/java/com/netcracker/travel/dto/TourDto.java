@@ -17,7 +17,7 @@ public class TourDto {
     private String country;
     private Date startDate;
     private Date endDate;
-    private String nameTravelAgency;
+    private UUID travelAgencyId;
     private UUID customerId;
     private boolean free;
 
@@ -87,12 +87,12 @@ public class TourDto {
         this.endDate = endDate;
     }
 
-    public String getNameTravelAgency() {
-        return nameTravelAgency;
+    public UUID getTravelAgencyId() {
+        return travelAgencyId;
     }
 
-    public void setNameTravelAgency(String nameTravelAgency) {
-        this.nameTravelAgency = nameTravelAgency;
+    public void setTravelAgencyId(UUID travelAgencyId) {
+        this.travelAgencyId = travelAgencyId;
     }
 
     public UUID getCustomerId() {
@@ -136,7 +136,7 @@ public class TourDto {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", nameTravelAgency='" + nameTravelAgency + '\'' +
+                ", travelAgencyId='" + travelAgencyId + '\'' +
                 '}';
     }
 }
