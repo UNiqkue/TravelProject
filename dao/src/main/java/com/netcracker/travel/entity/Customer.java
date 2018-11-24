@@ -12,7 +12,6 @@ public class Customer extends User{
     private Date dateOfBirth;
     private String cardNumber;
     private String passportInfo;
-    private Address address;
     private List<Tour> listOfTours;
 
     public Customer(){}
@@ -36,14 +35,6 @@ public class Customer extends User{
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public String getCardNumber() {
@@ -96,10 +87,8 @@ public class Customer extends User{
                 ", role=" + getRole() +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", address='" + address + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", passportInfo='" + passportInfo + '\'' +
-                ", listOfTours=" + listOfTours +
                 '}';
     }
 
