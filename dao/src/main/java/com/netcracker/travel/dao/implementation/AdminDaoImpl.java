@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class UserDaoImpl implements AbstractDao<User> {
+public class CustomerDaoImpl implements AbstractDao<User> {
 
     private Connection connection;
 

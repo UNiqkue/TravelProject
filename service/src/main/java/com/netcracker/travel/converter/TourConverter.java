@@ -3,7 +3,6 @@ package com.netcracker.travel.converter;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.entity.Tour;
 
-
 public class TourConverter {
 
     public Tour convert(TourDto tourDto){

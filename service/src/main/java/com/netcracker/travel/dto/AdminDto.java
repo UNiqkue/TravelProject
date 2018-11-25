@@ -1,20 +1,30 @@
-package com.netcracker.travel.entity;
+package com.netcracker.travel.dto;
 
-import com.netcracker.travel.entity.abstracts.BaseEntity;
 import com.netcracker.travel.entity.enumeration.Role;
 
 import java.util.Objects;
-import java.util.Set;
+import java.util.UUID;
 
-public class User extends BaseEntity {
+public class AdminDto{
 
+    private UUID id;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
     private String email;
     private String activationCode;
-    private Set<Role> role;
+    private Role role;
+
+    public AdminDto(){}
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -64,11 +74,11 @@ public class User extends BaseEntity {
         this.activationCode = activationCode;
     }
 
-    public Set<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Set<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -76,8 +86,8 @@ public class User extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId());
+       AdminDto adminDto= (AdminDto) o;
+        return Objects.equals(getId(), adminDto.getId());
     }
 
     @Override
@@ -88,8 +98,8 @@ public class User extends BaseEntity {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id='" + getId() + '\'' +
+        return "UserDto{" +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
@@ -99,5 +109,4 @@ public class User extends BaseEntity {
                 ", role=" + role +
                 '}';
     }
-
 }

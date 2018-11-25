@@ -1,6 +1,7 @@
 package com.netcracker.travel.dto;
 
 import com.netcracker.travel.entity.Tour;
+import com.netcracker.travel.entity.enumeration.Role;
 
 import java.sql.Date;
 import java.util.List;
@@ -16,11 +17,7 @@ public class CustomerDto {
     private String password;
     private String email;
     private String activationCode;
-    private String country;
-    private String city;
-    private String street;
-    private Integer numberHouse;
-    private Integer numberRoom;
+    private Role role;
     private String phoneNumber;
     private Date dateOfBirth;
     private String cardNumber;
@@ -101,46 +98,6 @@ public class CustomerDto {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public Integer getNumberHouse() {
-        return numberHouse;
-    }
-
-    public void setNumberHouse(Integer numberHouse) {
-        this.numberHouse = numberHouse;
-    }
-
-    public Integer getNumberRoom() {
-        return numberRoom;
-    }
-
-    public void setNumberRoom(Integer numberRoom) {
-        this.numberRoom = numberRoom;
-    }
-
     public String getCardNumber() {
         return cardNumber;
     }
@@ -163,6 +120,14 @@ public class CustomerDto {
 
     public void setListOfTours(List<Tour> listOfTours) {
         this.listOfTours = listOfTours;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -189,16 +154,10 @@ public class CustomerDto {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", activationCode='" + activationCode + '\'' +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", numberHouse=" + numberHouse +
-                ", numberRoom=" + numberRoom +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", passportInfo='" + passportInfo + '\'' +
-                ", listOfTours=" + listOfTours +
                 '}';
     }
 }

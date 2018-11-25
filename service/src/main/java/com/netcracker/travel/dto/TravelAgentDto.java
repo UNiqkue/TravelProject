@@ -1,5 +1,7 @@
 package com.netcracker.travel.dto;
 
+import com.netcracker.travel.entity.enumeration.Role;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,6 +14,7 @@ public class TravelAgentDto {
     private String password;
     private String email;
     private String activationCode;
+    private Role role;
     private String phoneNumber;
     private String position;
     private UUID travelAgencyId;
@@ -94,6 +97,14 @@ public class TravelAgentDto {
 
     public void setTravelAgencyId(UUID travelAgencyId) {
         this.travelAgencyId = travelAgencyId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
