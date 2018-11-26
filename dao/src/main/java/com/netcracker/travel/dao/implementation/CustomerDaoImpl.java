@@ -22,7 +22,7 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
 
     public static CustomerDaoImpl getInstance(){
         if (instance == null) {
-            synchronized (CustomerDaoImpl.class) {
+            synchronized (AdminDaoImpl.class) {
                 if (instance == null) {
                     instance = new CustomerDaoImpl();
 
@@ -137,6 +137,12 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
         preparedStatement.close();
     }
 
+    public Customer getByUsername(String username){
+        return null;
+    }
 
 
+    public Customer getByEmail(String email) {
+        return null;
+    }
 }

@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -52,11 +53,13 @@ public class Menu {
                 e.printStackTrace();
             } catch (NumberFormatException e) {
                 System.out.println("Wrong input");
+            } catch (SQLException e){
+                e.printStackTrace();
             }
         }
     }
 
-    public static void adminConsole() {
+    public static void adminConsole() throws SQLException {
         BufferedReader reader = getBufferedReader();
         AdminServiceImpl adminService = new AdminServiceImpl();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
@@ -125,7 +128,7 @@ public class Menu {
     }
 
 
-    public static void travelAgentConsole(String username) {
+    public static void travelAgentConsole(String username) throws SQLException {
         BufferedReader reader = getBufferedReader();
         TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         TravelAgentDto travelAgentDto = travelAgentService.getByUsername(username);
@@ -182,8 +185,10 @@ public class Menu {
                                                 }
                                                 tourDto.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
                                                 tourDto.setFree(true);
-                                            } catch (IOException | IllegalArgumentException e) {
-                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                System.out.println("Not");
+                                            } catch(IllegalArgumentException e){
+                                                System.out.println("Not");
                                             }
                                         }
                                         travelAgentService.createTour(tourDto);
@@ -252,7 +257,7 @@ public class Menu {
         }
     }
 
-    public static void customerConsole(String username) {
+    public static void customerConsole(String username) throws SQLException {
         BufferedReader reader = getBufferedReader();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         CustomerDto customerDto = customerService.getByUsername(username);
@@ -264,7 +269,7 @@ public class Menu {
                 int y = Integer.parseInt(reader.readLine());
                 switch (y) {
                     case 1:
-
+/*
                         boolean exit3 = false;
                         while (!exit3) {
                             try {
@@ -348,7 +353,7 @@ public class Menu {
                                 System.out.println("Wrong input");
                             }
                         }
-
+*/
                         break;
                     case 2:
                         String tourId = "00000000-0000-0000-0000-000000000000";
@@ -406,7 +411,9 @@ public class Menu {
             try {
                 tourUid = UUID.fromString(reader.readLine());
                 tourId = tourUid.toString();
-            } catch (IOException | IllegalArgumentException e) {
+            } catch (IOException e) {
+                System.out.println("Not corrected id");
+            } catch(IllegalArgumentException e){
                 System.out.println("Not corrected id");
             }
             if (tourId.equals("00000000-0000-0000-0000-000000000000")) {

@@ -1,7 +1,7 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
-import com.netcracker.travel.entity.User;
+import com.netcracker.travel.entity.Admin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,21 +12,21 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class CustomerDaoImpl implements AbstractDao<User> {
+public class AdminDaoImpl implements AbstractDao<Admin> {
 
     private Connection connection;
 
-    private static volatile UserDaoImpl instance;
+    private static volatile AdminDaoImpl instance;
 
-    private UserDaoImpl(){
+    private AdminDaoImpl(){
 
     }
 
-    public static UserDaoImpl getInstance(){
+    public static AdminDaoImpl getInstance(){
         if (instance == null) {
-            synchronized (UserDaoImpl.class) {
+            synchronized (AdminDaoImpl.class) {
                 if (instance == null) {
-                    instance = new UserDaoImpl();
+                    instance = new AdminDaoImpl();
                 }
             }
         }
@@ -34,20 +34,20 @@ public class CustomerDaoImpl implements AbstractDao<User> {
     }
 
 
-    private User setResultUser(ResultSet resultSet) throws SQLException {
-        User user = new User();
-        user.setId(UUID.fromString(resultSet.getString("id")));
-        user.setFirstName(resultSet.getString("fisrtName"));
-        user.setLastName(resultSet.getString("lastName"));
-        user.setUsername(resultSet.getString("username"));
-        user.setPassword(resultSet.getString("password"));
-        user.setEmail(resultSet.getString("email"));
-        user.setActivationCode(resultSet.getString("activationCode"));
-        return user;
+    private Admin setResultUser(ResultSet resultSet) throws SQLException {
+        Admin admin = new Admin();
+        admin.setId(UUID.fromString(resultSet.getString("id")));
+        admin.setFirstName(resultSet.getString("fisrtName"));
+        admin.setLastName(resultSet.getString("lastName"));
+        admin.setUsername(resultSet.getString("username"));
+        admin.setPassword(resultSet.getString("password"));
+        admin.setEmail(resultSet.getString("email"));
+        admin.setActivationCode(resultSet.getString("activationCode"));
+        return admin;
     }
 
-    public User getById(UUID id) throws SQLException {
-        User user = null;
+    public Admin getById(UUID id) throws SQLException {
+        Admin admin = null;
         String uuid = id.toString();
 
         PreparedStatement preparedStatement = connection.prepareStatement("" +
@@ -55,11 +55,11 @@ public class CustomerDaoImpl implements AbstractDao<User> {
         preparedStatement.setString(1, uuid);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            user = setResultUser(resultSet);
+            admin = setResultUser(resultSet);
         }
         resultSet.close();
         preparedStatement.close();
-        return user;
+        return admin;
     }
 
     /*public Collection<User> getByName(String name) {
@@ -69,8 +69,8 @@ public class CustomerDaoImpl implements AbstractDao<User> {
                 .collect(Collectors.toList());
     }*/
 
-    public List<User> getAll() throws SQLException {
-        List<User> usersList = new ArrayList<>();
+    public List<Admin> getAll() throws SQLException {
+        List<Admin> usersList = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement("" +
                 "SELECT * FROM user");
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -82,8 +82,8 @@ public class CustomerDaoImpl implements AbstractDao<User> {
         return usersList;
     }
 
-    public User save(User entity) throws SQLException {
-        User user = null;
+    public Admin save(Admin entity) throws SQLException {
+        Admin admin = null;
         PreparedStatement preparedStatement = connection.prepareStatement("" +
                 "INSERT INTO user(firstName, lastName, username, password, email, activationCode)" +
                 "VALUES(?, ?, ?, ?, ?, ?)");
@@ -99,15 +99,15 @@ public class CustomerDaoImpl implements AbstractDao<User> {
         preparedStatement.setString(1, entity.getId().toString());
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            user = setResultUser(resultSet);
+            admin = setResultUser(resultSet);
         }
         resultSet.close();
         preparedStatement.close();
-        return user;
+        return admin;
     }
 
-    public User update(User entity) throws SQLException {
-        User user = null;
+    public Admin update(Admin entity) throws SQLException {
+        Admin admin = null;
         PreparedStatement preparedStatement = connection.prepareStatement("" +
                 "UPDATE user SET firstName=?, lastName=?, username=?, password=?, email=?, activationCode=? WHERE id=?");
         preparedStatement.setString(1, entity.getFirstName());
@@ -122,11 +122,11 @@ public class CustomerDaoImpl implements AbstractDao<User> {
         preparedStatement.setString(1, entity.getId().toString());
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            user = setResultUser(resultSet);
+            admin = setResultUser(resultSet);
         }
         resultSet.close();
         preparedStatement.close();
-        return user;
+        return admin;
     }
 
     public void delete(UUID id) throws SQLException {
@@ -136,6 +136,10 @@ public class CustomerDaoImpl implements AbstractDao<User> {
         preparedStatement.setString(1, uuid);
         preparedStatement.execute();
         preparedStatement.close();
+    }
+
+    public Admin getByUsername(String username){
+        return null;
     }
 
 }

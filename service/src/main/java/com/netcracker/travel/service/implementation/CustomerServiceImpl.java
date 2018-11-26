@@ -9,7 +9,6 @@ import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
-import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.PhoneNumberException;
@@ -17,7 +16,7 @@ import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 
-import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -42,34 +41,34 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         return customerConverter.convert(customerDao.getByUsername(username));
     }
 
-    public List<CustomerDto> getAll() {
+    public List<CustomerDto> getAll() throws SQLException {
         return customerDao.getAll()
                 .stream()
                 .map(customer -> customerConverter.convert(customer))
                 .collect(Collectors.toList());
     }
 
-    public TourDto bookTour(UUID id, UUID customerId) {
+    public TourDto bookTour(UUID id, UUID customerId) throws SQLException {
         TourDto temp = buyTour(id, customerId);
         System.out.println("You have 3 days to pay for the tour");
         return temp;
     }
 
-    public TourDto buyTour(UUID id, UUID customerId) {
+    public TourDto buyTour(UUID id, UUID customerId) throws SQLException {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setCustomerId(customerId);
         tourDto.setFree(false);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public List<TourDto> searchTourByName(String name) {
+  /*  public List<TourDto> searchTourByName(String name) throws SQLException {
         return tourDao.getByName(name)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByDate(Date startDate, Date endDate) {
+    public List<TourDto> searchTourByDate(Date startDate, Date endDate) throws SQLException {
         return tourDao.getByDate(startDate, endDate)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
@@ -83,7 +82,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByCountry(String country) {
+    public List<TourDto> searchTourByCountry(String country) throws SQLException {
         return tourDao.getByCountry(country)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
@@ -103,24 +102,24 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .stream()
                 .filter(travelAgency -> travelAgency.getName().equals(name))
                 .findFirst().get());
-    }
+    }*/
 
 
-    public TourDto cancelTour(UUID tourId) {
+    public TourDto cancelTour(UUID tourId) throws SQLException {
         TourDto tourDto = tourConverter.convert(tourDao.getById(tourId));
         tourDto.setCustomerId(null);
         tourDto.setFree(true);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public List<TourDto> viewOrderedTours(UUID id) {
+    public List<TourDto> viewOrderedTours(UUID id) throws SQLException {
         return tourDao.getToursById(id)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
-    public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
+    public CustomerDto updatePhoneNumber(String username, String phoneNumber) throws SQLException {
         CustomerDto customerDto = getByUsername(username);
         customerDto.setPhoneNumber(phoneNumber);
         return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
@@ -136,7 +135,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         }
     }
 
-    public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
+    public CustomerDto registration(RegistrationRequestDto registrationRequestDto) throws SQLException {
         if (checkExisting(registrationRequestDto) == false) {
             return null;
         }

@@ -211,6 +211,12 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         preparedStatement.close();
         return tours;
     }
+
+    public Tour getByTravelAgencyId(UUID id) {
+        return null;
+    }
+
+
 /*
     public List<Tour> getTourByCustomerId(UUID customerId) throws SQLException {
         List<Tour> toursList = new ArrayList<>();

@@ -7,10 +7,11 @@ import com.netcracker.travel.service.implementation.AuthenticationServiceImpl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 
 public class AuthenticationController {
 
-    public void login() {
+    public void login() throws SQLException {
         AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 

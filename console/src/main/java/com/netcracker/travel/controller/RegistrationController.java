@@ -10,13 +10,14 @@ import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.UUID;
 
 public class RegistrationController {
 
     private CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();
 
-    public CustomerDto registration() throws UsernameExistException, EmailExistException {
+    public CustomerDto registration() throws UsernameExistException, EmailExistException, SQLException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();

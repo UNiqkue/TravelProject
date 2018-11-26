@@ -129,4 +129,8 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         preparedStatement.execute();
         preparedStatement.close();
     }
+
+    public TravelAgency getByName(String name) {
+        return null;
+    }
 }

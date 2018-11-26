@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
@@ -141,4 +140,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     }
 
 
+    public TravelAgent getByUsername(String username) {
+        return null;
+    }
 }
