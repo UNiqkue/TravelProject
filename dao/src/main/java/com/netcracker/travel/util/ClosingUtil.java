@@ -1,14 +1,9 @@
-package by.pvt.khudnitsky.payments.utils;
-
-import org.apache.log4j.Logger;
+package com.netcracker.travel.util;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
-/**
- * Copyright (c) 2016, Khudnitsky. All rights reserved.
- */
 public class ClosingUtil {
 
     private ClosingUtil(){}
@@ -19,7 +14,7 @@ public class ClosingUtil {
                 statement.close();
             }
             catch(SQLException e){
-                PaymentSystemLogger.getInstance().logError(ClosingUtil.class, e.getMessage());
+                SystemLogger.getInstance().logError(ClosingUtil.class, e.getMessage());
             }
         }
     }
@@ -30,7 +25,7 @@ public class ClosingUtil {
                 resultSet.close();
             }
             catch(SQLException e){
-                PaymentSystemLogger.getInstance().logError(ClosingUtil.class, e.getMessage());
+                SystemLogger.getInstance().logError(ClosingUtil.class, e.getMessage());
             }
         }
     }

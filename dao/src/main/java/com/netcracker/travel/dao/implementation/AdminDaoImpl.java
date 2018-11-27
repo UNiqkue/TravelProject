@@ -2,6 +2,11 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Admin;
+import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.util.ClosingUtil;
+import com.netcracker.travel.util.SystemLogger;
+import com.netcracker.travel.util.PoolConnector;
+import com.netcracker.travel.util.SqlConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +15,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 public class AdminDaoImpl implements AbstractDao<Admin> {
 
     private Connection connection;
+    private PreparedStatement statement;
+    private ResultSet result;
 
     private static volatile AdminDaoImpl instance;
 
@@ -33,113 +41,179 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         return instance;
     }
 
-
-    private Admin setResultUser(ResultSet resultSet) throws SQLException {
-        Admin admin = new Admin();
-        admin.setId(UUID.fromString(resultSet.getString("id")));
-        admin.setFirstName(resultSet.getString("fisrtName"));
-        admin.setLastName(resultSet.getString("lastName"));
-        admin.setUsername(resultSet.getString("username"));
-        admin.setPassword(resultSet.getString("password"));
-        admin.setEmail(resultSet.getString("email"));
-        admin.setActivationCode(resultSet.getString("activationCode"));
-        return admin;
-    }
-
-    public Admin getById(UUID id) throws SQLException {
-        Admin admin = null;
-        String uuid = id.toString();
-
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE uuid=?");
-        preparedStatement.setString(1, uuid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            admin = setResultUser(resultSet);
+    public Admin save(Admin admin) {
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.ADD_ADMIN);
+            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(2, admin.getFirstName());
+            statement.setString(3, admin.getLastName());
+            statement.setString(4, admin.getUsername());
+            statement.setString(5, admin.getPassword());
+            statement.setString(6, admin.getEmail());
+            statement.setString(7, admin.getActivationCode());
+            statement.setString(8, Role.ADMIN.toString());
+            statement.executeUpdate();
         }
-        resultSet.close();
-        preparedStatement.close();
+        catch (SQLException e){
+            String message = "Unable to add the user account ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
         return admin;
     }
 
-    /*public Collection<User> getByName(String name) {
-        return getEntityMapValues()
+    public List<Admin> getAll() {
+        List<Admin> list = new ArrayList<>();
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_ALL_ADMINS);
+            result = statement.executeQuery();
+            while (result.next()) {
+                Admin admin = buildAdmin(result);
+//                admin.setId(UUID.fromString(result.getString("id")));
+//                admin.setFirstName(result.getString("firstName"));
+//                admin.setLastName(result.getString("lastName"));
+//                admin.setUsername(result.getString("username"));
+//                admin.setPassword(result.getString("password"));
+//                admin.setEmail(result.getString("email"));
+//                admin.setActivationCode(result.getString("activationCode"));
+                list.add(admin);
+            }
+        }
+        catch (SQLException e){
+            String message = "Unable to return list of users ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
+        return list;
+    }
+
+    public Admin getById(UUID id) {
+        Admin admin = null;
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_ID);
+            statement.setString(1, id.toString());
+            result = statement.executeQuery();
+            while (result.next()) {
+                admin = buildAdmin(result);
+            }
+        }
+        catch (SQLException e){
+            String message = "Unable to return the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
+        return admin;
+    }
+
+    public List<Admin> getByName(String lastName) {
+        List<Admin> list = getAll()
                 .stream()
-                .filter(user -> user.getUsername().equals(name))
+                .filter(admin -> admin.getLastName().equals(lastName))
                 .collect(Collectors.toList());
-    }*/
-
-    public List<Admin> getAll() throws SQLException {
-        List<Admin> usersList = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            usersList.add(setResultUser(resultSet));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return usersList;
+        return list;
     }
 
-    public Admin save(Admin entity) throws SQLException {
+    public Admin getByUsername(String username) {
         Admin admin = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "INSERT INTO user(firstName, lastName, username, password, email, activationCode)" +
-                "VALUES(?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, entity.getFirstName());
-        preparedStatement.setString(2, entity.getLastName());
-        preparedStatement.setString(3, entity.getUsername());
-        preparedStatement.setString(4, entity.getPassword());
-        preparedStatement.setString(5, entity.getEmail());
-        preparedStatement.setString(6, entity.getActivationCode());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            admin = setResultUser(resultSet);
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_USERNAME);
+            statement.setString(1, username);
+            result = statement.executeQuery();
+            while (result.next()) {
+                admin = buildAdmin(result);
+            }
         }
-        resultSet.close();
-        preparedStatement.close();
+        catch (SQLException e){
+            String message = "Unable to return the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
         return admin;
     }
 
-    public Admin update(Admin entity) throws SQLException {
+
+    public Admin getByEmail(String email) {
         Admin admin = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "UPDATE user SET firstName=?, lastName=?, username=?, password=?, email=?, activationCode=? WHERE id=?");
-        preparedStatement.setString(1, entity.getFirstName());
-        preparedStatement.setString(2, entity.getLastName());
-        preparedStatement.setString(3, entity.getUsername());
-        preparedStatement.setString(4, entity.getPassword());
-        preparedStatement.setString(5, entity.getEmail());
-        preparedStatement.setString(6, entity.getActivationCode());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            admin = setResultUser(resultSet);
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_EMAIL);
+            statement.setString(1, email);
+            result = statement.executeQuery();
+            while (result.next()) {
+                admin = buildAdmin(result);
+            }
         }
-        resultSet.close();
-        preparedStatement.close();
+        catch (SQLException e){
+            String message = "Unable to return the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
         return admin;
     }
 
-    public void delete(UUID id) throws SQLException {
-        String uuid = id.toString();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "DELETE FROM user WHERE  id=?");
-        preparedStatement.setString(1, uuid);
-        preparedStatement.execute();
-        preparedStatement.close();
+    public Admin update(Admin admin){
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.PUT_USERNAME);
+            statement.setString(1, admin.getUsername());
+            statement.setString(2, admin.getId().toString());
+            statement.executeUpdate();
+        }
+        catch(SQLException e){
+            String message = "Unable to update amount ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
+        return admin;
     }
 
-    public Admin getByUsername(String username){
-        return null;
+    public void delete(UUID id) {
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.DELETE_USER_BY_ID);
+            statement.setString(1, id.toString());
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            String message = "Unable to delete the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
+    }
+
+    private Admin buildAdmin(ResultSet result) throws SQLException{
+        String uid = result.getString("id");
+        String firstName = result.getString("firstName");
+        String lastName = result.getString("lastName");
+        String username = result.getString("username");
+        String password = result.getString("password");
+        String email = result.getString("email");
+        String activationCode = result.getString("activationCode");
+        Admin admin =new Admin(UUID.fromString(uid), firstName, lastName, username, password, email, activationCode);
+        admin.setRole(Role.valueOf(result.getString("role")));
+        return admin;
     }
 
 }

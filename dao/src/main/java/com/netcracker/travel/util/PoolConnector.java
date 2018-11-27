@@ -1,29 +1,17 @@
-/**
- * Copyright (c) 2016, Khudnitsky. All rights reserved.
- */
-package by.pvt.khudnitsky.payments.managers;
+package com.netcracker.travel.util;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import by.pvt.khudnitsky.payments.exceptions.DaoException;
-import by.pvt.khudnitsky.payments.utils.PaymentSystemLogger;
-import org.apache.commons.dbcp2.BasicDataSource;
-
-/**
- * @author khudnitsky
- * @version 1.0
- *
- */
-
-public class PoolManager {
-    private static PoolManager instance;
+public class PoolConnector {
+    private static PoolConnector instance;
     private BasicDataSource dataSource;
 
     private static ThreadLocal<Connection> connectionHolder = new ThreadLocal<>();
 
-    private PoolManager() {
+    private PoolConnector() {
         ResourceBundle bundle = ResourceBundle.getBundle("database");
         dataSource = new BasicDataSource();
         dataSource.setDriverClassName(bundle.getString("database.driver"));
@@ -32,9 +20,9 @@ public class PoolManager {
         dataSource.setUrl(bundle.getString("database.url"));
     }
 
-    public static synchronized PoolManager getInstance(){
+    public static synchronized PoolConnector getInstance(){
         if(instance == null){
-            instance = new PoolManager();
+            instance = new PoolConnector();
         }
         return instance;
     }
@@ -44,7 +32,7 @@ public class PoolManager {
         return connection;
     }
 
-    public Connection getConnection() throws DaoException {
+    public Connection getConnection() {
         try {
             if (connectionHolder.get() == null) {
                 Connection connection = connect();
@@ -53,7 +41,6 @@ public class PoolManager {
         }
         catch(SQLException e){
             String message = "Unable to get connection";
-            throw new DaoException(message, e);
         }
         return connectionHolder.get();
     }
@@ -65,7 +52,7 @@ public class PoolManager {
                 connectionHolder.remove();
             }
             catch(SQLException e){
-                PaymentSystemLogger.getInstance().logError(getClass(), e.getMessage());
+                SystemLogger.getInstance().logError(getClass(), e.getMessage());
             }
         }
     }

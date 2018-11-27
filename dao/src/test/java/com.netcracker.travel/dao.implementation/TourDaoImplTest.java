@@ -1,0 +1,47 @@
+package com.netcracker.travel.dao.implementation;
+
+import com.netcracker.travel.entity.Tour;
+import com.netcracker.travel.entity.enumeration.TypeTour;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.sql.Date;
+import java.util.UUID;
+
+public class TourDaoImplTest {
+
+    Tour tour;
+
+    @Test
+    public void testSave() throws Exception{
+        TourDaoImpl.getInstance().save(tour);
+        Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
+        Assert.assertEquals(tour, actual);
+        TourDaoImpl.getInstance().delete(tour.getId());
+    }
+
+    @Test
+    public void testGetById() throws Exception {
+        tour = new Tour(UUID.randomUUID(), "Tour", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.randomUUID(), UUID.randomUUID(), true);
+        Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
+        Assert.assertEquals(tour, actual);
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        TourDaoImpl.getInstance().save(tour);
+        tour.setPrice(10.0);
+        TourDaoImpl.getInstance().update(tour);
+        Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
+        TourDaoImpl.getInstance().delete(tour.getId());
+        Assert.assertEquals(tour, actual);
+    }
+
+    @Test
+    public void testDelete() throws Exception{
+        TourDaoImpl.getInstance().save(tour);
+        TourDaoImpl.getInstance().delete(tour.getId());
+        Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
+        Assert.assertNull(actual);
+    }
+}

@@ -2,18 +2,26 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgency;
+import com.netcracker.travel.util.ClosingUtil;
+import com.netcracker.travel.util.SystemLogger;
+import com.netcracker.travel.util.PoolConnector;
+import com.netcracker.travel.util.SqlConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
 
     private Connection connection;
+    private PreparedStatement statement;
+    private ResultSet result;
+
 
     private static volatile TravelAgencyDaoImpl instance;
 
@@ -32,105 +40,126 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         return instance;
     }
 
-    private TravelAgency setResultTravelAgency(ResultSet resultSet) throws SQLException {
-        TravelAgency travelAgency = new TravelAgency();
-        travelAgency.setId(UUID.fromString(resultSet.getString("id")));
-        travelAgency.setName(resultSet.getString("name"));
-        travelAgency.setCountTour(Integer.valueOf(resultSet.getString("countTour")));
-        travelAgency.setCountTravelAgent(Integer.valueOf(resultSet.getString("countTravelAgents")));
-
-        return travelAgency;
-    }
-
-    public TravelAgency getById(UUID id) throws SQLException {
-        TravelAgency travelAgency = null;
-        String uuid = id.toString();
-
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM travelagency WHERE uuid=?");
-        preparedStatement.setString(1, uuid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            travelAgency = setResultTravelAgency(resultSet);
+    public TravelAgency save(TravelAgency travelAgency) {
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.ADD_TRAVELAGENCY);
+            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(2, travelAgency.getName());
+            statement.setInt(3, travelAgency.getCountTour());
+            statement.setInt(4, travelAgency.getCountTravelAgent());
+            statement.executeUpdate();
         }
-        resultSet.close();
-        preparedStatement.close();
+        catch (SQLException e){
+            String message = "Unable to add the user account ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
         return travelAgency;
     }
 
-    /*public Collection<travelAgency> getByName(String name) {
-        return getEntityMapValues()
+    @Override
+    public TravelAgency update(TravelAgency travelAgency){
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.PUT_NAME);
+            statement.setString(1, travelAgency.getId().toString());
+            statement.executeUpdate();
+        }
+        catch(SQLException e){
+            String message = "Unable to update amount ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
+        return travelAgency;
+    }
+
+    public TravelAgency getById(UUID id) {
+        TravelAgency travelAgency = null;
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_TRAVELAGENCY_BY_ID);
+            statement.setString(1, id.toString());
+            result = statement.executeQuery();
+            while (result.next()) {
+                travelAgency = buildTravelAgency(result);
+            }
+        }
+        catch (SQLException e){
+            String message = "Unable to return the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
+        return travelAgency;
+    }
+
+    public List<TravelAgency> getByName(String name) {
+        List<TravelAgency> list = getAll()
                 .stream()
-                .filter(travelAgency -> travelAgency.setResultTravelAgencyname().equals(name))
+                .filter(admin -> admin.getName().equals(name))
                 .collect(Collectors.toList());
-    }*/
-
-    public Collection<TravelAgency> getAll() throws SQLException {
-        Collection<TravelAgency> travelAgenciesList = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM travelagency");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            travelAgenciesList.add(setResultTravelAgency(resultSet));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return travelAgenciesList;
+        return list;
     }
 
-    public TravelAgency save(TravelAgency entity) throws SQLException {
-        TravelAgency travelAgency = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "INSERT INTO travelAgency(name, countTour, countTravelAgents)" +
-                "VALUES(?, ?, ?)");
-        preparedStatement.setString(1, entity.getName());
-        preparedStatement.setInt(2, entity.getCountTour());
-        preparedStatement.setInt(3, entity.getCountTravelAgent());
 
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM travelagency WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            travelAgency = setResultTravelAgency(resultSet);
+    public List<TravelAgency> getAll()  {
+        List<TravelAgency> list = new ArrayList<>();
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_ALL_TRAVELAGENCIES);
+            result = statement.executeQuery();
+            while (result.next()) {
+                TravelAgency travelAgency = new TravelAgency();
+                travelAgency.setId(UUID.fromString(result.getString("id")));
+                travelAgency.setName(result.getString("name"));
+                travelAgency.setCountTour(result.getInt("countTour"));
+                travelAgency.setCountTravelAgent(result.getInt("countTravelAgent"));
+                list.add(travelAgency);
+            }
         }
-        resultSet.close();
-        preparedStatement.close();
-         return travelAgency;
+        catch (SQLException e){
+            String message = "Unable to return list of users ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
+        return list;
     }
 
-    public TravelAgency update(TravelAgency entity) throws SQLException {
-        TravelAgency travelAgency = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "UPDATE travelAgency SET name=?, countTour=?, countTravelAgents=? WHERE id=?");
-        preparedStatement.setString(1, entity.getName());
-        preparedStatement.setInt(2, entity.getCountTour());
-        preparedStatement.setInt(3, entity.getCountTravelAgent());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM travelagency WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            travelAgency = setResultTravelAgency(resultSet);
+
+
+
+
+    public void delete(UUID id) {
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.DELETE_TRAVELAGENCY_BY_ID);
+            statement.setString(1, id.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            String message = "Unable to delete the account ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        } finally {
+            ClosingUtil.close(statement);
         }
-        resultSet.close();
-        preparedStatement.close();
+    }
+
+    private TravelAgency buildTravelAgency(ResultSet result) throws SQLException{
+        String uid = result.getString("id");
+        String name = result.getString("name");
+        int countTour = result.getInt("countTour");
+        int countTravelAgent = result.getInt("countTravelAgent");
+        TravelAgency travelAgency = new TravelAgency(UUID.fromString(uid), name, countTour, countTravelAgent);
         return travelAgency;
     }
 
-    public void delete(UUID id) throws SQLException {
-
-        String uuid = id.toString();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "DELETE FROM travelagency WHERE  id=?");
-        preparedStatement.setString(1, uuid);
-        preparedStatement.execute();
-        preparedStatement.close();
-    }
-
-    public TravelAgency getByName(String name) {
-        return null;
-    }
 }

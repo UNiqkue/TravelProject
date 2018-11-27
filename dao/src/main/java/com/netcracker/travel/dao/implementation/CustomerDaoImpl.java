@@ -2,18 +2,23 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Customer;
+import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.util.ClosingUtil;
+import com.netcracker.travel.util.SystemLogger;
+import com.netcracker.travel.util.PoolConnector;
+import com.netcracker.travel.util.SqlConfig;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CustomerDaoImpl implements AbstractDao<Customer> {
 
     private Connection connection;
+    private PreparedStatement statement;
+    private ResultSet result;
 
     private static volatile CustomerDaoImpl instance;
 
@@ -32,117 +37,191 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
         return instance;
     }
 
-    private Customer setResultCustomer(ResultSet resultSet) throws SQLException {
-        Customer customer = new Customer();
-        customer.setId(UUID.fromString(resultSet.getString("id")));
-        customer.setFirstName(resultSet.getString("fisrtName"));
-        customer.setLastName(resultSet.getString("lastName"));
-        customer.setUsername(resultSet.getString("username"));
-        customer.setPassword(resultSet.getString("password"));
-        customer.setEmail(resultSet.getString("email"));
-        customer.setActivationCode(resultSet.getString("activationCode"));
-
-        return customer;
-    }
-
-    public Customer getById(UUID id) throws SQLException {
-        Customer customer = null;
-        String uuid = id.toString();
-
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE uuid=?");
-        preparedStatement.setString(1, uuid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            customer = setResultCustomer(resultSet);
+    public Customer save(Customer customer) {
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.ADD_CUSTOMER);
+            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(2, customer.getFirstName());
+            statement.setString(3, customer.getLastName());
+            statement.setString(4, customer.getUsername());
+            statement.setString(5, customer.getPassword());
+            statement.setString(6, customer.getEmail());
+            statement.setString(7, customer.getActivationCode());
+            statement.setString(8, customer.getCardNumber());
+            statement.setDate(9, customer.getDateOfBirth());
+            statement.setString(10, customer.getPassportInfo());
+            statement.setString(11, customer.getPhoneNumber());
+            statement.setString(12, Role.CUSTOMER.toString());
+            statement.executeUpdate();
         }
-        resultSet.close();
-        preparedStatement.close();
+        catch (SQLException e){
+            String message = "Unable to add the user account ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
         return customer;
     }
 
-    /*public Collection<Customer> getByName(String name) {
-        return getEntityMapValues()
+
+    public List<Customer> getAll() {
+        List<Customer> list = new ArrayList<>();
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_ALL_CUSTOMERS);
+            result = statement.executeQuery();
+            while (result.next()) {
+                Customer customer = buildCustomer(result);
+//                customer.setId(UUID.fromString(result.getString("id")));
+//                customer.setFirstName(result.getString("firstName"));
+//                customer.setLastName(result.getString("lastName"));
+//                customer.setUsername(result.getString("username"));
+//                customer.setPassword(result.getString("password"));
+//                customer.setEmail(result.getString("email"));
+//                customer.setActivationCode(result.getString("activationCode"));
+//                customer.setCardNumber(result.getString("cardNumber"));
+//                customer.setDateOfBirth(result.getDate("dateOfBirth"));
+//                customer.setPassportInfo(result.getString("passportInfo"));
+//                customer.setPhoneNumber(result.getString("phoneNumber"));
+                list.add(customer);
+            }
+        }
+        catch (SQLException e){
+            String message = "Unable to return list of users ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
+        return list;
+    }
+
+    public Customer getById(UUID id) {
+        Customer customer = null;
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_ID);
+            statement.setString(1, id.toString());
+            result = statement.executeQuery();
+            while (result.next()) {
+                customer = buildCustomer(result);
+            }
+        }
+        catch (SQLException e){
+            String message = "Unable to return the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
+        return customer;
+    }
+
+    public List<Customer> getByName(String lastName) {
+        List<Customer> customerList = getAll()
                 .stream()
-                .filter(Customer -> Customer.setResultCustomername().equals(name))
+                .filter(admin -> admin.getLastName().equals(lastName))
                 .collect(Collectors.toList());
-    }*/
-
-    public Collection<Customer> getAll() throws SQLException {
-        Collection<Customer> customersList = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            customersList.add(setResultCustomer(resultSet));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        return customersList;
+        return customerList;
     }
 
-    public Customer save(Customer entity) throws SQLException {
+    public Customer getByUsername(String username) {
         Customer customer = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "INSERT INTO user(firstName, lastName, username, password, email, activationCode)" +
-                "VALUES(?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, entity.getFirstName());
-        preparedStatement.setString(2, entity.getLastName());
-        preparedStatement.setString(3, entity.getUsername());
-        preparedStatement.setString(4, entity.getPassword());
-        preparedStatement.setString(5, entity.getEmail());
-        preparedStatement.setString(6, entity.getActivationCode());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            customer = setResultCustomer(resultSet);
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_USERNAME);
+            statement.setString(1, username);
+            result = statement.executeQuery();
+            while (result.next()) {
+                customer = buildCustomer(result);
+            }
         }
-        resultSet.close();
-        preparedStatement.close();
-         return customer;
-    }
-
-    public Customer update(Customer entity) throws SQLException {
-        Customer customer = null;
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "UPDATE customer SET firstName=?, lastName=?, username=?, password=?, email=?, activationCode=? WHERE id=?");
-        preparedStatement.setString(1, entity.getFirstName());
-        preparedStatement.setString(2, entity.getLastName());
-        preparedStatement.setString(3, entity.getUsername());
-        preparedStatement.setString(4, entity.getPassword());
-        preparedStatement.setString(5, entity.getEmail());
-        preparedStatement.setString(6, entity.getActivationCode());
-        preparedStatement.execute();
-        preparedStatement = connection.prepareStatement("" +
-                "SELECT * FROM user WHERE id=?");
-        preparedStatement.setString(1, entity.getId().toString());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            customer = setResultCustomer(resultSet);
+        catch (SQLException e){
+            String message = "Unable to return the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
         }
-        resultSet.close();
-        preparedStatement.close();
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
         return customer;
-    }
-
-    public void delete(UUID id) throws SQLException {
-        String uuid = id.toString();
-        PreparedStatement preparedStatement = connection.prepareStatement("" +
-                "DELETE FROM user WHERE  id=?");
-        preparedStatement.setString(1, uuid);
-        preparedStatement.execute();
-        preparedStatement.close();
-    }
-
-    public Customer getByUsername(String username){
-        return null;
     }
 
 
     public Customer getByEmail(String email) {
-        return null;
+        Customer customer = null;
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_EMAIL);
+            statement.setString(1, email);
+            result = statement.executeQuery();
+            while (result.next()) {
+                customer = buildCustomer(result);
+            }
+        }
+        catch (SQLException e){
+            String message = "Unable to return the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(result);
+            ClosingUtil.close(statement);
+        }
+        return customer;
+    }
+
+    public Customer update(Customer customer){
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.PUT_PHONE);
+            statement.setString(1, customer.getPhoneNumber());
+            statement.setString(2, customer.getId().toString());
+            statement.executeUpdate();
+        }
+        catch(SQLException e){
+            String message = "Unable to update amount ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
+        return customer;
+    }
+
+    public void delete(UUID id) {
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.DELETE_USER_BY_ID);
+            statement.setString(1, id.toString());
+            statement.executeUpdate();
+        }
+        catch (SQLException e){
+            String message = "Unable to delete the user ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
+    }
+
+    private Customer buildCustomer(ResultSet result) throws SQLException{
+        String uid = result.getString("id");
+        String firstName = result.getString("firstName");
+        String lastName = result.getString("lastName");
+        String username = result.getString("username");
+        String password = result.getString("password");
+        String email = result.getString("email");
+        String activationCode = result.getString("activationCode");
+        String phoneNumber = result.getString("phoneNumber");
+        String dateOfBirth = result.getString("dateOfBirth");
+        String cardNumber = result.getString("cardNumber");
+        String passportInfo = result.getString("passportInfo");
+        Customer customer =new Customer(UUID.fromString(uid), firstName, lastName, username, password, email, activationCode, phoneNumber, Date.valueOf(dateOfBirth), cardNumber, passportInfo);
+        customer.setRole(Role.valueOf(result.getString("role")));
+        return customer;
     }
 }
