@@ -13,7 +13,6 @@ import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.entity.TravelAgency;
 import com.netcracker.travel.service.interfaces.AbstractService;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,21 +28,25 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
     public AdminServiceImpl(){
     }
 
-    public List<AdminDto> getAll() throws SQLException {
+    public AdminDto getByUsername(String username) {
+        return adminConverter.convert(adminDao.getByUsername(username));
+    }
+
+    public List<AdminDto> getAll() {
         return adminDao.getAll()
                 .stream()
                 .map(user -> adminConverter.convert(user))
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> watchTours() throws SQLException {
+    public List<TourDto> watchTours() {
         return tourDao.getAll()
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
-    public TravelAgency createTravelAgency() throws SQLException {
+    public TravelAgency createTravelAgency(){
         TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
         TourDaoImpl tourDao = TourDaoImpl.getInstance();
         TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
@@ -64,11 +67,11 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
         return travelAgencyDao.save(travelAgencyConverter.convert(travelAgencyDto));
     }
 
-    public AdminDto updateInfo(UUID id) throws SQLException {
+    public AdminDto updateInfo(UUID id){
         return adminConverter.convert(adminDao.update(adminDao.getById(id)));
     }
 
-    public AdminDto checkInfo(UUID id) throws SQLException {
+    public AdminDto checkInfo(UUID id){
         return adminConverter.convert(adminDao.getById(id));
     }
 

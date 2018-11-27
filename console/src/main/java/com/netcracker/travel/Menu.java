@@ -15,7 +15,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -53,13 +52,11 @@ public class Menu {
                 e.printStackTrace();
             } catch (NumberFormatException e) {
                 System.out.println("Wrong input");
-            } catch (SQLException e){
-                e.printStackTrace();
             }
         }
     }
 
-    public static void adminConsole() throws SQLException {
+    public static void adminConsole() {
         BufferedReader reader = getBufferedReader();
         AdminServiceImpl adminService = new AdminServiceImpl();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
@@ -128,7 +125,7 @@ public class Menu {
     }
 
 
-    public static void travelAgentConsole(String username) throws SQLException {
+    public static void travelAgentConsole(String username) {
         BufferedReader reader = getBufferedReader();
         TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         TravelAgentDto travelAgentDto = travelAgentService.getByUsername(username);
@@ -167,8 +164,17 @@ public class Menu {
                                                 }
                                                 System.out.println("Please, input country");
                                                 tourDto.setCountry(reader.readLine());
-                                                System.out.println("Please, input the type");
-                                                tourDto.setType(TypeTour.valueOf(reader.readLine()));
+                                                boolean exitcreate1 = false;
+                                                while (exitcreate1 == false) {
+                                                    try {
+                                                        System.out.println("Please, input the type (HOTELRESTTOUR, SHOPTOUR, EXCURSION, CRUISE, SANATORIUM)");
+                                                        tourDto.setType(TypeTour.valueOf(reader.readLine()));
+                                                        exitcreate1 = true;
+                                                    } catch (IOException | IllegalArgumentException e) {
+                                                        System.out.println("No such type");
+                                                    }
+
+                                                }
                                                 boolean exitcreate = false;
                                                 while (exitcreate == false) {
                                                     try {
@@ -185,11 +191,10 @@ public class Menu {
                                                 }
                                                 tourDto.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
                                                 tourDto.setFree(true);
-                                            } catch (IOException e) {
-                                                System.out.println("Not");
-                                            } catch(IllegalArgumentException e){
-                                                System.out.println("Not");
+                                            } catch (IOException | IllegalArgumentException e) {
+                                                System.out.println("No such type");
                                             }
+
                                         }
                                         travelAgentService.createTour(tourDto);
                                         System.out.println("You create tour \n");
@@ -257,7 +262,7 @@ public class Menu {
         }
     }
 
-    public static void customerConsole(String username) throws SQLException {
+    public static void customerConsole(String username) {
         BufferedReader reader = getBufferedReader();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         CustomerDto customerDto = customerService.getByUsername(username);
@@ -269,7 +274,7 @@ public class Menu {
                 int y = Integer.parseInt(reader.readLine());
                 switch (y) {
                     case 1:
-/*
+
                         boolean exit3 = false;
                         while (!exit3) {
                             try {
@@ -337,9 +342,17 @@ public class Menu {
                                                 System.out.println("Wrong input");
                                             }
                                         }
+                                        break;
                                     case 5:
-                                        System.out.println("Please, input the TravelAgency name");
-                                        printTours(customerService.searchTourByTravelAgency(reader.readLine()));
+                                        try {
+                                            System.out.println("Please, input the TravelAgency name");
+                                            printTours(customerService.searchTourByTravelAgency(reader.readLine()));
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        } catch (NoSuchElementException e) {
+                                            System.out.println("TravelAgency is not found.");
+                                            break;
+                                        }
                                         break;
                                     case 0:
                                         exit3 = true;
@@ -353,7 +366,7 @@ public class Menu {
                                 System.out.println("Wrong input");
                             }
                         }
-*/
+
                         break;
                     case 2:
                         String tourId = "00000000-0000-0000-0000-000000000000";
@@ -411,9 +424,7 @@ public class Menu {
             try {
                 tourUid = UUID.fromString(reader.readLine());
                 tourId = tourUid.toString();
-            } catch (IOException e) {
-                System.out.println("Not corrected id");
-            } catch(IllegalArgumentException e){
+            } catch (IOException | IllegalArgumentException e) {
                 System.out.println("Not corrected id");
             }
             if (tourId.equals("00000000-0000-0000-0000-000000000000")) {

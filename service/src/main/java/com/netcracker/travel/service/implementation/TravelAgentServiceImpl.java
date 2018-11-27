@@ -11,7 +11,6 @@ import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,24 +27,24 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
     public TravelAgentServiceImpl(){}
 
-    public TourDto createTour(TourDto tourDto) throws SQLException {
+    public TourDto createTour(TourDto tourDto) {
         return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
-    public List<TourDto> checkExistenceTours() throws SQLException {
+    public List<TourDto> checkExistenceTours(){
         return tourDao.getAll()
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
-    public TourDto editTour(UUID id, String description) throws SQLException {
+    public TourDto editTour(UUID id, String description) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setDescription(description);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public List<TourDto> viewOrderHystory() throws SQLException {
+    public List<TourDto> viewOrderHystory() {
         String clientId = "00000000-0000-0000-0000-000000000000";
         return  tourDao.getAll()
                 .stream()
@@ -54,7 +53,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
                 .collect(Collectors.toList());
     }
 
-    public TravelAgencyDto getTravelAgency(UUID id) throws SQLException {
+    public TravelAgencyDto getTravelAgency(UUID id){
         return travelAgencyConverter.convert(travelAgencyDao.getById(id));
     }
 
@@ -66,13 +65,13 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
         return null;
     }
 
-    public TourDto makeDiscount(UUID id, Double price) throws SQLException {
+    public TourDto makeDiscount(UUID id, Double price) {
             TourDto tourDto = tourConverter.convert(tourDao.getById(id));
             tourDto.setPrice(price);
             return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
-    public void deleteTour(UUID id) throws SQLException {
+    public void deleteTour(UUID id) {
         tourDao.delete(id);
     }
 }

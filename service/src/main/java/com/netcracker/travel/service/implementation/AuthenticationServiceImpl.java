@@ -11,6 +11,7 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
+import org.json.JSONException;
 
 import java.util.NoSuchElementException;
 
@@ -28,7 +29,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public int login(LoginRequestDto loginRequestDto) {
-        int exit = 0;
             try {
                 try {
                     CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
@@ -47,18 +47,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     }
                 } catch (NoSuchElementException e) {
                     System.out.println("Loaddd.....");
+                } catch (JSONException e){
+
                 }
 
-                TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
-                if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
-                    exit = 3;
-                }
+//                try {
+                    TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
+                    if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
+                        return 3;
+                    }
+//                } catch (JSONException e){
+//                    return 0;
+//                    }
 
             } catch (NoSuchElementException e) {
                 System.out.println("Loaddddd.......");
             }
 
-        return exit;
+        return 0;
     }
 
 
