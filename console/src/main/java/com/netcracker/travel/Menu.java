@@ -170,7 +170,9 @@ public class Menu {
                                                         System.out.println("Please, input the type (HOTELRESTTOUR, SHOPTOUR, EXCURSION, CRUISE, SANATORIUM)");
                                                         tourDto.setType(TypeTour.valueOf(reader.readLine()));
                                                         exitcreate1 = true;
-                                                    } catch (IOException | IllegalArgumentException e) {
+                                                    } catch (IOException e) {
+                                                        System.out.println("No such type");
+                                                    } catch (IllegalArgumentException e) {
                                                         System.out.println("No such type");
                                                     }
 
@@ -191,7 +193,9 @@ public class Menu {
                                                 }
                                                 tourDto.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
                                                 tourDto.setFree(true);
-                                            } catch (IOException | IllegalArgumentException e) {
+                                            } catch (IOException e) {
+                                                System.out.println("No such type");
+                                            } catch (IllegalArgumentException e) {
                                                 System.out.println("No such type");
                                             }
 
@@ -424,7 +428,10 @@ public class Menu {
             try {
                 tourUid = UUID.fromString(reader.readLine());
                 tourId = tourUid.toString();
-            } catch (IOException | IllegalArgumentException e) {
+
+            } catch (IOException e) {
+                System.out.println("Not corrected id");
+            } catch (IllegalArgumentException e) {
                 System.out.println("Not corrected id");
             }
             if (tourId.equals("00000000-0000-0000-0000-000000000000")) {
