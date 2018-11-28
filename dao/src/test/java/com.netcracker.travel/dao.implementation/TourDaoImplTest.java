@@ -14,6 +14,7 @@ public class TourDaoImplTest {
 
     @Test
     public void testSave() throws Exception{
+        tour = new Tour(UUID.randomUUID(), "Tour", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.randomUUID(), UUID.randomUUID(), true);
         TourDaoImpl.getInstance().save(tour);
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
         Assert.assertEquals(tour, actual);

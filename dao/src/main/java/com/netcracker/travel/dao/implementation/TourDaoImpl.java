@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class TourDaoImpl implements AbstractDao<Tour> {
 
-    private Connection connection;
+    private Connection connection =PoolConnector.getInstance().getConnection();
     private PreparedStatement statement;
     private ResultSet result;
 
@@ -40,8 +40,8 @@ public class TourDaoImpl implements AbstractDao<Tour> {
 
     public Tour save(Tour tour) {
         try {
-            connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.ADD_TOUR);
+            Connection connection = PoolConnector.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(SqlConfig.ADD_TOUR);
             statement.setString(1, UUID.randomUUID().toString());
             statement.setString(2, tour.getName());
             statement.setString(3, tour.getDescription());
@@ -60,7 +60,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             SystemLogger.getInstance().logError(getClass(), message);
         }
         finally{
-            ClosingUtil.close(statement);
+           // ClosingUtil.close(statement);
         }
         return tour;
     }
