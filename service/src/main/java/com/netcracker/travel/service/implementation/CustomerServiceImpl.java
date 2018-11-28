@@ -15,9 +15,8 @@ import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
-import com.netcracker.travel.service.interfaces.PaymentTourService;
-import com.netcracker.travel.service.interfaces.RegistrationService;
 import com.netcracker.travel.service.interfaces.SearchTourService;
+import com.netcracker.travel.service.interfaces.RegistrationService;
 
 import java.sql.Date;
 import java.util.List;
@@ -27,7 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService, PaymentTourService {
+public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService, SearchTourService {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
@@ -51,6 +50,20 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .collect(Collectors.toList());
     }
 
+    public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
+        CustomerDto customerDto = getByUsername(username);
+        customerDto.setPhoneNumber(phoneNumber);
+        return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
+    }
+
+    /** viewOrderedTours **/
+    public List<TourDto> watchTours(UUID id) {
+        return tourDao.getToursById(id)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+    }
+
     public TourDto bookTour(UUID id, UUID customerId) {
         TourDto temp = buyTour(id, customerId);
         System.out.println("You have 3 days to pay for the tour");
@@ -61,6 +74,13 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setCustomerId(customerId);
         tourDto.setFree(false);
+        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+    }
+
+    public TourDto cancelTour(UUID tourId) {
+        TourDto tourDto = tourConverter.convert(tourDao.getById(tourId));
+        tourDto.setCustomerId(null);
+        tourDto.setFree(true);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
     }
 
@@ -105,27 +125,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .stream()
                 .filter(travelAgency -> travelAgency.getName().equals(name))
                 .findFirst().get());
-    }
-
-
-    public TourDto cancelTour(UUID tourId) {
-        TourDto tourDto = tourConverter.convert(tourDao.getById(tourId));
-        tourDto.setCustomerId(null);
-        tourDto.setFree(true);
-        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
-    }
-
-    public List<TourDto> viewOrderedTours(UUID id) {
-        return tourDao.getToursById(id)
-                .stream()
-                .map(tour -> tourConverter.convert(tour))
-                .collect(Collectors.toList());
-    }
-
-    public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
-        CustomerDto customerDto = getByUsername(username);
-        customerDto.setPhoneNumber(phoneNumber);
-        return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {

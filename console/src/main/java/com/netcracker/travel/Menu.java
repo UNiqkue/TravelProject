@@ -136,7 +136,7 @@ public class Menu {
                 int x = Integer.parseInt(reader.readLine());
                 switch (x) {
                     case 1:
-                        System.out.println(travelAgentService.viewOrderHystory());
+                        System.out.println(travelAgentService.watchTours());
                         break;
                     case 2:
                         boolean exit4 = false;
@@ -385,7 +385,7 @@ public class Menu {
                         System.out.println("You buy tour");
                         break;
                     case 4:
-                        printTours(customerService.viewOrderedTours(customerDto.getId()));
+                        printTours(customerService.watchTours(customerDto.getId()));
                         break;
                     case 5:
                         tourId = "00000000-0000-0000-0000-000000000000";
