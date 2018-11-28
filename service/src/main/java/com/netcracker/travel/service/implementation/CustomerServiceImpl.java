@@ -137,9 +137,9 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
-        if (checkExisting(registrationRequestDto) == false) {
+    /*    if (checkExisting(registrationRequestDto) == false) {
             return null;
-        }
+        }*/
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(UUID.randomUUID());
         customerDto.setFirstName(registrationRequestDto.getFirstName());
