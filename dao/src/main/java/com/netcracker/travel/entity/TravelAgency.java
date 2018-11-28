@@ -7,7 +7,6 @@ import java.util.Objects;
 public class TravelAgency extends BaseEntity {
 
     private String name;
-    private Address address;
     private Integer countTour;
     private Integer countTravelAgent;
 
@@ -19,14 +18,6 @@ public class TravelAgency extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public Integer getCountTour() {
@@ -63,7 +54,6 @@ public class TravelAgency extends BaseEntity {
     public String toString() {
         return "TravelAgency{" +
                 "name='" + name + '\'' +
-                ", address='" + address + '\'' +
                 ", countTour=" + countTour +
                 ", countTravelAgent=" + countTravelAgent +
                 '}';
