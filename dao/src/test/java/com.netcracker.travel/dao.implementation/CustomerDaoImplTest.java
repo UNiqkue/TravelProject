@@ -8,11 +8,11 @@ import java.sql.Date;
 import java.util.UUID;
 
 public class CustomerDaoImplTest {
-    
-    Customer customer;
+
+    Customer customer = new Customer(UUID.randomUUID(), "Vova", "Dinkevich", "Customer1", "null1111", "Customer@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", Date.valueOf("2000-10-10"), "123123", "123123");
 
     @Test
-    public void testSave() throws Exception{
+    public void testSave() throws Exception {
         CustomerDaoImpl.getInstance().save(customer);
         Customer actual = CustomerDaoImpl.getInstance().getById(customer.getId());
         Assert.assertEquals(customer, actual);
@@ -21,7 +21,7 @@ public class CustomerDaoImplTest {
 
     @Test
     public void testGetById() throws Exception {
-        customer = new Customer(UUID.randomUUID(), "Vova", "Dinkevich", "Customer1", "null1111", "Customer@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", Date.valueOf("2000-10-10"), "123123", "123123");
+        customer = new Customer(UUID.fromString("cbbe730d-2187-4ca3-bdad-a79f09db8ded"), "Vova", "Dinkevich", "Customer1", "null1111", "Customer@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", Date.valueOf("2000-10-10"), "123123", "123123");
         Customer actual = CustomerDaoImpl.getInstance().getById(customer.getId());
         Assert.assertEquals(customer, actual);
     }
@@ -37,7 +37,7 @@ public class CustomerDaoImplTest {
     }
 
     @Test
-    public void testDelete() throws Exception{
+    public void testDelete() throws Exception {
         CustomerDaoImpl.getInstance().save(customer);
         CustomerDaoImpl.getInstance().delete(customer.getId());
         Customer actual = CustomerDaoImpl.getInstance().getById(customer.getId());

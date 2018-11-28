@@ -2,8 +2,6 @@ package com.netcracker.travel.util;
 
 public class SqlConfig {
 
-    public static final String DATABASE_SOURCE = "database";
-
     public static final String ADD_CUSTOMER = "INSERT INTO user(id, firstName, lastName, username, password, email, activationCode, cardNumber, dateOfBirth, passportInfo, phoneNumber, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_ALL_CUSTOMERS = "SELECT * FROM user where role='CUSTOMER'";
     public static final String DELETE_USER_BY_ID = "DELETE FROM user WHERE id = ?";

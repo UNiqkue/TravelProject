@@ -57,6 +57,7 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
         }
         catch (SQLException e){
             String message = "Unable to add the user account ";
+            e.printStackTrace();
             SystemLogger.getInstance().logError(getClass(), message);
         }
         finally{
