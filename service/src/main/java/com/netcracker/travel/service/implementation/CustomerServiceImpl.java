@@ -9,32 +9,21 @@ import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
-<<<<<<< HEAD
-import com.netcracker.travel.entity.enumeration.TypeTour;
-=======
 import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
->>>>>>> task3
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 
 import java.sql.Date;
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-=======
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
->>>>>>> task3
 
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService {
 
@@ -53,41 +42,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         return customerConverter.convert(customerDao.getByUsername(username));
     }
 
-<<<<<<< HEAD
-    public TourDto bookTour(TourDto tourDto, UUID customerId) {
-        return null;
-    }
-
-    public TourDto buyTour(TourDto tourDto, UUID customerId) {
-        return null;
-    }
-
-    public List<TourDto> searchTourByName(String name){
-          return new ArrayList<>();
-    }
-
-    public List<TourDto> searchTourByDate(Date startDate, Date endDate){
-        return new ArrayList<>();
-    }
-
-    public List<TourDto> searchTourByType(Set<TypeTour> type){
-        return new ArrayList<>();
-    }
-
-    public List<TourDto> searchTourByCountry(String coutnry){
-        return new ArrayList<>();
-    }
-
-    public TourDto cancelTour(UUID id){
-        return null;
-    }
-
-    public List<TourDto> viewOrderedTours(UUID id){
-        return new ArrayList<>();
-    }
-
-    public boolean login(LoginRequestDto loginRequestDto) {
-=======
     public List<CustomerDto> getAll() {
         return customerDao.getAll()
                 .stream()
@@ -137,7 +91,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public List<TourDto> searchTourByTravelAgency(String name) {
-        TravelAgencyDto travelAgencyDto = getTravelAgencyByName(name);
+            TravelAgencyDto travelAgencyDto = getTravelAgencyByName(name);
         return tourDao.getByTravelAgencyId(travelAgencyDto.getId())
                 .stream()
                 .map(travel -> tourConverter.convert(travel))
@@ -212,7 +166,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         } catch (EmailExistException e) {
             System.out.println("User with such email exists");
         }
->>>>>>> task3
         return false;
     }
 

@@ -1,42 +1,101 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
+import com.netcracker.travel.dao.storage.TravelAgentList;
 import com.netcracker.travel.entity.TravelAgent;
 
-import java.util.Collection;
+import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
-
+import java.util.stream.Collectors;
 
 public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
-    @Override
+    private static volatile TravelAgentDaoImpl instance;
+
+    private TravelAgentDaoImpl(){}
+
+    public static TravelAgentDaoImpl getInstance(){
+        if (instance == null) {
+            synchronized (TravelAgentDaoImpl.class) {
+                if (instance == null) {
+                    instance = new TravelAgentDaoImpl();
+                }
+            }
+        }
+        return instance;
+    }
+
     public TravelAgent getById(UUID id) {
-        return null;
+        return getAll()
+                .stream()
+                .filter(travelAgent -> travelAgent.getId().toString().equals(id.toString()))
+                .findFirst().get();
     }
 
-    @Override
-    public Collection<TravelAgent> getByName(String name) {
-        return null;
+    public List<TravelAgent> getByName(String lastName) {
+        return getAll()
+                .stream()
+                .filter(travelAgent -> travelAgent.getLastName().equals(lastName))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public Collection<TravelAgent> getAll() {
-        return null;
+    public TravelAgent getByUsername(String username) {
+        return getAll()
+                .stream()
+                .filter(travelAgent -> travelAgent.getUsername().equals(username))
+                .findFirst().get();
     }
 
-    @Override
+    public List<TravelAgent> getAll() {
+        TravelAgentList list = new TravelAgentList();
+        return list.read();
+    }
+
     public TravelAgent save(TravelAgent travelAgent) {
-        return null;
+        TravelAgentList list = new TravelAgentList();
+        return list.write(travelAgent);
     }
 
-    @Override
     public TravelAgent update(TravelAgent travelAgent) {
-        return null;
+        removeById(travelAgent.getId());
+        return save(travelAgent);
     }
 
-    @Override
     public void delete(UUID id) {
-
+        removeById(id);
     }
+
+    public TravelAgent removeById(UUID id) {
+        List<TravelAgent> list = getAll();
+        TravelAgent travelAgent = new TravelAgent();
+        int i;
+        for (i = 0; i <= list.size() - 1; i++) {
+            if (list.get(i).getId().toString().equals(id.toString())) {
+                travelAgent = list.remove(i);
+                System.out.println("TravelAgent found");
+                break;
+            }
+        }
+        saveList(list);
+        return travelAgent;
+    }
+
+    private void saveList(List<TravelAgent> list) {
+        clean();
+        for (int i = 0; i <= list.size() - 1; i++) {
+            save(list.get(i));
+        }
+    }
+
+    private void clean() {
+        TravelAgentList travelAgentList = new TravelAgentList();
+        try {
+            travelAgentList.clean();
+        } catch (IOException e) {
+            System.out.println("Error while writing to file: " + e);
+        }
+    }
+
 
 }

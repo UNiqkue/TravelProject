@@ -6,18 +6,14 @@ import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgentDaoImpl;
-<<<<<<< HEAD
-import com.netcracker.travel.dto.LoginRequestDto;
-=======
->>>>>>> task3
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
@@ -30,41 +26,18 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
     private TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
 
     public TravelAgentServiceImpl(){}
-<<<<<<< HEAD
-
-    public List<TravelAgentDto> getAll() {
-        return null;
-    }
-=======
->>>>>>> task3
 
     public TourDto createTour(TourDto tourDto) {
-        return null;
+        return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
     public List<TourDto> checkExistenceTours(){
-        return new ArrayList<>();
+        return tourDao.getAll()
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
     }
 
-<<<<<<< HEAD
-    public TourDto editTour(TourDto tourDto) {
-        return null;
-    }
-
-    public List<TourDto> viewOrderHystory(UUID clientId) {
-        return new ArrayList<>();
-
-    }
-
-    public boolean login(LoginRequestDto loginRequestDto) {
-        return false;
-    }
-
-    public TravelAgencyDto getTravelAgency(UUID id){
-        return null;
-    }
-
-=======
     public TourDto editTour(UUID id, String description) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setDescription(description);
@@ -101,5 +74,4 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
     public void deleteTour(UUID id) {
         tourDao.delete(id);
     }
->>>>>>> task3
 }

@@ -23,8 +23,6 @@
         </plugins>
     </build>
 
-<<<<<<< HEAD
-=======
     <dependencies>
         <dependency>
             <groupId>org.json</groupId>
@@ -33,6 +31,4 @@
         </dependency>
     </dependencies>
 
-
->>>>>>> task3
 </project>
