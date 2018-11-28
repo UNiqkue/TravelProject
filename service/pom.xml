@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>service</artifactId>
+<<<<<<< HEAD
     <build>
         <plugins>
             <plugin>
@@ -31,4 +32,8 @@
         <scope>compile</scope>
     </dependency>
     </dependencies>
+=======
+
+
+>>>>>>> master
 </project>
