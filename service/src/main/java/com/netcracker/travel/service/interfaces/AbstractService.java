@@ -5,5 +5,6 @@ import java.util.List;
 public interface AbstractService<T> {
 
     List<T> getAll();
+    T getByUsername(String username);
 
 }

@@ -15,7 +15,9 @@ import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
+import com.netcracker.travel.service.interfaces.PaymentTourService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
+import com.netcracker.travel.service.interfaces.SearchTourService;
 
 import java.sql.Date;
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService {
+public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService, PaymentTourService {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
