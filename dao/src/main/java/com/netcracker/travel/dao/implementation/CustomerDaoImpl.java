@@ -38,7 +38,6 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
     }
 
     public Customer save(Customer customer) {
-        //   PoolConnector poolConnector = new PoolConnector();
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.ADD_CUSTOMER);
@@ -119,6 +118,7 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
                 customer.setDateOfBirth(result.getDate("dateOfBirth"));
                 customer.setPassportInfo(result.getString("passportInfo"));
                 customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setRole(Role.valueOf(result.getString("role")));
             }
 
         } catch (SQLException e) {
@@ -132,11 +132,10 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
     }
 
     public List<Customer> getByName(String lastName) {
-        List<Customer> customerList = getAll()
+        return getAll()
                 .stream()
                 .filter(admin -> admin.getLastName().equals(lastName))
                 .collect(Collectors.toList());
-        return customerList;
     }
 
     public Customer getByUsername(String username) {

@@ -19,6 +19,7 @@ public class CustomerDaoImplTest {
         CustomerDaoImpl.getInstance().delete(customer.getId());
     }
 
+
     @Test
     public void testGetById() throws Exception {
         customer.setId(UUID.fromString("b9e77612-c18f-4e68-8272-ce0ebef67bb9"));
