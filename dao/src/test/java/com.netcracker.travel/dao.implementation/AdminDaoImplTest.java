@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class AdminDaoImplTest {
 
-    Admin admin;
+    Admin admin = new Admin(UUID.randomUUID(), "Achik", "Dmin", "Administrator", "null1111", "admin@gmail.com", "qwdqscqwcdqwcd");
 
     @Test
     public void testSave() throws Exception{
@@ -20,7 +20,7 @@ public class AdminDaoImplTest {
 
     @Test
     public void testGetById() throws Exception {
-        admin = new Admin(UUID.randomUUID(), "Achik", "Dmin", "Administrator", "null1111", "admin@gmail.com", "qwdqscqwcdqwcd");
+        admin.setId(UUID.fromString("abbe730d-2187-4ca3-bdad-a79f09db8ded"));
         Admin actual = AdminDaoImpl.getInstance().getById(admin.getId());
         Assert.assertEquals(admin, actual);
     }

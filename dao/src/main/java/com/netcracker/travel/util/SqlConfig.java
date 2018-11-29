@@ -6,14 +6,16 @@ public class SqlConfig {
     public static final String GET_ALL_CUSTOMERS = "SELECT * FROM user where role='CUSTOMER'";
     public static final String DELETE_USER_BY_ID = "DELETE FROM user WHERE id = ?";
     public static final String GET_USER_BY_USERNAME = "SELECT * FROM user WHERE username = ?";
- //   public static final String GET_USER_BY_NAME = "SELECT * FROM user WHERE lastName = ?";
     public static final String GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email = ?";
     public static final String GET_USER_BY_ID = "SELECT * FROM user WHERE id = ?";
     public static final String PUT_PHONE = "UPDATE user SET phoneNumber = ? WHERE id = ?";
 
-    public static final String ADD_ADMIN = "INSERT INTO user(id, firstName, lastName, username, password, email, activationCode, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    public static final String GET_ALL_ADMINS = "SELECT * FROM user where role='ADMIN'";
-    public static final String PUT_USERNAME = "UPDATE user SET username = ? WHERE id = ?";
+    public static final String ADD_ADMIN = "INSERT INTO admin(id, firstName, lastName, username, password, email, activationCode, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String GET_ALL_ADMINS = "SELECT * FROM admin where role='ADMIN'";
+    public static final String GET_ADMIN_BY_USERNAME = "SELECT * FROM admin WHERE username = ?";
+    public static final String GET_ADMIN_BY_ID = "SELECT * FROM admin WHERE id = ?";
+    public static final String DELETE_ADMIN_BY_ID = "DELETE FROM admin WHERE id = ?";
+    public static final String PUT_ADMIN_USERNAME  = "UPDATE admin SET username = ? WHERE id = ?";
 
     public static final String ADD_TRAVELAGENT = "INSERT INTO user(id, firstName, lastName, username, password, email, activationCode, phoneNumber, position, travelAgentId, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_ALL_TRAVELAGENTS = "SELECT * FROM user where role='TRAVELAGENT'";

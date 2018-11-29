@@ -45,7 +45,7 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.ADD_ADMIN);
-            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(1, admin.getId().toString());
             statement.setString(2, admin.getFirstName());
             statement.setString(3, admin.getLastName());
             statement.setString(4, admin.getUsername());
@@ -57,6 +57,7 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         }
         catch (SQLException e){
             String message = "Unable to add the user account ";
+            e.printStackTrace();
             SystemLogger.getInstance().logError(getClass(), message);
         }
         finally{
@@ -72,14 +73,15 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
             statement = connection.prepareStatement(SqlConfig.GET_ALL_ADMINS);
             result = statement.executeQuery();
             while (result.next()) {
-                Admin admin = buildAdmin(result);
-//                admin.setId(UUID.fromString(result.getString("id")));
-//                admin.setFirstName(result.getString("firstName"));
-//                admin.setLastName(result.getString("lastName"));
-//                admin.setUsername(result.getString("username"));
-//                admin.setPassword(result.getString("password"));
-//                admin.setEmail(result.getString("email"));
-//                admin.setActivationCode(result.getString("activationCode"));
+                Admin admin = new Admin();
+                admin.setId(UUID.fromString(result.getString("id")));
+                admin.setFirstName(result.getString("firstName"));
+                admin.setLastName(result.getString("lastName"));
+                admin.setUsername(result.getString("username"));
+                admin.setPassword(result.getString("password"));
+                admin.setEmail(result.getString("email"));
+                admin.setActivationCode(result.getString("activationCode"));
+                admin.setRole(Role.valueOf(result.getString("role")));
                 list.add(admin);
             }
         }
@@ -98,11 +100,19 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         Admin admin = null;
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_ID);
+            statement = connection.prepareStatement(SqlConfig.GET_ADMIN_BY_ID);
             statement.setString(1, id.toString());
             result = statement.executeQuery();
             while (result.next()) {
-                admin = buildAdmin(result);
+                admin = new Admin();
+                admin.setId(UUID.fromString(result.getString("id")));
+                admin.setFirstName(result.getString("firstName"));
+                admin.setLastName(result.getString("lastName"));
+                admin.setUsername(result.getString("username"));
+                admin.setPassword(result.getString("password"));
+                admin.setEmail(result.getString("email"));
+                admin.setActivationCode(result.getString("activationCode"));
+                admin.setRole(Role.valueOf(result.getString("role")));
             }
         }
         catch (SQLException e){
@@ -128,11 +138,19 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         Admin admin = null;
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_USERNAME);
+            statement = connection.prepareStatement(SqlConfig.GET_ADMIN_BY_USERNAME);
             statement.setString(1, username);
             result = statement.executeQuery();
             while (result.next()) {
-                admin = buildAdmin(result);
+                admin = new Admin();
+                admin.setId(UUID.fromString(result.getString("id")));
+                admin.setFirstName(result.getString("firstName"));
+                admin.setLastName(result.getString("lastName"));
+                admin.setUsername(result.getString("username"));
+                admin.setPassword(result.getString("password"));
+                admin.setEmail(result.getString("email"));
+                admin.setActivationCode(result.getString("activationCode"));
+                admin.setRole(Role.valueOf(result.getString("role")));
             }
         }
         catch (SQLException e){
@@ -146,33 +164,11 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         return admin;
     }
 
-
-    public Admin getByEmail(String email) {
-        Admin admin = null;
-        try {
-            connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_EMAIL);
-            statement.setString(1, email);
-            result = statement.executeQuery();
-            while (result.next()) {
-                admin = buildAdmin(result);
-            }
-        }
-        catch (SQLException e){
-            String message = "Unable to return the user ";
-            SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
-            ClosingUtil.close(result);
-            ClosingUtil.close(statement);
-        }
-        return admin;
-    }
 
     public Admin update(Admin admin){
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.PUT_USERNAME);
+            statement = connection.prepareStatement(SqlConfig.PUT_ADMIN_USERNAME);
             statement.setString(1, admin.getUsername());
             statement.setString(2, admin.getId().toString());
             statement.executeUpdate();
@@ -190,7 +186,7 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
     public void delete(UUID id) {
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.DELETE_USER_BY_ID);
+            statement = connection.prepareStatement(SqlConfig.DELETE_ADMIN_BY_ID);
             statement.setString(1, id.toString());
             statement.executeUpdate();
         }
