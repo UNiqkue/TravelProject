@@ -21,7 +21,7 @@ public class CustomerDaoImplTest {
 
     @Test
     public void testGetById() throws Exception {
-        customer = new Customer(UUID.fromString("cbbe730d-2187-4ca3-bdad-a79f09db8ded"), "Vova", "Dinkevich", "Customer1", "null1111", "Customer@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", Date.valueOf("2000-10-10"), "123123", "123123");
+        customer.setId(UUID.fromString("b9e77612-c18f-4e68-8272-ce0ebef67bb9"));
         Customer actual = CustomerDaoImpl.getInstance().getById(customer.getId());
         Assert.assertEquals(customer, actual);
     }

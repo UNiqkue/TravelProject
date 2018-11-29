@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService, SearchTourService {
+public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();

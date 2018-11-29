@@ -11,7 +11,7 @@ public class PoolConnector {
 
     private static ThreadLocal<Connection> connectionHolder = new ThreadLocal<>();
 
-    private PoolConnector() {
+    public PoolConnector() {
         ResourceBundle bundle = ResourceBundle.getBundle("database");
         dataSource = new BasicDataSource();
         dataSource.setDriverClassName(bundle.getString("database.driver"));

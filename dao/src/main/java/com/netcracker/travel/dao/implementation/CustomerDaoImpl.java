@@ -22,10 +22,10 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
 
     private static volatile CustomerDaoImpl instance;
 
-    private CustomerDaoImpl(){
+    private CustomerDaoImpl() {
     }
 
-    public static CustomerDaoImpl getInstance(){
+    public static CustomerDaoImpl getInstance() {
         if (instance == null) {
             synchronized (AdminDaoImpl.class) {
                 if (instance == null) {
@@ -38,10 +38,11 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
     }
 
     public Customer save(Customer customer) {
+        //   PoolConnector poolConnector = new PoolConnector();
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.ADD_CUSTOMER);
-            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(1, customer.getId().toString());
             statement.setString(2, customer.getFirstName());
             statement.setString(3, customer.getLastName());
             statement.setString(4, customer.getUsername());
@@ -54,13 +55,11 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             statement.setString(11, customer.getPhoneNumber());
             statement.setString(12, Role.CUSTOMER.toString());
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to add the user account ";
             e.printStackTrace();
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return customer;
@@ -74,26 +73,25 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             statement = connection.prepareStatement(SqlConfig.GET_ALL_CUSTOMERS);
             result = statement.executeQuery();
             while (result.next()) {
-                Customer customer = buildCustomer(result);
-//                customer.setId(UUID.fromString(result.getString("id")));
-//                customer.setFirstName(result.getString("firstName"));
-//                customer.setLastName(result.getString("lastName"));
-//                customer.setUsername(result.getString("username"));
-//                customer.setPassword(result.getString("password"));
-//                customer.setEmail(result.getString("email"));
-//                customer.setActivationCode(result.getString("activationCode"));
-//                customer.setCardNumber(result.getString("cardNumber"));
-//                customer.setDateOfBirth(result.getDate("dateOfBirth"));
-//                customer.setPassportInfo(result.getString("passportInfo"));
-//                customer.setPhoneNumber(result.getString("phoneNumber"));
+                Customer customer = new Customer();//buildCustomer(result);
+                customer.setId(UUID.fromString(result.getString("id")));
+                customer.setFirstName(result.getString("firstName"));
+                customer.setLastName(result.getString("lastName"));
+                customer.setUsername(result.getString("username"));
+                customer.setPassword(result.getString("password"));
+                customer.setEmail(result.getString("email"));
+                customer.setActivationCode(result.getString("activationCode"));
+                customer.setCardNumber(result.getString("cardNumber"));
+                customer.setDateOfBirth(result.getDate("dateOfBirth"));
+                customer.setPassportInfo(result.getString("passportInfo"));
+                customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setRole(Role.valueOf(result.getString("role")));
                 list.add(customer);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return list of users ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
@@ -107,15 +105,26 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             statement = connection.prepareStatement(SqlConfig.GET_USER_BY_ID);
             statement.setString(1, id.toString());
             result = statement.executeQuery();
-            while (result.next()) {
-                customer = buildCustomer(result);
+            if (result.next()) {
+                //  customer = buildCustomer(result);
+                customer = new Customer();
+                customer.setId(UUID.fromString(result.getString("id")));
+                customer.setFirstName(result.getString("firstName"));
+                customer.setLastName(result.getString("lastName"));
+                customer.setUsername(result.getString("username"));
+                customer.setPassword(result.getString("password"));
+                customer.setEmail(result.getString("email"));
+                customer.setActivationCode(result.getString("activationCode"));
+                customer.setCardNumber(result.getString("cardNumber"));
+                customer.setDateOfBirth(result.getDate("dateOfBirth"));
+                customer.setPassportInfo(result.getString("passportInfo"));
+                customer.setPhoneNumber(result.getString("phoneNumber"));
             }
-        }
-        catch (SQLException e){
+
+        } catch (SQLException e) {
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
@@ -138,14 +147,24 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             statement.setString(1, username);
             result = statement.executeQuery();
             while (result.next()) {
-                customer = buildCustomer(result);
+                customer = new Customer();
+                customer.setId(UUID.fromString(result.getString("id")));
+                customer.setFirstName(result.getString("firstName"));
+                customer.setLastName(result.getString("lastName"));
+                customer.setUsername(result.getString("username"));
+                customer.setPassword(result.getString("password"));
+                customer.setEmail(result.getString("email"));
+                customer.setActivationCode(result.getString("activationCode"));
+                customer.setCardNumber(result.getString("cardNumber"));
+                customer.setDateOfBirth(result.getDate("dateOfBirth"));
+                customer.setPassportInfo(result.getString("passportInfo"));
+                customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setRole(Role.valueOf(result.getString("role")));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
@@ -161,33 +180,41 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             statement.setString(1, email);
             result = statement.executeQuery();
             while (result.next()) {
-                customer = buildCustomer(result);
+                customer = new Customer();
+                customer.setId(UUID.fromString(result.getString("id")));
+                customer.setFirstName(result.getString("firstName"));
+                customer.setLastName(result.getString("lastName"));
+                customer.setUsername(result.getString("username"));
+                customer.setPassword(result.getString("password"));
+                customer.setEmail(result.getString("email"));
+                customer.setActivationCode(result.getString("activationCode"));
+                customer.setCardNumber(result.getString("cardNumber"));
+                customer.setDateOfBirth(result.getDate("dateOfBirth"));
+                customer.setPassportInfo(result.getString("passportInfo"));
+                customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setRole(Role.valueOf(result.getString("role")));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
         return customer;
     }
 
-    public Customer update(Customer customer){
+    public Customer update(Customer customer) {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.PUT_PHONE);
             statement.setString(1, customer.getPhoneNumber());
             statement.setString(2, customer.getId().toString());
             statement.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to update amount ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return customer;
@@ -199,30 +226,11 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             statement = connection.prepareStatement(SqlConfig.DELETE_USER_BY_ID);
             statement.setString(1, id.toString());
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to delete the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
-    }
-
-    private Customer buildCustomer(ResultSet result) throws SQLException{
-        String uid = result.getString("id");
-        String firstName = result.getString("firstName");
-        String lastName = result.getString("lastName");
-        String username = result.getString("username");
-        String password = result.getString("password");
-        String email = result.getString("email");
-        String activationCode = result.getString("activationCode");
-        String phoneNumber = result.getString("phoneNumber");
-        String dateOfBirth = result.getString("dateOfBirth");
-        String cardNumber = result.getString("cardNumber");
-        String passportInfo = result.getString("passportInfo");
-        Customer customer =new Customer(UUID.fromString(uid), firstName, lastName, username, password, email, activationCode, phoneNumber, Date.valueOf(dateOfBirth), cardNumber, passportInfo);
-        customer.setRole(Role.valueOf(result.getString("role")));
-        return customer;
     }
 }

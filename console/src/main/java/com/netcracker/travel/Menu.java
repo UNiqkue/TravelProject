@@ -201,7 +201,7 @@ public class Menu {
                                         }
                                         travelAgentService.createTour(tourDto);
                                         System.out.println("You create tour \n");
-                                        printTours(travelAgentService.checkExistenceTours());
+                                        printTours(travelAgentService.getExistenceTours());
                                         break;
                                     case 2:
                                         String tourId = "00000000-0000-0000-0000-000000000000";
@@ -233,7 +233,7 @@ public class Menu {
 
                         break;
                     case 3:
-                        printTours(travelAgentService.checkExistenceTours());
+                        printTours(travelAgentService.getExistenceTours());
                         break;
                     case 4:
                         String tourId = "00000000-0000-0000-0000-000000000000";
