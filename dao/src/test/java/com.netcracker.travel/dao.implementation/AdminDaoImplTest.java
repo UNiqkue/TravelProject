@@ -20,7 +20,7 @@ public class AdminDaoImplTest {
 
     @Test
     public void testGetById() throws Exception {
-        admin.setId(UUID.fromString("abbe730d-2187-4ca3-bdad-a79f09db8ded"));
+        admin.setId(UUID.fromString("5be60162-f667-4f2d-a165-5697b6c1a3b5"));
         Admin actual = AdminDaoImpl.getInstance().getById(admin.getId());
         Assert.assertEquals(admin, actual);
     }
