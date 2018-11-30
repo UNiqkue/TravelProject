@@ -66,7 +66,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     public TourDto makeDiscount(UUID id, Double price) {
             TourDto tourDto = tourConverter.convert(tourDao.getById(id));
             tourDto.setPrice(price);
-            return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+            return tourConverter.convert(tourDao.updatePrice(tourConverter.convert(tourDto)));
     }
 
     /** editTour - update description of tour **/

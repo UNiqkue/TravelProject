@@ -30,6 +30,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
     private TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
+    private CustomerDto currentUser;
 
     private CustomerConverter customerConverter = new CustomerConverter();
     private TourConverter tourConverter = new TourConverter();
@@ -65,24 +66,33 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .collect(Collectors.toList());
     }
 
-    public TourDto bookTour(UUID id, UUID customerId) {
+    public TourDto buyTour(UUID id, UUID customerId) {
         TourDto temp = buyTour(id, customerId);
-        System.out.println("You have 3 days to pay for the tour");
+        System.out.println("You bought this tour");
         return temp;
     }
 
-    public TourDto buyTour(UUID id, UUID customerId) {
+    public TourDto bookTour(UUID id, UUID customerId) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
-        tourDto.setCustomerId(customerId);
-        tourDto.setFree(false);
-        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+        if (customerId.equals(tourDto.getCustomerId()) || tourDto.isFree()) {
+            tourDto.setCustomerId(customerId);
+            tourDto.setFree(false);
+            tourDto = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+            System.out.println("You booked tour");
+        } else {
+            System.out.println("You can't do it!!!");
+        }
+        return tourDto;
     }
 
-    public TourDto cancelTour(UUID tourId) {
+    public TourDto cancelTour(UUID tourId, UUID userId) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(tourId));
-        tourDto.setCustomerId(null);
-        tourDto.setFree(true);
-        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+        if (userId.equals(tourDto.getCustomerId())) {
+            tourDto = tourConverter.convert(tourDao.updateCancelTrip(tourConverter.convert(tourDto)));
+        } else {
+            System.out.println("You can't do it!!!");
+        }
+        return tourDto;
     }
 
     public List<TourDto> searchTourByName(String name) {
@@ -131,9 +141,9 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
-    /*    if (checkExisting(registrationRequestDto) == false) {
+        if (checkExisting(registrationRequestDto) == false) {
             return null;
-        }*/
+        }
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(UUID.randomUUID());
         customerDto.setFirstName(registrationRequestDto.getFirstName());

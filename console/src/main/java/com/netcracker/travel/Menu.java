@@ -382,7 +382,6 @@ public class Menu {
                         tourUid = UUID.fromString(tourId);
                         tourUid = inputTourUid(tourId, tourUid);
                         customerService.buyTour(tourUid, customerDto.getId());
-                        System.out.println("You buy tour");
                         break;
                     case 4:
                         printTours(customerService.watchTours(customerDto.getId()));
@@ -391,7 +390,7 @@ public class Menu {
                         tourId = "00000000-0000-0000-0000-000000000000";
                         tourUid = UUID.fromString(tourId);
                         tourUid = inputTourUid(tourId, tourUid);
-                        customerService.cancelTour(tourUid);
+                        customerService.cancelTour(tourUid, customerDto.getId());
                         break;
                     case 0:
                         exit2 = true;

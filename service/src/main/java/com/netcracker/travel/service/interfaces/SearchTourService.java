@@ -13,5 +13,5 @@ public interface SearchTourService<T> {
     List<T> searchTourByTravelAgency(String name);
     T bookTour(UUID id, UUID customerId);
     T buyTour(UUID id, UUID customerId);
-    T cancelTour(UUID tourId);
+    T cancelTour(UUID tourId, UUID customerId);
 }

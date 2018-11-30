@@ -136,6 +136,8 @@ public class TourDto {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", travelAgencyId='" + travelAgencyId + '\'' +
+                ", customerId=" + customerId +
+                ", free=" + free +
                 '}';
     }
 }

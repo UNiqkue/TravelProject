@@ -33,6 +33,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         return 2;
                     }
 
+
                 } catch (NullPointerException e) {
                     System.out.println("Load...");
                 }
