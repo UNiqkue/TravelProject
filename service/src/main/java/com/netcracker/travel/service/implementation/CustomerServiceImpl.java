@@ -11,6 +11,7 @@ import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
+import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
@@ -169,12 +170,17 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
             System.out.println("User with such username exists");
         } catch (EmailExistException e) {
             System.out.println("User with such email exists");
+        } catch (NoExistUserException e) {
+            System.out.println("You can't register (invalid username, email or other user data)");
         }
         return false;
     }
 
     private void checkUsernameExist(String username) {
         try {
+            if (customerDao.getByUsername(username) == null) {
+                throw new NoExistUserException();
+            }
             CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(username));
             if (customerDto != null) {
                 throw new UsernameExistException();
