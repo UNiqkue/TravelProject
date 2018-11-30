@@ -24,7 +24,8 @@ public class CustomerDto {
     private String passportInfo;
     private List<Tour> listOfTours;
 
-    public CustomerDto(){}
+    public CustomerDto() {
+    }
 
     public UUID getId() {
         return id;

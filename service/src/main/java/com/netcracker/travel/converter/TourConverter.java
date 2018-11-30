@@ -5,8 +5,8 @@ import com.netcracker.travel.entity.Tour;
 
 public class TourConverter {
 
-    public Tour convert(TourDto tourDto){
-        Tour tour= new Tour();
+    public Tour convert(TourDto tourDto) {
+        Tour tour = new Tour();
 
         tour.setId(tourDto.getId());
         tour.setName(tourDto.getName());
@@ -18,7 +18,7 @@ public class TourConverter {
         tour.setEndDate(tourDto.getEndDate());
         tour.setTravelAgencyId(tourDto.getTravelAgencyId());
         tour.setFree(tourDto.isFree());
-        if(tour.isFree() == false) {
+        if (tour.isFree() == false) {
             tour.setCustomerId(tourDto.getCustomerId());
         }
 
@@ -26,8 +26,8 @@ public class TourConverter {
         return tour;
     }
 
-    public TourDto convert(Tour tour){
-        TourDto tourDto= new TourDto();
+    public TourDto convert(Tour tour) {
+        TourDto tourDto = new TourDto();
 
         tourDto.setId(tour.getId());
         tourDto.setName(tour.getName());
@@ -39,13 +39,12 @@ public class TourConverter {
         tourDto.setEndDate(tour.getEndDate());
         tourDto.setTravelAgencyId(tour.getTravelAgencyId());
         tourDto.setFree(tour.isFree());
-        if(tourDto.isFree() == false) {
+        if (tourDto.isFree() == false) {
             tourDto.setCustomerId(tour.getCustomerId());
         }
 
         return tourDto;
     }
-
 
 
 }

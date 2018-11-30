@@ -20,7 +20,8 @@ public class TourDto {
     private UUID customerId;
     private boolean free;
 
-    public TourDto(){}
+    public TourDto() {
+    }
 
     public UUID getId() {
         return id;

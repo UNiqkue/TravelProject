@@ -15,7 +15,8 @@ public class TravelAgencyDto {
     private Integer countTour;
     private Integer countTravelAgent;
 
-    public TravelAgencyDto(){}
+    public TravelAgencyDto() {
+    }
 
     public UUID getId() {
         return id;

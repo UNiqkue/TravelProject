@@ -5,8 +5,8 @@ import com.netcracker.travel.entity.Admin;
 
 public class AdminConverter {
 
-    public Admin convert(AdminDto adminDto){
-        Admin admin= new Admin();
+    public Admin convert(AdminDto adminDto) {
+        Admin admin = new Admin();
         admin.setId(adminDto.getId());
         admin.setFirstName(adminDto.getFirstName());
         admin.setLastName(adminDto.getLastName());
@@ -18,8 +18,8 @@ public class AdminConverter {
         return admin;
     }
 
-    public AdminDto convert(Admin admin){
-       AdminDto adminDto = new AdminDto();
+    public AdminDto convert(Admin admin) {
+        AdminDto adminDto = new AdminDto();
         adminDto.setId(admin.getId());
         adminDto.setFirstName(admin.getFirstName());
         adminDto.setLastName(admin.getLastName());

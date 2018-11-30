@@ -91,7 +91,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public List<TourDto> searchTourByTravelAgency(String name) {
-            TravelAgencyDto travelAgencyDto = getTravelAgencyByName(name);
+        TravelAgencyDto travelAgencyDto = getTravelAgencyByName(name);
         return tourDao.getByTravelAgencyId(travelAgencyDto.getId())
                 .stream()
                 .map(travel -> tourConverter.convert(travel))
