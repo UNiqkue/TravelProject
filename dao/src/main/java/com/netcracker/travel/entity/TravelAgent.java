@@ -67,7 +67,15 @@ public class TravelAgent extends User {
     @Override
     public String toString() {
         return "TravelAgent{" +
-                "phoneNumber='" + phoneNumber + '\'' +
+                "id='" + getId() + '\'' +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", username='" + getUsername() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", activationCode='" + getActivationCode() + '\'' +
+                ", role=" + getRole() +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
                 ", travelAgencyId=" + travelAgencyId +
                 '}';

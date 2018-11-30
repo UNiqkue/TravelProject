@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 public class TravelAgentDaoImplTest {
-    TravelAgent travelAgent;
+    TravelAgent travelAgent = new TravelAgent(UUID.randomUUID(), "Grisha", "Moloch", "TravelAgent1", "null1111", "TravelAgent@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", "123123", UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"));
 
     @Test
     public void testSave() throws Exception{
@@ -19,7 +19,7 @@ public class TravelAgentDaoImplTest {
 
     @Test
     public void testGetById() throws Exception {
-        travelAgent = new TravelAgent(UUID.randomUUID(), "Grisha", "Moloch", "TravelAgent1", "null1111", "TravelAgent@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", "123123", UUID.randomUUID());
+        travelAgent.setId(UUID.fromString("851eee22-9170-4310-832f-bbb22c6d033b"));
         TravelAgent actual = TravelAgentDaoImpl.getInstance().getById(travelAgent.getId());
         Assert.assertEquals(travelAgent, actual);
     }

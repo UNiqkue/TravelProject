@@ -17,7 +17,7 @@ public class SqlConfig {
     public static final String DELETE_ADMIN_BY_ID = "DELETE FROM admin WHERE id = ?";
     public static final String PUT_ADMIN_USERNAME = "UPDATE admin SET username = ? WHERE id = ?";
 
-    public static final String ADD_TRAVELAGENT = "INSERT INTO travel_agent(id, first_name, last_name, username, password, email, activation_code, phoneNumber, position, travelAgentId, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String ADD_TRAVELAGENT = "INSERT INTO travel_agent(id, first_name, last_name, username, password, email, activation_code, phone_number, position, travel_agency_id, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_ALL_TRAVELAGENTS = "SELECT * FROM travel_agent where role='TRAVELAGENT'";
     public static final String GET_TRAVELAGENT_BY_USERNAME = "SELECT * FROM travel_agent WHERE username = ?";
     public static final String GET_TRAVELAGENT_BY_ID = "SELECT * FROM travel_agent WHERE id = ?";

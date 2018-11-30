@@ -43,7 +43,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.ADD_TRAVELAGENT);
-            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(1, travelAgent.getId().toString());
             statement.setString(2, travelAgent.getFirstName());
             statement.setString(3, travelAgent.getLastName());
             statement.setString(4, travelAgent.getUsername());
@@ -57,6 +57,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             statement.executeUpdate();
         }
         catch (SQLException e){
+            e.printStackTrace();
             String message = "Unable to add the user account ";
             SystemLogger.getInstance().logError(getClass(), message);
         }
@@ -75,15 +76,15 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             while (result.next()) {
                 TravelAgent travelAgent = new TravelAgent();//buildTravelAgent(result);
                 travelAgent.setId(UUID.fromString(result.getString("id")));
-                travelAgent.setFirstName(result.getString("firstName"));
-                travelAgent.setLastName(result.getString("lastName"));
+                travelAgent.setFirstName(result.getString("first_name"));
+                travelAgent.setLastName(result.getString("last_name"));
                 travelAgent.setUsername(result.getString("username"));
                 travelAgent.setPassword(result.getString("password"));
                 travelAgent.setEmail(result.getString("email"));
-                travelAgent.setActivationCode(result.getString("activationCode"));
-                travelAgent.setPhoneNumber(result.getString("phoneNumber"));
+                travelAgent.setActivationCode(result.getString("activation_code"));
+                travelAgent.setPhoneNumber(result.getString("phone_number"));
                 travelAgent.setPosition(result.getString("position"));
-                travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travelAgencyId")));
+                travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travel_agency_id")));
                 travelAgent.setRole(Role.valueOf(result.getString("role")));
                 list.add(travelAgent);
             }
@@ -107,7 +108,18 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             statement.setString(1, id.toString());
             result = statement.executeQuery();
             while (result.next()) {
-                travelAgent = buildTravelAgent(result);
+                travelAgent = new TravelAgent();//buildTravelAgent(result);
+                travelAgent.setId(UUID.fromString(result.getString("id")));
+                travelAgent.setFirstName(result.getString("first_name"));
+                travelAgent.setLastName(result.getString("last_name"));
+                travelAgent.setUsername(result.getString("username"));
+                travelAgent.setPassword(result.getString("password"));
+                travelAgent.setEmail(result.getString("email"));
+                travelAgent.setActivationCode(result.getString("activation_code"));
+                travelAgent.setPhoneNumber(result.getString("phone_number"));
+                travelAgent.setPosition(result.getString("position"));
+                travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travel_agency_id")));
+                travelAgent.setRole(Role.valueOf(result.getString("role")));
             }
         }
         catch (SQLException e){
@@ -137,7 +149,18 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             statement.setString(1, username);
             result = statement.executeQuery();
             while (result.next()) {
-                travelAgent = buildTravelAgent(result);
+                travelAgent = new TravelAgent();
+                travelAgent.setId(UUID.fromString(result.getString("id")));
+                travelAgent.setFirstName(result.getString("first_name"));
+                travelAgent.setLastName(result.getString("last_name"));
+                travelAgent.setUsername(result.getString("username"));
+                travelAgent.setPassword(result.getString("password"));
+                travelAgent.setEmail(result.getString("email"));
+                travelAgent.setActivationCode(result.getString("activation_code"));
+                travelAgent.setPhoneNumber(result.getString("phone_number"));
+                travelAgent.setPosition(result.getString("position"));
+                travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travel_agency_id")));
+                travelAgent.setRole(Role.valueOf(result.getString("role")));
             }
         }
         catch (SQLException e){
@@ -185,21 +208,21 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         }
     }
 
-    private TravelAgent buildTravelAgent(ResultSet result) throws SQLException{
+   /* private TravelAgent buildTravelAgent(ResultSet result) throws SQLException{
         String uid = result.getString("id");
-        String firstName = result.getString("firstName");
-        String lastName = result.getString("lastName");
+        String firstName = result.getString("first_name");
+        String lastName = result.getString("last_name");
         String username = result.getString("username");
         String password = result.getString("password");
         String email = result.getString("email");
-        String activationCode = result.getString("activationCode");
-        String phoneNumber = result.getString("phoneNumber");
+        String activationCode = result.getString("activation_code");
+        String phoneNumber = result.getString("phone_number");
         String position = result.getString("position");
-        String travelAgentId = result.getString("travelAgentId");
+        String travelAgentId = result.getString("travel_agent_id");
         TravelAgent travelAgent =new TravelAgent(UUID.fromString(uid), firstName, lastName, username, password, email, activationCode, phoneNumber, position, UUID.fromString(travelAgentId));
         travelAgent.setRole(Role.valueOf(result.getString("role")));
         return travelAgent;
-    }
+    }*/
 
 
 }
