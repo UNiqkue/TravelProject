@@ -26,43 +26,42 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public int login(LoginRequestDto loginRequestDto) {
+        try {
             try {
-                try {
-                    CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
-                    if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
-                        return 2;
-                    }
-
-
-                } catch (NullPointerException e) {
-                    System.out.println("Load...");
+                CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
+                if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
+                    return 2;
                 }
 
-                try {
-                    AdminDto adminDto = adminConverter.convert(adminDao.getByUsername(loginRequestDto.getUsername()));
-                    if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
-                        return 1;
-                    }
-                } catch (NullPointerException e) {
-                    System.out.println("Loaddd.....");
-                }
-
-               try {
-                    TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
-                    if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
-                        return 3;
-                    }
-                } catch (NullPointerException e){
-                    return 0;
-                    }
 
             } catch (NullPointerException e) {
-                System.out.println("Loaddddd.......");
+                System.out.println("Load...");
             }
+
+            try {
+                AdminDto adminDto = adminConverter.convert(adminDao.getByUsername(loginRequestDto.getUsername()));
+                if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
+                    return 1;
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Loaddd.....");
+            }
+
+            try {
+                TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
+                if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
+                    return 3;
+                }
+            } catch (NullPointerException e) {
+                return 0;
+            }
+
+        } catch (NullPointerException e) {
+            System.out.println("Loaddddd.......");
+        }
 
         return 0;
     }
-
 
 
 }

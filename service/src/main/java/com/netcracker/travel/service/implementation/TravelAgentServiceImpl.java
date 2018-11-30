@@ -25,11 +25,11 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     private TourConverter tourConverter = new TourConverter();
     private TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
 
-    public TravelAgentServiceImpl(){}
+    public TravelAgentServiceImpl() {
+    }
 
     public TourDto createTour(TourDto tourDto) {
         tourDto.setId(UUID.randomUUID());
-       // tourDto.setCustomerId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
         return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
@@ -40,17 +40,21 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
                 .collect(Collectors.toList());
     }
 
-    /** viewOrderHystory **/
+    /**
+     * viewOrderHystory
+     **/
     public List<TourDto> watchTours() {
         String clientId = "00000000-0000-0000-0000-000000000000";
-        return  tourDao.getAll()
+        return tourDao.getAll()
                 .stream()
                 .filter(tour -> !(tour.getCustomerId().toString().equals(clientId)))
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
-    /** getAll TravelAgents **/
+    /**
+     * getAll TravelAgents
+     **/
     public List<TravelAgentDto> getAll() {
         return travelAgentDao.getAll()
                 .stream()
@@ -62,14 +66,18 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
         return travelAgentConverter.convert(travelAgentDao.getByUsername(username));
     }
 
-    /** makeDiscount - update price of tour **/
+    /**
+     * makeDiscount - update price of tour
+     **/
     public TourDto makeDiscount(UUID id, Double price) {
-            TourDto tourDto = tourConverter.convert(tourDao.getById(id));
-            tourDto.setPrice(price);
-            return tourConverter.convert(tourDao.updatePrice(tourConverter.convert(tourDto)));
+        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+        tourDto.setPrice(price);
+        return tourConverter.convert(tourDao.updatePrice(tourConverter.convert(tourDto)));
     }
 
-    /** editTour - update description of tour **/
+    /**
+     * editTour - update description of tour
+     **/
     public TourDto editTour(UUID id, String description) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setDescription(description);
