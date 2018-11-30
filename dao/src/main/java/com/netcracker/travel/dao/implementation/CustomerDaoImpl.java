@@ -74,16 +74,16 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             while (result.next()) {
                 Customer customer = new Customer();//buildCustomer(result);
                 customer.setId(UUID.fromString(result.getString("id")));
-                customer.setFirstName(result.getString("firstName"));
-                customer.setLastName(result.getString("lastName"));
+                customer.setFirstName(result.getString("first_name"));
+                customer.setLastName(result.getString("last_name"));
                 customer.setUsername(result.getString("username"));
                 customer.setPassword(result.getString("password"));
                 customer.setEmail(result.getString("email"));
-                customer.setActivationCode(result.getString("activationCode"));
-                customer.setCardNumber(result.getString("cardNumber"));
-                customer.setDateOfBirth(result.getDate("dateOfBirth"));
-                customer.setPassportInfo(result.getString("passportInfo"));
-                customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setActivationCode(result.getString("activation_code"));
+                customer.setCardNumber(result.getString("card_number"));
+                customer.setDateOfBirth(result.getDate("date_of_birth"));
+                customer.setPassportInfo(result.getString("passport_info"));
+                customer.setPhoneNumber(result.getString("phone_number"));
                 customer.setRole(Role.valueOf(result.getString("role")));
                 list.add(customer);
             }
@@ -108,16 +108,16 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
                 //  customer = buildCustomer(result);
                 customer = new Customer();
                 customer.setId(UUID.fromString(result.getString("id")));
-                customer.setFirstName(result.getString("firstName"));
-                customer.setLastName(result.getString("lastName"));
+                customer.setFirstName(result.getString("first_name"));
+                customer.setLastName(result.getString("last_name"));
                 customer.setUsername(result.getString("username"));
                 customer.setPassword(result.getString("password"));
                 customer.setEmail(result.getString("email"));
-                customer.setActivationCode(result.getString("activationCode"));
-                customer.setCardNumber(result.getString("cardNumber"));
-                customer.setDateOfBirth(result.getDate("dateOfBirth"));
-                customer.setPassportInfo(result.getString("passportInfo"));
-                customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setActivationCode(result.getString("activation_code"));
+                customer.setCardNumber(result.getString("card_number"));
+                customer.setDateOfBirth(result.getDate("date_of_birth"));
+                customer.setPassportInfo(result.getString("passport_info"));
+                customer.setPhoneNumber(result.getString("phone_number"));
                 customer.setRole(Role.valueOf(result.getString("role")));
             }
 
@@ -148,16 +148,16 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             while (result.next()) {
                 customer = new Customer();
                 customer.setId(UUID.fromString(result.getString("id")));
-                customer.setFirstName(result.getString("firstName"));
-                customer.setLastName(result.getString("lastName"));
+                customer.setFirstName(result.getString("first_name"));
+                customer.setLastName(result.getString("last_name"));
                 customer.setUsername(result.getString("username"));
                 customer.setPassword(result.getString("password"));
                 customer.setEmail(result.getString("email"));
-                customer.setActivationCode(result.getString("activationCode"));
-                customer.setCardNumber(result.getString("cardNumber"));
-                customer.setDateOfBirth(result.getDate("dateOfBirth"));
-                customer.setPassportInfo(result.getString("passportInfo"));
-                customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setActivationCode(result.getString("activation_code"));
+                customer.setCardNumber(result.getString("card_number"));
+                customer.setDateOfBirth(result.getDate("date_of_birth"));
+                customer.setPassportInfo(result.getString("passport_info"));
+                customer.setPhoneNumber(result.getString("phone_number"));
                 customer.setRole(Role.valueOf(result.getString("role")));
             }
         } catch (SQLException e) {
@@ -181,16 +181,16 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             while (result.next()) {
                 customer = new Customer();
                 customer.setId(UUID.fromString(result.getString("id")));
-                customer.setFirstName(result.getString("firstName"));
-                customer.setLastName(result.getString("lastName"));
+                customer.setFirstName(result.getString("first_name"));
+                customer.setLastName(result.getString("last_name"));
                 customer.setUsername(result.getString("username"));
                 customer.setPassword(result.getString("password"));
                 customer.setEmail(result.getString("email"));
-                customer.setActivationCode(result.getString("activationCode"));
-                customer.setCardNumber(result.getString("cardNumber"));
-                customer.setDateOfBirth(result.getDate("dateOfBirth"));
-                customer.setPassportInfo(result.getString("passportInfo"));
-                customer.setPhoneNumber(result.getString("phoneNumber"));
+                customer.setActivationCode(result.getString("activation_code"));
+                customer.setCardNumber(result.getString("card_number"));
+                customer.setDateOfBirth(result.getDate("date_of_birth"));
+                customer.setPassportInfo(result.getString("passport_info"));
+                customer.setPhoneNumber(result.getString("phone_number"));
                 customer.setRole(Role.valueOf(result.getString("role")));
             }
         } catch (SQLException e) {

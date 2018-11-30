@@ -73,18 +73,18 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             statement = connection.prepareStatement(SqlConfig.GET_ALL_TRAVELAGENTS);
             result = statement.executeQuery();
             while (result.next()) {
-                TravelAgent travelAgent = buildTravelAgent(result);
-//                travelAgent.setId(UUID.fromString(result.getString("id")));
-//                travelAgent.setFirstName(result.getString("firstName"));
-//                travelAgent.setLastName(result.getString("lastName"));
-//                travelAgent.setUsername(result.getString("username"));
-//                travelAgent.setPassword(result.getString("password"));
-//                travelAgent.setEmail(result.getString("email"));
-//                travelAgent.setActivationCode(result.getString("activationCode"));
-//                travelAgent.setPhoneNumber(result.getString("phoneNumber"));
-//                travelAgent.setPosition(result.getString("position"));
-//                travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travelAgencyId")));
-//                travelAgent.setRole(Role.valueOf(result.getString("role")));
+                TravelAgent travelAgent = new TravelAgent();//buildTravelAgent(result);
+                travelAgent.setId(UUID.fromString(result.getString("id")));
+                travelAgent.setFirstName(result.getString("firstName"));
+                travelAgent.setLastName(result.getString("lastName"));
+                travelAgent.setUsername(result.getString("username"));
+                travelAgent.setPassword(result.getString("password"));
+                travelAgent.setEmail(result.getString("email"));
+                travelAgent.setActivationCode(result.getString("activationCode"));
+                travelAgent.setPhoneNumber(result.getString("phoneNumber"));
+                travelAgent.setPosition(result.getString("position"));
+                travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travelAgencyId")));
+                travelAgent.setRole(Role.valueOf(result.getString("role")));
                 list.add(travelAgent);
             }
         }
@@ -103,7 +103,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         TravelAgent travelAgent = null;
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_ID);
+            statement = connection.prepareStatement(SqlConfig.GET_TRAVELAGENT_BY_ID);
             statement.setString(1, id.toString());
             result = statement.executeQuery();
             while (result.next()) {
@@ -133,31 +133,8 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         TravelAgent travelAgent = null;
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_USERNAME);
+            statement = connection.prepareStatement(SqlConfig.GET_TRAVELAGENT_BY_USERNAME);
             statement.setString(1, username);
-            result = statement.executeQuery();
-            while (result.next()) {
-                travelAgent = buildTravelAgent(result);
-            }
-        }
-        catch (SQLException e){
-            String message = "Unable to return the user ";
-            SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
-            ClosingUtil.close(result);
-            ClosingUtil.close(statement);
-        }
-        return travelAgent;
-    }
-
-
-    public TravelAgent getByEmail(String email){
-        TravelAgent travelAgent = null;
-        try {
-            connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.GET_USER_BY_EMAIL);
-            statement.setString(1, email);
             result = statement.executeQuery();
             while (result.next()) {
                 travelAgent = buildTravelAgent(result);
@@ -177,7 +154,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     public TravelAgent update(TravelAgent travelAgent){
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.PUT_PHONE);
+            statement = connection.prepareStatement(SqlConfig.PUT_POSITION);
             statement.setString(1, travelAgent.getPhoneNumber());
             statement.setString(2, travelAgent.getId().toString());
             statement.executeUpdate();
@@ -195,7 +172,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     public void delete(UUID id) {
         try {
             connection = PoolConnector.getInstance().getConnection();
-            statement = connection.prepareStatement(SqlConfig.DELETE_USER_BY_ID);
+            statement = connection.prepareStatement(SqlConfig.DELETE_TRAVELAGENT_BY_ID);
             statement.setString(1, id.toString());
             statement.executeUpdate();
         }
