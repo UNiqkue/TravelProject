@@ -51,7 +51,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             statement.setDate(7, tour.getStartDate());
             statement.setDate(8, tour.getEndDate());
             statement.setString(9, tour.getTravelAgencyId().toString());
-            statement.setString(10, tour.getCustomerId().toString());
+            statement.setString(10, "00000000-0000-0000-0000-000000000000");
             statement.setBoolean(11, tour.isFree());
             statement.executeUpdate();
         }
@@ -61,7 +61,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             SystemLogger.getInstance().logError(getClass(), message);
         }
         finally{
-           // ClosingUtil.close(statement);
+            ClosingUtil.close(statement);
         }
         return tour;
     }
@@ -183,6 +183,24 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.MAKE_DISCOUNT);
             statement.setDouble(1, tour.getPrice());
+            statement.setString(2, tour.getId().toString());
+            statement.executeUpdate();
+        }
+        catch(SQLException e){
+            String message = "Unable to update amount ";
+            SystemLogger.getInstance().logError(getClass(), message);
+        }
+        finally{
+            ClosingUtil.close(statement);
+        }
+        return tour;
+    }
+
+    public Tour updateDescription(Tour tour){
+        try {
+            connection = PoolConnector.getInstance().getConnection();
+            statement = connection.prepareStatement(SqlConfig.PUT_DESCRIPTION);
+            statement.setString(1, tour.getDescription());
             statement.setString(2, tour.getId().toString());
             statement.executeUpdate();
         }

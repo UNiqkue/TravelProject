@@ -101,7 +101,7 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     public List<TravelAgency> getByName(String name) {
         List<TravelAgency> list = getAll()
                 .stream()
-                .filter(admin -> admin.getName().equals(name))
+                .filter(agency -> agency.getName().equals(name))
                 .collect(Collectors.toList());
         return list;
     }
@@ -118,7 +118,7 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
                 travelAgency.setId(UUID.fromString(result.getString("id")));
                 travelAgency.setName(result.getString("name"));
                 travelAgency.setCountTour(result.getInt("count_tour"));
-                travelAgency.setCountTravelAgent(result.getInt("count_travel_agent"));
+                travelAgency.setCountTravelAgent(result.getInt("count_travel_agents"));
                 list.add(travelAgency);
             }
         } catch (SQLException e) {

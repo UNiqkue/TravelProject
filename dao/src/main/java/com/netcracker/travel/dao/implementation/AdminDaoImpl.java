@@ -75,12 +75,12 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
             while (result.next()) {
                 Admin admin = new Admin();
                 admin.setId(UUID.fromString(result.getString("id")));
-                admin.setFirstName(result.getString("firstName"));
-                admin.setLastName(result.getString("lastName"));
+                admin.setFirstName(result.getString("first_name"));
+                admin.setLastName(result.getString("last_name"));
                 admin.setUsername(result.getString("username"));
                 admin.setPassword(result.getString("password"));
                 admin.setEmail(result.getString("email"));
-                admin.setActivationCode(result.getString("activationCode"));
+                admin.setActivationCode(result.getString("activation_code"));
                 admin.setRole(Role.valueOf(result.getString("role")));
                 list.add(admin);
             }
@@ -106,12 +106,12 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
             while (result.next()) {
                 admin = new Admin();
                 admin.setId(UUID.fromString(result.getString("id")));
-                admin.setFirstName(result.getString("firstName"));
-                admin.setLastName(result.getString("lastName"));
+                admin.setFirstName(result.getString("first_name"));
+                admin.setLastName(result.getString("last_name"));
                 admin.setUsername(result.getString("username"));
                 admin.setPassword(result.getString("password"));
                 admin.setEmail(result.getString("email"));
-                admin.setActivationCode(result.getString("activationCode"));
+                admin.setActivationCode(result.getString("activation_code"));
                 admin.setRole(Role.valueOf(result.getString("role")));
             }
         }
@@ -144,16 +144,17 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
             while (result.next()) {
                 admin = new Admin();
                 admin.setId(UUID.fromString(result.getString("id")));
-                admin.setFirstName(result.getString("firstName"));
-                admin.setLastName(result.getString("lastName"));
+                admin.setFirstName(result.getString("first_name"));
+                admin.setLastName(result.getString("last_name"));
                 admin.setUsername(result.getString("username"));
                 admin.setPassword(result.getString("password"));
                 admin.setEmail(result.getString("email"));
-                admin.setActivationCode(result.getString("activationCode"));
+                admin.setActivationCode(result.getString("activation_code"));
                 admin.setRole(Role.valueOf(result.getString("role")));
             }
         }
         catch (SQLException e){
+            e.printStackTrace();
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
         }
@@ -201,12 +202,12 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
 
     private Admin buildAdmin(ResultSet result) throws SQLException{
         String uid = result.getString("id");
-        String firstName = result.getString("firstName");
-        String lastName = result.getString("lastName");
+        String firstName = result.getString("first_name");
+        String lastName = result.getString("last_name");
         String username = result.getString("username");
         String password = result.getString("password");
         String email = result.getString("email");
-        String activationCode = result.getString("activationCode");
+        String activationCode = result.getString("activation_code");
         Admin admin =new Admin(UUID.fromString(uid), firstName, lastName, username, password, email, activationCode);
         admin.setRole(Role.valueOf(result.getString("role")));
         return admin;

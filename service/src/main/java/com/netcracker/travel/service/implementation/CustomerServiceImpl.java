@@ -9,14 +9,13 @@ import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
-import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
-import com.netcracker.travel.service.interfaces.SearchTourService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
+import com.netcracker.travel.service.interfaces.SearchTourService;
 
 import java.sql.Date;
 import java.util.List;
@@ -56,7 +55,9 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
     }
 
-    /** viewOrderedTours **/
+    /**
+     * viewOrderedTours
+     **/
     public List<TourDto> watchTours(UUID id) {
         return tourDao.getToursById(id)
                 .stream()
@@ -113,18 +114,10 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public List<TourDto> searchTourByTravelAgency(String name) {
-            TravelAgencyDto travelAgencyDto = getTravelAgencyByName(name);
-        return tourDao.getByTravelAgencyId(travelAgencyDto.getId())
+        return tourDao.getByTravelAgencyId(travelAgencyDao.getByName(name).get(0).getId())
                 .stream()
                 .map(travel -> tourConverter.convert(travel))
                 .collect(Collectors.toList());
-    }
-
-    public TravelAgencyDto getTravelAgencyByName(String name) {
-        return travelAgencyConverter.convert(travelAgencyDao.getByName(name)
-                .stream()
-                .filter(travelAgency -> travelAgency.getName().equals(name))
-                .findFirst().get());
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {

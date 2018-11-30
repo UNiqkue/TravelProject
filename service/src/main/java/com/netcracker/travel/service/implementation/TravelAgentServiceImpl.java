@@ -28,10 +28,12 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     public TravelAgentServiceImpl(){}
 
     public TourDto createTour(TourDto tourDto) {
+        tourDto.setId(UUID.randomUUID());
+       // tourDto.setCustomerId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
         return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
-    public List<TourDto> getExistenceTours(){
+    public List<TourDto> getExistenceTours() {
         return tourDao.getAll()
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
@@ -56,7 +58,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
                 .collect(Collectors.toList());
     }
 
-    public TravelAgentDto getByUsername(String username){
+    public TravelAgentDto getByUsername(String username) {
         return travelAgentConverter.convert(travelAgentDao.getByUsername(username));
     }
 
@@ -71,7 +73,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     public TourDto editTour(UUID id, String description) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setDescription(description);
-        return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+        return tourConverter.convert(tourDao.updateDescription(tourConverter.convert(tourDto)));
     }
 
     public void deleteTour(UUID id) {
