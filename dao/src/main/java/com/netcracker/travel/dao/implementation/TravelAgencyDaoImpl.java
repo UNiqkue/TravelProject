@@ -51,6 +51,7 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
             statement.executeUpdate();
         }
         catch (SQLException e){
+            e.printStackTrace();
             String message = "Unable to add the user account ";
             SystemLogger.getInstance().logError(getClass(), message);
         }

@@ -10,12 +10,12 @@ import java.util.UUID;
 
 public class TourDaoImplTest {
 
-    Tour tour;
+    Tour tour = new Tour(UUID.randomUUID(), "Tour by sea", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"), UUID.fromString("91ccd7a5-6446-4e8e-bfc6-010a66e12228"), true);
+
 
     @Test
     public void testSave() throws Exception{
-        tour = new Tour(UUID.randomUUID(), "Tour", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.randomUUID(), UUID.randomUUID(), true);
-        TourDaoImpl.getInstance().save(tour);
+        tour = TourDaoImpl.getInstance().save(tour);
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
         Assert.assertEquals(tour, actual);
         TourDaoImpl.getInstance().delete(tour.getId());
@@ -23,7 +23,7 @@ public class TourDaoImplTest {
 
     @Test
     public void testGetById() throws Exception {
-        tour = new Tour(UUID.randomUUID(), "Tour", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.randomUUID(), UUID.randomUUID(), true);
+        tour.setId(UUID.fromString("2be61a8a-3fa7-4f2d-a592-054de4f010dc"));
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
         Assert.assertEquals(tour, actual);
     }

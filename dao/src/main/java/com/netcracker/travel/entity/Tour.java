@@ -134,14 +134,17 @@ public class Tour extends BaseEntity {
     @Override
     public String toString() {
         return "Tour{" +
-                "name='" + name + '\'' +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", type=" + type +
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", travelAgencyId=" + travelAgencyId +
                 ", customerId=" + customerId +
+                ", free=" + free +
                 '}';
     }
 

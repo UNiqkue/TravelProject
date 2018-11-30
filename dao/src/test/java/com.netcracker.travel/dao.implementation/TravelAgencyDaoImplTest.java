@@ -7,14 +7,14 @@ import org.junit.Test;
 import java.util.UUID;
 
 public class TravelAgencyDaoImplTest {
-    TravelAgency travelAgency;
+    TravelAgency travelAgency = new TravelAgency(UUID.randomUUID(), "CoralTravel", 5, 10);
 
     @Test
     public void testSave() throws Exception{
         TravelAgencyDaoImpl.getInstance().save(travelAgency);
         TravelAgency actual = TravelAgencyDaoImpl.getInstance().getById(travelAgency.getId());
         Assert.assertEquals(travelAgency, actual);
-        TravelAgencyDaoImpl.getInstance().delete(travelAgency.getId());
+     //   TravelAgencyDaoImpl.getInstance().delete(travelAgency.getId());
     }
 
     @Test

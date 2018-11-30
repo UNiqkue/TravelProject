@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class TourDaoImpl implements AbstractDao<Tour> {
 
-    private Connection connection =PoolConnector.getInstance().getConnection();
+    private Connection connection = PoolConnector.getInstance().getConnection();
     private PreparedStatement statement;
     private ResultSet result;
 
@@ -42,7 +42,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         try {
             Connection connection = PoolConnector.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(SqlConfig.ADD_TOUR);
-            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(1, tour.getId().toString());
             statement.setString(2, tour.getName());
             statement.setString(3, tour.getDescription());
             statement.setDouble(4, tour.getPrice());
@@ -57,6 +57,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
         }
         catch (SQLException e){
             String message = "Unable to add the user account ";
+            e.printStackTrace();
             SystemLogger.getInstance().logError(getClass(), message);
         }
         finally{
@@ -79,10 +80,10 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 tour.setPrice(result.getDouble("price"));
                 tour.setType(TypeTour.valueOf(result.getString("type")));
                 tour.setCountry(result.getString("country"));
-                tour.setStartDate(result.getDate("startDate"));
-                tour.setEndDate(result.getDate("endDate"));
-                tour.setTravelAgencyId(UUID.fromString(result.getString("travelAgencyId")));
-                tour.setCustomerId(UUID.fromString(result.getString("customerId")));
+                tour.setStartDate(result.getDate("start_date"));
+                tour.setEndDate(result.getDate("end_date"));
+                tour.setTravelAgencyId(UUID.fromString(result.getString("travel_agency_id")));
+                tour.setCustomerId(UUID.fromString(result.getString("customer_id")));
                 tour.setFree(result.getBoolean("free"));
                 list.add(tour);
             }
@@ -106,10 +107,22 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             statement.setString(1, id.toString());
             result = statement.executeQuery();
             while (result.next()) {
-                tour = buildTour(result);
+                tour = new Tour();
+                tour.setId(UUID.fromString(result.getString("id")));
+                tour.setName(result.getString("name"));
+                tour.setDescription(result.getString("description"));
+                tour.setPrice(result.getDouble("price"));
+                tour.setType(TypeTour.valueOf(result.getString("type")));
+                tour.setCountry(result.getString("country"));
+                tour.setStartDate(result.getDate("start_date"));
+                tour.setEndDate(result.getDate("end_date"));
+                tour.setTravelAgencyId(UUID.fromString(result.getString("travel_agency_id")));
+                tour.setCustomerId(UUID.fromString(result.getString("customer_id")));
+                tour.setFree(result.getBoolean("free"));
             }
         }
         catch (SQLException e){
+            e.printStackTrace();
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
         }

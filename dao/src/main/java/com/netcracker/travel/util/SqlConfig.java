@@ -30,7 +30,7 @@ public class SqlConfig {
     public static final String MAKE_DISCOUNT = "UPDATE tour SET price = ? WHERE id = ?";
     public static final String DELETE_TOUR_BY_ID = "DELETE FROM tour WHERE id = ?";
 
-    public static final String ADD_TRAVELAGENCY = "INSERT INTO travel_agency(id, name, count_tour, count_travel_agent) VALUES(?, ?, ?, ?)";
+    public static final String ADD_TRAVELAGENCY = "INSERT INTO travel_agency(id, name, count_tour, count_travel_agents) VALUES(?, ?, ?, ?)";
     public static final String PUT_NAME = "UPDATE travel_agency SET name = ? WHERE id = ?";
     public static final String GET_TRAVELAGENCY_BY_ID = "SELECT * FROM travel_agency WHERE id = ?";
     public static final String GET_ALL_TRAVELAGENCIES = "SELECT * FROM travel_agency";
