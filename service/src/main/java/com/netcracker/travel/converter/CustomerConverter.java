@@ -36,7 +36,7 @@ public class CustomerConverter {
         customerDto.setDateOfBirth(customer.getDateOfBirth());
         customerDto.setPassportInfo(customer.getPassportInfo());
         customerDto.setListOfTours(customer.getListOfTours());
-
         return customerDto;
     }
+
 }

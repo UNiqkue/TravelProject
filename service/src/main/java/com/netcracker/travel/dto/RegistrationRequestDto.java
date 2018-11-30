@@ -1,6 +1,7 @@
 package com.netcracker.travel.dto;
 
 import java.sql.Date;
+import java.util.UUID;
 
 public class RegistrationRequestDto {
 
