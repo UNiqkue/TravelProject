@@ -14,12 +14,12 @@ public class TravelAgencyDaoImplTest {
         TravelAgencyDaoImpl.getInstance().save(travelAgency);
         TravelAgency actual = TravelAgencyDaoImpl.getInstance().getById(travelAgency.getId());
         Assert.assertEquals(travelAgency, actual);
-     //   TravelAgencyDaoImpl.getInstance().delete(travelAgency.getId());
+        TravelAgencyDaoImpl.getInstance().delete(travelAgency.getId());
     }
 
     @Test
     public void testGetById() throws Exception {
-        travelAgency = new TravelAgency(UUID.randomUUID(), "TravelAgency1", 10, 15);
+        travelAgency.setId(UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"));
         TravelAgency actual = TravelAgencyDaoImpl.getInstance().getById(travelAgency.getId());
         Assert.assertEquals(travelAgency, actual);
     }

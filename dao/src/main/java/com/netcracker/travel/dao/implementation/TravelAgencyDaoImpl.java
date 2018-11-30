@@ -25,11 +25,10 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
 
     private static volatile TravelAgencyDaoImpl instance;
 
-    private TravelAgencyDaoImpl(){
-
+    private TravelAgencyDaoImpl() {
     }
 
-    public static TravelAgencyDaoImpl getInstance(){
+    public static TravelAgencyDaoImpl getInstance() {
         if (instance == null) {
             synchronized (TravelAgencyDaoImpl.class) {
                 if (instance == null) {
@@ -44,36 +43,32 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.ADD_TRAVELAGENCY);
-            statement.setString(1, UUID.randomUUID().toString());
+            statement.setString(1, travelAgency.getId().toString());
             statement.setString(2, travelAgency.getName());
             statement.setInt(3, travelAgency.getCountTour());
             statement.setInt(4, travelAgency.getCountTravelAgent());
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             String message = "Unable to add the user account ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return travelAgency;
     }
 
     @Override
-    public TravelAgency update(TravelAgency travelAgency){
+    public TravelAgency update(TravelAgency travelAgency) {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.PUT_NAME);
             statement.setString(1, travelAgency.getId().toString());
             statement.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to update amount ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return travelAgency;
@@ -87,14 +82,16 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
             statement.setString(1, id.toString());
             result = statement.executeQuery();
             while (result.next()) {
-                travelAgency = buildTravelAgency(result);
+                travelAgency = new TravelAgency();
+                travelAgency.setId(UUID.fromString(result.getString("id")));
+                travelAgency.setName(result.getString("name"));
+                travelAgency.setCountTour(result.getInt("count_tour"));
+                travelAgency.setCountTravelAgent(result.getInt("count_travel_agent"));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
@@ -110,7 +107,7 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     }
 
 
-    public List<TravelAgency> getAll()  {
+    public List<TravelAgency> getAll() {
         List<TravelAgency> list = new ArrayList<>();
         try {
             connection = PoolConnector.getInstance().getConnection();
@@ -120,24 +117,19 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
                 TravelAgency travelAgency = new TravelAgency();
                 travelAgency.setId(UUID.fromString(result.getString("id")));
                 travelAgency.setName(result.getString("name"));
-                travelAgency.setCountTour(result.getInt("countTour"));
-                travelAgency.setCountTravelAgent(result.getInt("countTravelAgent"));
+                travelAgency.setCountTour(result.getInt("count_tour"));
+                travelAgency.setCountTravelAgent(result.getInt("count_travel_agent"));
                 list.add(travelAgency);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return list of users ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
         return list;
     }
-
-
-
 
 
     public void delete(UUID id) {
@@ -154,13 +146,13 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
         }
     }
 
-    private TravelAgency buildTravelAgency(ResultSet result) throws SQLException{
+  /*  private TravelAgency buildTravelAgency(ResultSet result) throws SQLException {
         String uid = result.getString("id");
         String name = result.getString("name");
-        int countTour = result.getInt("countTour");
-        int countTravelAgent = result.getInt("countTravelAgent");
+        int countTour = result.getInt("count_tour");
+        int countTravelAgent = result.getInt("count_travel_agent");
         TravelAgency travelAgency = new TravelAgency(UUID.fromString(uid), name, countTour, countTravelAgent);
         return travelAgency;
-    }
+    }*/
 
 }
