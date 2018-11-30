@@ -10,7 +10,8 @@ public class TravelAgency extends BaseEntity {
     private Integer countTour;
     private Integer countTravelAgent;
 
-    public TravelAgency(){}
+    public TravelAgency() {
+    }
 
     public String getName() {
         return name;

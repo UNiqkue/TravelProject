@@ -14,7 +14,8 @@ public class Customer extends User {
     private String passportInfo;
     private List<Tour> listOfTours;
 
-    public Customer(){}
+    public Customer() {
+    }
 
     @Override
     public void setRole(Role role) {
@@ -53,7 +54,9 @@ public class Customer extends User {
         this.passportInfo = passportInfo;
     }
 
-    public List<Tour> getListOfTours() {        return listOfTours;    }
+    public List<Tour> getListOfTours() {
+        return listOfTours;
+    }
 
     public void setListOfTours(List<Tour> listOfTours) {
         this.listOfTours = listOfTours;

@@ -16,7 +16,7 @@ public class TourList {
 
     private static String filePath = "dao\\src\\main\\resources\\storage\\tour.json";
 
-    public List<Tour> read()  {
+    public List<Tour> read() {
         List<Tour> list = new ArrayList<Tour>();
         try {
             Scanner scanner = new Scanner(new File(filePath));

@@ -36,7 +36,7 @@ public class TravelAgencyList {
         return list;
     }
 
-    public TravelAgency write(TravelAgency travelAgency){
+    public TravelAgency write(TravelAgency travelAgency) {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonTravelAgency = new JSONObject();
@@ -64,11 +64,11 @@ public class TravelAgencyList {
             fileWriter.write(jsonTravelAgency.toString() + "\n");
             fileWriter.flush();
             fileWriter.close();
-        } catch(JSONException e1) {
+        } catch (JSONException e1) {
             e1.printStackTrace();
-        } catch(FileNotFoundException fnf){
+        } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "File not found ");
-        } catch(IOException ioe){
+        } catch (IOException ioe) {
             System.out.println("Error while writing to file: " + ioe);
         }
         return travelAgency;

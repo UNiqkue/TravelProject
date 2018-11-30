@@ -11,7 +11,8 @@ public class TravelAgent extends User {
     private String position;
     private UUID travelAgencyId;
 
-    public TravelAgent(){ }
+    public TravelAgent() {
+    }
 
     @Override
     public void setRole(Role role) {

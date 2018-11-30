@@ -14,7 +14,7 @@ public class TravelAgentList {
 
     private static String filePath = "dao\\src\\main\\resources\\storage\\travelagent.json";
 
-    public List<TravelAgent> read(){
+    public List<TravelAgent> read() {
         List<TravelAgent> list = new ArrayList<TravelAgent>();
         TravelAgent travelAgent;
         try {
@@ -38,15 +38,15 @@ public class TravelAgentList {
             }
             scanner.close();
 
-        } catch(FileNotFoundException fnf){
+        } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "Unable to open file ");
-        } catch(IOException e){
+        } catch (IOException e) {
             System.out.println("Error while reading to file: " + e);
         }
         return list;
     }
 
-    public TravelAgent write(TravelAgent travelAgent){
+    public TravelAgent write(TravelAgent travelAgent) {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonTravelAgent = new JSONObject();
@@ -108,11 +108,11 @@ public class TravelAgentList {
             fileWriter.flush();
             fileWriter.close();
 
-        } catch(JSONException e1) {
+        } catch (JSONException e1) {
             e1.printStackTrace();
-        } catch(FileNotFoundException fnf){
+        } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "File not found ");
-        } catch(IOException ioe){
+        } catch (IOException ioe) {
             System.out.println("Error while writing to file: " + ioe);
         }
         return travelAgent;
