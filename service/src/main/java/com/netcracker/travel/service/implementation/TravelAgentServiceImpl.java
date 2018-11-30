@@ -29,6 +29,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
 
     public TourDto createTour(TourDto tourDto) {
         tourDto.setId(UUID.randomUUID());
+       // tourDto.setCustomerId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
         return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
