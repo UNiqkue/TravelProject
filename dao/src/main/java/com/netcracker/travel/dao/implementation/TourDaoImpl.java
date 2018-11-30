@@ -22,11 +22,11 @@ public class TourDaoImpl implements AbstractDao<Tour> {
 
     private static volatile TourDaoImpl instance;
 
-    private TourDaoImpl(){
+    private TourDaoImpl() {
 
     }
 
-    public static TourDaoImpl getInstance(){
+    public static TourDaoImpl getInstance() {
         if (instance == null) {
             synchronized (TourDaoImpl.class) {
                 if (instance == null) {
@@ -54,19 +54,17 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             statement.setString(10, "00000000-0000-0000-0000-000000000000");
             statement.setBoolean(11, tour.isFree());
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to add the user account ";
             e.printStackTrace();
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return tour;
     }
 
-    public List<Tour> getAll(){
+    public List<Tour> getAll() {
         List<Tour> list = new ArrayList<>();
         try {
             connection = PoolConnector.getInstance().getConnection();
@@ -87,19 +85,17 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 tour.setFree(result.getBoolean("free"));
                 list.add(tour);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return list of users ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
         return list;
     }
 
-    public Tour getById(UUID id)  {
+    public Tour getById(UUID id) {
         Tour tour = null;
         try {
             connection = PoolConnector.getInstance().getConnection();
@@ -120,13 +116,11 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 tour.setCustomerId(UUID.fromString(result.getString("customer_id")));
                 tour.setFree(result.getBoolean("free"));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
@@ -178,7 +172,7 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 .collect(Collectors.toList());
     }
 
-    public Tour update(Tour tour){
+    public Tour update(Tour tour) {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.PUT_CUSTOMER);
@@ -186,18 +180,16 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             statement.setBoolean(2, tour.isFree());
             statement.setString(3, tour.getId().toString());
             statement.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to update amount ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return tour;
     }
 
-    public Tour updateCancelTrip(Tour tour){
+    public Tour updateCancelTrip(Tour tour) {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.CANCEl_TRIP);
@@ -205,48 +197,42 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             statement.setBoolean(2, true);
             statement.setString(3, tour.getId().toString());
             statement.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to update amount ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return tour;
     }
 
-    public Tour updatePrice(Tour tour){
+    public Tour updatePrice(Tour tour) {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.MAKE_DISCOUNT);
             statement.setDouble(1, tour.getPrice());
             statement.setString(2, tour.getId().toString());
             statement.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to update amount ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return tour;
     }
 
-    public Tour updateDescription(Tour tour){
+    public Tour updateDescription(Tour tour) {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.PUT_DESCRIPTION);
             statement.setString(1, tour.getDescription());
             statement.setString(2, tour.getId().toString());
             statement.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to update amount ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return tour;
@@ -258,17 +244,15 @@ public class TourDaoImpl implements AbstractDao<Tour> {
             statement = connection.prepareStatement(SqlConfig.DELETE_TOUR_BY_ID);
             statement.setString(1, id.toString());
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to delete the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
     }
 
-    private Tour buildTour(ResultSet result) throws SQLException{
+    private Tour buildTour(ResultSet result) throws SQLException {
         String uid = result.getString("id");
         String name = result.getString("name");
         String description = result.getString("description");

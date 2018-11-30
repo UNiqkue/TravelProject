@@ -22,13 +22,14 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet result;
-    
+
     private static volatile TravelAgentDaoImpl instance;
 
-    private TravelAgentDaoImpl(){
+    private TravelAgentDaoImpl() {
 
     }
-    public static TravelAgentDaoImpl getInstance(){
+
+    public static TravelAgentDaoImpl getInstance() {
         if (instance == null) {
             synchronized (TravelAgentDaoImpl.class) {
                 if (instance == null) {
@@ -55,13 +56,11 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             statement.setString(10, travelAgent.getTravelAgencyId().toString());
             statement.setString(11, Role.TRAVELAGENT.toString());
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             String message = "Unable to add the user account ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return travelAgent;
@@ -88,19 +87,17 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
                 travelAgent.setRole(Role.valueOf(result.getString("role")));
                 list.add(travelAgent);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return list of users ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
         return list;
     }
 
-    public TravelAgent getById(UUID id){
+    public TravelAgent getById(UUID id) {
         TravelAgent travelAgent = null;
         try {
             connection = PoolConnector.getInstance().getConnection();
@@ -121,12 +118,10 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
                 travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travel_agency_id")));
                 travelAgent.setRole(Role.valueOf(result.getString("role")));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
@@ -162,31 +157,27 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
                 travelAgent.setTravelAgencyId(UUID.fromString(result.getString("travel_agency_id")));
                 travelAgent.setRole(Role.valueOf(result.getString("role")));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to return the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(result);
             ClosingUtil.close(statement);
         }
         return travelAgent;
     }
 
-    public TravelAgent update(TravelAgent travelAgent){
+    public TravelAgent update(TravelAgent travelAgent) {
         try {
             connection = PoolConnector.getInstance().getConnection();
             statement = connection.prepareStatement(SqlConfig.PUT_POSITION);
             statement.setString(1, travelAgent.getPhoneNumber());
             statement.setString(2, travelAgent.getId().toString());
             statement.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to update amount ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
         return travelAgent;
@@ -198,12 +189,10 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             statement = connection.prepareStatement(SqlConfig.DELETE_TRAVELAGENT_BY_ID);
             statement.setString(1, id.toString());
             statement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to delete the user ";
             SystemLogger.getInstance().logError(getClass(), message);
-        }
-        finally{
+        } finally {
             ClosingUtil.close(statement);
         }
     }

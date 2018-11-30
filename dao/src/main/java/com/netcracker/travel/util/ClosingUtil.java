@@ -6,25 +6,24 @@ import java.sql.SQLException;
 
 public class ClosingUtil {
 
-    private ClosingUtil(){}
+    private ClosingUtil() {
+    }
 
-    public static void close(PreparedStatement statement){
-        if(statement != null){
-            try{
+    public static void close(PreparedStatement statement) {
+        if (statement != null) {
+            try {
                 statement.close();
-            }
-            catch(SQLException e){
+            } catch (SQLException e) {
                 SystemLogger.getInstance().logError(ClosingUtil.class, e.getMessage());
             }
         }
     }
 
-    public static void close(ResultSet resultSet){
-        if(resultSet != null){
-            try{
+    public static void close(ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
                 resultSet.close();
-            }
-            catch(SQLException e){
+            } catch (SQLException e) {
                 SystemLogger.getInstance().logError(ClosingUtil.class, e.getMessage());
             }
         }

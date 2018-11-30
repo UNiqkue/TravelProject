@@ -16,7 +16,8 @@ public abstract class User extends BaseEntity {
     private String activationCode;
     private Role role;
 
-    public User(){}
+    public User() {
+    }
 
     public User(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode) {
         super(id);
