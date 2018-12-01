@@ -1,13 +1,33 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.entity.TravelAgency;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
 public class TravelAgencyDaoImplTest {
-    TravelAgency travelAgency = new TravelAgency(UUID.randomUUID(), "CoralTravel", 5, 10);
+    TravelAgency travelAgency;
+
+    @Before
+    public void setUp() {
+        travelAgency = new TravelAgency(UUID.randomUUID(), "CoralTravel", 5, 10);
+    }
+
+    @After
+    public void tearDown() {
+        travelAgency = null;
+    }
+
+    @Test
+    public void testGetInstance() throws Exception {
+        TravelAgencyDaoImpl instance1 = TravelAgencyDaoImpl.getInstance();
+        TravelAgencyDaoImpl instance2 = TravelAgencyDaoImpl.getInstance();
+        Assert.assertEquals(instance1.hashCode(), instance2.hashCode());
+    }
+
 
     @Test
     public void testSave() throws Exception{

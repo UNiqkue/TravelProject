@@ -2,7 +2,9 @@ package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.entity.Tour;
 import com.netcracker.travel.entity.enumeration.TypeTour;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
@@ -10,11 +12,27 @@ import java.util.UUID;
 
 public class TourDaoImplTest {
 
-    Tour tour = new Tour(UUID.randomUUID(), "Tour by sea", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"), UUID.fromString("91ccd7a5-6446-4e8e-bfc6-010a66e12228"), true);
+    Tour tour;
 
+    @Before
+    public void setUp() {
+        tour = new Tour(UUID.randomUUID(), "Tour by sea", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"), UUID.fromString("91ccd7a5-6446-4e8e-bfc6-010a66e12228"), true);
+    }
+
+    @After
+    public void tearDown() {
+        tour = null;
+    }
 
     @Test
-    public void testSave() throws Exception{
+    public void testGetInstance() throws Exception {
+        TourDaoImpl instance1 = TourDaoImpl.getInstance();
+        TourDaoImpl instance2 = TourDaoImpl.getInstance();
+        Assert.assertEquals(instance1.hashCode(), instance2.hashCode());
+    }
+
+    @Test
+    public void testSave() throws Exception {
         tour = TourDaoImpl.getInstance().save(tour);
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
         Assert.assertEquals(tour, actual);
@@ -39,7 +57,7 @@ public class TourDaoImplTest {
     }
 
     @Test
-    public void testDelete() throws Exception{
+    public void testDelete() throws Exception {
         TourDaoImpl.getInstance().save(tour);
         TourDaoImpl.getInstance().delete(tour.getId());
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());

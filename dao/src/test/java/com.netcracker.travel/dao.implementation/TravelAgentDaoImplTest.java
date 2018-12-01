@@ -1,16 +1,35 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.entity.TravelAgent;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
 public class TravelAgentDaoImplTest {
-    TravelAgent travelAgent = new TravelAgent(UUID.randomUUID(), "Grisha", "Moloch", "TravelAgent1", "null1111", "TravelAgent@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", "123123", UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"));
+    TravelAgent travelAgent;
+
+    @Before
+    public void setUp() {
+        travelAgent = new TravelAgent(UUID.randomUUID(), "Grisha", "Moloch", "TravelAgent1", "null1111", "TravelAgent@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", "123123", UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"));
+    }
+
+    @After
+    public void tearDown() {
+        travelAgent = null;
+    }
 
     @Test
-    public void testSave() throws Exception{
+    public void testGetInstance() throws Exception {
+        TravelAgentDaoImpl instance1 = TravelAgentDaoImpl.getInstance();
+        TravelAgentDaoImpl instance2 = TravelAgentDaoImpl.getInstance();
+        Assert.assertEquals(instance1.hashCode(), instance2.hashCode());
+    }
+
+    @Test
+    public void testSave() throws Exception {
         TravelAgentDaoImpl.getInstance().save(travelAgent);
         TravelAgent actual = TravelAgentDaoImpl.getInstance().getById(travelAgent.getId());
         Assert.assertEquals(travelAgent, actual);
@@ -35,7 +54,7 @@ public class TravelAgentDaoImplTest {
     }
 
     @Test
-    public void testDelete() throws Exception{
+    public void testDelete() throws Exception {
         TravelAgentDaoImpl.getInstance().save(travelAgent);
         TravelAgentDaoImpl.getInstance().delete(travelAgent.getId());
         TravelAgent actual = TravelAgentDaoImpl.getInstance().getById(travelAgent.getId());

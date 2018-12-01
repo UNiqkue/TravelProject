@@ -1,15 +1,35 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.entity.Customer;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
 import java.util.UUID;
 
-public class CustomerDaoImplTest {
+public class CustomerDaoImplTest extends Assert {
 
-    Customer customer = new Customer(UUID.randomUUID(), "Vova", "Dinkevich", "Customer1", "null1111", "Customer@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", Date.valueOf("2000-10-10"), "123123", "123123");
+    Customer customer;
+
+    @Before
+    public void setUp() {
+        customer = new Customer(UUID.randomUUID(), "Vova", "Dinkevich", "Customer1", "null1111", "Customer@gmail.com", "qwdqscqwcdqwcd", "+375-29-567-23-23", Date.valueOf("2000-10-10"), "123123", "123123");
+    }
+
+    @After
+    public void tearDown() {
+        customer = null;
+    }
+
+    @Test
+    public void testGetInstance() throws Exception {
+        CustomerDaoImpl instance1 = CustomerDaoImpl.getInstance();
+        CustomerDaoImpl instance2 = CustomerDaoImpl.getInstance();
+        Assert.assertEquals(instance1.hashCode(), instance2.hashCode());
+    }
+
 
     @Test
     public void testSave() throws Exception {

@@ -1,17 +1,36 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.entity.Admin;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
-public class AdminDaoImplTest {
+public class AdminDaoImplTest extends Assert {
 
-    Admin admin = new Admin(UUID.randomUUID(), "Achik", "Dmin", "Administrator", "null1111", "admin@gmail.com", "qwdqscqwcdqwcd");
+    Admin admin;
+
+    @Before
+    public void setUp() {
+        admin = new Admin(UUID.randomUUID(), "Achik", "Dmin", "Administrator", "null1111", "admin@gmail.com", "qwdqscqwcdqwcd");
+    }
+
+    @After
+    public void tearDown() {
+        admin = null;
+    }
 
     @Test
-    public void testSave() throws Exception{
+    public void testGetInstance() throws Exception {
+        AdminDaoImpl instance1 = AdminDaoImpl.getInstance();
+        AdminDaoImpl instance2 = AdminDaoImpl.getInstance();
+        Assert.assertEquals(instance1.hashCode(), instance2.hashCode());
+    }
+
+    @Test
+    public void testSave() throws Exception {
         AdminDaoImpl.getInstance().save(admin);
         Admin actual = AdminDaoImpl.getInstance().getById(admin.getId());
         Assert.assertEquals(admin, actual);
@@ -36,7 +55,7 @@ public class AdminDaoImplTest {
     }
 
     @Test
-    public void testDelete() throws Exception{
+    public void testDelete() throws Exception {
         AdminDaoImpl.getInstance().save(admin);
         AdminDaoImpl.getInstance().delete(admin.getId());
         Admin actual = AdminDaoImpl.getInstance().getById(admin.getId());
