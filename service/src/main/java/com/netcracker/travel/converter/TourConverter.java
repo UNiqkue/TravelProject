@@ -7,7 +7,6 @@ public class TourConverter {
 
     public Tour convert(TourDto tourDto) {
         Tour tour = new Tour();
-
         tour.setId(tourDto.getId());
         tour.setName(tourDto.getName());
         tour.setDescription(tourDto.getDescription());
@@ -21,19 +20,16 @@ public class TourConverter {
         if (tour.isFree() == false) {
             tour.setCustomerId(tourDto.getCustomerId());
         }
-
-
         return tour;
     }
 
     public TourDto convert(Tour tour) {
         TourDto tourDto = new TourDto();
-
         tourDto.setId(tour.getId());
         tourDto.setName(tour.getName());
         tourDto.setDescription(tour.getDescription());
         tourDto.setPrice(tour.getPrice());
-        tourDto.setType(tour.getType());
+        tourDto.setType(tour.getType().toString());
         tourDto.setCountry(tour.getCountry());
         tourDto.setStartDate(tour.getStartDate());
         tourDto.setEndDate(tour.getEndDate());
@@ -42,7 +38,6 @@ public class TourConverter {
         if (tourDto.isFree() == false) {
             tourDto.setCustomerId(tour.getCustomerId());
         }
-
         return tourDto;
     }
 

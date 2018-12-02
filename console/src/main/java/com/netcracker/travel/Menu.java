@@ -5,7 +5,6 @@ import com.netcracker.travel.controller.RegistrationController;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgentDto;
-import com.netcracker.travel.entity.enumeration.TypeTour;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
@@ -137,7 +136,7 @@ public class Menu {
                 int x = Integer.parseInt(reader.readLine());
                 switch (x) {
                     case 1:
-                        System.out.println(travelAgentService.viewOrderHystory());
+                        System.out.println(travelAgentService.watchTours());
                         break;
                     case 2:
                         boolean exit4 = false;
@@ -168,9 +167,11 @@ public class Menu {
                                                 while (exitcreate1 == false) {
                                                     try {
                                                         System.out.println("Please, input the type (HOTELRESTTOUR, SHOPTOUR, EXCURSION, CRUISE, SANATORIUM)");
-                                                        tourDto.setType(TypeTour.valueOf(reader.readLine()));
+                                                        tourDto.setType(reader.readLine());
                                                         exitcreate1 = true;
-                                                    } catch (IOException | IllegalArgumentException e) {
+                                                    } catch (IOException e) {
+                                                        System.out.println("No such type");
+                                                    } catch (IllegalArgumentException e) {
                                                         System.out.println("No such type");
                                                     }
 
@@ -191,14 +192,16 @@ public class Menu {
                                                 }
                                                 tourDto.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
                                                 tourDto.setFree(true);
-                                            } catch (IOException | IllegalArgumentException e) {
+                                            } catch (IOException e) {
+                                                System.out.println("No such type");
+                                            } catch (IllegalArgumentException e) {
                                                 System.out.println("No such type");
                                             }
 
                                         }
                                         travelAgentService.createTour(tourDto);
                                         System.out.println("You create tour \n");
-                                        printTours(travelAgentService.checkExistenceTours());
+                                        printTours(travelAgentService.getExistenceTours());
                                         break;
                                     case 2:
                                         String tourId = "00000000-0000-0000-0000-000000000000";
@@ -230,7 +233,7 @@ public class Menu {
 
                         break;
                     case 3:
-                        printTours(travelAgentService.checkExistenceTours());
+                        printTours(travelAgentService.getExistenceTours());
                         break;
                     case 4:
                         String tourId = "00000000-0000-0000-0000-000000000000";
@@ -316,19 +319,19 @@ public class Menu {
                                                 int type = Integer.parseInt(reader.readLine());
                                                 switch (type) {
                                                     case 1:
-                                                        printTours(customerService.searchTourByType(String.valueOf(TypeTour.HOTELRESTTOUR)));
+                                                        printTours(customerService.searchTourByType("HOTELRESTTOUR"));
                                                         break;
                                                     case 2:
-                                                        printTours(customerService.searchTourByType(String.valueOf(TypeTour.SHOPTOUR)));
+                                                        printTours(customerService.searchTourByType("SHOPTOUR"));
                                                         break;
                                                     case 3:
-                                                        printTours(customerService.searchTourByType(String.valueOf(TypeTour.EXCURSION)));
+                                                        printTours(customerService.searchTourByType("EXCURSION"));
                                                         break;
                                                     case 4:
-                                                        printTours(customerService.searchTourByType(String.valueOf(TypeTour.CRUISE)));
+                                                        printTours(customerService.searchTourByType("CRUISE"));
                                                         break;
                                                     case 5:
-                                                        printTours(customerService.searchTourByType(String.valueOf(TypeTour.SANATORIUM)));
+                                                        printTours(customerService.searchTourByType("SANATORIUM"));
                                                         break;
                                                     case 0:
                                                         exit4 = true;
@@ -379,16 +382,15 @@ public class Menu {
                         tourUid = UUID.fromString(tourId);
                         tourUid = inputTourUid(tourId, tourUid);
                         customerService.buyTour(tourUid, customerDto.getId());
-                        System.out.println("You buy tour");
                         break;
                     case 4:
-                        printTours(customerService.viewOrderedTours(customerDto.getId()));
+                        printTours(customerService.watchTours(customerDto.getId()));
                         break;
                     case 5:
                         tourId = "00000000-0000-0000-0000-000000000000";
                         tourUid = UUID.fromString(tourId);
                         tourUid = inputTourUid(tourId, tourUid);
-                        customerService.cancelTour(tourUid);
+                        customerService.cancelTour(tourUid, customerDto.getId());
                         break;
                     case 0:
                         exit2 = true;
@@ -424,7 +426,10 @@ public class Menu {
             try {
                 tourUid = UUID.fromString(reader.readLine());
                 tourId = tourUid.toString();
-            } catch (IOException | IllegalArgumentException e) {
+
+            } catch (IOException e) {
+                System.out.println("Not corrected id");
+            } catch (IllegalArgumentException e) {
                 System.out.println("Not corrected id");
             }
             if (tourId.equals("00000000-0000-0000-0000-000000000000")) {

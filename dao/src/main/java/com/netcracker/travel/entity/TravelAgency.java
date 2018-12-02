@@ -3,6 +3,7 @@ package com.netcracker.travel.entity;
 import com.netcracker.travel.entity.abstracts.BaseEntity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class TravelAgency extends BaseEntity {
 
@@ -11,6 +12,13 @@ public class TravelAgency extends BaseEntity {
     private Integer countTravelAgent;
 
     public TravelAgency() {
+    }
+
+    public TravelAgency(UUID id, String name, Integer countTour, Integer countTravelAgent) {
+        super(id);
+        this.name = name;
+        this.countTour = countTour;
+        this.countTravelAgent = countTravelAgent;
     }
 
     public String getName() {

@@ -18,4 +18,5 @@ public interface AbstractDao<T extends BaseEntity> {
     T update(T t);
 
     void delete(UUID id);
+
 }

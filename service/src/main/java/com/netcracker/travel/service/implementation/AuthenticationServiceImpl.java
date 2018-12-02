@@ -11,9 +11,6 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
-import org.json.JSONException;
-
-import java.util.NoSuchElementException;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -36,7 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     return 2;
                 }
 
-            } catch (NoSuchElementException e) {
+
+            } catch (NullPointerException e) {
                 System.out.println("Load...");
             }
 
@@ -45,22 +43,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
                     return 1;
                 }
-            } catch (NoSuchElementException e) {
+            } catch (NullPointerException e) {
                 System.out.println("Loaddd.....");
-            } catch (JSONException e) {
-
             }
 
-//                try {
-            TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
-            if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
-                return 3;
+            try {
+                TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
+                if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
+                    return 3;
+                }
+            } catch (NullPointerException e) {
+                return 0;
             }
-//                } catch (JSONException e){
-//                    return 0;
-//                    }
 
-        } catch (NoSuchElementException e) {
+        } catch (NullPointerException e) {
             System.out.println("Loaddddd.......");
         }
 
