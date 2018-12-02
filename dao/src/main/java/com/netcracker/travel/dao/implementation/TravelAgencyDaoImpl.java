@@ -1,7 +1,6 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
-<<<<<<< HEAD
 import com.netcracker.travel.dao.storage.TravelAgencyList;
 import com.netcracker.travel.entity.TravelAgency;
 
@@ -9,12 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-=======
-import com.netcracker.travel.entity.TravelAgency;
-
-import java.util.List;
-import java.util.UUID;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
 
@@ -35,7 +28,6 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     }
 
     public TravelAgency getById(UUID id) {
-<<<<<<< HEAD
         return getAll()
                 .stream()
                 .filter(travelAgency -> travelAgency.getId().toString().equals(id.toString()))
@@ -100,32 +92,4 @@ public class TravelAgencyDaoImpl implements AbstractDao<TravelAgency> {
     }
 
 
-=======
-        return null;
-    }
-
-    public List<TravelAgency> getByName(String name) {
-        return null;
-    }
-
-    public List<TravelAgency> getAll() {
-        return null;
-    }
-
-    public TravelAgency save(TravelAgency travelAgency) {
-        return travelAgency;
-    }
-
-    public TravelAgency update(TravelAgency travelAgency) {
-        return travelAgency;
-    }
-
-    public void delete(UUID id) {
-    }
-
-    public TravelAgency removeById(UUID id) {
-        return null;
-    }
-
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 }

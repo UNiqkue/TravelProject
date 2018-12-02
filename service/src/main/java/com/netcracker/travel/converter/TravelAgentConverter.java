@@ -5,13 +5,8 @@ import com.netcracker.travel.entity.TravelAgent;
 
 public class TravelAgentConverter {
 
-<<<<<<< HEAD
     public TravelAgent convert(TravelAgentDto travelAgentDto) {
         TravelAgent travelAgent = new TravelAgent();
-=======
-    public TravelAgent convert(TravelAgentDto travelAgentDto){
-        TravelAgent travelAgent= new TravelAgent();
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         travelAgent.setId(travelAgentDto.getId());
         travelAgent.setFirstName(travelAgentDto.getFirstName());
         travelAgent.setLastName(travelAgentDto.getLastName());
@@ -22,20 +17,11 @@ public class TravelAgentConverter {
         travelAgent.setPhoneNumber(travelAgentDto.getPhoneNumber());
         travelAgent.setPosition(travelAgentDto.getPosition());
         travelAgent.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
-<<<<<<< HEAD
         return travelAgent;
     }
 
     public TravelAgentDto convert(TravelAgent travelAgent) {
         TravelAgentDto travelAgentDto = new TravelAgentDto();
-=======
-
-        return travelAgent;
-    }
-
-    public TravelAgentDto convert(TravelAgent travelAgent){
-        TravelAgentDto travelAgentDto= new TravelAgentDto();
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         travelAgentDto.setId(travelAgent.getId());
         travelAgentDto.setFirstName(travelAgent.getFirstName());
         travelAgentDto.setLastName(travelAgent.getLastName());
@@ -46,10 +32,6 @@ public class TravelAgentConverter {
         travelAgentDto.setPhoneNumber(travelAgent.getPhoneNumber());
         travelAgentDto.setPosition(travelAgent.getPosition());
         travelAgentDto.setTravelAgencyId(travelAgent.getTravelAgencyId());
-<<<<<<< HEAD
-=======
-
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         return travelAgentDto;
     }
 }

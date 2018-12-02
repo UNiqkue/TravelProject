@@ -1,7 +1,6 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
-<<<<<<< HEAD
 import com.netcracker.travel.dao.storage.CustomerList;
 import com.netcracker.travel.entity.Customer;
 
@@ -9,12 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-=======
-import com.netcracker.travel.entity.Customer;
-
-import java.util.List;
-import java.util.UUID;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 public class CustomerDaoImpl implements AbstractDao<Customer> {
 
@@ -35,7 +28,6 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
     }
 
     public Customer getById(UUID id) {
-<<<<<<< HEAD
         return getAll()
                 .stream()
                 .filter(customer -> customer.getId().toString().equals(id.toString()))
@@ -119,31 +111,6 @@ public class CustomerDaoImpl implements AbstractDao<Customer> {
             System.out.println("Error while writing to file: " + e);
         }
     }
-=======
-        return null;
-    }
-
-    public List<Customer> getByName(String lastName) {
-        return null;
-    }
-
-    public List<Customer> getAll() {
-        return null;
-    }
-
-    public Customer save(Customer customer) {
-        return null;
-    }
-
-    public Customer update(Customer customer) {
-        return customer;
-    }
-
-    public void delete(UUID id) {
-    }
-
-
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 
 }

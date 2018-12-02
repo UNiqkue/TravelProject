@@ -29,7 +29,6 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     }
 
     public Tour getById(UUID id) {
-<<<<<<< HEAD
         return getAll()
                 .stream()
                 .filter(tour -> tour.getId().toString().equals(id.toString()))
@@ -70,34 +69,10 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 .stream()
                 .filter(tour -> tour.getTravelAgencyId().toString().equals(id.toString()))
                 .collect(Collectors.toList());
-=======
-        return null;
-    }
-
-    public List<Tour> getByName(String name) {
-        return null;
-    }
-
-    public List<Tour> getByDate(Date startDate, Date endDate) {
-        return null;
-    }
-
-    public List<Tour> getByCountry(String country) {
-        return null;
-    }
-
-    public List<Tour> getByType(String type) {
-        return null;
-    }
-
-    public List<Tour> getByTravelAgencyId(UUID id) {
-        return null;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
 
     public List<Tour> getAll() {
-<<<<<<< HEAD
         TourList list = new TourList();
         return list.read();
     }
@@ -110,17 +85,6 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     public Tour update(Tour tour) {
         removeById(tour.getId());
         return save(tour);
-=======
-        return null;
-    }
-
-    public Tour save(Tour tour) {
-        return tour;
-    }
-
-    public Tour update(Tour tour) {
-        return tour;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
     public void delete(UUID id) {
@@ -128,7 +92,6 @@ public class TourDaoImpl implements AbstractDao<Tour> {
     }
 
     public Tour removeById(UUID id) {
-<<<<<<< HEAD
         List<Tour> list = getAll();
         Tour tour = new Tour();
         int i;
@@ -165,9 +128,6 @@ public class TourDaoImpl implements AbstractDao<Tour> {
                 .stream()
                 .filter(tour -> tour.getCustomerId().toString().equals(customerId.toString()))
                 .collect(Collectors.toList());
-=======
-        return null;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
 

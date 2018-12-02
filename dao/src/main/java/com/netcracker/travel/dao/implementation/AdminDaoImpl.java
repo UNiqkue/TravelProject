@@ -1,7 +1,6 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
-<<<<<<< HEAD
 import com.netcracker.travel.dao.storage.AdminList;
 import com.netcracker.travel.entity.Admin;
 
@@ -9,12 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-=======
-import com.netcracker.travel.entity.Admin;
-
-import java.util.List;
-import java.util.UUID;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 
 public class AdminDaoImpl implements AbstractDao<Admin> {
@@ -36,7 +29,6 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
     }
 
     public Admin getById(UUID id) {
-<<<<<<< HEAD
         return getAll()
                 .stream()
                 .filter(admin -> admin.getId().toString().equals(id.toString()))
@@ -106,30 +98,6 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
             System.out.println("Error while writing to file: " + e);
         }
     }
-=======
-        return null;
-    }
-
-    public List<Admin> getByName(String lastName) {
-        return null;
-    }
-
-    public List<Admin> getAll() {
-        return null;
-    }
-
-    public Admin save(Admin admin) {
-        return admin;
-    }
-
-    public Admin update(Admin admin) {
-        return admin;
-    }
-
-    public void delete(UUID id) {
-    }
-
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 }
 

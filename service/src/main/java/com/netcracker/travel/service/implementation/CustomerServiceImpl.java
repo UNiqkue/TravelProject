@@ -10,30 +10,20 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgencyDto;
-<<<<<<< HEAD
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
-=======
-import com.netcracker.travel.exception.PhoneNumberException;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 
 import java.sql.Date;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-=======
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService {
 
@@ -49,7 +39,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public CustomerDto getByUsername(String username) {
-<<<<<<< HEAD
         return customerConverter.convert(customerDao.getByUsername(username));
     }
 
@@ -114,51 +103,10 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .stream()
                 .filter(travelAgency -> travelAgency.getName().equals(name))
                 .findFirst().get());
-=======
-        return null;
-    }
-
-    public List<CustomerDto> getAll() {
-        return null;
-    }
-
-    public TourDto bookTour(UUID id, UUID customerId) {
-        return null;
-    }
-
-    public TourDto buyTour(UUID id, UUID customerId) {
-        return null;
-    }
-
-    public List<TourDto> searchTourByName(String name) {
-        return null;
-    }
-
-    public List<TourDto> searchTourByDate(Date startDate, Date endDate) {
-        return null;
-    }
-
-    public List<TourDto> searchTourByType(String type) {
-        return null;
-    }
-
-    public List<TourDto> searchTourByCountry(String country) {
-        return null;
-    }
-
-    public List<TourDto> searchTourByTravelAgency(String name) {
-
-        return null;
-    }
-
-    public TravelAgencyDto getTravelAgencyByName(String name) {
-        return null;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
 
     public TourDto cancelTour(UUID tourId) {
-<<<<<<< HEAD
         TourDto tourDto = tourConverter.convert(tourDao.getById(tourId));
         tourDto.setCustomerId(null);
         tourDto.setFree(true);
@@ -176,17 +124,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         CustomerDto customerDto = getByUsername(username);
         customerDto.setPhoneNumber(phoneNumber);
         return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
-=======
-        return null;
-    }
-
-    public List<TourDto> viewOrderedTours(UUID id) {
-        return null;
-    }
-
-    public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
-        return null;
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {
@@ -200,7 +137,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
-<<<<<<< HEAD
         if (checkExisting(registrationRequestDto) == false) {
             return null;
         }
@@ -230,17 +166,10 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         } catch (EmailExistException e) {
             System.out.println("User with such email exists");
         }
-=======
-        return null;
-    }
-
-    private boolean checkExisting(RegistrationRequestDto registrationRequestDto) {
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         return false;
     }
 
     private void checkUsernameExist(String username) {
-<<<<<<< HEAD
         try {
             CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(username));
             if (customerDto != null) {
@@ -258,13 +187,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
             }
         } catch (NoSuchElementException e) {
         }
-=======
-
-    }
-
-    private void checkEmailExist(String email) {
-
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
 

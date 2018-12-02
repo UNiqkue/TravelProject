@@ -5,22 +5,14 @@ import com.netcracker.travel.entity.enumeration.Role;
 import java.util.Objects;
 import java.util.UUID;
 
-<<<<<<< HEAD
 public class TravelAgent extends User {
-=======
-public class TravelAgent extends User{
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
     private String phoneNumber;
     private String position;
     private UUID travelAgencyId;
 
-<<<<<<< HEAD
     public TravelAgent() {
     }
-=======
-    public TravelAgent(){ }
->>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
     @Override
     public void setRole(Role role) {
