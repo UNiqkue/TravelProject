@@ -6,7 +6,7 @@ public abstract class BaseEntity {
 
     private UUID id;
 
-    public BaseEntity(){
+    public BaseEntity() {
     }
 
     public BaseEntity(UUID id) {

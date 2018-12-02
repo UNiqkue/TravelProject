@@ -25,7 +25,7 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
     private AdminConverter adminConverter = new AdminConverter();
     private TourConverter tourConverter = new TourConverter();
 
-    public AdminServiceImpl(){
+    public AdminServiceImpl() {
     }
 
     public AdminDto getByUsername(String username) {
@@ -46,7 +46,7 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
                 .collect(Collectors.toList());
     }
 
-    public TravelAgency createTravelAgency(){
+    public TravelAgency createTravelAgency() {
         TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
         TourDaoImpl tourDao = TourDaoImpl.getInstance();
         TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
@@ -67,11 +67,11 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
         return travelAgencyDao.save(travelAgencyConverter.convert(travelAgencyDto));
     }
 
-    public AdminDto updateInfo(UUID id){
+    public AdminDto updateInfo(UUID id) {
         return adminConverter.convert(adminDao.update(adminDao.getById(id)));
     }
 
-    public AdminDto checkInfo(UUID id){
+    public AdminDto checkInfo(UUID id) {
         return adminConverter.convert(adminDao.getById(id));
     }
 

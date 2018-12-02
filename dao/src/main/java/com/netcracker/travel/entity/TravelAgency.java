@@ -11,7 +11,8 @@ public class TravelAgency extends BaseEntity {
     private Integer countTour;
     private Integer countTravelAgent;
 
-    public TravelAgency(){}
+    public TravelAgency() {
+    }
 
     public TravelAgency(UUID id, String name, Integer countTour, Integer countTravelAgent) {
         super(id);

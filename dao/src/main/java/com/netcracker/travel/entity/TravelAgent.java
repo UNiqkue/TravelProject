@@ -11,7 +11,8 @@ public class TravelAgent extends User {
     private String position;
     private UUID travelAgencyId;
 
-    public TravelAgent(){ }
+    public TravelAgent() {
+    }
 
     public TravelAgent(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, UUID travelAgencyId) {
         super(id, firstName, lastName, username, password, email, activationCode);

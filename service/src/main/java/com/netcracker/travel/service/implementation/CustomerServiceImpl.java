@@ -1,16 +1,14 @@
 package com.netcracker.travel.service.implementation;
 
+import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
-import com.netcracker.travel.converter.TravelAgencyConverter;
-import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
-import com.netcracker.travel.dao.implementation.TourDaoImpl;
-import com.netcracker.travel.dao.implementation.TravelAgencyDaoImpl;
-import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.RegistrationRequestDto;
-import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.converter.TravelAgentConverter;
+import com.netcracker.travel.dao.implementation.*;
+import com.netcracker.travel.dto.*;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
+import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
@@ -30,11 +28,13 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
     private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
     private TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
-    private CustomerDto currentUser;
+    private AdminDaoImpl adminDao = AdminDaoImpl.getInstance();
+    private TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
 
     private CustomerConverter customerConverter = new CustomerConverter();
     private TourConverter tourConverter = new TourConverter();
-    private TravelAgencyConverter travelAgencyConverter = new TravelAgencyConverter();
+    private AdminConverter adminConverter = new AdminConverter();
+    private TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
 
     public CustomerServiceImpl() {
     }
@@ -169,27 +169,112 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
             System.out.println("User with such username exists");
         } catch (EmailExistException e) {
             System.out.println("User with such email exists");
+        } catch (NoExistUserException e) {
+            System.out.println("You can't register (invalid username, email or other user data)");
         }
         return false;
     }
 
     private void checkUsernameExist(String username) {
+        checkCustomerUsername(username);
+        checkAdminUsername(username);
+        checkTravelAgentUsername(username);
+    }
+
+    private void checkAdminUsername(String username) {
         try {
-            CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(username));
+            AdminDto adminDto = adminDao.getAll()
+                    .stream()
+                    .filter(user -> user.getUsername().equals(username))
+                    .map(user -> adminConverter.convert(user))
+                    .findFirst().get();
+            if (adminDto != null) {
+                throw new UsernameExistException();
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Checking");
+        }
+    }
+
+    private void checkCustomerUsername(String username) {
+        try {
+            CustomerDto customerDto = customerDao.getAll()
+                    .stream()
+                    .filter(user -> user.getUsername().equals(username))
+                    .map(user -> customerConverter.convert(user))
+                    .findFirst().get();
             if (customerDto != null) {
                 throw new UsernameExistException();
             }
         } catch (NoSuchElementException e) {
+            System.out.println("Checking");
+        }
+    }
+
+
+    private void checkTravelAgentUsername(String username) {
+        try {
+            TravelAgentDto travelAgentDto = travelAgentDao.getAll()
+                    .stream()
+                    .filter(user -> user.getUsername().equals(username))
+                    .map(user -> travelAgentConverter.convert(user))
+                    .findFirst().get();
+            if (travelAgentDto != null) {
+                throw new UsernameExistException();
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Checking");
         }
     }
 
     private void checkEmailExist(String email) {
+        checkCustomerEmail(email);
+        checkAdminEmail(email);
+        checkTravelAgentEmail(email);
+    }
+
+    private void checkTravelAgentEmail(String email) {
         try {
-            CustomerDto customerDto = customerConverter.convert(customerDao.getByEmail(email));
+            TravelAgentDto travelAgentDto = travelAgentDao.getAll()
+                    .stream()
+                    .filter(user -> user.getEmail().equals(email))
+                    .map(user -> travelAgentConverter.convert(user))
+                    .findFirst().get();
+            if (travelAgentDto != null) {
+                throw new EmailExistException();
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("You registered");
+        }
+    }
+
+    private void checkAdminEmail(String email) {
+        try {
+            AdminDto adminDto = adminDao.getAll()
+                    .stream()
+                    .filter(user -> user.getEmail().equals(email))
+                    .map(user -> adminConverter.convert(user))
+                    .findFirst().get();
+            if (adminDto != null) {
+                throw new EmailExistException();
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Checking");
+        }
+    }
+
+    private void checkCustomerEmail(String email) {
+        try {
+            CustomerDto customerDto = customerDao.getAll()
+                    .stream()
+                    .filter(user -> user.getEmail().equals(email))
+                    .map(user -> customerConverter.convert(user))
+                    .findFirst().get();
             if (customerDto != null) {
                 throw new EmailExistException();
             }
         } catch (NoSuchElementException e) {
+            System.out.println("Checking");
         }
     }
 

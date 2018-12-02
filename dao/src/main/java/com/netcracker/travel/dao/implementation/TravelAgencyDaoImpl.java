@@ -3,9 +3,9 @@ package com.netcracker.travel.dao.implementation;
 import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.TravelAgency;
 import com.netcracker.travel.util.ClosingUtil;
-import com.netcracker.travel.util.SystemLogger;
 import com.netcracker.travel.util.PoolConnector;
 import com.netcracker.travel.util.SqlConfig;
+import com.netcracker.travel.util.SystemLogger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

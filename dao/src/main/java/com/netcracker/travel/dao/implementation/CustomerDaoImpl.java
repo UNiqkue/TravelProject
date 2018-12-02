@@ -4,11 +4,14 @@ import com.netcracker.travel.dao.interfaces.AbstractDao;
 import com.netcracker.travel.entity.Customer;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.util.ClosingUtil;
-import com.netcracker.travel.util.SystemLogger;
 import com.netcracker.travel.util.PoolConnector;
 import com.netcracker.travel.util.SqlConfig;
+import com.netcracker.travel.util.SystemLogger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

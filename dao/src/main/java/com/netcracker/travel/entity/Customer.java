@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Customer extends User{
+public class Customer extends User {
 
     private String phoneNumber;
     private Date dateOfBirth;
@@ -15,7 +15,8 @@ public class Customer extends User{
     private String passportInfo;
     private List<Tour> listOfTours;
 
-    public Customer(){}
+    public Customer() {
+    }
 
     public Customer(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
         super(id, firstName, lastName, username, password, email, activationCode);
@@ -62,7 +63,9 @@ public class Customer extends User{
         this.passportInfo = passportInfo;
     }
 
-    public List<Tour> getListOfTours() {        return listOfTours;    }
+    public List<Tour> getListOfTours() {
+        return listOfTours;
+    }
 
     public void setListOfTours(List<Tour> listOfTours) {
         this.listOfTours = listOfTours;

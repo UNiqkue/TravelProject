@@ -1,12 +1,12 @@
 package com.netcracker.travel.exception;
 
-public class PhoneNumberException extends Exception{
+public class PhoneNumberException extends Exception {
 
-    public PhoneNumberException(){
+    public PhoneNumberException() {
         super();
     }
 
-    public PhoneNumberException(String message){
+    public PhoneNumberException(String message) {
         super(message);
     }
 

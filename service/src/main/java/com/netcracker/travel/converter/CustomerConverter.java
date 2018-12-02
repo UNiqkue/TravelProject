@@ -14,7 +14,6 @@ public class CustomerConverter {
         customer.setPassword(customerDto.getPassword());
         customer.setEmail(customerDto.getEmail());
         customer.setActivationCode(customerDto.getActivationCode());
-
         customer.setPhoneNumber(customerDto.getPhoneNumber());
         customer.setCardNumber(customerDto.getCardNumber());
         customer.setDateOfBirth(customerDto.getDateOfBirth());
@@ -32,13 +31,12 @@ public class CustomerConverter {
         customerDto.setPassword(customer.getPassword());
         customerDto.setEmail(customer.getEmail());
         customerDto.setActivationCode(customer.getActivationCode());
-
         customerDto.setPhoneNumber(customer.getPhoneNumber());
         customerDto.setCardNumber(customer.getCardNumber());
         customerDto.setDateOfBirth(customer.getDateOfBirth());
         customerDto.setPassportInfo(customer.getPassportInfo());
         customerDto.setListOfTours(customer.getListOfTours());
-
         return customerDto;
     }
+
 }

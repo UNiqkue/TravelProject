@@ -1,6 +1,7 @@
 package com.netcracker.travel.util;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -20,8 +21,8 @@ public class PoolConnector {
         dataSource.setUrl(bundle.getString("database.url"));
     }
 
-    public static synchronized PoolConnector getInstance(){
-        if(instance == null){
+    public static synchronized PoolConnector getInstance() {
+        if (instance == null) {
             instance = new PoolConnector();
         }
         return instance;
@@ -38,20 +39,18 @@ public class PoolConnector {
                 Connection connection = connect();
                 connectionHolder.set(connection);
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             String message = "Unable to get connection";
         }
         return connectionHolder.get();
     }
 
-    public void releaseConnection(Connection connection){
-        if(connection != null){
-            try{
+    public void releaseConnection(Connection connection) {
+        if (connection != null) {
+            try {
                 connection.close();
                 connectionHolder.remove();
-            }
-            catch(SQLException e){
+            } catch (SQLException e) {
                 SystemLogger.getInstance().logError(getClass(), e.getMessage());
             }
         }
