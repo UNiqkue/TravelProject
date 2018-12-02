@@ -5,7 +5,11 @@ import com.netcracker.travel.entity.enumeration.Role;
 import java.util.Objects;
 import java.util.UUID;
 
+<<<<<<< HEAD
 public class AdminDto {
+=======
+public class AdminDto{
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
     private UUID id;
     private String firstName;
@@ -16,8 +20,12 @@ public class AdminDto {
     private String activationCode;
     private Role role;
 
+<<<<<<< HEAD
     public AdminDto() {
     }
+=======
+    public AdminDto(){}
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
     public UUID getId() {
         return id;
@@ -87,7 +95,11 @@ public class AdminDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+<<<<<<< HEAD
         AdminDto adminDto = (AdminDto) o;
+=======
+       AdminDto adminDto= (AdminDto) o;
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         return Objects.equals(getId(), adminDto.getId());
     }
 

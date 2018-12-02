@@ -1,5 +1,6 @@
 package com.netcracker.travel;
 
+<<<<<<< HEAD
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgentDto;
@@ -16,10 +17,13 @@ import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+=======
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 public class Menu {
 
     public static void chooseAction() {
+<<<<<<< HEAD
         boolean exit = false;
         while (!exit) {
             printMenu();
@@ -471,3 +475,9 @@ public class Menu {
     }
 
 }
+=======
+    }
+}
+
+
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded

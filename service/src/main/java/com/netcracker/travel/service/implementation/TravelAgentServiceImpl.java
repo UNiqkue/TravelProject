@@ -13,7 +13,10 @@ import com.netcracker.travel.service.interfaces.AbstractService;
 
 import java.util.List;
 import java.util.UUID;
+<<<<<<< HEAD
 import java.util.stream.Collectors;
+=======
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
@@ -29,6 +32,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
     }
 
     public TourDto createTour(TourDto tourDto) {
+<<<<<<< HEAD
         return tourConverter.convert(tourDao.save(tourConverter.convert(tourDto)));
     }
 
@@ -60,6 +64,29 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
     public TravelAgentDto getByUsername(String username) {
         return travelAgentConverter.convert(travelAgentDao.getByUsername(username));
+=======
+        return null;
+    }
+
+    public List<TourDto> checkExistenceTours() {
+        return null;
+    }
+
+    public TourDto editTour(UUID id, String description) {
+        return null;
+    }
+
+    public List<TourDto> viewOrderHystory() {
+        return null;
+    }
+
+    public TravelAgencyDto getTravelAgency(UUID id) {
+        return null;
+    }
+
+    public TravelAgentDto getByUsername(String username) {
+        return null;
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
     public List<TravelAgentDto> getAll() {
@@ -67,6 +94,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
     }
 
     public TourDto makeDiscount(UUID id, Double price) {
+<<<<<<< HEAD
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setPrice(price);
         return tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
@@ -74,5 +102,12 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
 
     public void deleteTour(UUID id) {
         tourDao.delete(id);
+=======
+        return null;
+    }
+
+    public void deleteTour(UUID id) {
+
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 }

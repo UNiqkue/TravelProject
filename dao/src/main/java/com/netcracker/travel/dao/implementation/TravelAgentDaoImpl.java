@@ -1,6 +1,7 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
+<<<<<<< HEAD
 import com.netcracker.travel.dao.storage.TravelAgentList;
 import com.netcracker.travel.entity.TravelAgent;
 
@@ -8,15 +9,27 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+=======
+import com.netcracker.travel.entity.TravelAgent;
+
+import java.util.List;
+import java.util.UUID;
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
     private static volatile TravelAgentDaoImpl instance;
 
+<<<<<<< HEAD
     private TravelAgentDaoImpl() {
     }
 
     public static TravelAgentDaoImpl getInstance() {
+=======
+    private TravelAgentDaoImpl(){}
+
+    public static TravelAgentDaoImpl getInstance(){
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         if (instance == null) {
             synchronized (TravelAgentDaoImpl.class) {
                 if (instance == null) {
@@ -28,6 +41,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
     }
 
     public TravelAgent getById(UUID id) {
+<<<<<<< HEAD
         return getAll()
                 .stream()
                 .filter(travelAgent -> travelAgent.getId().toString().equals(id.toString()))
@@ -97,6 +111,31 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             System.out.println("Error while writing to file: " + e);
         }
     }
+=======
+        return null;
+    }
+
+    public List<TravelAgent> getByName(String lastName) {
+        return null;
+    }
+
+    public List<TravelAgent> getAll() {
+        return null;
+    }
+
+    public TravelAgent save(TravelAgent travelAgent) {
+        return travelAgent;
+    }
+
+    public TravelAgent update(TravelAgent travelAgent) {
+        return travelAgent;
+    }
+
+    public void delete(UUID id) {
+
+    }
+
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 
 }

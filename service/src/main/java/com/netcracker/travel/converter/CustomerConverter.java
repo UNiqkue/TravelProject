@@ -32,6 +32,10 @@ public class CustomerConverter {
         customerDto.setPassword(customer.getPassword());
         customerDto.setEmail(customer.getEmail());
         customerDto.setActivationCode(customer.getActivationCode());
+<<<<<<< HEAD
+=======
+
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         customerDto.setPhoneNumber(customer.getPhoneNumber());
         customerDto.setCardNumber(customer.getCardNumber());
         customerDto.setDateOfBirth(customer.getDateOfBirth());

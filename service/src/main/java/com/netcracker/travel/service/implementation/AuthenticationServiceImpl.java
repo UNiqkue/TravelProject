@@ -6,6 +6,7 @@ import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dao.implementation.AdminDaoImpl;
 import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
 import com.netcracker.travel.dao.implementation.TravelAgentDaoImpl;
+<<<<<<< HEAD
 import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
@@ -14,6 +15,10 @@ import com.netcracker.travel.service.interfaces.AuthenticationService;
 import org.json.JSONException;
 
 import java.util.NoSuchElementException;
+=======
+import com.netcracker.travel.dto.LoginRequestDto;
+import com.netcracker.travel.service.interfaces.AuthenticationService;
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -29,6 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public int login(LoginRequestDto loginRequestDto) {
+<<<<<<< HEAD
         try {
             try {
                 CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
@@ -64,8 +70,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             System.out.println("Loaddddd.......");
         }
 
+=======
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
         return 0;
     }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
 }

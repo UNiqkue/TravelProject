@@ -20,7 +20,11 @@ public class Tour extends BaseEntity {
     private UUID customerId;
     private boolean free;
 
+<<<<<<< HEAD
     public Tour() {
+=======
+    public Tour(){
+>>>>>>> d177eb1e96c657f9a48464952036b2c59a242ded
     }
 
     public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate) {
