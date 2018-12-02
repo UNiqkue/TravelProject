@@ -23,11 +23,7 @@ public class Tour extends BaseEntity {
     public Tour() {
     }
 
-<<<<<<< HEAD
-    public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, UUID travelAgencyId, UUID customerId, boolean free) {
-=======
     public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate) {
->>>>>>> task3
         super(id);
         this.name = name;
         this.description = description;
@@ -36,9 +32,6 @@ public class Tour extends BaseEntity {
         this.country = country;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.travelAgencyId = travelAgencyId;
-        this.customerId = customerId;
-        this.free = free;
     }
 
     public String getName() {
@@ -138,21 +131,14 @@ public class Tour extends BaseEntity {
     @Override
     public String toString() {
         return "Tour{" +
-                "id=" + getId() +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", type=" + type +
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-<<<<<<< HEAD
-                ", travelAgencyId=" + travelAgencyId +
                 ", customerId=" + customerId +
-                ", free=" + free +
-=======
-                ", customerId=" + customerId +
->>>>>>> task3
                 '}';
     }
 

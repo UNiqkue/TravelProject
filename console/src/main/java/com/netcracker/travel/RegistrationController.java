@@ -1,4 +1,4 @@
-package com.netcracker.travel.controller;
+package com.netcracker.travel;
 
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;

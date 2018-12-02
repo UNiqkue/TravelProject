@@ -17,21 +17,4 @@ public class Admin extends User {
     public void setRole(Role role) {
         super.setRole(role);
     }
-<<<<<<< HEAD
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "id='" + getId() + '\'' +
-                ", firstName='" + getFirstName() + '\'' +
-                ", lastName='" + getLastName() + '\'' +
-                ", username='" + getUsername() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", activationCode='" + getActivationCode() + '\'' +
-                ", role=" + getRole() +
-                "}";
-    }
-=======
->>>>>>> task3
 }

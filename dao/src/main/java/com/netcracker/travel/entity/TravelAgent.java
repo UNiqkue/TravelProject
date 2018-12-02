@@ -13,16 +13,6 @@ public class TravelAgent extends User {
 
     public TravelAgent() {
     }
-<<<<<<< HEAD
-
-    public TravelAgent(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, UUID travelAgencyId) {
-        super(id, firstName, lastName, username, password, email, activationCode);
-        this.phoneNumber = phoneNumber;
-        this.position = position;
-        this.travelAgencyId = travelAgencyId;
-    }
-=======
->>>>>>> task3
 
     @Override
     public void setRole(Role role) {
@@ -71,15 +61,7 @@ public class TravelAgent extends User {
     @Override
     public String toString() {
         return "TravelAgent{" +
-                "id='" + getId() + '\'' +
-                ", firstName='" + getFirstName() + '\'' +
-                ", lastName='" + getLastName() + '\'' +
-                ", username='" + getUsername() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", activationCode='" + getActivationCode() + '\'' +
-                ", role=" + getRole() +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                "phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
                 ", travelAgencyId=" + travelAgencyId +
                 '}';

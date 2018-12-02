@@ -5,7 +5,6 @@ import com.netcracker.travel.entity.enumeration.Role;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Customer extends User {
 
@@ -18,17 +17,6 @@ public class Customer extends User {
     public Customer() {
     }
 
-<<<<<<< HEAD
-    public Customer(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
-        super(id, firstName, lastName, username, password, email, activationCode);
-        this.phoneNumber = phoneNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.cardNumber = cardNumber;
-        this.passportInfo = passportInfo;
-    }
-
-=======
->>>>>>> task3
     @Override
     public void setRole(Role role) {
         super.setRole(Role.CUSTOMER);

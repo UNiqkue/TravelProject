@@ -1,6 +1,5 @@
-package com.netcracker.travel.controller;
+package com.netcracker.travel;
 
-import com.netcracker.travel.Menu;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.service.implementation.AuthenticationServiceImpl;
 

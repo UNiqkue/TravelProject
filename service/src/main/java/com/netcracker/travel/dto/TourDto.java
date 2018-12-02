@@ -59,13 +59,8 @@ public class TourDto {
         return type;
     }
 
-<<<<<<< HEAD
-    public void setType(String type) {
-        this.type = TypeTour.valueOf(type);
-=======
     public void setType(TypeTour type) {
         this.type = type;
->>>>>>> task3
     }
 
     public String getCountry() {
@@ -142,11 +137,6 @@ public class TourDto {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", travelAgencyId='" + travelAgencyId + '\'' +
-<<<<<<< HEAD
-                ", customerId=" + customerId +
-                ", free=" + free +
-=======
->>>>>>> task3
                 '}';
     }
 }
