@@ -48,7 +48,7 @@ public class TourDaoImplTest {
 
     @Test
     public void testUpdate() throws Exception {
-        TourDaoImpl.getInstance().save(tour);
+        TourDaoImpl.getInstance().save(tour); 
         tour.setPrice(10.0);
         TourDaoImpl.getInstance().updatePrice(tour);
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
