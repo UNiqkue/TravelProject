@@ -12,6 +12,13 @@ public class TravelAgency extends BaseEntity {
     private Integer countTravelAgent;
 
     public TravelAgency() {
+<<<<<<< HEAD
+=======
+    }
+
+    public String getName() {
+        return name;
+>>>>>>> task3
     }
 
     public TravelAgency(UUID id, String name, Integer countTour, Integer countTravelAgent) {
@@ -21,6 +28,7 @@ public class TravelAgency extends BaseEntity {
         this.countTravelAgent = countTravelAgent;
     }
 
+<<<<<<< HEAD
     public String getName() {
         return name;
     }
@@ -29,6 +37,8 @@ public class TravelAgency extends BaseEntity {
         this.name = name;
     }
 
+=======
+>>>>>>> task3
     public Integer getCountTour() {
         return countTour;
     }

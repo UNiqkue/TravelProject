@@ -1,6 +1,7 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
+import com.netcracker.travel.dao.storage.TravelAgentList;
 import com.netcracker.travel.entity.TravelAgent;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.util.ClosingUtil;
@@ -8,17 +9,22 @@ import com.netcracker.travel.util.SystemLogger;
 import com.netcracker.travel.util.PoolConnector;
 import com.netcracker.travel.util.SqlConfig;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+=======
+import java.io.IOException;
+>>>>>>> task3
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
+<<<<<<< HEAD
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet result;
@@ -27,6 +33,11 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
 
     private TravelAgentDaoImpl() {
 
+=======
+    private static volatile TravelAgentDaoImpl instance;
+
+    private TravelAgentDaoImpl() {
+>>>>>>> task3
     }
 
     public static TravelAgentDaoImpl getInstance() {
@@ -40,6 +51,7 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
         return instance;
     }
 
+<<<<<<< HEAD
     public TravelAgent save(TravelAgent travelAgent) {
         try {
             connection = PoolConnector.getInstance().getConnection();
@@ -194,6 +206,76 @@ public class TravelAgentDaoImpl implements AbstractDao<TravelAgent> {
             SystemLogger.getInstance().logError(getClass(), message);
         } finally {
             ClosingUtil.close(statement);
+=======
+    public TravelAgent getById(UUID id) {
+        return getAll()
+                .stream()
+                .filter(travelAgent -> travelAgent.getId().toString().equals(id.toString()))
+                .findFirst().get();
+    }
+
+    public List<TravelAgent> getByName(String lastName) {
+        return getAll()
+                .stream()
+                .filter(travelAgent -> travelAgent.getLastName().equals(lastName))
+                .collect(Collectors.toList());
+    }
+
+    public TravelAgent getByUsername(String username) {
+        return getAll()
+                .stream()
+                .filter(travelAgent -> travelAgent.getUsername().equals(username))
+                .findFirst().get();
+    }
+
+    public List<TravelAgent> getAll() {
+        TravelAgentList list = new TravelAgentList();
+        return list.read();
+    }
+
+    public TravelAgent save(TravelAgent travelAgent) {
+        TravelAgentList list = new TravelAgentList();
+        return list.write(travelAgent);
+    }
+
+    public TravelAgent update(TravelAgent travelAgent) {
+        removeById(travelAgent.getId());
+        return save(travelAgent);
+    }
+
+    public void delete(UUID id) {
+        removeById(id);
+    }
+
+    public TravelAgent removeById(UUID id) {
+        List<TravelAgent> list = getAll();
+        TravelAgent travelAgent = new TravelAgent();
+        int i;
+        for (i = 0; i <= list.size() - 1; i++) {
+            if (list.get(i).getId().toString().equals(id.toString())) {
+                travelAgent = list.remove(i);
+                System.out.println("TravelAgent found");
+                break;
+            }
+        }
+        saveList(list);
+        return travelAgent;
+    }
+
+    private void saveList(List<TravelAgent> list) {
+        clean();
+        for (int i = 0; i <= list.size() - 1; i++) {
+            save(list.get(i));
+        }
+    }
+
+    private void clean() {
+        TravelAgentList travelAgentList = new TravelAgentList();
+        try {
+            travelAgentList.clean();
+        } catch (IOException e) {
+            System.out.println("Error while writing to file: " + e);
+>>>>>>> task3
         }
     }
 

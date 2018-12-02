@@ -23,7 +23,11 @@ public class Tour extends BaseEntity {
     public Tour() {
     }
 
+<<<<<<< HEAD
     public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, UUID travelAgencyId, UUID customerId, boolean free) {
+=======
+    public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate) {
+>>>>>>> task3
         super(id);
         this.name = name;
         this.description = description;
@@ -142,9 +146,13 @@ public class Tour extends BaseEntity {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+<<<<<<< HEAD
                 ", travelAgencyId=" + travelAgencyId +
                 ", customerId=" + customerId +
                 ", free=" + free +
+=======
+                ", customerId=" + customerId +
+>>>>>>> task3
                 '}';
     }
 

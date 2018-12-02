@@ -18,6 +18,7 @@ public class Customer extends User {
     public Customer() {
     }
 
+<<<<<<< HEAD
     public Customer(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
         super(id, firstName, lastName, username, password, email, activationCode);
         this.phoneNumber = phoneNumber;
@@ -26,6 +27,8 @@ public class Customer extends User {
         this.passportInfo = passportInfo;
     }
 
+=======
+>>>>>>> task3
     @Override
     public void setRole(Role role) {
         super.setRole(Role.CUSTOMER);

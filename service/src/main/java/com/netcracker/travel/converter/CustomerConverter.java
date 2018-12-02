@@ -14,6 +14,10 @@ public class CustomerConverter {
         customer.setPassword(customerDto.getPassword());
         customer.setEmail(customerDto.getEmail());
         customer.setActivationCode(customerDto.getActivationCode());
+<<<<<<< HEAD
+=======
+
+>>>>>>> task3
         customer.setPhoneNumber(customerDto.getPhoneNumber());
         customer.setCardNumber(customerDto.getCardNumber());
         customer.setDateOfBirth(customerDto.getDateOfBirth());

@@ -1,6 +1,7 @@
 package com.netcracker.travel.dao.implementation;
 
 import com.netcracker.travel.dao.interfaces.AbstractDao;
+<<<<<<< HEAD
 import com.netcracker.travel.entity.Admin;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.util.ClosingUtil;
@@ -13,6 +14,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+=======
+import com.netcracker.travel.dao.storage.AdminList;
+import com.netcracker.travel.entity.Admin;
+
+import java.io.IOException;
+>>>>>>> task3
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,10 +27,13 @@ import java.util.stream.Collectors;
 
 public class AdminDaoImpl implements AbstractDao<Admin> {
 
+<<<<<<< HEAD
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet result;
 
+=======
+>>>>>>> task3
     private static volatile AdminDaoImpl instance;
 
     private AdminDaoImpl() {
@@ -40,6 +50,7 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
         return instance;
     }
 
+<<<<<<< HEAD
     public Admin save(Admin admin) {
         try {
             connection = PoolConnector.getInstance().getConnection();
@@ -201,3 +212,81 @@ public class AdminDaoImpl implements AbstractDao<Admin> {
     }
 
 }
+=======
+    public Admin getById(UUID id) {
+        return getAll()
+                .stream()
+                .filter(admin -> admin.getId().toString().equals(id.toString()))
+                .findFirst().get();
+    }
+
+    public List<Admin> getByName(String lastName) {
+        return getAll()
+                .stream()
+                .filter(admin -> admin.getLastName().equals(lastName))
+                .collect(Collectors.toList());
+    }
+
+    public Admin getByUsername(String username) {
+        return getAll()
+                .stream()
+                .filter(admin -> admin.getUsername().equals(username))
+                .findFirst().get();
+    }
+
+    public List<Admin> getAll() {
+        AdminList adminList = new AdminList();
+        return adminList.read();
+    }
+
+    public Admin save(Admin admin) {
+        AdminList adminList = new AdminList();
+        return adminList.write(admin);
+    }
+
+    public Admin update(Admin admin) {
+        removeById(admin.getId());
+        return save(admin);
+    }
+
+    public void delete(UUID id) {
+        removeById(id);
+    }
+
+    public Admin removeById(UUID id) {
+        List<Admin> list = getAll();
+        Admin admin = new Admin();
+        int i;
+        for (i = 0; i <= list.size() - 1; i++) {
+            if (list.get(i).getId().toString().equals(id.toString())) {
+                admin = list.remove(i);
+                System.out.println("Admin found");
+                break;
+            }
+        }
+        saveList(list);
+        return admin;
+    }
+
+    private void saveList(List<Admin> list) {
+        clean();
+        for (int i = 0; i <= list.size() - 1; i++) {
+            save(list.get(i));
+        }
+    }
+
+    private void clean() {
+        AdminList adminList = new AdminList();
+        try {
+            adminList.clean();
+        } catch (IOException e) {
+            System.out.println("Error while writing to file: " + e);
+        }
+    }
+
+}
+
+
+
+
+>>>>>>> task3

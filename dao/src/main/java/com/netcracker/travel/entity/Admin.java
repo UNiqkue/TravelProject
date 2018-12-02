@@ -17,6 +17,7 @@ public class Admin extends User {
     public void setRole(Role role) {
         super.setRole(role);
     }
+<<<<<<< HEAD
 
     @Override
     public String toString() {
@@ -31,4 +32,6 @@ public class Admin extends User {
                 ", role=" + getRole() +
                 "}";
     }
+=======
+>>>>>>> task3
 }
