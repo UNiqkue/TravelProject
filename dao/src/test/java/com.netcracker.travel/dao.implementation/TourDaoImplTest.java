@@ -50,7 +50,7 @@ public class TourDaoImplTest {
     public void testUpdate() throws Exception {
         TourDaoImpl.getInstance().save(tour);
         tour.setPrice(10.0);
-        TourDaoImpl.getInstance().update(tour);
+        TourDaoImpl.getInstance().updatePrice(tour);
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
         TourDaoImpl.getInstance().delete(tour.getId());
         Assert.assertEquals(tour, actual);
