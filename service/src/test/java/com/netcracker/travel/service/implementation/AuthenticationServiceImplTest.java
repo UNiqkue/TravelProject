@@ -30,6 +30,7 @@ public class AuthenticationServiceImplTest {
         loginRequestDto.setPassword("null1111");
         int actual = authenticationService.login(loginRequestDto);
         Assert.assertEquals(expected, actual);
+
     }
 
     @Test

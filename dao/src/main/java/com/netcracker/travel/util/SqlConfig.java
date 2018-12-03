@@ -8,7 +8,7 @@ public class SqlConfig {
     public static final String GET_USER_BY_USERNAME = "SELECT * FROM customer WHERE username = ?";
     public static final String GET_USER_BY_EMAIL = "SELECT * FROM customer WHERE email = ?";
     public static final String GET_USER_BY_ID = "SELECT * FROM customer WHERE id = ?";
-    public static final String PUT_PHONE = "UPDATE customer SET phoneNumber = ? WHERE id = ?";
+    public static final String PUT_PHONE = "UPDATE customer SET phone_number = ? WHERE id = ?";
 
     public static final String ADD_ADMIN = "INSERT INTO admin(id, first_name, last_name, username, password, email, activation_code, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_ALL_ADMINS = "SELECT * FROM admin where role='ADMIN'";

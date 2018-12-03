@@ -1,30 +1,90 @@
 package com.netcracker.travel.service.implementation;
 
+import com.netcracker.travel.converter.CustomerConverter;
+import com.netcracker.travel.converter.TourConverter;
+import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
+import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.exception.PhoneNumberException;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceImplTest {
+    private static final Logger LOG = Logger.getLogger(CustomerServiceImplTest.class.getName());
 
     @InjectMocks
     private CustomerServiceImpl customerService;
 
+    @Mock
+    private CustomerDaoImpl customerDao;
+    @Mock
+    private TourDaoImpl tourDao;
+
+    private TourConverter tourConverter;
+    private CustomerConverter customerConverter;
+
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        customerService = new CustomerServiceImpl();
+        tourConverter = new TourConverter();
+        customerConverter = new CustomerConverter();
     }
+
+    @Test
+    public void testGetByUsername(){
+        CustomerDto customer = customerConverter.convert(CustomerDaoImpl.getInstance().getByUsername("Customer1"));
+        when(customerDao.getByUsername("Customer1")).thenReturn(customerConverter.convert(customer));
+        CustomerDto actual = customerService.getByUsername("Customer1");
+        LOG.info(String.valueOf(actual));
+        Assert.assertEquals(customer, actual);
+    }
+
+    @Test
+    public void testGetAll() {
+        List<CustomerDto> customers = CustomerDaoImpl.getInstance().getAll()
+                .stream()
+                .map(customer -> customerConverter.convert(customer))
+                .collect(Collectors.toList());
+        when(customerDao.getAll()).thenReturn(customers
+                .stream()
+                .map(admin -> customerConverter.convert(admin))
+                .collect(Collectors.toList()));
+        List<CustomerDto> actual = customerService.getAll();
+        LOG.info(String.valueOf(actual));
+        Assert.assertEquals(customers, actual);
+    }
+
+    @Test
+    public void testUpdatePhoneNumber(){
+        String phoneNumber = "+375-29-123-45-67";
+        CustomerDto customer = customerConverter.convert(CustomerDaoImpl.getInstance().getByUsername("Customer1"));
+       /*
+        when(customerDao.getById(UUID.fromString("91ccd7a5-6446-4e8e-bfc6-010a66e12228"))).thenReturn(customerConverter.convert(customer));
+        when(customerService.updatePhoneNumber(customer.getUsername(), phoneNumber)).thenReturn(customer);*/
+         customerService.updatePhoneNumber(customer.getUsername(), phoneNumber);
+
+        Assert.assertEquals(customer, customer);
+    }
+
+
+
+
 
     @Test
     public void verifyPhoneNumberTest() throws PhoneNumberException, Exception {
@@ -47,6 +107,7 @@ public class CustomerServiceImplTest {
 
     @After
     public void tearDown(){
-        customerService = null;
+        customerConverter = null;
+        tourConverter = null;
     }
 }
