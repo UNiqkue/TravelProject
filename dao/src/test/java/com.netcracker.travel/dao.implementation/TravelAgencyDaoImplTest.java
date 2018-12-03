@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 public class TravelAgencyDaoImplTest {
@@ -42,6 +43,12 @@ public class TravelAgencyDaoImplTest {
         travelAgency.setId(UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"));
         TravelAgency actual = TravelAgencyDaoImpl.getInstance().getById(travelAgency.getId());
         Assert.assertEquals(travelAgency, actual);
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+        List<TravelAgency> travelAgencies = TravelAgencyDaoImpl.getInstance().getAll();
+        Assert.assertNotNull(travelAgencies);
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class CustomerDaoImplTest extends Assert {
@@ -44,6 +45,12 @@ public class CustomerDaoImplTest extends Assert {
         customer.setId(UUID.fromString("91ccd7a5-6446-4e8e-bfc6-010a66e12228"));
         Customer actual = CustomerDaoImpl.getInstance().getById(customer.getId());
         Assert.assertEquals(customer, actual);
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+        List<Customer> customers = CustomerDaoImpl.getInstance().getAll();
+        Assert.assertNotNull(customers);
     }
 
     @Test

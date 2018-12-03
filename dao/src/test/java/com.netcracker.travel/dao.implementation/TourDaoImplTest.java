@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class TourDaoImplTest {
@@ -37,6 +38,12 @@ public class TourDaoImplTest {
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
         Assert.assertEquals(tour, actual);
         TourDaoImpl.getInstance().delete(tour.getId());
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+        List<Tour> tours= TourDaoImpl.getInstance().getAll();
+        Assert.assertNotNull(tours);
     }
 
     @Test

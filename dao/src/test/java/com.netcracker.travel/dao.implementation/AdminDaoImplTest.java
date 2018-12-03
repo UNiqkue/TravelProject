@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 public class AdminDaoImplTest extends Assert {
@@ -42,6 +43,12 @@ public class AdminDaoImplTest extends Assert {
         admin.setId(UUID.fromString("5be60162-f667-4f2d-a165-5697b6c1a3b5"));
         Admin actual = AdminDaoImpl.getInstance().getById(admin.getId());
         Assert.assertEquals(admin, actual);
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+        List<Admin> admins = AdminDaoImpl.getInstance().getAll();
+        Assert.assertNotNull(admins);
     }
 
     @Test
