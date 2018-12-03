@@ -6,11 +6,9 @@ import com.netcracker.travel.dao.implementation.CustomerDaoImpl;
 import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
+import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.exception.PhoneNumberException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -71,15 +70,32 @@ public class CustomerServiceImplTest {
     }
 
     @Test
+    @Ignore
     public void testUpdatePhoneNumber(){
         String phoneNumber = "+375-29-123-45-67";
         CustomerDto customer = customerConverter.convert(CustomerDaoImpl.getInstance().getByUsername("Customer1"));
-       /*
+
         when(customerDao.getById(UUID.fromString("91ccd7a5-6446-4e8e-bfc6-010a66e12228"))).thenReturn(customerConverter.convert(customer));
-        when(customerService.updatePhoneNumber(customer.getUsername(), phoneNumber)).thenReturn(customer);*/
+        when(customerService.updatePhoneNumber(customer.getUsername(), phoneNumber)).thenReturn(customer);
          customerService.updatePhoneNumber(customer.getUsername(), phoneNumber);
 
         Assert.assertEquals(customer, customer);
+    }
+
+    @Test
+    public void testWatchTours() {
+        UUID customerId = UUID.fromString("f16477b5-5571-472d-9d5d-6c77ddd75017");
+        List<TourDto> tours = TourDaoImpl.getInstance().getToursById(customerId)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+        when(tourDao.getToursById(customerId)).thenReturn(tours
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList()));
+        List<TourDto> actual = customerService.watchTours(customerId);
+        LOG.info(String.valueOf(actual));
+        Assert.assertEquals(tours, actual);
     }
 
 
