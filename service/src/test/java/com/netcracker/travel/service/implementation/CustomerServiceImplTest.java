@@ -98,8 +98,43 @@ public class CustomerServiceImplTest {
         Assert.assertEquals(tours, actual);
     }
 
+    @Test
+    public void testBookTourTest(){
 
+    }
 
+    @Test
+    public void testBuyTourTest(){
+
+    }
+
+    @Test
+    public void cancelTourTest() {
+
+    }
+
+    @Test
+    public void searchTourByNameTest() {
+    }
+
+    @Test
+    public void searchTourByDateTest() {
+
+    }
+
+    @Test
+    public void searchTourByTypeTest() {
+
+    }
+
+    @Test
+    public void searchTourByCountryTest() {
+
+    }
+
+    @Test
+    public void searchTourByTravelAgencyTest() {
+    }
 
 
     @Test
