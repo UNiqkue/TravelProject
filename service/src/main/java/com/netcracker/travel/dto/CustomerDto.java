@@ -27,6 +27,21 @@ public class CustomerDto {
     public CustomerDto() {
     }
 
+    public CustomerDto(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, Role role, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.activationCode = activationCode;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.cardNumber = cardNumber;
+        this.passportInfo = passportInfo;
+    }
+
     public UUID getId() {
         return id;
     }

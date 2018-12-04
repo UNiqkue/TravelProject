@@ -23,6 +23,20 @@ public class TourDto {
     public TourDto() {
     }
 
+    public TourDto(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, UUID travelAgencyId, UUID customerId, boolean free) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.type = type;
+        this.country = country;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.travelAgencyId = travelAgencyId;
+        this.customerId = customerId;
+        this.free = free;
+    }
+
     public UUID getId() {
         return id;
     }
