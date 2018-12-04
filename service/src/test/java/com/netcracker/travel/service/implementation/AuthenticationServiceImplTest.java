@@ -5,20 +5,24 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class AuthenticationServiceImplTest {
 
+    @Mock
     private AuthenticationServiceImpl authenticationService;
     private LoginRequestDto loginRequestDto;
 
     @Before
     public void setUp() {
-        authenticationService = new AuthenticationServiceImpl();
+        MockitoAnnotations.initMocks(this);
+        authenticationService =new AuthenticationServiceImpl();
         loginRequestDto = new LoginRequestDto();
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         authenticationService = null;
         loginRequestDto = null;
     }
@@ -52,7 +56,7 @@ public class AuthenticationServiceImplTest {
     }
 
     @Test
-    public void loginNullTest() throws Exception{
+    public void loginNullTest() throws Exception {
         int expected = 0;
         loginRequestDto.setUsername("Qqwertyuio");
         loginRequestDto.setPassword("12345678");

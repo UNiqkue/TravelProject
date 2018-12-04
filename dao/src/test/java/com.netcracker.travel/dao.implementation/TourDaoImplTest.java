@@ -48,7 +48,7 @@ public class TourDaoImplTest {
 
     @Test
     public void testGetById() throws Exception {
-        tour.setId(UUID.fromString("2be61a8a-3fa7-4f2d-a592-054de4f010dc"));
+        tour.setId(UUID.fromString("12ef3a14-9a12-4ee9-9dd5-90a92161aec7"));
         Tour actual = TourDaoImpl.getInstance().getById(tour.getId());
         Assert.assertEquals(tour, actual);
     }
