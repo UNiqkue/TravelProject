@@ -67,18 +67,12 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public TourDto buyTour(UUID id, UUID customerId) {
-        TourDto temp = buyTour(id, customerId);
-        System.out.println("You bought this tour");
-        return temp;
-    }
-
-    public TourDto bookTour(UUID id, UUID customerId) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         if (customerId.equals(tourDto.getCustomerId()) || tourDto.isFree()) {
             tourDto.setCustomerId(customerId);
             tourDto.setFree(false);
             tourDto = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
-            System.out.println("You booked tour");
+            System.out.println("You bought tour");
         } else {
             System.out.println("You can't do it!!!");
         }
