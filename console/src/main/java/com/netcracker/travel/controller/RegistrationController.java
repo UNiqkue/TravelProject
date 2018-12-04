@@ -6,12 +6,14 @@ import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
+import org.springframework.stereotype.Controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.UUID;
 
+@Controller
 public class RegistrationController {
 
     private CustomerServiceImpl customerServiceImpl = new CustomerServiceImpl();

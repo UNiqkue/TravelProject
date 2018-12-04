@@ -14,6 +14,7 @@ import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 import com.netcracker.travel.service.interfaces.SearchTourService;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+@Service
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();

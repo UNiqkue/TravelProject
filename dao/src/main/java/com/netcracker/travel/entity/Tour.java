@@ -3,10 +3,12 @@ package com.netcracker.travel.entity;
 import com.netcracker.travel.entity.abstracts.BaseEntity;
 import com.netcracker.travel.entity.enumeration.TypeTour;
 
+import javax.persistence.Entity;
 import java.sql.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Tour extends BaseEntity {
 
     private String name;

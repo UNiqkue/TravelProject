@@ -2,11 +2,13 @@ package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.enumeration.Role;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Customer extends User {
 
     private String phoneNumber;
@@ -63,6 +65,7 @@ public class Customer extends User {
         this.passportInfo = passportInfo;
     }
 
+    @ManyToMany(cascade = CascadeType.ALL)
     public List<Tour> getListOfTours() {
         return listOfTours;
     }

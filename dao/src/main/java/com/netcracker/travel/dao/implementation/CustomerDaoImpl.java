@@ -7,6 +7,7 @@ import com.netcracker.travel.util.ClosingUtil;
 import com.netcracker.travel.util.PoolConnector;
 import com.netcracker.travel.util.SqlConfig;
 import com.netcracker.travel.util.SystemLogger;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Repository
 public class CustomerDaoImpl implements AbstractDao<Customer> {
 
     private Connection connection;

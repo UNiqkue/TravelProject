@@ -3,9 +3,11 @@ package com.netcracker.travel.entity;
 import com.netcracker.travel.entity.abstracts.BaseEntity;
 import com.netcracker.travel.entity.enumeration.Role;
 
+import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public abstract class User extends BaseEntity {
 
     private String firstName;

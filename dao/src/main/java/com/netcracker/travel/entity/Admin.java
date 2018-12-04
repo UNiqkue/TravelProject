@@ -2,8 +2,10 @@ package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.enumeration.Role;
 
+import javax.persistence.Entity;
 import java.util.UUID;
 
+@Entity
 public class Admin extends User {
 
     public Admin() {

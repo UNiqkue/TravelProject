@@ -10,11 +10,13 @@ import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.CrudTourService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, CrudTourService<TourDto> {
 
     private TourDaoImpl tourDao = TourDaoImpl.getInstance();
@@ -40,9 +42,6 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
                 .collect(Collectors.toList());
     }
 
-    /**
-     * viewOrderHystory
-     **/
     public List<TourDto> watchTours() {
         String clientId = "00000000-0000-0000-0000-000000000000";
         return tourDao.getAll()
@@ -52,9 +51,6 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
                 .collect(Collectors.toList());
     }
 
-    /**
-     * getAll TravelAgents
-     **/
     public List<TravelAgentDto> getAll() {
         return travelAgentDao.getAll()
                 .stream()
@@ -66,18 +62,12 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
         return travelAgentConverter.convert(travelAgentDao.getByUsername(username));
     }
 
-    /**
-     * makeDiscount - update price of tour
-     **/
     public TourDto makeDiscount(UUID id, Double price) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setPrice(price);
         return tourConverter.convert(tourDao.updatePrice(tourConverter.convert(tourDto)));
     }
 
-    /**
-     * editTour - update description of tour
-     **/
     public TourDto editTour(UUID id, String description) {
         TourDto tourDto = tourConverter.convert(tourDao.getById(id));
         tourDto.setDescription(description);

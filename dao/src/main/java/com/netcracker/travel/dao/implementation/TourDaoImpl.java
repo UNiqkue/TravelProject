@@ -7,6 +7,7 @@ import com.netcracker.travel.util.ClosingUtil;
 import com.netcracker.travel.util.PoolConnector;
 import com.netcracker.travel.util.SqlConfig;
 import com.netcracker.travel.util.SystemLogger;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Repository
 public class TourDaoImpl implements AbstractDao<Tour> {
 
     private Connection connection = PoolConnector.getInstance().getConnection();

@@ -3,11 +3,13 @@ package com.netcracker.travel.controller;
 import com.netcracker.travel.Menu;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.service.implementation.AuthenticationServiceImpl;
+import org.springframework.stereotype.Controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+@Controller
 public class AuthenticationController {
     private AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

@@ -7,10 +7,12 @@ import com.netcracker.travel.dao.implementation.TourDaoImpl;
 import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.service.interfaces.AbstractService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class AdminServiceImpl implements AbstractService<AdminDto> {
 
     private AdminDaoImpl adminDao = AdminDaoImpl.getInstance();

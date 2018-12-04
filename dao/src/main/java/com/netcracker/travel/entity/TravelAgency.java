@@ -2,9 +2,11 @@ package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.abstracts.BaseEntity;
 
+import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class TravelAgency extends BaseEntity {
 
     private String name;
