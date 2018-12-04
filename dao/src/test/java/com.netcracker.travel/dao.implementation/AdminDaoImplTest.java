@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class AdminDaoImplTest extends Assert {
 
-    Admin admin;
+    private Admin admin;
 
     @Before
     public void setUp() {

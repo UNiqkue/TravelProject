@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class TourDaoImplTest {
 
-    Tour tour;
+    private Tour tour;
 
     @Before
     public void setUp() {

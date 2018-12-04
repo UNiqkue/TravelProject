@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class CustomerDaoImplTest extends Assert {
 
-    Customer customer;
+    private Customer customer;
 
     @Before
     public void setUp() {

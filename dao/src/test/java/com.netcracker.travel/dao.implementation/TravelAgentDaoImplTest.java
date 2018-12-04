@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TravelAgentDaoImplTest {
-    TravelAgent travelAgent;
+    private TravelAgent travelAgent;
 
     @Before
     public void setUp() {
