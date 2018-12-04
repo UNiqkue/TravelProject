@@ -9,43 +9,106 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AuthenticationController {
+    private AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private LoginRequestDto loginRequestDto;
 
     public void login() {
-        AuthenticationServiceImpl authenticationService = new AuthenticationServiceImpl();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        int buf = 10;
-        while (buf == 10) {
+        boolean exit = false;
+        while (!exit) {
+            printWindow();
             try {
-                System.out.println("Please, input the username:");
-                String username = reader.readLine();
-
-                System.out.println("Please, input the password:");
-                String password = reader.readLine();
-
-                LoginRequestDto loginRequestDto = new LoginRequestDto(username, password);
-
-                buf = authenticationService.login(loginRequestDto);
-
-                switch (buf) {
+                int x = Integer.parseInt(reader.readLine());
+                switch (x) {
                     case 1:
-                        Menu.adminConsole();
+                        requestCustomer();
                         break;
                     case 2:
-                        Menu.customerConsole(loginRequestDto.getUsername());
+                        requestTravelAgent();
                         break;
                     case 3:
-                        Menu.travelAgentConsole(loginRequestDto.getUsername());
+                        requestAdmin();
+                        break;
+                    case 0:
+                        exit = true;
                         break;
                     default:
-                        System.out.println("You input incorrect username or password");
+                        Menu.printMesInput();
                         break;
                 }
-
+            } catch (NumberFormatException e) {
+                System.out.println("Wrong input");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    private void requestAdmin() {
+        try {
+            loginRequestDto = inputLoginRequest();
+            if (authenticationService.loginAdmin(loginRequestDto)) {
+                Menu.adminConsole();
+            } else {
+                printRequestError();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void requestTravelAgent() {
+        try {
+            loginRequestDto = inputLoginRequest();
+            if (authenticationService.loginTravelAgent(loginRequestDto)) {
+                Menu.travelAgentConsole(loginRequestDto.getUsername());
+            } else {
+                printRequestError();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void requestCustomer() {
+        try {
+            loginRequestDto = inputLoginRequest();
+            if (authenticationService.loginCustomer(loginRequestDto)) {
+                Menu.customerConsole(loginRequestDto.getUsername());
+            } else {
+                printRequestError();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String inputUsername() throws IOException {
+        System.out.println("Please, input the username:");
+        String username = reader.readLine();
+        return username;
+    }
+
+    private String inputPassword() throws IOException {
+        System.out.println("Please, input the password:");
+        String password = reader.readLine();
+        return password;
+    }
+
+    private LoginRequestDto inputLoginRequest() throws IOException {
+        String username = inputUsername();
+        String password = inputPassword();
+        loginRequestDto = new LoginRequestDto(username, password);
+        return loginRequestDto;
+    }
+
+    private void printWindow() {
+        System.out.println("You registered by? \n 1. Customer \n 2. TravelAgent \n 3. Admin \n 0. Exit");
+    }
+
+    private void printRequestError() {
+        System.out.println("You input not corrected password");
+    }
+
 
 }

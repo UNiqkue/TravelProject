@@ -4,5 +4,7 @@ import com.netcracker.travel.dto.LoginRequestDto;
 
 public interface AuthenticationService {
 
-    int login(LoginRequestDto loginRequestDto);
+    boolean loginCustomer(LoginRequestDto loginRequestDto);
+    boolean loginAdmin(LoginRequestDto loginRequestDto);
+    boolean loginTravelAgent(LoginRequestDto loginRequestDto);
 }
