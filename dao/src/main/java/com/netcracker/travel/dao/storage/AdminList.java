@@ -14,12 +14,13 @@ import java.util.UUID;
 public class AdminList {
 
     private static String filePath = "dao\\src\\main\\resources\\storage\\admin.json";
+    private Scanner scanner;
 
     public List<Admin> read() {
         List<Admin> list = new ArrayList<>();
         Admin admin;
         try {
-            Scanner scanner = getScanner();
+            scanner = getScanner();
             while (scanner.hasNextLine()) {
                 admin = new Admin();
                 JSONObject jsonObject = new JSONObject(scanner.nextLine());
@@ -33,13 +34,14 @@ public class AdminList {
                 admin.setRole(Role.valueOf((String) jsonObject.get("role")));
                 list.add(admin);
             }
-            scanner.close();
         } catch (JSONException e1) {
             e1.printStackTrace();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "Unable to open file ");
         } catch (IOException e) {
             System.out.println("Error while reading to file: " + e);
+        } finally {
+            scanner.close();
         }
         return list;
     }
@@ -48,53 +50,54 @@ public class AdminList {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonAdmin = new JSONObject();
-
-            if (admin.getId() != null) {
-                jsonAdmin.put("id", admin.getId());
-            } else {
-                jsonAdmin.put("id", UUID.randomUUID().toString());
+            try {
+                if (admin.getId() != null) {
+                    jsonAdmin.put("id", admin.getId());
+                } else {
+                    jsonAdmin.put("id", UUID.randomUUID().toString());
+                }
+                if (admin.getFirstName() != null) {
+                    jsonAdmin.put("firstName", admin.getFirstName());
+                } else {
+                    jsonAdmin.put("firstName", "null");
+                }
+                if (admin.getLastName() != null) {
+                    jsonAdmin.put("lastName", admin.getLastName());
+                } else {
+                    jsonAdmin.put("lastName", "null");
+                }
+                if (admin.getUsername() != null) {
+                    jsonAdmin.put("username", admin.getUsername());
+                } else {
+                    jsonAdmin.put("username", "null");
+                }
+                if (admin.getPassword() != null) {
+                    jsonAdmin.put("password", admin.getPassword());
+                } else {
+                    jsonAdmin.put("password", "null");
+                }
+                if (admin.getEmail() != null) {
+                    jsonAdmin.put("email", admin.getEmail());
+                } else {
+                    jsonAdmin.put("email", "null");
+                }
+                if (admin.getActivationCode() != null) {
+                    jsonAdmin.put("activationCode", admin.getActivationCode());
+                } else {
+                    jsonAdmin.put("activationCode", "null");
+                }
+                if (admin.getRole() != null) {
+                    jsonAdmin.put("role", admin.getRole());
+                } else {
+                    jsonAdmin.put("role", Role.ADMIN);
+                }
+                fileWriter.write(jsonAdmin.toString() + "\n");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            } finally {
+                fileWriter.flush();
+                fileWriter.close();
             }
-            if (admin.getFirstName() != null) {
-                jsonAdmin.put("firstName", admin.getFirstName());
-            } else {
-                jsonAdmin.put("firstName", "null");
-            }
-            if (admin.getLastName() != null) {
-                jsonAdmin.put("lastName", admin.getLastName());
-            } else {
-                jsonAdmin.put("lastName", "null");
-            }
-            if (admin.getUsername() != null) {
-                jsonAdmin.put("username", admin.getUsername());
-            } else {
-                jsonAdmin.put("username", "null");
-            }
-            if (admin.getPassword() != null) {
-                jsonAdmin.put("password", admin.getPassword());
-            } else {
-                jsonAdmin.put("password", "null");
-            }
-            if (admin.getEmail() != null) {
-                jsonAdmin.put("email", admin.getEmail());
-            } else {
-                jsonAdmin.put("email", "null");
-            }
-            if (admin.getActivationCode() != null) {
-                jsonAdmin.put("activationCode", admin.getActivationCode());
-            } else {
-                jsonAdmin.put("activationCode", "null");
-            }
-            if (admin.getRole() != null) {
-                jsonAdmin.put("role", admin.getRole());
-            } else {
-                jsonAdmin.put("role", Role.ADMIN);
-            }
-            fileWriter.write(jsonAdmin.toString() + "\n");
-            fileWriter.flush();
-            fileWriter.close();
-
-        } catch (JSONException e1) {
-            e1.printStackTrace();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "File not found ");
         } catch (IOException ioe) {

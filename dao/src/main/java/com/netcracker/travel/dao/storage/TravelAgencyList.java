@@ -13,11 +13,12 @@ import java.util.UUID;
 public class TravelAgencyList {
 
     private static String filePath = "dao\\src\\main\\resources\\storage\\travelagency.json";
+    private Scanner scanner;
 
     public List<TravelAgency> read() {
         List<TravelAgency> list = new ArrayList<TravelAgency>();
         try {
-            Scanner scanner = new Scanner(new File(filePath));
+            scanner = new Scanner(new File(filePath));
             while (scanner.hasNextLine()) {
                 TravelAgency travelAgency = new TravelAgency();
                 JSONObject jsonObject = new JSONObject(scanner.nextLine());
@@ -27,11 +28,10 @@ public class TravelAgencyList {
                 travelAgency.setCountTravelAgent(Integer.valueOf(jsonObject.get("countTravelAgent").toString()));
                 list.add(travelAgency);
             }
-            scanner.close();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "Unable to open file ");
-        } catch (IOException e) {
-            System.out.println("Error while reading to file: " + e);
+        } finally {
+            scanner.close();
         }
         return list;
     }
@@ -40,32 +40,34 @@ public class TravelAgencyList {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonTravelAgency = new JSONObject();
-            if (travelAgency.getId() != null) {
-                jsonTravelAgency.put("id", travelAgency.getId());
-            } else {
-                jsonTravelAgency.put("id", UUID.randomUUID().toString());
+            try {
+                if (travelAgency.getId() != null) {
+                    jsonTravelAgency.put("id", travelAgency.getId());
+                } else {
+                    jsonTravelAgency.put("id", UUID.randomUUID().toString());
+                }
+                if (travelAgency.getName() != null) {
+                    jsonTravelAgency.put("name", travelAgency.getName());
+                } else {
+                    jsonTravelAgency.put("name", "null");
+                }
+                if (travelAgency.getCountTour() != null) {
+                    jsonTravelAgency.put("countTour", travelAgency.getCountTour());
+                } else {
+                    jsonTravelAgency.put("countTour", "0");
+                }
+                if (travelAgency.getCountTravelAgent() != null) {
+                    jsonTravelAgency.put("countTravelAgent", travelAgency.getCountTravelAgent());
+                } else {
+                    jsonTravelAgency.put("countTravelAgent", "0");
+                }
+                fileWriter.write(jsonTravelAgency.toString() + "\n");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            } finally {
+                fileWriter.flush();
+                fileWriter.close();
             }
-            if (travelAgency.getName() != null) {
-                jsonTravelAgency.put("name", travelAgency.getName());
-            } else {
-                jsonTravelAgency.put("name", "null");
-            }
-            if (travelAgency.getCountTour() != null) {
-                jsonTravelAgency.put("countTour", travelAgency.getCountTour());
-            } else {
-                jsonTravelAgency.put("countTour", "0");
-            }
-            if (travelAgency.getCountTravelAgent() != null) {
-                jsonTravelAgency.put("countTravelAgent", travelAgency.getCountTravelAgent());
-            } else {
-                jsonTravelAgency.put("countTravelAgent", "0");
-            }
-
-            fileWriter.write(jsonTravelAgency.toString() + "\n");
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "File not found ");
         } catch (IOException ioe) {

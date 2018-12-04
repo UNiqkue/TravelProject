@@ -13,13 +13,13 @@ import java.util.UUID;
 
 public class TourList {
 
-
     private static String filePath = "dao\\src\\main\\resources\\storage\\tour.json";
+    private Scanner scanner;
 
     public List<Tour> read() {
         List<Tour> list = new ArrayList<Tour>();
         try {
-            Scanner scanner = new Scanner(new File(filePath));
+            scanner = new Scanner(new File(filePath));
             while (scanner.hasNextLine()) {
                 Tour tour = new Tour();
                 JSONObject jsonObject = new JSONObject(scanner.nextLine());
@@ -36,14 +36,12 @@ public class TourList {
                 tour.setFree((boolean) jsonObject.get("free"));
                 list.add(tour);
             }
-            scanner.close();
-
         } catch (JSONException e1) {
             e1.printStackTrace();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "Unable to open file ");
-        } catch (IOException e) {
-            System.out.println("Error while reading to file: " + e);
+        } finally {
+            scanner.close();
         }
         return list;
     }
@@ -52,66 +50,69 @@ public class TourList {
         try {
             FileWriter fileWriter = new FileWriter(filePath, true);
             JSONObject jsonTour = new JSONObject();
-            if (tour.getId() != null) {
-                jsonTour.put("id", tour.getId());
-            } else {
-                jsonTour.put("id", UUID.randomUUID().toString());
+            try {
+                if (tour.getId() != null) {
+                    jsonTour.put("id", tour.getId());
+                } else {
+                    jsonTour.put("id", UUID.randomUUID().toString());
+                }
+                if (tour.getName() != null) {
+                    jsonTour.put("name", tour.getName());
+                } else {
+                    jsonTour.put("name", "null");
+                }
+                if (tour.getDescription() != null) {
+                    jsonTour.put("description", tour.getDescription());
+                } else {
+                    jsonTour.put("description", "null");
+                }
+                if (tour.getPrice() != null) {
+                    jsonTour.put("price", tour.getPrice().toString());
+                } else {
+                    jsonTour.put("price", "111.50");
+                }
+                if (tour.getPrice() != null) {
+                    jsonTour.put("type", tour.getType());
+                } else {
+                    jsonTour.put("type", "HOTELRESTTOUR");
+                }
+                if (tour.getCountry() != null) {
+                    jsonTour.put("country", tour.getCountry());
+                } else {
+                    jsonTour.put("country", "null");
+                }
+                if (tour.getStartDate() != null) {
+                    jsonTour.put("startDate", tour.getStartDate());
+                } else {
+                    jsonTour.put("startDate", "2000-10-10");
+                }
+                if (tour.getEndDate() != null) {
+                    jsonTour.put("endDate", tour.getEndDate());
+                } else {
+                    jsonTour.put("endDate", "2000-11-11");
+                }
+                if (tour.getTravelAgencyId() != null) {
+                    jsonTour.put("travelAgencyId", tour.getTravelAgencyId());
+                } else {
+                    jsonTour.put("travelAgencyId", "00000000-0000-0000-0000-000000000000");
+                }
+                if (tour.getCustomerId() != null) {
+                    jsonTour.put("customerId", tour.getCustomerId());
+                } else {
+                    jsonTour.put("customerId", "00000000-0000-0000-0000-000000000000");
+                }
+                if (String.valueOf(tour.isFree()) != null) {
+                    jsonTour.put("free", tour.isFree());
+                } else {
+                    jsonTour.put("free", "true");
+                }
+                fileWriter.write(jsonTour.toString() + "\n");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            } finally {
+                fileWriter.flush();
+                fileWriter.close();
             }
-            if (tour.getName() != null) {
-                jsonTour.put("name", tour.getName());
-            } else {
-                jsonTour.put("name", "null");
-            }
-            if (tour.getDescription() != null) {
-                jsonTour.put("description", tour.getDescription());
-            } else {
-                jsonTour.put("description", "null");
-            }
-            if (tour.getPrice() != null) {
-                jsonTour.put("price", tour.getPrice().toString());
-            } else {
-                jsonTour.put("price", "111.50");
-            }
-            if (tour.getPrice() != null) {
-                jsonTour.put("type", tour.getType());
-            } else {
-                jsonTour.put("type", "HOTELRESTTOUR");
-            }
-            if (tour.getCountry() != null) {
-                jsonTour.put("country", tour.getCountry());
-            } else {
-                jsonTour.put("country", "null");
-            }
-            if (tour.getStartDate() != null) {
-                jsonTour.put("startDate", tour.getStartDate());
-            } else {
-                jsonTour.put("startDate", "2000-10-10");
-            }
-            if (tour.getEndDate() != null) {
-                jsonTour.put("endDate", tour.getEndDate());
-            } else {
-                jsonTour.put("endDate", "2000-11-11");
-            }
-            if (tour.getTravelAgencyId() != null) {
-                jsonTour.put("travelAgencyId", tour.getTravelAgencyId());
-            } else {
-                jsonTour.put("travelAgencyId", "00000000-0000-0000-0000-000000000000");
-            }
-            if (tour.getCustomerId() != null) {
-                jsonTour.put("customerId", tour.getCustomerId());
-            } else {
-                jsonTour.put("customerId", "00000000-0000-0000-0000-000000000000");
-            }
-            if (String.valueOf(tour.isFree()) != null) {
-                jsonTour.put("free", tour.isFree());
-            } else {
-                jsonTour.put("free", "true");
-            }
-            fileWriter.write(jsonTour.toString() + "\n");
-            fileWriter.flush();
-            fileWriter.close();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
         } catch (FileNotFoundException fnf) {
             System.out.println(fnf + "File not found ");
         } catch (IOException ioe) {
