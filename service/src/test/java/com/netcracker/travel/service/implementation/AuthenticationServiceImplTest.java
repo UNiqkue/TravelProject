@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Mockito.when;
+
 public class AuthenticationServiceImplTest {
 
     @Mock
@@ -17,8 +19,6 @@ public class AuthenticationServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        authenticationService =new AuthenticationServiceImpl();
-        loginRequestDto = new LoginRequestDto();
     }
 
     @After
@@ -28,39 +28,32 @@ public class AuthenticationServiceImplTest {
     }
 
     @Test
-    public void loginAdminTest() throws Exception {
-        int expected = 1;
-        loginRequestDto.setUsername("Administrator");
-        loginRequestDto.setPassword("null1111");
-        int actual = authenticationService.login(loginRequestDto);
-        Assert.assertEquals(expected, actual);
-
+    public void testLoginCustomer() throws Exception {
+        loginRequestDto = new LoginRequestDto("Customer1", "null1111");
+        when(authenticationService.loginCustomer(loginRequestDto)).thenReturn(true);
+        Assert.assertTrue(authenticationService.loginCustomer(loginRequestDto));
     }
 
     @Test
-    public void loginCustomerTest() throws Exception {
-        int expected = 2;
-        loginRequestDto.setUsername("Customer1");
-        loginRequestDto.setPassword("null1111");
-        int actual = authenticationService.login(loginRequestDto);
-        Assert.assertEquals(expected, actual);
+    public void testLoginAdmin() throws Exception {
+        loginRequestDto = new LoginRequestDto("Administrator", "null1111");
+        when(authenticationService.loginAdmin(loginRequestDto)).thenReturn(true);
+        Assert.assertTrue(authenticationService.loginAdmin(loginRequestDto));
     }
 
     @Test
-    public void loginTravelAgentTest() throws Exception {
-        int expected = 3;
-        loginRequestDto.setUsername("TravelAgent1");
-        loginRequestDto.setPassword("null1111");
-        int actual = authenticationService.login(loginRequestDto);
-        Assert.assertEquals(expected, actual);
+    public void testLoginTravelAgent() throws Exception {
+        loginRequestDto = new LoginRequestDto("TravelAgent1", "null1111");
+        when(authenticationService.loginTravelAgent(loginRequestDto)).thenReturn(true);
+        Assert.assertTrue(authenticationService.loginTravelAgent(loginRequestDto));
     }
 
     @Test
-    public void loginNullTest() throws Exception {
-        int expected = 0;
-        loginRequestDto.setUsername("Qqwertyuio");
-        loginRequestDto.setPassword("12345678");
-        int actual = authenticationService.login(loginRequestDto);
-        Assert.assertEquals(expected, actual);
+    public void testLoginNull() throws Exception {
+        loginRequestDto = new LoginRequestDto("QWERTYU", "0987654321");
+        when(authenticationService.loginCustomer(loginRequestDto)).thenReturn(false);
+        Assert.assertFalse(authenticationService.loginCustomer(loginRequestDto));
     }
+
+
 }
