@@ -11,7 +11,6 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.interfaces.AuthenticationService;
-import org.json.JSONException;
 
 import java.util.NoSuchElementException;
 
@@ -28,43 +27,44 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationServiceImpl() {
     }
 
-    public int login(LoginRequestDto loginRequestDto) {
+    public boolean loginCustomer(LoginRequestDto loginRequestDto){
         try {
-            try {
-                CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
-                if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
-                    return 2;
-                }
-
-            } catch (NoSuchElementException e) {
-                System.out.println("Load...");
+            CustomerDto customerDto = customerConverter.convert(customerDao.getByUsername(loginRequestDto.getUsername()));
+            if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
+                return true;
             }
+        } catch (NoSuchElementException e) {
+            printErrorLogin();
+        }
+        return false;
+    }
 
-            try {
-                AdminDto adminDto = adminConverter.convert(adminDao.getByUsername(loginRequestDto.getUsername()));
-                if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
-                    return 1;
-                }
-            } catch (NoSuchElementException e) {
-                System.out.println("Loaddd.....");
-            } catch (JSONException e) {
-
+    public boolean loginAdmin(LoginRequestDto loginRequestDto){
+        try {
+            AdminDto adminDto = adminConverter.convert(adminDao.getByUsername(loginRequestDto.getUsername()));
+            if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
+                return true;
             }
+        } catch (NoSuchElementException e) {
+            printErrorLogin();
+        }
+        return false;
+    }
 
-//                try {
+    public boolean loginTravelAgent(LoginRequestDto loginRequestDto){
+        try {
             TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentDao.getByUsername(loginRequestDto.getUsername()));
             if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
-                return 3;
+                return true;
             }
-//                } catch (JSONException e){
-//                    return 0;
-//                    }
-
         } catch (NoSuchElementException e) {
-            System.out.println("Loaddddd.......");
+            printErrorLogin();
         }
+        return false;
+    }
 
-        return 0;
+    private void printErrorLogin(){
+        System.out.println("You input not corrected username");
     }
 
 
