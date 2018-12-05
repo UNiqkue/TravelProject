@@ -2,6 +2,7 @@ package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.abstracts.BaseEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.UUID;
@@ -10,7 +11,9 @@ import java.util.UUID;
 public class TravelAgency extends BaseEntity {
 
     private String name;
+    @Column(name = "count_tour")
     private Integer countTour;
+    @Column(name = "count_travel_agent")
     private Integer countTravelAgent;
 
     public TravelAgency() {

@@ -2,6 +2,7 @@ package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.enumeration.Role;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Objects;
 import java.util.UUID;
@@ -9,8 +10,11 @@ import java.util.UUID;
 @Entity
 public class TravelAgent extends User {
 
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "position")
     private String position;
+    @Column(name = "travel_agency_id")
     private UUID travelAgencyId;
 
     public TravelAgent() {

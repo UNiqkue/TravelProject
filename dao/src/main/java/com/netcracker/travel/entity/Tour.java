@@ -3,6 +3,7 @@ package com.netcracker.travel.entity;
 import com.netcracker.travel.entity.abstracts.BaseEntity;
 import com.netcracker.travel.entity.enumeration.TypeTour;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.sql.Date;
 import java.util.Objects;
@@ -16,9 +17,13 @@ public class Tour extends BaseEntity {
     private Double price;
     private TypeTour type;
     private String country;
+    @Column(name = "start_date")
     private Date startDate;
+    @Column(name = "end_date")
     private Date endDate;
+    @Column(name = "travel_agency_id")
     private UUID travelAgencyId;
+    @Column(name = "customer_id")
     private UUID customerId;
     private boolean free;
 

@@ -2,12 +2,12 @@ package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
-import com.netcracker.travel.dao.implementation.TourDaoImpl;
-import com.netcracker.travel.dao.implementation.TravelAgentDaoImpl;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.entity.Tour;
 import com.netcracker.travel.entity.enumeration.TypeTour;
+import com.netcracker.travel.repository.TourRepository;
+import com.netcracker.travel.repository.TravelAgentRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,9 +28,9 @@ import static org.mockito.Mockito.*;
 public class TravelAgentServiceImplTest {
 
     @Mock
-    private TravelAgentDaoImpl travelAgentDao;
+    private TravelAgentRepository travelAgentRepository;
     @Mock
-    private TourDaoImpl tourDao;
+    private TourRepository tourRepository;
     private TourConverter tourConverter;
     private TravelAgentConverter travelAgentConverter;
     private TourDto tourDto;
@@ -49,19 +49,19 @@ public class TravelAgentServiceImplTest {
 
     @Test
     public void testCreateTour() {
-        tourDto = tourConverter.convert(TourDaoImpl.getInstance().save(tourConverter.convert(tourDto)));
-        TourDto actual = tourConverter.convert(TourDaoImpl.getInstance().getById(tourDto.getId()));
+        tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
+        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId()));
         Assert.assertEquals(tourDto, actual);
-        TourDaoImpl.getInstance().delete(tourDto.getId());
+        tourRepository.delete(tourDto.getId());
     }
 
     @Test
     public void testGetAll() {
-        List<TravelAgentDto> expected = TravelAgentDaoImpl.getInstance().getAll()
+        List<TravelAgentDto> expected = travelAgentRepository.findAll()
                 .stream()
                 .map(agent -> travelAgentConverter.convert(agent))
                 .collect(Collectors.toList());
-        when(travelAgentDao.getAll()).thenReturn(expected
+        when(travelAgentRepository.findAll()).thenReturn(expected
                 .stream()
                 .map(agent -> travelAgentConverter.convert(agent))
                 .collect(Collectors.toList()));
@@ -71,38 +71,38 @@ public class TravelAgentServiceImplTest {
 
     @Test
     public void testGetByUsername() {
-        TravelAgentDto expected = travelAgentConverter.convert(TravelAgentDaoImpl.getInstance().getByUsername("TravelAgent1"));
-        when(travelAgentDao.getByUsername("TravelAgent1")).thenReturn(travelAgentConverter.convert(expected));
+        TravelAgentDto expected = travelAgentConverter.convert(travelAgentRepository.findByUsername("TravelAgent1"));
+        when(travelAgentRepository.findByUsername("TravelAgent1")).thenReturn(travelAgentConverter.convert(expected));
         TravelAgentDto actual = travelAgentService.getByUsername("TravelAgent1");
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void testMakeDiscount() {
-        TourDaoImpl.getInstance().save(tourConverter.convert(tourDto));
+        tourRepository.save(tourConverter.convert(tourDto));
         tourDto.setPrice(10.0);
-        TourDaoImpl.getInstance().updatePrice(tourConverter.convert(tourDto));
-        TourDto actual = tourConverter.convert(TourDaoImpl.getInstance().getById(tourDto.getId()));
-        TourDaoImpl.getInstance().delete(tourDto.getId());
+        tourRepository.save(tourConverter.convert(tourDto));
+        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId()));
+        tourRepository.delete(tourDto.getId());
         Assert.assertEquals(tourDto, actual);
     }
 
     @Test
     public void testEditTour() {
-        TourDaoImpl.getInstance().save(tourConverter.convert(tourDto));
+        tourRepository.save(tourConverter.convert(tourDto));
         tourDto.setDescription("New tour 5 person");
-        TourDaoImpl.getInstance().updateDescription(tourConverter.convert(tourDto));
-        TourDto actual = tourConverter.convert(TourDaoImpl.getInstance().getById(tourDto.getId()));
-        TourDaoImpl.getInstance().delete(tourDto.getId());
+        tourRepository.save(tourConverter.convert(tourDto));
+        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId()));
+        tourRepository.delete(tourDto.getId());
         Assert.assertEquals(tourDto, actual);
     }
 
     @Test
     public void testDeleteTour() {
         UUID id = UUID.fromString("2be61a8a-3fa7-4f2d-a592-054de4f010dc");
-        Tour tour = tourDao.getById(id);
+        Tour tour = tourRepository.getById(id);
         travelAgentService.deleteTour(id);
-        verify(tourDao, times(1)).delete(id);
-        tourDao.save(tour);
+        verify(tourRepository, times(1)).delete(id);
+        tourRepository.save(tour);
     }
 }

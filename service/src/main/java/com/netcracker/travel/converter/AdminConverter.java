@@ -2,7 +2,9 @@ package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.entity.Admin;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdminConverter {
 
     public Admin convert(AdminDto adminDto) {

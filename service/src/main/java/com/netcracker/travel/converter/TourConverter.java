@@ -2,7 +2,9 @@ package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.entity.Tour;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TourConverter {
 
     public Tour convert(TourDto tourDto) {

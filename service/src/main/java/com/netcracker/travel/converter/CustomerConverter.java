@@ -2,7 +2,9 @@ package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.entity.Customer;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomerConverter {
 
     public Customer convert(CustomerDto customerDto) {
@@ -18,7 +20,6 @@ public class CustomerConverter {
         customer.setCardNumber(customerDto.getCardNumber());
         customer.setDateOfBirth(customerDto.getDateOfBirth());
         customer.setPassportInfo(customerDto.getPassportInfo());
-        customer.setListOfTours(customerDto.getListOfTours());
         return customer;
     }
 
@@ -35,7 +36,6 @@ public class CustomerConverter {
         customerDto.setCardNumber(customer.getCardNumber());
         customerDto.setDateOfBirth(customer.getDateOfBirth());
         customerDto.setPassportInfo(customer.getPassportInfo());
-        customerDto.setListOfTours(customer.getListOfTours());
         return customerDto;
     }
 

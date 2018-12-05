@@ -2,20 +2,23 @@ package com.netcracker.travel.entity;
 
 import com.netcracker.travel.entity.enumeration.Role;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 public class Customer extends User {
 
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
+    @Column(name = "card_number")
     private String cardNumber;
+    @Column(name = "passport_info")
     private String passportInfo;
-    private List<Tour> listOfTours;
 
     public Customer() {
     }
@@ -63,15 +66,6 @@ public class Customer extends User {
 
     public void setPassportInfo(String passportInfo) {
         this.passportInfo = passportInfo;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    public List<Tour> getListOfTours() {
-        return listOfTours;
-    }
-
-    public void setListOfTours(List<Tour> listOfTours) {
-        this.listOfTours = listOfTours;
     }
 
     @Override

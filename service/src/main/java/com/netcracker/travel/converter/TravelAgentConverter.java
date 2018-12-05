@@ -2,7 +2,9 @@ package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.entity.TravelAgent;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TravelAgentConverter {
 
     public TravelAgent convert(TravelAgentDto travelAgentDto) {

@@ -4,16 +4,17 @@ import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
-import com.netcracker.travel.dao.implementation.*;
 import com.netcracker.travel.dto.*;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
+import com.netcracker.travel.repository.*;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 import com.netcracker.travel.service.interfaces.SearchTourService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -27,26 +28,34 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService {
 
-    private TourDaoImpl tourDao = TourDaoImpl.getInstance();
-    private CustomerDaoImpl customerDao = CustomerDaoImpl.getInstance();
-    private TravelAgencyDaoImpl travelAgencyDao = TravelAgencyDaoImpl.getInstance();
-    private AdminDaoImpl adminDao = AdminDaoImpl.getInstance();
-    private TravelAgentDaoImpl travelAgentDao = TravelAgentDaoImpl.getInstance();
-
-    private CustomerConverter customerConverter = new CustomerConverter();
-    private TourConverter tourConverter = new TourConverter();
-    private AdminConverter adminConverter = new AdminConverter();
-    private TravelAgentConverter travelAgentConverter = new TravelAgentConverter();
+    @Autowired
+    private TourRepository tourRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private TravelAgencyRepository travelAgencyRepository;
+    @Autowired
+    private AdminRepository adminRepository;
+    @Autowired
+    private TravelAgentRepository travelAgentRepository;
+    @Autowired
+    private CustomerConverter customerConverter;
+    @Autowired
+    private TourConverter tourConverter;
+    @Autowired
+    private AdminConverter adminConverter;
+    @Autowired
+    private TravelAgentConverter travelAgentConverter;
 
     public CustomerServiceImpl() {
     }
 
     public CustomerDto getByUsername(String username) {
-        return customerConverter.convert(customerDao.getByUsername(username));
+        return customerConverter.convert(customerRepository.findByUsername(username));
     }
 
     public List<CustomerDto> getAll() {
-        return customerDao.getAll()
+        return customerRepository.findAll()
                 .stream()
                 .map(customer -> customerConverter.convert(customer))
                 .collect(Collectors.toList());
@@ -55,25 +64,26 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
         CustomerDto customerDto = getByUsername(username);
         customerDto.setPhoneNumber(phoneNumber);
-        return customerConverter.convert(customerDao.update(customerConverter.convert(customerDto)));
-    }
+        return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
+    } /**update вместо save**/
 
     /**
      * viewOrderedTours
      **/
     public List<TourDto> watchTours(UUID id) {
-        return tourDao.getToursById(id)
+        return tourRepository.findAllByCustomerId(id)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
     public TourDto buyTour(UUID id, UUID customerId) {
-        TourDto tourDto = tourConverter.convert(tourDao.getById(id));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(id));
         if (customerId.equals(tourDto.getCustomerId()) || tourDto.isFree()) {
             tourDto.setCustomerId(customerId);
             tourDto.setFree(false);
-            tourDto = tourConverter.convert(tourDao.update(tourConverter.convert(tourDto)));
+            tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
+            /**update вместо save**/
             System.out.println("You bought tour");
         } else {
             System.out.println("You can't do it!!!");
@@ -82,9 +92,10 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public TourDto cancelTour(UUID tourId, UUID userId) {
-        TourDto tourDto = tourConverter.convert(tourDao.getById(tourId));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId));
         if (userId.equals(tourDto.getCustomerId())) {
-            tourDto = tourConverter.convert(tourDao.updateCancelTrip(tourConverter.convert(tourDto)));
+            tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
+            /**updateCancelTrip вместо save**/
         } else {
             System.out.println("You can't do it!!!");
         }
@@ -92,35 +103,35 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public List<TourDto> searchTourByName(String name) {
-        return tourDao.getByName(name)
+        return tourRepository.findByName(name)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
     public List<TourDto> searchTourByDate(Date startDate, Date endDate) {
-        return tourDao.getByDate(startDate, endDate)
+        return tourRepository.findByDate(startDate, endDate)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
     public List<TourDto> searchTourByType(String type) {
-        return tourDao.getByType(type)
+        return tourRepository.findByType(type)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
     public List<TourDto> searchTourByCountry(String country) {
-        return tourDao.getByCountry(country)
+        return tourRepository.findByCountry(country)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
     public List<TourDto> searchTourByTravelAgency(String name) {
-        return tourDao.getByTravelAgencyId(travelAgencyDao.getByName(name).get(0).getId())
+        return tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
                 .stream()
                 .map(travel -> tourConverter.convert(travel))
                 .collect(Collectors.toList());
@@ -153,7 +164,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         customerDto.setCardNumber(registrationRequestDto.getCardNumber());
         customerDto.setDateOfBirth(registrationRequestDto.getDateOfBirth());
         customerDto.setPhoneNumber(registrationRequestDto.getPhoneNumber());
-        return customerConverter.convert(customerDao.save(customerConverter.convert(customerDto)));
+        return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
     private boolean checkExisting(RegistrationRequestDto registrationRequestDto) {
@@ -179,7 +190,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkAdminUsername(String username) {
         try {
-            AdminDto adminDto = adminDao.getAll()
+            AdminDto adminDto = adminRepository.findAll()
                     .stream()
                     .filter(user -> user.getUsername().equals(username))
                     .map(user -> adminConverter.convert(user))
@@ -194,7 +205,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkCustomerUsername(String username) {
         try {
-            CustomerDto customerDto = customerDao.getAll()
+            CustomerDto customerDto = customerRepository.findAll()
                     .stream()
                     .filter(user -> user.getUsername().equals(username))
                     .map(user -> customerConverter.convert(user))
@@ -210,7 +221,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkTravelAgentUsername(String username) {
         try {
-            TravelAgentDto travelAgentDto = travelAgentDao.getAll()
+            TravelAgentDto travelAgentDto = travelAgentRepository.findAll()
                     .stream()
                     .filter(user -> user.getUsername().equals(username))
                     .map(user -> travelAgentConverter.convert(user))
@@ -231,7 +242,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkTravelAgentEmail(String email) {
         try {
-            TravelAgentDto travelAgentDto = travelAgentDao.getAll()
+            TravelAgentDto travelAgentDto = travelAgentRepository.findAll()
                     .stream()
                     .filter(user -> user.getEmail().equals(email))
                     .map(user -> travelAgentConverter.convert(user))
@@ -246,7 +257,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkAdminEmail(String email) {
         try {
-            AdminDto adminDto = adminDao.getAll()
+            AdminDto adminDto = adminRepository.findAll()
                     .stream()
                     .filter(user -> user.getEmail().equals(email))
                     .map(user -> adminConverter.convert(user))
@@ -261,7 +272,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkCustomerEmail(String email) {
         try {
-            CustomerDto customerDto = customerDao.getAll()
+            CustomerDto customerDto = customerRepository.findAll()
                     .stream()
                     .filter(user -> user.getEmail().equals(email))
                     .map(user -> customerConverter.convert(user))
