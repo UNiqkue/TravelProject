@@ -14,7 +14,6 @@
         <module>console</module>
     </modules>
 
-<<<<<<< HEAD
     <dependencies>
         <dependency>
             <groupId>log4j</groupId>
@@ -34,7 +33,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-=======
+
     <dependencyManagement>
         <dependencies>
         </dependencies>
@@ -88,6 +87,6 @@
             </plugin>
         </plugins>
     </build>
->>>>>>> task3
+
 
 </project>
