@@ -1,16 +1,13 @@
 package com.netcracker.travel.repository;
 
 import com.netcracker.travel.entity.Tour;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Repository
-public interface TourRepository extends CrudRepository<Tour, UUID> {
-    List<Tour> findAll();
+public interface TourRepository extends JpaRepository<Tour, UUID> {
     List<Tour> findByName(String name);
     List<Tour> findByType(String type);
     List<Tour> findByCountry(String country);

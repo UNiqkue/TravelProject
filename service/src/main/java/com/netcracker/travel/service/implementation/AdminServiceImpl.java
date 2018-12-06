@@ -1,5 +1,6 @@
 package com.netcracker.travel.service.implementation;
 
+import javax.persistence.*;
 import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.dto.AdminDto;
@@ -8,7 +9,6 @@ import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
