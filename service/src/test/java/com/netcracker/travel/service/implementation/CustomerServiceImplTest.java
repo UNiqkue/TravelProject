@@ -4,7 +4,6 @@ import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.TourDto;
-import com.netcracker.travel.entity.enumeration.TypeTour;
 import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TourRepository;
 import org.junit.After;
@@ -17,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -57,7 +55,7 @@ public class CustomerServiceImplTest {
         LOG.info(String.valueOf(actual));
         Assert.assertEquals(customer, actual);
     }
-
+/*
     @Test
     public void testGetAll() {
         List<CustomerDto> customers = customerRepository.findAll()
@@ -72,7 +70,7 @@ public class CustomerServiceImplTest {
         LOG.info(String.valueOf(actual));
         Assert.assertEquals(customers, actual);
     }
-
+*/
 
     @Test
     public void testWatchTours() {
@@ -100,7 +98,7 @@ public class CustomerServiceImplTest {
         Assert.assertEquals(customerDto, actual);
         customerRepository.delete(customerDto.getId());
     }*/
-
+/*
     @Test
     public void searchTourByNameTest() {
         String name = "Sea";
@@ -180,7 +178,7 @@ public class CustomerServiceImplTest {
         List<TourDto> actual = adminService.watchTours();
         Assert.assertEquals(tours, actual);
     }
-
+*/
     @After
     public void tearDown(){
         customerConverter = null;

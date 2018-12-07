@@ -54,7 +54,7 @@ public class TravelAgentServiceImplTest {
         Assert.assertEquals(tourDto, actual);
         tourRepository.delete(tourDto.getId());
     }
-
+/*
     @Test
     public void testGetAll() {
         List<TravelAgentDto> expected = travelAgentRepository.findAll()
@@ -68,7 +68,7 @@ public class TravelAgentServiceImplTest {
         List<TravelAgentDto> actual = travelAgentService.getAll();
         Assert.assertEquals(expected, actual);
     }
-
+*/
     @Test
     public void testGetByUsername() {
         TravelAgentDto expected = travelAgentConverter.convert(travelAgentRepository.findByUsername("TravelAgent1"));

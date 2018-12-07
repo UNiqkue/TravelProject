@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, CrudTourService<TourDto> {
@@ -22,7 +23,6 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     private TourRepository tourRepository;
     @Autowired
     private TravelAgentRepository travelAgentRepository;
-
     @Autowired
     private TourConverter tourConverter;
     @Autowired
@@ -37,24 +37,21 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     }
 
     public List<TourDto> getExistenceTours() {
-        return tourRepository.findAll()
-                .stream()
+        return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
     public List<TourDto> watchTours() {
         String clientId = "00000000-0000-0000-0000-000000000000";
-        return tourRepository.findAll()
-                .stream()
+        return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
                 .filter(tour -> !(tour.getCustomerId().toString().equals(clientId)))
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
 
     public List<TravelAgentDto> getAll() {
-        return travelAgentRepository.findAll()
-                .stream()
+        return StreamSupport.stream(travelAgentRepository.findAll().spliterator(), false)
                 .map(travelAgent -> travelAgentConverter.convert(travelAgent))
                 .collect(Collectors.toList());
     }

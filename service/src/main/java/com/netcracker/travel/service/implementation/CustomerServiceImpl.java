@@ -24,6 +24,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService {
@@ -55,8 +56,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public List<CustomerDto> getAll() {
-        return customerRepository.findAll()
-                .stream()
+        return StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                 .map(customer -> customerConverter.convert(customer))
                 .collect(Collectors.toList());
     }
@@ -190,8 +190,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkAdminUsername(String username) {
         try {
-            AdminDto adminDto = adminRepository.findAll()
-                    .stream()
+            AdminDto adminDto = StreamSupport.stream(adminRepository.findAll().spliterator(), false)
                     .filter(user -> user.getUsername().equals(username))
                     .map(user -> adminConverter.convert(user))
                     .findFirst().get();
@@ -205,8 +204,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkCustomerUsername(String username) {
         try {
-            CustomerDto customerDto = customerRepository.findAll()
-                    .stream()
+            CustomerDto customerDto = StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                     .filter(user -> user.getUsername().equals(username))
                     .map(user -> customerConverter.convert(user))
                     .findFirst().get();
@@ -221,8 +219,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkTravelAgentUsername(String username) {
         try {
-            TravelAgentDto travelAgentDto = travelAgentRepository.findAll()
-                    .stream()
+            TravelAgentDto travelAgentDto = StreamSupport.stream(travelAgentRepository.findAll().spliterator(), false)
                     .filter(user -> user.getUsername().equals(username))
                     .map(user -> travelAgentConverter.convert(user))
                     .findFirst().get();
@@ -242,8 +239,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkTravelAgentEmail(String email) {
         try {
-            TravelAgentDto travelAgentDto = travelAgentRepository.findAll()
-                    .stream()
+            TravelAgentDto travelAgentDto = StreamSupport.stream(travelAgentRepository.findAll().spliterator(), false)
                     .filter(user -> user.getEmail().equals(email))
                     .map(user -> travelAgentConverter.convert(user))
                     .findFirst().get();
@@ -257,8 +253,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkAdminEmail(String email) {
         try {
-            AdminDto adminDto = adminRepository.findAll()
-                    .stream()
+            AdminDto adminDto = StreamSupport.stream(adminRepository.findAll().spliterator(), false)
                     .filter(user -> user.getEmail().equals(email))
                     .map(user -> adminConverter.convert(user))
                     .findFirst().get();
@@ -272,8 +267,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     private void checkCustomerEmail(String email) {
         try {
-            CustomerDto customerDto = customerRepository.findAll()
-                    .stream()
+            CustomerDto customerDto = StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                     .filter(user -> user.getEmail().equals(email))
                     .map(user -> customerConverter.convert(user))
                     .findFirst().get();

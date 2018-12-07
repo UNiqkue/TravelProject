@@ -1,10 +1,12 @@
 package com.netcracker.travel.repository;
 
 import com.netcracker.travel.entity.Customer;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface CustomerRepository extends JpaRepository<Customer, UUID> {
+@Repository
+public interface CustomerRepository extends CrudRepository<Customer, UUID> {
     Customer findByUsername(String username);
 }
