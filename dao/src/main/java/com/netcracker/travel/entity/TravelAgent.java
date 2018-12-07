@@ -4,10 +4,12 @@ import com.netcracker.travel.entity.enumeration.Role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "travel_agent")
 public class TravelAgent extends User {
 
     @Column(name = "phone_number")

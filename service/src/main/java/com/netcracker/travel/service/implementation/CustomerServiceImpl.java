@@ -109,8 +109,14 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByDate(Date startDate, Date endDate) {
-        return tourRepository.findByDate(startDate, endDate)
+    public List<TourDto> searchTourByStartDate(Date startDate) {
+        return tourRepository.findByStartDate(startDate)
+                .stream()
+                .map(tour -> tourConverter.convert(tour))
+                .collect(Collectors.toList());
+    }
+    public List<TourDto> searchTourByEndDate(Date endDate) {
+        return tourRepository.findByEndDate(endDate)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());

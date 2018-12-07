@@ -1,8 +1,11 @@
 package com.netcracker.travel.service.interfaces;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public interface CrudTourService<T> {
 
     T createTour(T t);

@@ -432,9 +432,10 @@ public class Menu {
             try {
                 System.out.println("Please, input the start date (2000-10-10)");
                 startDate = Date.valueOf(reader.readLine());
+                printTours(customerService.searchTourByStartDate(startDate));
                 System.out.println("And the end date");
                 endDate = Date.valueOf(reader.readLine());
-                printTours(customerService.searchTourByDate(startDate, endDate));
+                printTours(customerService.searchTourByEndDate(endDate));
             } catch (IllegalArgumentException e) {
                 System.out.println("You input not corrected date. Example: 2000-10-10");
             }

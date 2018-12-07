@@ -4,12 +4,15 @@ import com.netcracker.travel.entity.abstracts.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "travel_agency")
 public class TravelAgency extends BaseEntity {
 
+    @Column(name = "name")
     private String name;
     @Column(name = "count_tour")
     private Integer countTour;

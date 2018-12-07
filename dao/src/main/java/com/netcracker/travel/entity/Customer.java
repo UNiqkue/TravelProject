@@ -4,11 +4,13 @@ import com.netcracker.travel.entity.enumeration.Role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "customer")
 public class Customer extends User {
 
     @Column(name = "phone_number")

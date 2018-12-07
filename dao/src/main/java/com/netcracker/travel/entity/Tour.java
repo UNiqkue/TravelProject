@@ -3,28 +3,39 @@ package com.netcracker.travel.entity;
 import com.netcracker.travel.entity.abstracts.BaseEntity;
 import com.netcracker.travel.entity.enumeration.TypeTour;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "tour")
 public class Tour extends BaseEntity {
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
+    @Column(name = "price")
     private Double price;
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private TypeTour type;
+    @Column(name = "country")
     private String country;
     @Column(name = "start_date")
     private Date startDate;
     @Column(name = "end_date")
     private Date endDate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "travel_agency", nullable = false)
     @Column(name = "travel_agency_id")
     private UUID travelAgencyId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer", nullable = false)
     @Column(name = "customer_id")
     private UUID customerId;
+    @Column(name = "free")
     private boolean free;
 
     public Tour() {

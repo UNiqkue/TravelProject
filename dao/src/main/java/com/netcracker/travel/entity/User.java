@@ -5,6 +5,8 @@ import com.netcracker.travel.entity.enumeration.Role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,6 +26,7 @@ public abstract class User extends BaseEntity {
     @Column(name = "activation_code")
     private String activationCode;
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public User() {
