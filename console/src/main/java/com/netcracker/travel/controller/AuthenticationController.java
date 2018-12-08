@@ -10,8 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Controller
+@Controller("authenticationController")
 public class AuthenticationController {
+
     @Autowired
     private AuthenticationServiceImpl authenticationService;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

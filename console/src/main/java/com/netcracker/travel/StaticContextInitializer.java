@@ -16,13 +16,13 @@ public class StaticContextInitializer {
     @Autowired
     private AdminServiceImpl adminService;
     @Autowired
-    private static CustomerServiceImpl customerService;
+    private CustomerServiceImpl customerService;
     @Autowired
-    private static TravelAgentServiceImpl travelAgentService;
+    private TravelAgentServiceImpl travelAgentService;
     @Autowired
-    private static AuthenticationController authenticationController;
+    private AuthenticationController authenticationController;
     @Autowired
-    private static RegistrationController registrationController;
+    private RegistrationController registrationController;
 
     @PostConstruct
     public void init() {
