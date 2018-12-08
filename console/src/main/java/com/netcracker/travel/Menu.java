@@ -10,7 +10,6 @@ import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,19 +21,13 @@ import java.util.UUID;
 
 public class Menu {
 
-    @Autowired
     private static AdminServiceImpl adminService;
-    @Autowired
     private static CustomerServiceImpl customerService;
-    @Autowired
     private static TravelAgentServiceImpl travelAgentService;
-    @Autowired
-    @Qualifier("authenticationController")
     private static AuthenticationController authenticationController;
-    @Autowired
-    @Qualifier("registrationController")
     private static RegistrationController registrationController;
 
+    @Autowired
     public static void setConfigMenu(AdminServiceImpl adminService, CustomerServiceImpl customerService, TravelAgentServiceImpl travelAgentService, AuthenticationController authenticationController, RegistrationController registrationController) {
         Menu.adminService = adminService;
         Menu.customerService = customerService;
