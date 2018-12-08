@@ -9,6 +9,7 @@ import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +21,21 @@ import java.util.UUID;
 
 public class Menu {
 
+    private static AdminServiceImpl adminService;
+    private static CustomerServiceImpl customerService;
+    private static TravelAgentServiceImpl travelAgentService;
+    private static AuthenticationController authenticationController;
+    private static RegistrationController registrationController;
+
+    @Autowired
+    public static void setConfigMenu(AdminServiceImpl adminService, CustomerServiceImpl customerService, TravelAgentServiceImpl travelAgentService, AuthenticationController authenticationController, RegistrationController registrationController) {
+        Menu.adminService = adminService;
+        Menu.customerService = customerService;
+        Menu.travelAgentService = travelAgentService;
+        Menu.authenticationController = authenticationController;
+        Menu.registrationController = registrationController;
+    }
+
     public static void chooseAction() {
         BufferedReader reader = getBufferedReader();
         boolean exit = false;
@@ -29,15 +45,12 @@ public class Menu {
                 int x = Integer.parseInt(reader.readLine());
                 switch (x) {
                     case 1:
-                        AdminServiceImpl adminService = new AdminServiceImpl();
                         printTours(adminService.watchTours());
                         break;
                     case 2:
-                        AuthenticationController authenticationController = new AuthenticationController();
                         authenticationController.login();
                         break;
                     case 3:
-                        RegistrationController registrationController = new RegistrationController();
                         registrationController.registration();
                         break;
 
@@ -57,7 +70,6 @@ public class Menu {
 
     public static void adminConsole() {
         BufferedReader reader = getBufferedReader();
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         boolean exit1 = false;
         while (!exit1) {
             try {
@@ -87,7 +99,6 @@ public class Menu {
 
     private static void updateCustomerInformation() {
         BufferedReader reader = getBufferedReader();
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         String username;
         boolean exit2 = false;
         while (!exit2) {
@@ -129,7 +140,6 @@ public class Menu {
 
     public static void travelAgentConsole(String username) {
         BufferedReader reader = getBufferedReader();
-        TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         TravelAgentDto travelAgentDto = travelAgentService.getByUsername(username);
         boolean exit1 = false;
         while (!exit1) {
@@ -197,7 +207,6 @@ public class Menu {
     }
 
     private static void createTour(TravelAgentDto travelAgentDto) {
-        TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         BufferedReader reader = getBufferedReader();
         TourDto tourDto = new TourDto();
         while (!tourDto.isFree()) {
@@ -258,7 +267,6 @@ public class Menu {
     }
 
     private static void updateTourDescription() throws IOException {
-        TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         BufferedReader reader = getBufferedReader();
         String tourId = "00000000-0000-0000-0000-000000000000";
         UUID tourUid = UUID.fromString(tourId);
@@ -269,7 +277,6 @@ public class Menu {
     }
 
     private static void deleteTour() {
-        TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         String tourId = "00000000-0000-0000-0000-000000000000";
         UUID tourUid = UUID.fromString(tourId);
         tourUid = inputTourUid(tourId, tourUid);
@@ -277,7 +284,6 @@ public class Menu {
     }
 
     private static void makeDiscount() throws IOException {
-        TravelAgentServiceImpl travelAgentService = new TravelAgentServiceImpl();
         BufferedReader reader = getBufferedReader();
         String tourId = "00000000-0000-0000-0000-000000000000";
         UUID tourUid = UUID.fromString(tourId);
@@ -296,7 +302,6 @@ public class Menu {
 
     public static void customerConsole(String username) {
         BufferedReader reader = getBufferedReader();
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         CustomerDto customerDto = customerService.getByUsername(username);
         boolean exit = false;
         while (!exit) {
@@ -332,7 +337,6 @@ public class Menu {
     }
 
     private static void searchTours() {
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         BufferedReader reader = getBufferedReader();
         boolean exit3 = false;
         while (!exit3) {
@@ -373,7 +377,6 @@ public class Menu {
 
     private static void searchToursByTravelAgencyName() {
         BufferedReader reader = getBufferedReader();
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         try {
             System.out.println("Please, input the TravelAgency name");
             printTours(customerService.searchTourByTravelAgency(reader.readLine()));
@@ -386,7 +389,6 @@ public class Menu {
 
     private static void searchToursByType() {
         BufferedReader reader = getBufferedReader();
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         boolean exit4 = false;
         while (!exit4) {
             try {
@@ -424,7 +426,6 @@ public class Menu {
 
     private static void searchToursByDate() throws IOException {
         BufferedReader reader = getBufferedReader();
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         boolean exit = false;
         Date startDate = Date.valueOf("2100-10-10");
         Date endDate = Date.valueOf("2100-10-10");
@@ -446,7 +447,6 @@ public class Menu {
     }
 
     private static void buyTour(CustomerDto customerDto) {
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         String tourId = "00000000-0000-0000-0000-000000000000";
         UUID tourUid = UUID.fromString(tourId);
         tourUid = inputTourUid(tourId, tourUid);
@@ -454,7 +454,6 @@ public class Menu {
     }
 
     private static void cancelTour(CustomerDto customerDto) {
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
         String tourId = "00000000-0000-0000-0000-000000000000";
         UUID tourUid = UUID.fromString(tourId);
         tourUid = inputTourUid(tourId, tourUid);
