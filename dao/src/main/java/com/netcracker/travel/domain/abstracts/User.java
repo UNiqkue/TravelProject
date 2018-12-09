@@ -22,7 +22,7 @@ public abstract class User extends BaseEntity {
     @Column(name = "activation_code")
     private String activationCode;
     @Column(name = "role")
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private Role role;
 
     public User() {

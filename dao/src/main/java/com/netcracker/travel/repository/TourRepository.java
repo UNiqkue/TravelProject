@@ -3,7 +3,6 @@ package com.netcracker.travel.repository;
 import com.netcracker.travel.domain.Tour;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;

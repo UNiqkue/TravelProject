@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tour")
+@Embeddable
 public class Tour extends BaseEntity {
 
     @Column(name = "name")
@@ -18,8 +19,8 @@ public class Tour extends BaseEntity {
     private String description;
     @Column(name = "price")
     private Double price;
-    @Column(name = "type",  columnDefinition = "ENUM('HOTELRESTTOUR', 'SHOPTOUR', 'EXCURSION', 'CRUISE', 'SANATORIUM')", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    @Enumerated(EnumType.ORDINAL)
     private TypeTour type;
     @Column(name = "country")
     private String country;
