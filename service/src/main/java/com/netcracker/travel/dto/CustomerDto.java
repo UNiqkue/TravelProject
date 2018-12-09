@@ -1,7 +1,7 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.entity.Tour;
-import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.domain.Tour;
+import com.netcracker.travel.domain.enumeration.Role;
 
 import java.sql.Date;
 import java.util.List;

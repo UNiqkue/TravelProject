@@ -1,6 +1,7 @@
-package com.netcracker.travel.entity;
+package com.netcracker.travel.domain;
 
-import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.domain.abstracts.User;
+import com.netcracker.travel.domain.enumeration.Role;
 
 import javax.persistence.*;
 import java.sql.Date;

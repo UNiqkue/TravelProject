@@ -1,7 +1,7 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.entity.Customer;
+import com.netcracker.travel.domain.Customer;
 import org.springframework.stereotype.Component;
 
 @Component

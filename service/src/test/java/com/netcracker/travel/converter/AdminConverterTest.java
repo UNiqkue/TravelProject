@@ -1,7 +1,7 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.AdminDto;
-import com.netcracker.travel.entity.Admin;
+import com.netcracker.travel.domain.Admin;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

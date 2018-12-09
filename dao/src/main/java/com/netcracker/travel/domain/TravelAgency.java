@@ -1,6 +1,6 @@
-package com.netcracker.travel.entity;
+package com.netcracker.travel.domain;
 
-import com.netcracker.travel.entity.abstracts.BaseEntity;
+import com.netcracker.travel.domain.abstracts.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Objects;

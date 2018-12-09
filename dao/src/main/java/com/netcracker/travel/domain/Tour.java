@@ -1,7 +1,7 @@
-package com.netcracker.travel.entity;
+package com.netcracker.travel.domain;
 
-import com.netcracker.travel.entity.abstracts.BaseEntity;
-import com.netcracker.travel.entity.enumeration.TypeTour;
+import com.netcracker.travel.domain.abstracts.BaseEntity;
+import com.netcracker.travel.domain.enumeration.TypeTour;
 
 import javax.persistence.*;
 import java.sql.Date;

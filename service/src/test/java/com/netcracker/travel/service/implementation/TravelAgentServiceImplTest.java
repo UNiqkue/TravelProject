@@ -4,8 +4,8 @@ import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgentDto;
-import com.netcracker.travel.entity.Tour;
-import com.netcracker.travel.entity.enumeration.TypeTour;
+import com.netcracker.travel.domain.Tour;
+import com.netcracker.travel.domain.enumeration.TypeTour;
 import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.repository.TravelAgentRepository;
 import org.junit.Assert;
@@ -18,9 +18,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 

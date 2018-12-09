@@ -5,7 +5,7 @@ import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dto.*;
-import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.domain.enumeration.Role;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.PhoneNumberException;

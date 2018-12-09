@@ -1,7 +1,7 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.TravelAgencyDto;
-import com.netcracker.travel.entity.TravelAgency;
+import com.netcracker.travel.domain.TravelAgency;
 
 public class TravelAgencyConverter {
 

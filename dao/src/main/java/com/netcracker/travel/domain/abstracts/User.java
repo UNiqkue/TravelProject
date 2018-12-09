@@ -1,30 +1,42 @@
-package com.netcracker.travel.dto;
+package com.netcracker.travel.domain.abstracts;
 
 import com.netcracker.travel.domain.enumeration.Role;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
-public class TravelAgentDto {
+@Entity
+public abstract class User extends BaseEntity {
 
-    private UUID id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
+    @Column(name = "email")
     private String email;
+    @Column(name = "activation_code")
     private String activationCode;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
-    private String phoneNumber;
-    private String position;
-    private UUID travelAgencyId;
 
-    public UUID getId() {
-        return id;
+    public User() {
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public User(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.activationCode = activationCode;
+
     }
 
     public String getFirstName() {
@@ -75,30 +87,6 @@ public class TravelAgentDto {
         this.activationCode = activationCode;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public UUID getTravelAgencyId() {
-        return travelAgencyId;
-    }
-
-    public void setTravelAgencyId(UUID travelAgencyId) {
-        this.travelAgencyId = travelAgencyId;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -111,8 +99,8 @@ public class TravelAgentDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TravelAgentDto that = (TravelAgentDto) o;
-        return Objects.equals(getId(), that.getId());
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId());
     }
 
     @Override
@@ -123,17 +111,16 @@ public class TravelAgentDto {
 
     @Override
     public String toString() {
-        return "TravelAgentDto{" +
-                "id=" + id +
+        return "User{" +
+                "id='" + getId() + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", activationCode='" + activationCode + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", position='" + position + '\'' +
-                ", travelAgencyId='" + travelAgencyId + '\'' +
+                ", role=" + role +
                 '}';
     }
+
 }

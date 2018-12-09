@@ -1,4 +1,4 @@
-package com.netcracker.travel.entity.abstracts;
+package com.netcracker.travel.domain.abstracts;
 
 import javax.persistence.*;
 import java.util.UUID;

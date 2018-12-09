@@ -1,8 +1,8 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.TourDto;
-import com.netcracker.travel.entity.Tour;
-import com.netcracker.travel.entity.enumeration.TypeTour;
+import com.netcracker.travel.domain.Tour;
+import com.netcracker.travel.domain.enumeration.TypeTour;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

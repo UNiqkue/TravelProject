@@ -1,4 +1,4 @@
-package com.netcracker.travel.entity.enumeration;
+package com.netcracker.travel.domain.enumeration;
 
 public enum Role {
     ADMIN, GUEST, CUSTOMER, TRAVELAGENT;
