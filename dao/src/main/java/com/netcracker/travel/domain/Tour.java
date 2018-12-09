@@ -18,7 +18,7 @@ public class Tour extends BaseEntity {
     private String description;
     @Column(name = "price")
     private Double price;
-    @Column(name = "type")
+    @Column(name = "type",  columnDefinition = "ENUM('HOTELRESTTOUR', 'SHOPTOUR', 'EXCURSION', 'CRUISE', 'SANATORIUM')", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeTour type;
     @Column(name = "country")
