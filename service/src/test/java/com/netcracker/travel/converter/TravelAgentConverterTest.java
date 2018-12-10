@@ -50,7 +50,7 @@ public class TravelAgentConverterTest {
 
     @Test
     public void testConvertFromEntityToDto() {
-        when(travelAgent.getId()).thenReturn(id);
+        when(travelAgent.getId()).thenReturn(id.toString());
         when(travelAgent.getFirstName()).thenReturn(firstName);
         when(travelAgent.getLastName()).thenReturn(lastName);
         travelAgentDto = travelAgentConverter.convert(travelAgent);

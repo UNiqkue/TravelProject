@@ -28,12 +28,8 @@ public class Tour extends BaseEntity {
     private Date startDate;
     @Column(name = "end_date")
     private Date endDate;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "travel_agency", nullable = false)
     @Column(name = "travel_agency_id")
     private UUID travelAgencyId;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer", nullable = false)
     @Column(name = "customer_id")
     private UUID customerId;
     @Column(name = "free")
@@ -42,7 +38,7 @@ public class Tour extends BaseEntity {
     public Tour() {
     }
 
-    public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, UUID travelAgencyId, UUID customerId, boolean free) {
+    public Tour(String id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, UUID travelAgencyId, UUID customerId, boolean free) {
         super(id);
         this.name = name;
         this.description = description;

@@ -8,6 +8,7 @@ import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,14 +44,9 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
                 .collect(Collectors.toList());
     }
 
+    @Bean
     public List<TourDto> watchTours() {
-     /*   Iterable<Tour> tours = tourRepository.findAll();
-
-        List<TourDto> dtos = new ArrayList<>();
-        for (Tour tour : tours){
-            dtos.add(tourConverter.convert(tour));
-        }*/
-        return /*dtos*/ StreamSupport.stream(tourRepository.findAll().spliterator(), false)
+        return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }

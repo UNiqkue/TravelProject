@@ -4,12 +4,14 @@ import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.domain.Tour;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class TourConverter {
 
     public Tour convert(TourDto tourDto) {
         Tour tour = new Tour();
-        tour.setId(tourDto.getId());
+        tour.setId(tourDto.getId().toString());
         tour.setName(tourDto.getName());
         tour.setDescription(tourDto.getDescription());
         tour.setPrice(tourDto.getPrice());
@@ -27,7 +29,8 @@ public class TourConverter {
 
     public TourDto convert(Tour tour) {
         TourDto tourDto = new TourDto();
-        tourDto.setId(tour.getId());
+        tourDto.setId(UUID.fromString(tour.getId().replaceFirst("(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                "$1-$2-$3-$4-$5")));
         tourDto.setName(tour.getName());
         tourDto.setDescription(tour.getDescription());
         tourDto.setPrice(tour.getPrice());

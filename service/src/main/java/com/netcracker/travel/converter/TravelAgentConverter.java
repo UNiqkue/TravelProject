@@ -4,12 +4,14 @@ import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.domain.TravelAgent;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class TravelAgentConverter {
 
     public TravelAgent convert(TravelAgentDto travelAgentDto) {
         TravelAgent travelAgent = new TravelAgent();
-        travelAgent.setId(travelAgentDto.getId());
+        travelAgent.setId(travelAgentDto.getId().toString());
         travelAgent.setFirstName(travelAgentDto.getFirstName());
         travelAgent.setLastName(travelAgentDto.getLastName());
         travelAgent.setUsername(travelAgentDto.getUsername());
@@ -24,7 +26,8 @@ public class TravelAgentConverter {
 
     public TravelAgentDto convert(TravelAgent travelAgent) {
         TravelAgentDto travelAgentDto = new TravelAgentDto();
-        travelAgentDto.setId(travelAgent.getId());
+        travelAgentDto.setId(UUID.fromString(travelAgent.getId().replaceFirst("(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                "$1-$2-$3-$4-$5")));
         travelAgentDto.setFirstName(travelAgent.getFirstName());
         travelAgentDto.setLastName(travelAgent.getLastName());
         travelAgentDto.setUsername(travelAgent.getUsername());

@@ -50,7 +50,7 @@ public class CustomerConverterTest {
 
     @Test
     public void testConvertFromEntityToDto() {
-        when(customer.getId()).thenReturn(id);
+        when(customer.getId()).thenReturn(id.toString());
         when(customer.getFirstName()).thenReturn(firstName);
         when(customer.getLastName()).thenReturn(lastName);
         customerDto = customerConverter.convert(customer);

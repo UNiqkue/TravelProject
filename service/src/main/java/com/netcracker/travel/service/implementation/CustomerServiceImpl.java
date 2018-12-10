@@ -78,7 +78,8 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public TourDto buyTour(UUID id, UUID customerId) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(id));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString().replaceFirst( "([0-9a-fA-F]{8})-([0-9a-fA-F]{4})-([0-9a-fA-F]{4})-([0-9a-fA-F]{4})-([0-9a-fA-F]+)", "$1$2$3$4$5" )));
+
         if (customerId.equals(tourDto.getCustomerId()) || tourDto.isFree()) {
             tourDto.setCustomerId(customerId);
             tourDto.setFree(false);
@@ -92,7 +93,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public TourDto cancelTour(UUID tourId, UUID userId) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId.toString()));
         if (userId.equals(tourDto.getCustomerId())) {
             tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
             /**updateCancelTrip вместо save**/
@@ -137,7 +138,8 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public List<TourDto> searchTourByTravelAgency(String name) {
-        return tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
+        return tourRepository.findByTravelAgencyId(UUID.fromString(travelAgencyRepository.findByName(name).get(0).getId().replaceFirst("(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                "$1-$2-$3-$4-$5")))
                 .stream()
                 .map(travel -> tourConverter.convert(travel))
                 .collect(Collectors.toList());

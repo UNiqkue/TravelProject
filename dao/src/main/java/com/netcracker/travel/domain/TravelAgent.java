@@ -21,7 +21,7 @@ public class TravelAgent extends User {
     public TravelAgent() {
     }
 
-    public TravelAgent(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, UUID travelAgencyId) {
+    public TravelAgent(String id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, UUID travelAgencyId) {
         super(id, firstName, lastName, username, password, email, activationCode);
         this.phoneNumber = phoneNumber;
         this.position = position;

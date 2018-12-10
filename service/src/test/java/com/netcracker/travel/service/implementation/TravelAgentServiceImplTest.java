@@ -48,7 +48,7 @@ public class TravelAgentServiceImplTest {
     @Test
     public void testCreateTour() {
         tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
-        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId()));
+        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId().toString()));
         Assert.assertEquals(tourDto, actual);
         tourRepository.delete(tourDto.getId());
     }
@@ -80,7 +80,7 @@ public class TravelAgentServiceImplTest {
         tourRepository.save(tourConverter.convert(tourDto));
         tourDto.setPrice(10.0);
         tourRepository.save(tourConverter.convert(tourDto));
-        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId()));
+        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId().toString()));
         tourRepository.delete(tourDto.getId());
         Assert.assertEquals(tourDto, actual);
     }
@@ -90,7 +90,7 @@ public class TravelAgentServiceImplTest {
         tourRepository.save(tourConverter.convert(tourDto));
         tourDto.setDescription("New tour 5 person");
         tourRepository.save(tourConverter.convert(tourDto));
-        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId()));
+        TourDto actual = tourConverter.convert(tourRepository.getById(tourDto.getId().toString()));
         tourRepository.delete(tourDto.getId());
         Assert.assertEquals(tourDto, actual);
     }
@@ -98,7 +98,7 @@ public class TravelAgentServiceImplTest {
     @Test
     public void testDeleteTour() {
         UUID id = UUID.fromString("2be61a8a-3fa7-4f2d-a592-054de4f010dc");
-        Tour tour = tourRepository.getById(id);
+        Tour tour = tourRepository.getById(id.toString());
         travelAgentService.deleteTour(id);
         verify(tourRepository, times(1)).delete(id);
         tourRepository.save(tour);

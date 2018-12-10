@@ -49,7 +49,7 @@ public class TravelAgencyConverterTest {
 
     @Test
     public void testConvertFromEntityToDto() {
-        when(travelAgency.getId()).thenReturn(id);
+        when(travelAgency.getId()).thenReturn(id.toString());
         when(travelAgency.getName()).thenReturn(name);
         when(travelAgency.getCountTour()).thenReturn(countTour);
         travelAgencyDto = travelAgencyConverter.convert(travelAgency);

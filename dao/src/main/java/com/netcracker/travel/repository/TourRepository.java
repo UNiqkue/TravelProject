@@ -15,7 +15,7 @@ public interface TourRepository extends CrudRepository<Tour, UUID> {
     List<Tour> findByCountry(String country);
     List<Tour> findByStartDate(Date startDate);
     List<Tour> findByEndDate(Date endDate);
-    Tour getById(UUID id);
+    Tour getById(String id);
     List<Tour> findByTravelAgencyId(UUID id);
     List<Tour> findAllByCustomerId(UUID id);
 }

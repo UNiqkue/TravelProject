@@ -17,21 +17,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
     private AdminRepository adminRepository;
-    @Autowired
     private TravelAgentRepository travelAgentRepository;
-
-    @Autowired
     private AdminConverter adminConverter;
-    @Autowired
     private CustomerConverter customerConverter;
-    @Autowired
     private TravelAgentConverter travelAgentConverter;
 
-    public AuthenticationServiceImpl() {
+    public AuthenticationServiceImpl(){
+    }
+
+    @Autowired
+    public AuthenticationServiceImpl(CustomerRepository customerRepository, AdminRepository adminRepository, TravelAgentRepository travelAgentRepository, AdminConverter adminConverter, CustomerConverter customerConverter, TravelAgentConverter travelAgentConverter) {
+        this.customerRepository = customerRepository;
+        this.adminRepository = adminRepository;
+        this.travelAgentRepository = travelAgentRepository;
+        this.adminConverter = adminConverter;
+        this.customerConverter = customerConverter;
+        this.travelAgentConverter = travelAgentConverter;
     }
 
     public boolean loginCustomer(LoginRequestDto loginRequestDto){

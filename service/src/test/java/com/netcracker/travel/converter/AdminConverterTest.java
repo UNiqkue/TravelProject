@@ -50,7 +50,7 @@ public class AdminConverterTest {
 
     @Test
     public void testConvertFromEntityToDto() {
-        when(admin.getId()).thenReturn(id);
+        when(admin.getId()).thenReturn(id.toString());
         when(admin.getFirstName()).thenReturn(firstName);
         when(admin.getLastName()).thenReturn(lastName);
         adminDto = adminConverter.convert(admin);

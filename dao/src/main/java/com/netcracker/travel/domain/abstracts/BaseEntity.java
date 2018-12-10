@@ -1,28 +1,31 @@
 package com.netcracker.travel.domain.abstracts;
 
-import javax.persistence.*;
-import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+import javax.persistence.*;
+
+@Entity(name = "uuidIdentifier")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class BaseEntity {
 
-    private UUID id;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(columnDefinition = "CHAR(32)")
+    private String id;
 
     public BaseEntity() {
     }
 
-    public BaseEntity(UUID id) {
+    public BaseEntity(String id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

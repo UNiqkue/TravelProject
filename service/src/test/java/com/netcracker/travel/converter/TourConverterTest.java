@@ -53,7 +53,7 @@ public class TourConverterTest {
 
     @Test
     public void testConvertFromEntityToDto() {
-        when(tour.getId()).thenReturn(id);
+        when(tour.getId()).thenReturn(id.toString());
         when(tour.getName()).thenReturn(name);
         when(tour.getPrice()).thenReturn(price);
         when(tour.getType()).thenReturn(typeTour);

@@ -7,9 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-//@ComponentScan("com.netcracker.travel")
-//@EntityScan("com.netcracker.travel.domain")
-//@EnableJpaRepositories(basePackages = "com.netcracker.travel.repository", entityManagerFactoryRef = "entityManagerFactory")
 public class Main implements CommandLineRunner {
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
 
