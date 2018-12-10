@@ -21,6 +21,7 @@ public class Customer extends User {
     private String cardNumber;
     @Column(name = "passport_info")
     private String passportInfo;
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Tour> tours;
 

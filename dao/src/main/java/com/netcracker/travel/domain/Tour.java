@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tour")
-@Embeddable
 public class Tour extends BaseEntity {
 
     @Column(name = "name")
@@ -28,13 +27,16 @@ public class Tour extends BaseEntity {
     private Date startDate;
     @Column(name = "end_date")
     private Date endDate;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "travel_agency_id", nullable = false)
     @Column(name = "travel_agency_id")
     private TravelAgency travelAgency;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "customer_id")
     private Customer customer;
+
     @Column(name = "free")
     private boolean free;
 
