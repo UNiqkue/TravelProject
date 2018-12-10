@@ -1,5 +1,9 @@
 package com.netcracker.travel.dto;
 
+import com.netcracker.travel.domain.Tour;
+import com.netcracker.travel.domain.TravelAgent;
+
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -7,8 +11,8 @@ public class TravelAgencyDto {
 
     private UUID id;
     private String name;
-    private Integer countTour;
-    private Integer countTravelAgent;
+    private List<Tour> tours;
+    private List<TravelAgent> travelAgents;
 
     public TravelAgencyDto() {
     }
@@ -29,20 +33,20 @@ public class TravelAgencyDto {
         this.name = name;
     }
 
-    public Integer getCountTour() {
-        return countTour;
+    public List<Tour> getTours() {
+        return tours;
     }
 
-    public void setCountTour(Integer countTour) {
-        this.countTour = countTour;
+    public void setTours(List<Tour> tours) {
+        this.tours = tours;
     }
 
-    public Integer getCountTravelAgent() {
-        return countTravelAgent;
+    public List<TravelAgent> getTravelAgents() {
+        return travelAgents;
     }
 
-    public void setCountTravelAgent(Integer countTravelAgent) {
-        this.countTravelAgent = countTravelAgent;
+    public void setTravelAgents(List<TravelAgent> travelAgents) {
+        this.travelAgents = travelAgents;
     }
 
     @Override
@@ -63,9 +67,9 @@ public class TravelAgencyDto {
     public String toString() {
         return "TravelAgencyDto{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", countTour=" + countTour +
-                ", countTravelAgent=" + countTravelAgent +
+                "name='" + name + '\'' +
+                ", tours=" + tours +
+                ", travelAgents=" + travelAgents +
                 '}';
     }
 }

@@ -45,7 +45,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     public List<TourDto> watchTours() {
         String clientId = "00000000-0000-0000-0000-000000000000";
         return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
-                .filter(tour -> !(tour.getCustomerId().toString().equals(clientId)))
+                .filter(tour -> !(tour.getCustomer().getId().toString().equals(clientId)))
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }

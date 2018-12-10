@@ -29,20 +29,19 @@ public class Tour extends BaseEntity {
     @Column(name = "end_date")
     private Date endDate;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "travel_agency", nullable = false)
+    @JoinColumn(name = "travel_agency_id", nullable = false)
     @Column(name = "travel_agency_id")
-    private UUID travelAgencyId;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer", nullable = false)
-    @Column(name = "customer_id")
-    private UUID customerId;
+    private TravelAgency travelAgency;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
     @Column(name = "free")
     private boolean free;
 
     public Tour() {
     }
 
-    public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, UUID travelAgencyId, UUID customerId, boolean free) {
+    public Tour(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, TravelAgency travelAgency, Customer customer, boolean free) {
         super(id);
         this.name = name;
         this.description = description;
@@ -51,8 +50,8 @@ public class Tour extends BaseEntity {
         this.country = country;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.travelAgencyId = travelAgencyId;
-        this.customerId = customerId;
+        this.travelAgency = travelAgency;
+        this.customer = customer;
         this.free = free;
     }
 
@@ -112,20 +111,20 @@ public class Tour extends BaseEntity {
         this.price = price;
     }
 
-    public UUID getTravelAgencyId() {
-        return travelAgencyId;
+    public TravelAgency getTravelAgency() {
+        return travelAgency;
     }
 
-    public void setTravelAgencyId(UUID travelAgencyId) {
-        this.travelAgencyId = travelAgencyId;
+    public void setTravelAgency(TravelAgency travelAgency) {
+        this.travelAgency = travelAgency;
     }
 
-    public UUID getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public boolean isFree() {
@@ -161,8 +160,8 @@ public class Tour extends BaseEntity {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", travelAgencyId=" + travelAgencyId +
-                ", customerId=" + customerId +
+                ", travelAgencyId=" + travelAgency +
+                ", customer=" + customer +
                 ", free=" + free +
                 '}';
     }

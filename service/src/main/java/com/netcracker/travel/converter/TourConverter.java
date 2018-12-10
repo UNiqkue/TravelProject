@@ -17,10 +17,10 @@ public class TourConverter {
         tour.setCountry(tourDto.getCountry());
         tour.setStartDate(tourDto.getStartDate());
         tour.setEndDate(tourDto.getEndDate());
-        tour.setTravelAgencyId(tourDto.getTravelAgencyId());
+        tour.setTravelAgency(tourDto.getTravelAgency());
         tour.setFree(tourDto.isFree());
-        if (tour.isFree() == false) {
-            tour.setCustomerId(tourDto.getCustomerId());
+        if (!tour.isFree()) {
+            tour.setCustomer(tourDto.getCustomer());
         }
         return tour;
     }
@@ -35,10 +35,10 @@ public class TourConverter {
         tourDto.setCountry(tour.getCountry());
         tourDto.setStartDate(tour.getStartDate());
         tourDto.setEndDate(tour.getEndDate());
-        tourDto.setTravelAgencyId(tour.getTravelAgencyId());
+        tourDto.setTravelAgency(tour.getTravelAgency());
         tourDto.setFree(tour.isFree());
-        if (tourDto.isFree() == false) {
-            tourDto.setCustomerId(tour.getCustomerId());
+        if (!tourDto.isFree()) {
+            tourDto.setCustomer(tour.getCustomer());
         }
         return tourDto;
     }

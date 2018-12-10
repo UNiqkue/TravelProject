@@ -2,22 +2,18 @@ package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
+import com.netcracker.travel.domain.Tour;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgentDto;
-import com.netcracker.travel.domain.Tour;
-import com.netcracker.travel.domain.enumeration.TypeTour;
 import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.repository.TravelAgentRepository;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.sql.Date;
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
@@ -36,14 +32,14 @@ public class TravelAgentServiceImplTest {
     @InjectMocks
     private TravelAgentServiceImpl travelAgentService;
 
-    @Before
+  /*  @Before
     public void init() {
         MockitoAnnotations.initMocks(TravelAgentServiceImpl.class);
         tourConverter = new TourConverter();
         travelAgentConverter = new TravelAgentConverter();
         tourDto = new TourDto(UUID.randomUUID(), "Tour by sea", "Dinkevich", 100.0, TypeTour.CRUISE, "Tailand", Date.valueOf("2000-10-10"), Date.valueOf("2000-10-10"), UUID.fromString("65cd0390-576b-459c-818d-6d244661ff4a"), UUID.fromString("91ccd7a5-6446-4e8e-bfc6-010a66e12228"), true);
 
-    }
+    }*/
 
     @Test
     public void testCreateTour() {

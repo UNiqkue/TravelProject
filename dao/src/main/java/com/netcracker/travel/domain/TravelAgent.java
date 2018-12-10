@@ -15,17 +15,18 @@ public class TravelAgent extends User {
     private String phoneNumber;
     @Column(name = "position")
     private String position;
-    @Column(name = "travel_agency_id")
-    private UUID travelAgencyId;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "travel_agency_id")
+    private TravelAgency travelAgency;
 
     public TravelAgent() {
     }
 
-    public TravelAgent(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, UUID travelAgencyId) {
+    public TravelAgent(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, TravelAgency travelAgency) {
         super(id, firstName, lastName, username, password, email, activationCode);
         this.phoneNumber = phoneNumber;
         this.position = position;
-        this.travelAgencyId = travelAgencyId;
+        this.travelAgency = travelAgency;
     }
 
     @Override
@@ -49,12 +50,12 @@ public class TravelAgent extends User {
         this.position = position;
     }
 
-    public UUID getTravelAgencyId() {
-        return travelAgencyId;
+    public TravelAgency getTravelAgency() {
+        return travelAgency;
     }
 
-    public void setTravelAgencyId(UUID travelAgencyId) {
-        this.travelAgencyId = travelAgencyId;
+    public void setTravelAgency(TravelAgency travelAgency) {
+        this.travelAgency = travelAgency;
     }
 
     @Override
@@ -85,7 +86,7 @@ public class TravelAgent extends User {
                 ", role=" + getRole() +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
-                ", travelAgencyId=" + travelAgencyId +
+                ", travelAgency=" + travelAgency +
                 '}';
     }
 

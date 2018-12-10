@@ -1,11 +1,8 @@
 package com.netcracker.travel.converter;
 
-import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.domain.TravelAgency;
-import org.junit.After;
-import org.junit.Assert;
+import com.netcracker.travel.dto.TravelAgencyDto;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -14,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.UUID;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TravelAgencyConverterTest {
@@ -34,7 +30,7 @@ public class TravelAgencyConverterTest {
         travelAgency = mock(TravelAgency.class);
         travelAgencyDto = mock(TravelAgencyDto.class);
     }
-
+/*
     @Test
     public void testConvertFromDtoToEntity() {
         when(travelAgencyDto.getId()).thenReturn(id);
@@ -63,5 +59,5 @@ public class TravelAgencyConverterTest {
     public void tearDown() {
         travelAgency = null;
         travelAgencyDto = null;
-    }
+    }*/
 }

@@ -3,6 +3,7 @@ package com.netcracker.travel.domain;
 import com.netcracker.travel.domain.abstracts.BaseEntity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,19 +13,35 @@ public class TravelAgency extends BaseEntity {
 
     @Column(name = "name")
     private String name;
-    @Column(name = "count_tour")
-    private Integer countTour;
-    @Column(name = "count_travel_agent")
-    private Integer countTravelAgent;
+    @OneToMany(mappedBy = "travel_agency", fetch = FetchType.EAGER)
+    private List<Tour> tours;
+    @OneToMany(mappedBy = "travel_agency", fetch = FetchType.EAGER)
+    private List<TravelAgent> travelAgents;
 
     public TravelAgency() {
     }
 
-    public TravelAgency(UUID id, String name, Integer countTour, Integer countTravelAgent) {
+    public TravelAgency(UUID id, String name, List<Tour> tours, List<TravelAgent> travelAgents) {
         super(id);
         this.name = name;
-        this.countTour = countTour;
-        this.countTravelAgent = countTravelAgent;
+        this.tours = tours;
+        this.travelAgents = travelAgents;
+    }
+
+    public List<Tour> getTours() {
+        return tours;
+    }
+
+    public void setTours(List<Tour> tours) {
+        this.tours = tours;
+    }
+
+    public List<TravelAgent> getTravelAgents() {
+        return travelAgents;
+    }
+
+    public void setTravelAgents(List<TravelAgent> travelAgents) {
+        this.travelAgents = travelAgents;
     }
 
     public String getName() {
@@ -35,21 +52,6 @@ public class TravelAgency extends BaseEntity {
         this.name = name;
     }
 
-    public Integer getCountTour() {
-        return countTour;
-    }
-
-    public void setCountTour(Integer countTour) {
-        this.countTour = countTour;
-    }
-
-    public Integer getCountTravelAgent() {
-        return countTravelAgent;
-    }
-
-    public void setCountTravelAgent(Integer countTravelAgent) {
-        this.countTravelAgent = countTravelAgent;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -69,9 +71,8 @@ public class TravelAgency extends BaseEntity {
     public String toString() {
         return "TravelAgency{" +
                 "name='" + name + '\'' +
-                ", countTour=" + countTour +
-                ", countTravelAgent=" + countTravelAgent +
+                ", tours=" + tours +
+                ", travelAgents=" + travelAgents +
                 '}';
     }
-
 }

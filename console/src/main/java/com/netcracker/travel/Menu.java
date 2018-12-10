@@ -252,7 +252,7 @@ public class Menu {
                         exitcreate = true;
                     }
                 }
-                tourDto.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
+                tourDto.setTravelAgency(travelAgentDto.getTravelAgency());
                 tourDto.setFree(true);
             } catch (IOException e) {
                 System.out.println("No such type");

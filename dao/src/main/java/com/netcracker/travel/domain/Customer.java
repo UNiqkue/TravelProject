@@ -5,6 +5,7 @@ import com.netcracker.travel.domain.enumeration.Role;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,6 +21,9 @@ public class Customer extends User {
     private String cardNumber;
     @Column(name = "passport_info")
     private String passportInfo;
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    private List<Tour> tours;
+
 
     public Customer() {
     }
@@ -67,6 +71,14 @@ public class Customer extends User {
 
     public void setPassportInfo(String passportInfo) {
         this.passportInfo = passportInfo;
+    }
+
+    public List<Tour> getTours() {
+        return tours;
+    }
+
+    public void setTours(List<Tour> tours) {
+        this.tours = tours;
     }
 
     @Override

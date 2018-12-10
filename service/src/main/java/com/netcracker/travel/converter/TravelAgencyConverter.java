@@ -9,8 +9,8 @@ public class TravelAgencyConverter {
         TravelAgency travelAgency = new TravelAgency();
         travelAgency.setId(travelAgencyDto.getId());
         travelAgency.setName(travelAgencyDto.getName());
-        travelAgency.setCountTour(travelAgencyDto.getCountTour());
-        travelAgency.setCountTravelAgent(travelAgencyDto.getCountTravelAgent());
+        travelAgency.setTours(travelAgencyDto.getTours());
+        travelAgency.setTravelAgents(travelAgencyDto.getTravelAgents());
         return travelAgency;
     }
 
@@ -18,8 +18,8 @@ public class TravelAgencyConverter {
         TravelAgencyDto travelAgencyDto = new TravelAgencyDto();
         travelAgencyDto.setId(travelAgency.getId());
         travelAgencyDto.setName(travelAgency.getName());
-        travelAgencyDto.setCountTour(travelAgency.getCountTour());
-        travelAgencyDto.setCountTravelAgent(travelAgency.getCountTravelAgent());
+        travelAgencyDto.setTours(travelAgency.getTours());
+        travelAgencyDto.setTravelAgents(travelAgency.getTravelAgents());
         return travelAgencyDto;
     }
 

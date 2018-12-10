@@ -1,5 +1,6 @@
 package com.netcracker.travel.dto;
 
+import com.netcracker.travel.domain.TravelAgency;
 import com.netcracker.travel.domain.enumeration.Role;
 
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class TravelAgentDto {
     private Role role;
     private String phoneNumber;
     private String position;
-    private UUID travelAgencyId;
+    private TravelAgency travelAgency;
 
     public UUID getId() {
         return id;
@@ -91,12 +92,12 @@ public class TravelAgentDto {
         this.position = position;
     }
 
-    public UUID getTravelAgencyId() {
-        return travelAgencyId;
+    public TravelAgency getTravelAgency() {
+        return travelAgency;
     }
 
-    public void setTravelAgencyId(UUID travelAgencyId) {
-        this.travelAgencyId = travelAgencyId;
+    public void setTravelAgency(TravelAgency travelAgency) {
+        this.travelAgency = travelAgency;
     }
 
     public Role getRole() {
@@ -133,7 +134,7 @@ public class TravelAgentDto {
                 ", activationCode='" + activationCode + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
-                ", travelAgencyId='" + travelAgencyId + '\'' +
+                ", travelAgencyId='" + travelAgency + '\'' +
                 '}';
     }
 }

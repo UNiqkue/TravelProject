@@ -18,7 +18,7 @@ public class TravelAgentConverter {
         travelAgent.setActivationCode(travelAgentDto.getActivationCode());
         travelAgent.setPhoneNumber(travelAgentDto.getPhoneNumber());
         travelAgent.setPosition(travelAgentDto.getPosition());
-        travelAgent.setTravelAgencyId(travelAgentDto.getTravelAgencyId());
+        travelAgent.setTravelAgency(travelAgentDto.getTravelAgency());
         return travelAgent;
     }
 
@@ -33,7 +33,7 @@ public class TravelAgentConverter {
         travelAgentDto.setActivationCode(travelAgent.getActivationCode());
         travelAgentDto.setPhoneNumber(travelAgent.getPhoneNumber());
         travelAgentDto.setPosition(travelAgent.getPosition());
-        travelAgentDto.setTravelAgencyId(travelAgent.getTravelAgencyId());
+        travelAgentDto.setTravelAgency(travelAgent.getTravelAgency());
         return travelAgentDto;
     }
 }

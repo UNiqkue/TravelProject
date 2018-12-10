@@ -1,5 +1,7 @@
 package com.netcracker.travel.dto;
 
+import com.netcracker.travel.domain.Customer;
+import com.netcracker.travel.domain.TravelAgency;
 import com.netcracker.travel.domain.enumeration.TypeTour;
 
 import java.sql.Date;
@@ -16,14 +18,14 @@ public class TourDto {
     private String country;
     private Date startDate;
     private Date endDate;
-    private UUID travelAgencyId;
-    private UUID customerId;
+    private TravelAgency travelAgency;
+    private Customer customer;
     private boolean free;
 
     public TourDto() {
     }
 
-    public TourDto(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, UUID travelAgencyId, UUID customerId, boolean free) {
+    public TourDto(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, TravelAgency travelAgency, Customer customer, boolean free) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -32,8 +34,8 @@ public class TourDto {
         this.country = country;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.travelAgencyId = travelAgencyId;
-        this.customerId = customerId;
+        this.travelAgency = travelAgency;
+        this.customer = customer;
         this.free = free;
     }
 
@@ -101,20 +103,20 @@ public class TourDto {
         this.endDate = endDate;
     }
 
-    public UUID getTravelAgencyId() {
-        return travelAgencyId;
+    public TravelAgency getTravelAgency() {
+        return travelAgency;
     }
 
-    public void setTravelAgencyId(UUID travelAgencyId) {
-        this.travelAgencyId = travelAgencyId;
+    public void setTravelAgency(TravelAgency travelAgency) {
+        this.travelAgency = travelAgency;
     }
 
-    public UUID getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public boolean isFree() {
@@ -150,8 +152,8 @@ public class TourDto {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", travelAgencyId='" + travelAgencyId + '\'' +
-                ", customerId=" + customerId +
+                ", travelAgencyId='" + travelAgency + '\'' +
+                ", customerId=" + customer +
                 ", free=" + free +
                 '}';
     }

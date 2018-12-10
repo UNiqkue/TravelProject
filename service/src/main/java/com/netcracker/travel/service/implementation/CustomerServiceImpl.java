@@ -79,8 +79,8 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     public TourDto buyTour(UUID id, UUID customerId) {
         TourDto tourDto = tourConverter.convert(tourRepository.getById(id));
-        if (customerId.equals(tourDto.getCustomerId()) || tourDto.isFree()) {
-            tourDto.setCustomerId(customerId);
+        if (customerId.equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
+            tourDto.setCustomer(customerRepository.findById(customerId));
             tourDto.setFree(false);
             tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
             /**update вместо save**/
@@ -93,7 +93,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
 
     public TourDto cancelTour(UUID tourId, UUID userId) {
         TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId));
-        if (userId.equals(tourDto.getCustomerId())) {
+        if (userId.equals(tourDto.getCustomer().getId())) {
             tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
             /**updateCancelTrip вместо save**/
         } else {
