@@ -5,7 +5,6 @@ import com.netcracker.travel.domain.enumeration.Role;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.UUID;
 
 @Entity
 @Table(name = "admin")
@@ -14,7 +13,7 @@ public class Admin extends User {
     public Admin() {
     }
 
-    public Admin(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode) {
+    public Admin(String id, String firstName, String lastName, String username, String password, String email, String activationCode) {
         super(id, firstName, lastName, username, password, email, activationCode);
     }
 

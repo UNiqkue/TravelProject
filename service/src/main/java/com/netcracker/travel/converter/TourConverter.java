@@ -1,7 +1,7 @@
 package com.netcracker.travel.converter;
 
-import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.domain.Tour;
+import com.netcracker.travel.dto.TourDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,10 +17,10 @@ public class TourConverter {
         tour.setCountry(tourDto.getCountry());
         tour.setStartDate(tourDto.getStartDate());
         tour.setEndDate(tourDto.getEndDate());
-        tour.setTravelAgency(tourDto.getTravelAgency());
+     //   tour.setTravelAgency(tourDto.getTravelAgency());
         tour.setFree(tourDto.isFree());
         if (!tour.isFree()) {
-            tour.setCustomer(tourDto.getCustomer());
+          //  tour.setCustomer(tourDto.getCustomer());
         }
         return tour;
     }
@@ -35,10 +35,10 @@ public class TourConverter {
         tourDto.setCountry(tour.getCountry());
         tourDto.setStartDate(tour.getStartDate());
         tourDto.setEndDate(tour.getEndDate());
-        tourDto.setTravelAgency(tour.getTravelAgency());
+     //   tourDto.setTravelAgency(tour.getTravelAgency());
         tourDto.setFree(tour.isFree());
         if (!tourDto.isFree()) {
-            tourDto.setCustomer(tour.getCustomer());
+          //  tourDto.setCustomer(tour.getCustomer());
         }
         return tourDto;
     }

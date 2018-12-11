@@ -2,11 +2,11 @@ package com.netcracker.travel.domain.abstracts;
 
 import com.netcracker.travel.domain.enumeration.Role;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Objects;
-import java.util.UUID;
 
-@Entity
 public abstract class User extends BaseEntity {
 
     @Column(name = "first_name")
@@ -28,7 +28,7 @@ public abstract class User extends BaseEntity {
     public User() {
     }
 
-    public User(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode) {
+    public User(String id, String firstName, String lastName, String username, String password, String email, String activationCode) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;

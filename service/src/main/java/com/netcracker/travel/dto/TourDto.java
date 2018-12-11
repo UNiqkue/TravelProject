@@ -6,11 +6,10 @@ import com.netcracker.travel.domain.enumeration.TypeTour;
 
 import java.sql.Date;
 import java.util.Objects;
-import java.util.UUID;
 
 public class TourDto {
 
-    private UUID id;
+    private String id;
     private String name;
     private String description;
     private Double price;
@@ -25,7 +24,7 @@ public class TourDto {
     public TourDto() {
     }
 
-    public TourDto(UUID id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, TravelAgency travelAgency, Customer customer, boolean free) {
+    public TourDto(String id, String name, String description, Double price, TypeTour type, String country, Date startDate, Date endDate, TravelAgency travelAgency, Customer customer, boolean free) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -39,11 +38,11 @@ public class TourDto {
         this.free = free;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

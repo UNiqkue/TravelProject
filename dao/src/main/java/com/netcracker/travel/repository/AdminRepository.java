@@ -4,9 +4,7 @@ import com.netcracker.travel.domain.Admin;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface AdminRepository extends CrudRepository<Admin, UUID> {
-    Admin findByUsername(String username);
+public interface AdminRepository extends CrudRepository<Admin, String> {
+ //   Admin findByUsername(String username);
 }

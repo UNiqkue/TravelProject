@@ -4,12 +4,14 @@ import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.domain.Customer;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class CustomerConverter {
 
     public Customer convert(CustomerDto customerDto) {
         Customer customer = new Customer();
-        customer.setId(customerDto.getId());
+        customer.setId(customerDto.getId().toString());
         customer.setFirstName(customerDto.getFirstName());
         customer.setLastName(customerDto.getLastName());
         customer.setUsername(customerDto.getUsername());
@@ -25,7 +27,7 @@ public class CustomerConverter {
 
     public CustomerDto convert(Customer customer) {
         CustomerDto customerDto = new CustomerDto();
-        customerDto.setId(customer.getId());
+        customerDto.setId(UUID.fromString(customer.getId()));
         customerDto.setFirstName(customer.getFirstName());
         customerDto.setLastName(customer.getLastName());
         customerDto.setUsername(customer.getUsername());

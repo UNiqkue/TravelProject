@@ -34,7 +34,7 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
     }
 
     public AdminDto getByUsername(String username) {
-        return adminConverter.convert(adminRepository.findByUsername(username));
+        return/* adminConverter.convert(adminRepository.findByUsername(username))*/ null;
     }
 
     public List<AdminDto> getAll() {

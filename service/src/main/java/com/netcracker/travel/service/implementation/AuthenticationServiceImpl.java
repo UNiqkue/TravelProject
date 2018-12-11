@@ -3,10 +3,7 @@ package com.netcracker.travel.service.implementation;
 import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
-import com.netcracker.travel.dto.AdminDto;
-import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TravelAgentRepository;
@@ -33,40 +30,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public AuthenticationServiceImpl() {
     }
-
     public boolean loginCustomer(LoginRequestDto loginRequestDto){
-        try {
+       /* try {
             CustomerDto customerDto = customerConverter.convert(customerRepository.findByUsername(loginRequestDto.getUsername()));
             if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
                 return true;
             }
         } catch (NullPointerException e) {
             printErrorLogin();
-        }
+        }*/
         return false;
     }
 
     public boolean loginAdmin(LoginRequestDto loginRequestDto){
-        try {
+       /* try {
             AdminDto adminDto = adminConverter.convert(adminRepository.findByUsername(loginRequestDto.getUsername()));
             if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
                 return true;
             }
         } catch (NullPointerException e) {
             printErrorLogin();
-        }
+        }*/
         return false;
     }
 
     public boolean loginTravelAgent(LoginRequestDto loginRequestDto){
-        try {
+      /*  try {
             TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentRepository.findByUsername(loginRequestDto.getUsername()));
             if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
                 return true;
             }
         } catch (NullPointerException e) {
             printErrorLogin();
-        }
+        }*/
         return false;
     }
 

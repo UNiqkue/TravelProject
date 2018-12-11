@@ -32,7 +32,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     }
 
     public TourDto createTour(TourDto tourDto) {
-        tourDto.setId(UUID.randomUUID());
+       // tourDto.setId(UUID.randomUUID());
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     }
 
@@ -45,7 +45,7 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     public List<TourDto> watchTours() {
         String clientId = "00000000-0000-0000-0000-000000000000";
         return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
-                .filter(tour -> !(tour.getCustomer().getId().toString().equals(clientId)))
+                .filter(tour -> !(tour/*.getCustomer()*/.getId().toString().equals(clientId)))
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
@@ -57,22 +57,22 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
     }
 
     public TravelAgentDto getByUsername(String username) {
-        return travelAgentConverter.convert(travelAgentRepository.findByUsername(username));
+        return /*travelAgentConverter.convert(travelAgentRepository.findByUsername(username))*/ null;
     }
 
     public TourDto makeDiscount(UUID id, Double price) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(id));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         tourDto.setPrice(price);
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     } /**updatePrice**/
 
     public TourDto editTour(UUID id, String description) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(id));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         tourDto.setDescription(description);
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     }/**updateDescription**/
 
     public void deleteTour(UUID id) {
-        tourRepository.delete(id);
+        tourRepository.delete(id.toString());
     }
 }

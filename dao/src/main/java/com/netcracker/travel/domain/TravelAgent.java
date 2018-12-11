@@ -3,9 +3,10 @@ package com.netcracker.travel.domain;
 import com.netcracker.travel.domain.abstracts.User;
 import com.netcracker.travel.domain.enumeration.Role;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "travel_agent")
@@ -15,18 +16,17 @@ public class TravelAgent extends User {
     private String phoneNumber;
     @Column(name = "position")
     private String position;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "travel_agency_id")
-    private TravelAgency travelAgency;
+
+   // private TravelAgency travelAgency;
 
     public TravelAgent() {
     }
 
-    public TravelAgent(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, TravelAgency travelAgency) {
+    public TravelAgent(String id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, String position, TravelAgency travelAgency) {
         super(id, firstName, lastName, username, password, email, activationCode);
         this.phoneNumber = phoneNumber;
         this.position = position;
-        this.travelAgency = travelAgency;
+      //  this.travelAgency = travelAgency;
     }
 
     @Override
@@ -50,13 +50,16 @@ public class TravelAgent extends User {
         this.position = position;
     }
 
+ /*   @ManyToOne(*//*fetch = FetchType.EAGER*//*)
+    @JoinColumn(name = "travel_agency_id")
+   // @Access(AccessType.PROPERTY)
     public TravelAgency getTravelAgency() {
         return travelAgency;
     }
 
     public void setTravelAgency(TravelAgency travelAgency) {
         this.travelAgency = travelAgency;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -86,7 +89,7 @@ public class TravelAgent extends User {
                 ", role=" + getRole() +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
-                ", travelAgency=" + travelAgency +
+              //  ", travelAgency=" + travelAgency +
                 '}';
     }
 

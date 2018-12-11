@@ -6,16 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface TourRepository extends CrudRepository<Tour, UUID> {
+public interface TourRepository extends CrudRepository<Tour, String> {
     List<Tour> findByName(String name);
     List<Tour> findByType(String type);
     List<Tour> findByCountry(String country);
     List<Tour> findByStartDate(Date startDate);
     List<Tour> findByEndDate(Date endDate);
-    Tour getById(UUID id);
-    List<Tour> findByTravelAgencyId(UUID id);
-    List<Tour> findAllByCustomerId(UUID id);
+    Tour getById(String id);
+  /*  List<Tour> findByTravelAgencyId(UUID id);
+    List<Tour> findAllByCustomerId(UUID id);*/
 }

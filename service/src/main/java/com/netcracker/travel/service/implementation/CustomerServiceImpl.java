@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public CustomerDto getByUsername(String username) {
-        return customerConverter.convert(customerRepository.findByUsername(username));
+        return /*customerConverter.convert(customerRepository.findByUsername(username))*/ null;
     }
 
     public List<CustomerDto> getAll() {
@@ -71,16 +71,16 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
      * viewOrderedTours
      **/
     public List<TourDto> watchTours(UUID id) {
-        return tourRepository.findAllByCustomerId(id)
+        return/* tourRepository.findAllByCustomerId(id)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/ null;
     }
 
     public TourDto buyTour(UUID id, UUID customerId) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(id));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         if (customerId.equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
-            tourDto.setCustomer(customerRepository.findById(customerId));
+            tourDto.setCustomer(customerRepository.findById(customerId.toString()));
             tourDto.setFree(false);
             tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
             /**update вместо save**/
@@ -92,7 +92,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public TourDto cancelTour(UUID tourId, UUID userId) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId.toString()));
         if (userId.equals(tourDto.getCustomer().getId())) {
             tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
             /**updateCancelTrip вместо save**/
@@ -137,10 +137,10 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public List<TourDto> searchTourByTravelAgency(String name) {
-        return tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
+        return/* tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
                 .stream()
                 .map(travel -> tourConverter.convert(travel))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/ null;
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {

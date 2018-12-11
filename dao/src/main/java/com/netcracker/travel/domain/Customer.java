@@ -3,11 +3,11 @@ package com.netcracker.travel.domain;
 import com.netcracker.travel.domain.abstracts.User;
 import com.netcracker.travel.domain.enumeration.Role;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "customer")
@@ -22,14 +22,14 @@ public class Customer extends User {
     @Column(name = "passport_info")
     private String passportInfo;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private List<Tour> tours;
+  //  @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+ //   private List<Tour> tours;
 
 
     public Customer() {
     }
 
-    public Customer(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
+    public Customer(String id, String firstName, String lastName, String username, String password, String email, String activationCode, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
         super(id, firstName, lastName, username, password, email, activationCode);
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
@@ -74,13 +74,13 @@ public class Customer extends User {
         this.passportInfo = passportInfo;
     }
 
-    public List<Tour> getTours() {
+   /* public List<Tour> getTours() {
         return tours;
     }
 
     public void setTours(List<Tour> tours) {
         this.tours = tours;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
