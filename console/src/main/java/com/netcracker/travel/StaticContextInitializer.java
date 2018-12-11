@@ -13,16 +13,20 @@ import javax.annotation.PostConstruct;
 @Component
 public class StaticContextInitializer {
 
+    private final AdminServiceImpl adminService;
+    private final CustomerServiceImpl customerService;
+    private final TravelAgentServiceImpl travelAgentService;
+    private final AuthenticationController authenticationController;
+    private final RegistrationController registrationController;
+
     @Autowired
-    private AdminServiceImpl adminService;
-    @Autowired
-    private CustomerServiceImpl customerService;
-    @Autowired
-    private TravelAgentServiceImpl travelAgentService;
-    @Autowired
-    private AuthenticationController authenticationController;
-    @Autowired
-    private RegistrationController registrationController;
+    public StaticContextInitializer(AdminServiceImpl adminService, CustomerServiceImpl customerService, TravelAgentServiceImpl travelAgentService, AuthenticationController authenticationController, RegistrationController registrationController) {
+        this.adminService = adminService;
+        this.customerService = customerService;
+        this.travelAgentService = travelAgentService;
+        this.authenticationController = authenticationController;
+        this.registrationController = registrationController;
+    }
 
     @PostConstruct
     public void init() {
