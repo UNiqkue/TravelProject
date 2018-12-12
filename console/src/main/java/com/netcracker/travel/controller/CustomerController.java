@@ -44,12 +44,12 @@ public class CustomerController {
             String id = customerService.registration(registrationRequestDto).getId();
             return new ResponseEntity<>(id, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error in creation tour", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error in creation customer", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @ApiOperation(value = "Update tour", nickname = "TourController.updateTour")
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "Tour is updated")})
+    @ApiOperation(value = "Update customer", nickname = "CustomerController.updateCustomer")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Customer is updated")})
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateCustomer(@PathVariable("id") String id, @RequestBody CustomerDto customerDto) {
         try {
@@ -58,13 +58,12 @@ public class CustomerController {
             customerDto = customerService.update(customerFromDb);
             return new ResponseEntity<>(customerDto.getId(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error in creation tour", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error in creation customer", HttpStatus.BAD_REQUEST);
         }
     }
 
-
-    @ApiOperation(value = "Gets specific tour", nickname = "TourController.getTour")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
+    @ApiOperation(value = "Gets specific customer", nickname = "CustomerController.getCustomer")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Customer")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomerDto> getCustomer(@PathVariable("id") String id) {
         CustomerDto customerDto = customerService.getById(id);
@@ -74,10 +73,10 @@ public class CustomerController {
         return new ResponseEntity<>(customerDto, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete tour", nickname = "TourController.deleteTour")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is deleted")})
+    @ApiOperation(value = "Delete customer", nickname = "CustomerController.deleteCustomer")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Customer is deleted")})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable("id") String id) {
         try {
             customerService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);

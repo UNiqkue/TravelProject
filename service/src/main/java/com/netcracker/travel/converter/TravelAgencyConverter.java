@@ -2,9 +2,11 @@ package com.netcracker.travel.converter;
 
 import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.domain.TravelAgency;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class TravelAgencyConverter {
 
     public TravelAgency convert(TravelAgencyDto travelAgencyDto) {

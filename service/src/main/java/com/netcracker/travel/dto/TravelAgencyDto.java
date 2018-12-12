@@ -5,11 +5,10 @@ import com.netcracker.travel.domain.TravelAgent;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class TravelAgencyDto {
 
-    private UUID id;
+    private String id;
     private String name;
     private List<Tour> tours;
     private List<TravelAgent> travelAgents;
@@ -17,11 +16,11 @@ public class TravelAgencyDto {
     public TravelAgencyDto() {
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -59,7 +58,6 @@ public class TravelAgencyDto {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId());
     }
 

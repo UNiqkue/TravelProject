@@ -31,26 +31,25 @@ import java.util.stream.StreamSupport;
 @Service
 public class CustomerServiceImpl implements AbstractService<CustomerDto>, RegistrationService, SearchTourService {
 
-    @Autowired
-    private TourRepository tourRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private TravelAgencyRepository travelAgencyRepository;
-    @Autowired
-    private AdminRepository adminRepository;
-    @Autowired
-    private TravelAgentRepository travelAgentRepository;
-    @Autowired
-    private CustomerConverter customerConverter;
-    @Autowired
-    private TourConverter tourConverter;
-    @Autowired
-    private AdminConverter adminConverter;
-    @Autowired
-    private TravelAgentConverter travelAgentConverter;
+    private final TourRepository tourRepository;
+    private final CustomerRepository customerRepository;
+    private final AdminRepository adminRepository;
+    private final TravelAgentRepository travelAgentRepository;
+    private final CustomerConverter customerConverter;
+    private final TourConverter tourConverter;
+    private final AdminConverter adminConverter;
+    private final TravelAgentConverter travelAgentConverter;
 
-    public CustomerServiceImpl() {
+    @Autowired
+    public CustomerServiceImpl(TourRepository tourRepository, CustomerRepository customerRepository, AdminRepository adminRepository, TravelAgentRepository travelAgentRepository, CustomerConverter customerConverter, TourConverter tourConverter, AdminConverter adminConverter, TravelAgentConverter travelAgentConverter) {
+        this.tourRepository = tourRepository;
+        this.customerRepository = customerRepository;
+        this.adminRepository = adminRepository;
+        this.travelAgentRepository = travelAgentRepository;
+        this.customerConverter = customerConverter;
+        this.tourConverter = tourConverter;
+        this.adminConverter = adminConverter;
+        this.travelAgentConverter = travelAgentConverter;
     }
 
     public CustomerDto getByUsername(String username) {
@@ -67,6 +66,11 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
         Customer customer = customerRepository.findOne(id);
         return customer != null ? customerConverter.convert(customer) : null;
         // return tourConverter.convert(tourRepository.findOne(UUID.fromString(id)));
+    }
+
+    @Override
+    public CustomerDto save(CustomerDto customerDto) {
+        return null;
     }
 
     public void delete(String id) {

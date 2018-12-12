@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TravelAgentRepository extends CrudRepository<TravelAgent, String> {
-  //  TravelAgent findByUsername(String username);
+    TravelAgent findById(String id);
+
+    TravelAgent findByUsername(String username);
 }

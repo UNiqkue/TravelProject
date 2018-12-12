@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TravelAgencyRepository extends CrudRepository<TravelAgency, String> {
     List<TravelAgency> findByName(String name);
+
+    TravelAgency getById(String id);
 }

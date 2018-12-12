@@ -11,4 +11,12 @@ public interface AbstractService<T> {
 
     T getByUsername(String username);
 
+    T getById(String id);
+
+    T save(T t);
+
+    T update(T t);
+
+    void delete(String id);
+
 }
