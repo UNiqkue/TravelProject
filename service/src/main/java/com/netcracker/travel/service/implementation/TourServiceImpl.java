@@ -1,9 +1,9 @@
 package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.TourConverter;
-import com.netcracker.travel.domain.Tour;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.repository.TourRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,23 +30,22 @@ public class TourServiceImpl {
                 .collect(Collectors.toList());
     }
 
-    public TourDto addTour(TourDto tourDto) {
+    public TourDto add(TourDto tourDto) {
         tourDto.setId(UUID.randomUUID().toString().replace("-", ""));
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     }
 
-    public TourDto updateTour(TourDto tourDto) {
+    public TourDto update(TourDto tourDto) {
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     }
 
-
-    public TourDto getTour(String id) {
-        Tour tour = tourRepository.findOne(id);
-        return tour != null ? tourConverter.convert(tour) : null;
-       // return tourConverter.convert(tourRepository.findOne(UUID.fromString(id)));
+    public TourDto get(String id) {
+        TourDto tourDto = new TourDto();
+        BeanUtils.copyProperties(tourRepository.findOne(id), tourDto);
+        return tourDto;
     }
 
-    public void deleteTour(String id) {
+    public void delete(String id) {
             tourRepository.delete(id);
     }
 }

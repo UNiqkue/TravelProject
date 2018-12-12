@@ -39,7 +39,7 @@ public class TourController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addTour(@RequestBody TourDto tourDto) {
         try {
-            String id = tourService.addTour(tourDto).getId();
+            String id = tourService.add(tourDto).getId();
             return new ResponseEntity<>(id, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation tour", HttpStatus.BAD_REQUEST);
@@ -51,7 +51,7 @@ public class TourController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateTour(@PathVariable("id") String id, @RequestBody TourDto tourDto) {
         try {
-            TourDto tourDtoToChange = tourService.getTour(id);
+            TourDto tourDtoToChange = tourService.get(id);
             tourDtoToChange.setName(tourDto.getName());
             tourDtoToChange.setDescription(tourDto.getDescription());
             tourDtoToChange.setCountry(tourDto.getCountry());
@@ -64,7 +64,7 @@ public class TourController {
             tourDtoToChange.setCustomer(tourDto.getCustomer());
             // todo rewrite to mapstruct
           //  BeanUtils.copyProperties(tourDto, tourDtoToChange, "id");
-            tourDto = tourService.updateTour(tourDtoToChange);
+            tourDto = tourService.update(tourDtoToChange);
             return new ResponseEntity<>(tourDto.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation tour", HttpStatus.BAD_REQUEST);
@@ -76,7 +76,7 @@ public class TourController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TourDto> getTour(@PathVariable("id") String id) {
-        TourDto tour = tourService.getTour(id);
+        TourDto tour = tourService.get(id);
         if(tour == null){
             return new ResponseEntity<>(tour, HttpStatus.NOT_FOUND);
         }
@@ -88,7 +88,7 @@ public class TourController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> delete(@PathVariable("id") String id) {
         try {
-            tourService.deleteTour(id);
+            tourService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
