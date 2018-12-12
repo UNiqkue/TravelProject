@@ -12,10 +12,11 @@ public class TravelAgent extends User {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
     @Column(name = "position")
     private String position;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "travel_agency_id")
     private TravelAgency travelAgency;
 
@@ -26,7 +27,7 @@ public class TravelAgent extends User {
         super(id, firstName, lastName, username, password, email, activationCode);
         this.phoneNumber = phoneNumber;
         this.position = position;
-      //  this.travelAgency = travelAgency;
+        this.travelAgency = travelAgency;
     }
 
     @Override
@@ -50,9 +51,6 @@ public class TravelAgent extends User {
         this.position = position;
     }
 
-  //  @ElementCollection(targetClass=TravelAgent.class)
-
- //   @Access(AccessType.PROPERTY)
     public TravelAgency getTravelAgency() {
         return travelAgency;
     }
@@ -72,7 +70,6 @@ public class TravelAgent extends User {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId());
     }
 
@@ -89,7 +86,7 @@ public class TravelAgent extends User {
                 ", role=" + getRole() +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", position='" + position + '\'' +
-              //  ", travelAgency=" + travelAgency +
+                ", travelAgency=" + travelAgency +
                 '}';
     }
 

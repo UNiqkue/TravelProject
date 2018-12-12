@@ -3,10 +3,9 @@ package com.netcracker.travel.domain;
 import com.netcracker.travel.domain.abstracts.User;
 import com.netcracker.travel.domain.enumeration.Role;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,16 +14,18 @@ public class Customer extends User {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
+
     @Column(name = "card_number")
     private String cardNumber;
+
     @Column(name = "passport_info")
     private String passportInfo;
 
-  //  @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
- //   private List<Tour> tours;
-
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    private List<Tour> tours;
 
     public Customer() {
     }
@@ -74,13 +75,13 @@ public class Customer extends User {
         this.passportInfo = passportInfo;
     }
 
-   /* public List<Tour> getTours() {
+    public List<Tour> getTours() {
         return tours;
     }
 
     public void setTours(List<Tour> tours) {
         this.tours = tours;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -93,7 +94,6 @@ public class Customer extends User {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId());
     }
 

@@ -6,7 +6,6 @@ import com.netcracker.travel.domain.enumeration.TypeTour;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tour")
@@ -14,28 +13,33 @@ public class Tour extends BaseEntity {
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "price")
     private Double price;
+
     @Column(name = "type")
     @Enumerated(EnumType.ORDINAL)
     private TypeTour type;
+
     @Column(name = "country")
     private String country;
+
     @Column(name = "start_date")
     private Date startDate;
+
     @Column(name = "end_date")
     private Date endDate;
 
-  /*  @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "travel_agency_id", nullable = false)*/
-   // @Column(name = "travel_agency_id")
-  //  private TravelAgency travelAgency;
+    @ManyToOne
+    @JoinColumn(name = "travel_agency_id")
+    private TravelAgency travelAgency;
 
-  //  @ManyToOne(cascade = CascadeType.ALL)
- /*   @Column(name = "customer_id")
-    private Customer customer;*/
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @Column(name = "free")
     private boolean free;
@@ -52,8 +56,8 @@ public class Tour extends BaseEntity {
         this.country = country;
         this.startDate = startDate;
         this.endDate = endDate;
-      //  this.travelAgency = travelAgency;
-      //  this.customer = customer;
+        this.travelAgency = travelAgency;
+        this.customer = customer;
         this.free = free;
     }
 
@@ -113,21 +117,21 @@ public class Tour extends BaseEntity {
         this.price = price;
     }
 
-  /*  public TravelAgency getTravelAgency() {
+    public TravelAgency getTravelAgency() {
         return travelAgency;
     }
 
     public void setTravelAgency(TravelAgency travelAgency) {
         this.travelAgency = travelAgency;
-    }*/
+    }
 
-   /* public Customer getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }*/
+    }
 
     public boolean isFree() {
         return free;
@@ -147,7 +151,6 @@ public class Tour extends BaseEntity {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId());
     }
 
@@ -162,8 +165,8 @@ public class Tour extends BaseEntity {
                 ", country='" + country + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-             //   ", travelAgencyId=" + travelAgency +
-            //    ", customer=" + customer +
+                ", travelAgencyId=" + travelAgency +
+                ", customer=" + customer +
                 ", free=" + free +
                 '}';
     }

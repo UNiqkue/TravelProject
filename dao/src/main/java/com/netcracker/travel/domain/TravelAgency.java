@@ -5,7 +5,6 @@ import com.netcracker.travel.domain.abstracts.BaseEntity;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "travel_agency")
@@ -13,35 +12,29 @@ public class TravelAgency extends BaseEntity {
 
     @Column(name = "name")
     private String name;
-    //  @OneToMany(mappedBy = "travel_agency", fetch = FetchType.EAGER)
-    //private List<Tour> tours;
 
-    @OneToMany(mappedBy = "travelAgency", fetch = FetchType.EAGER)
-    private Set<TravelAgent> travelAgents;
+    @OneToMany(mappedBy = "travelAgency")
+    private List<TravelAgent> travelAgents;
+
+    @OneToMany(mappedBy = "travelAgency")
+    private List<Tour> tours;
 
     public TravelAgency() {
     }
 
-    public TravelAgency(String id, String name, List<Tour> tours, List<TravelAgent> travelAgents) {
-        super(id);
-        this.name = name;
-        //  this.tours = tours;
-        // this.travelAgents = travelAgents;
-    }
-
-  /*  public List<Tour> getTours() {
+    public List<Tour> getTours() {
         return tours;
     }
 
     public void setTours(List<Tour> tours) {
         this.tours = tours;
-    }*/
+    }
 
-    public Set<TravelAgent> getTravelAgents() {
+    public List<TravelAgent> getTravelAgents() {
         return travelAgents;
     }
 
-    public void setTravelAgents(Set<TravelAgent> travelAgents) {
+    public void setTravelAgents(List<TravelAgent> travelAgents) {
         this.travelAgents = travelAgents;
     }
 
@@ -53,7 +46,6 @@ public class TravelAgency extends BaseEntity {
         this.name = name;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,7 +56,6 @@ public class TravelAgency extends BaseEntity {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId());
     }
 
@@ -72,8 +63,8 @@ public class TravelAgency extends BaseEntity {
     public String toString() {
         return "TravelAgency{" +
                 "name='" + name + '\'' +
-                //   ", tours=" + tours +
-                //   ", travelAgents=" + travelAgents +
+                ", tours=" + tours +
+                ", travelAgents=" + travelAgents +
                 '}';
     }
 }
