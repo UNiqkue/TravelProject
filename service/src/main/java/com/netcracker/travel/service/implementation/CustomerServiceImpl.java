@@ -4,8 +4,9 @@ import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
-import com.netcracker.travel.dto.*;
+import com.netcracker.travel.domain.Customer;
 import com.netcracker.travel.domain.enumeration.Role;
+import com.netcracker.travel.dto.*;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.PhoneNumberException;
@@ -14,6 +15,7 @@ import com.netcracker.travel.repository.*;
 import com.netcracker.travel.service.interfaces.AbstractService;
 import com.netcracker.travel.service.interfaces.RegistrationService;
 import com.netcracker.travel.service.interfaces.SearchTourService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,11 +63,19 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .collect(Collectors.toList());
     }
 
-    public CustomerDto updatePhoneNumber(String username, String phoneNumber) {
-        CustomerDto customerDto = getByUsername(username);
-        customerDto.setPhoneNumber(phoneNumber);
+    public CustomerDto getById(String id) {
+        Customer customer = customerRepository.findOne(id);
+        return customer != null ? customerConverter.convert(customer) : null;
+        // return tourConverter.convert(tourRepository.findOne(UUID.fromString(id)));
+    }
+
+    public void delete(String id) {
+        customerRepository.delete(id);
+    }
+
+    public CustomerDto update(CustomerDto customerDto) {
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
-    } /**update вместо save**/
+    }
 
     /**
      * viewOrderedTours
@@ -158,18 +168,9 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
             return null;
         }
         CustomerDto customerDto = new CustomerDto();
-        customerDto.setId(UUID.randomUUID());
-        customerDto.setFirstName(registrationRequestDto.getFirstName());
-        customerDto.setLastName(registrationRequestDto.getLastName());
-        customerDto.setUsername(registrationRequestDto.getUsername());
-        customerDto.setEmail(registrationRequestDto.getEmail());
-        customerDto.setPassword(registrationRequestDto.getPassword());
-        customerDto.setActivationCode(registrationRequestDto.getActivationCode());
+        BeanUtils.copyProperties(registrationRequestDto, customerDto);
+        customerDto.setId(UUID.randomUUID().toString()/*.replace("-", "")*/);
         customerDto.setRole(Role.GUEST);
-        customerDto.setPassportInfo(registrationRequestDto.getPassportInfo());
-        customerDto.setCardNumber(registrationRequestDto.getCardNumber());
-        customerDto.setDateOfBirth(registrationRequestDto.getDateOfBirth());
-        customerDto.setPhoneNumber(registrationRequestDto.getPhoneNumber());
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
@@ -284,6 +285,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
             System.out.println("Checking");
         }
     }
+
 
 
 }

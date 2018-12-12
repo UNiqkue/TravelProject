@@ -26,8 +26,8 @@ public class TourController {
         this.tourService = tourService;
     }
 
-    @ApiOperation(value = "Gets all books", nickname = "TourController.getAllTours")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "Books")})
+    @ApiOperation(value = "Gets all tours", nickname = "TourController.getAllTours")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tours")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TourDto>> getAllTours() {
         List<TourDto> tours = tourService.getAll();
@@ -64,7 +64,7 @@ public class TourController {
             tourDtoToChange.setCustomer(tourDto.getCustomer());
           //  BeanUtils.copyProperties(tourDto, tourDtoToChange, "id");
             tourDto = tourService.updateTour(tourDtoToChange);
-            return new ResponseEntity<>(tourDto.getId(), HttpStatus.CREATED);
+            return new ResponseEntity<>(tourDto.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation tour", HttpStatus.BAD_REQUEST);
         }
@@ -85,7 +85,7 @@ public class TourController {
     @ApiOperation(value = "Delete tour", nickname = "TourController.deleteTour")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is deleted")})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteBook(@PathVariable("id") String id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
         try {
             tourService.deleteTour(id);
             return new ResponseEntity<>(HttpStatus.OK);

@@ -1,17 +1,17 @@
 package com.netcracker.travel.converter;
 
-import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.domain.Customer;
+import com.netcracker.travel.dto.CustomerDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class CustomerConverter {
 
     public Customer convert(CustomerDto customerDto) {
         Customer customer = new Customer();
-        customer.setId(customerDto.getId().toString());
+        BeanUtils.copyProperties(customerDto, customer);
+     /*   customer.setId(customerDto.getId());
         customer.setFirstName(customerDto.getFirstName());
         customer.setLastName(customerDto.getLastName());
         customer.setUsername(customerDto.getUsername());
@@ -21,13 +21,14 @@ public class CustomerConverter {
         customer.setPhoneNumber(customerDto.getPhoneNumber());
         customer.setCardNumber(customerDto.getCardNumber());
         customer.setDateOfBirth(customerDto.getDateOfBirth());
-        customer.setPassportInfo(customerDto.getPassportInfo());
+        customer.setPassportInfo(customerDto.getPassportInfo());*/
         return customer;
     }
 
     public CustomerDto convert(Customer customer) {
         CustomerDto customerDto = new CustomerDto();
-        customerDto.setId(UUID.fromString(customer.getId()));
+        BeanUtils.copyProperties(customer, customerDto);
+      /*  customerDto.setId(customer.getId());
         customerDto.setFirstName(customer.getFirstName());
         customerDto.setLastName(customer.getLastName());
         customerDto.setUsername(customer.getUsername());
@@ -37,7 +38,7 @@ public class CustomerConverter {
         customerDto.setPhoneNumber(customer.getPhoneNumber());
         customerDto.setCardNumber(customer.getCardNumber());
         customerDto.setDateOfBirth(customer.getDateOfBirth());
-        customerDto.setPassportInfo(customer.getPassportInfo());
+        customerDto.setPassportInfo(customer.getPassportInfo());*/
         return customerDto;
     }
 

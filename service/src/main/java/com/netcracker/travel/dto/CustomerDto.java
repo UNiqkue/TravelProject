@@ -6,11 +6,10 @@ import com.netcracker.travel.domain.enumeration.Role;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class CustomerDto {
 
-    private UUID id;
+    private String id;
     private String firstName;
     private String lastName;
     private String username;
@@ -27,7 +26,7 @@ public class CustomerDto {
     public CustomerDto() {
     }
 
-    public CustomerDto(UUID id, String firstName, String lastName, String username, String password, String email, String activationCode, Role role, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
+    public CustomerDto(String id, String firstName, String lastName, String username, String password, String email, String activationCode, Role role, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,11 +41,11 @@ public class CustomerDto {
         this.passportInfo = passportInfo;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

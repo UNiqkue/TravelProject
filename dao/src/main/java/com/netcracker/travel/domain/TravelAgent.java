@@ -15,7 +15,7 @@ public class TravelAgent extends User {
     @Column(name = "position")
     private String position;
 
-   // private TravelAgency travelAgency;
+    //private TravelAgency travelAgency;
 
     public TravelAgent() {
     }
@@ -48,7 +48,7 @@ public class TravelAgent extends User {
         this.position = position;
     }
 
-   /* @ElementCollection(targetClass=TravelAgent.class)
+  /*  @ElementCollection(targetClass=TravelAgent.class)
     @ManyToOne()
     @JoinColumn(name = "travel_agency_id")
     @Access(AccessType.PROPERTY)
@@ -58,8 +58,8 @@ public class TravelAgent extends User {
 
     public void setTravelAgency(TravelAgency travelAgency) {
         this.travelAgency = travelAgency;
-    }
-*/
+    }*/
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
