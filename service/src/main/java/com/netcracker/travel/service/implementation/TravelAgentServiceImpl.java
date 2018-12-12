@@ -6,8 +6,8 @@ import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.repository.TravelAgentRepository;
-import com.netcracker.travel.service.interfaces.AbstractService;
-import com.netcracker.travel.service.interfaces.CrudTourService;
+import com.netcracker.travel.service.AbstractService;
+import com.netcracker.travel.service.CrudTourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +19,17 @@ import java.util.stream.StreamSupport;
 @Service
 public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, CrudTourService<TourDto> {
 
-    @Autowired
-    private TourRepository tourRepository;
-    @Autowired
-    private TravelAgentRepository travelAgentRepository;
-    @Autowired
-    private TourConverter tourConverter;
-    @Autowired
-    private TravelAgentConverter travelAgentConverter;
+    private final TourRepository tourRepository;
+    private final TravelAgentRepository travelAgentRepository;
+    private final TourConverter tourConverter;
+    private final TravelAgentConverter travelAgentConverter;
 
-    public TravelAgentServiceImpl() {
+    @Autowired
+    public TravelAgentServiceImpl(TourRepository tourRepository, TravelAgentRepository travelAgentRepository, TourConverter tourConverter, TravelAgentConverter travelAgentConverter) {
+        this.tourRepository = tourRepository;
+        this.travelAgentRepository = travelAgentRepository;
+        this.tourConverter = tourConverter;
+        this.travelAgentConverter = travelAgentConverter;
     }
 
     public TourDto createTour(TourDto tourDto) {
@@ -38,14 +39,14 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
 
     public List<TourDto> getExistenceTours() {
         return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
-                .map(tour -> tourConverter.convert(tour))
+                .map(tourConverter::convert)
                 .collect(Collectors.toList());
     }
 
     public List<TourDto> watchTours() {
         String clientId = "00000000-0000-0000-0000-000000000000";
         return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
-                .filter(tour -> !(tour/*.getCustomer()*/.getId().toString().equals(clientId)))
+                .filter(tour -> !(tour/*.getCustomer()*/.getId().equals(clientId)))
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }

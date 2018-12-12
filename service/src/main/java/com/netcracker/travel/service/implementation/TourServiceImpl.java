@@ -26,7 +26,7 @@ public class TourServiceImpl {
 
     public List<TourDto> getAll() {
         return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
-                .map(tour -> tourConverter.convert(tour))
+                .map(tourConverter::convert)
                 .collect(Collectors.toList());
     }
 

@@ -12,9 +12,9 @@ import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.repository.*;
-import com.netcracker.travel.service.interfaces.AbstractService;
-import com.netcracker.travel.service.interfaces.RegistrationService;
-import com.netcracker.travel.service.interfaces.SearchTourService;
+import com.netcracker.travel.service.AbstractService;
+import com.netcracker.travel.service.RegistrationService;
+import com.netcracker.travel.service.SearchTourService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public CustomerDto getByUsername(String username) {
-        return /*customerConverter.convert(customerRepository.findByUsername(username))*/ null;
+        return customerConverter.convert(customerRepository.findByUsername(username));
     }
 
     public List<CustomerDto> getAll() {
@@ -93,7 +93,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
             tourDto.setCustomer(customerRepository.findById(customerId.toString()));
             tourDto.setFree(false);
             tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
-            /**update вместо save**/
+            /** update вместо save**/
             System.out.println("You bought tour");
         } else {
             System.out.println("You can't do it!!!");
@@ -125,6 +125,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
+
     public List<TourDto> searchTourByEndDate(Date endDate) {
         return tourRepository.findByEndDate(endDate)
                 .stream()
@@ -285,7 +286,6 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
             System.out.println("Checking");
         }
     }
-
 
 
 }

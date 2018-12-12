@@ -5,6 +5,7 @@ import com.netcracker.travel.domain.abstracts.BaseEntity;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "travel_agency")
@@ -15,8 +16,9 @@ public class TravelAgency extends BaseEntity {
     //  @OneToMany(mappedBy = "travel_agency", fetch = FetchType.EAGER)
     //   private List<Tour> tours;
 
-    /*    @Access(AccessType.PROPERTY)
-    private List<TravelAgent> travelAgents;*/
+    //    @Access(AccessType.PROPERTY)
+    @OneToMany(mappedBy = "travelAgency", fetch = FetchType.EAGER)
+    private Set<TravelAgent> travelAgents;
 
     public TravelAgency() {
     }
@@ -25,7 +27,7 @@ public class TravelAgency extends BaseEntity {
         super(id);
         this.name = name;
         //  this.tours = tours;
-       // this.travelAgents = travelAgents;
+        // this.travelAgents = travelAgents;
     }
 
   /*  public List<Tour> getTours() {
@@ -36,18 +38,15 @@ public class TravelAgency extends BaseEntity {
         this.tours = tours;
     }*/
 
-  //  @ElementCollection(targetClass=TravelAgent.class)
-   // @OneToMany(targetEntity = TravelAgent.class,
-       //     mappedBy = "travel_agency",
-       //     cascade = CascadeType.ALL,
-       //     fetch = FetchType.EAGER)
-  /*  public List<TravelAgent> getTravelAgents() {
+    //  @ElementCollection(targetClass=TravelAgent.class)
+
+    public Set<TravelAgent> getTravelAgents() {
         return travelAgents;
     }
 
-    public void setTravelAgents(List<TravelAgent> travelAgents) {
+    public void setTravelAgents(Set<TravelAgent> travelAgents) {
         this.travelAgents = travelAgents;
-    }*/
+    }
 
     public String getName() {
         return name;

@@ -7,7 +7,7 @@ import com.netcracker.travel.dto.LoginRequestDto;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TravelAgentRepository;
-import com.netcracker.travel.service.interfaces.AuthenticationService;
+import com.netcracker.travel.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,7 @@ import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.repository.TourRepository;
-import com.netcracker.travel.service.interfaces.AbstractService;
+import com.netcracker.travel.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

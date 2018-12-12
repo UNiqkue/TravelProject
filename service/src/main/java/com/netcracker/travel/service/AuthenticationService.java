@@ -1,4 +1,4 @@
-package com.netcracker.travel.service.interfaces;
+package com.netcracker.travel.service;
 
 import com.netcracker.travel.dto.LoginRequestDto;
 import org.springframework.stereotype.Service;

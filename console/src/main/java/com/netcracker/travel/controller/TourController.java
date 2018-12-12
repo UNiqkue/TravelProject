@@ -62,6 +62,7 @@ public class TourController {
             tourDtoToChange.setFree(tourDto.isFree());
             tourDtoToChange.setTravelAgency(tourDto.getTravelAgency());
             tourDtoToChange.setCustomer(tourDto.getCustomer());
+            // todo rewrite to mapstruct
           //  BeanUtils.copyProperties(tourDto, tourDtoToChange, "id");
             tourDto = tourService.updateTour(tourDtoToChange);
             return new ResponseEntity<>(tourDto.getId(), HttpStatus.OK);

@@ -11,9 +11,9 @@ public class RegistrationRequestDto {
     private String email;
     private String activationCode;
     private String phoneNumber;
-    private Date dateOfBirth;
     private String cardNumber;
     private String passportInfo;
+    private Date dateOfBirth;
 
     public RegistrationRequestDto() {
     }
