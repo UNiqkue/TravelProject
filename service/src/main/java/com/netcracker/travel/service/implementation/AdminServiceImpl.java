@@ -3,7 +3,7 @@ package com.netcracker.travel.service.implementation;
 import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.repository.AdminRepository;
-import com.netcracker.travel.service.AbstractService;
+import com.netcracker.travel.service.BaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class AdminServiceImpl implements AbstractService<AdminDto> {
+public class AdminServiceImpl implements BaseEntityService<AdminDto> {
 
     private final AdminRepository adminRepository;
     private final AdminConverter adminConverter;

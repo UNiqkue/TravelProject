@@ -3,7 +3,7 @@ package com.netcracker.travel.service.implementation;
 import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.repository.TravelAgentRepository;
-import com.netcracker.travel.service.AbstractService;
+import com.netcracker.travel.service.BaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto> {
+public class TravelAgentServiceImpl implements BaseEntityService<TravelAgentDto> {
 
     private final TravelAgentRepository travelAgentRepository;
     private final TravelAgentConverter travelAgentConverter;

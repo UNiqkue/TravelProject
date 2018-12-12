@@ -3,6 +3,7 @@ package com.netcracker.travel.controller;
 import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.RegistrationRequestDto;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
+import com.netcracker.travel.service.implementation.RegistrationServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,10 +23,12 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerServiceImpl customerService;
+    private final RegistrationServiceImpl registrationService;
 
     @Autowired
-    public CustomerController(CustomerServiceImpl customerService) {
+    public CustomerController(CustomerServiceImpl customerService, RegistrationServiceImpl registrationService) {
         this.customerService = customerService;
+        this.registrationService = registrationService;
     }
 
     @ApiOperation(value = "Gets all customers", nickname = "CustomerController.getAllCustomers")
@@ -41,7 +44,7 @@ public class CustomerController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addCustomer(@RequestBody RegistrationRequestDto registrationRequestDto) {
         try {
-            String id = customerService.registration(registrationRequestDto).getId();
+            String id = registrationService.registration(registrationRequestDto).getId();
             return new ResponseEntity<>(id, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation customer", HttpStatus.BAD_REQUEST);
