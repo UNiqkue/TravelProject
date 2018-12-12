@@ -1,10 +1,8 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.domain.Tour;
 import com.netcracker.travel.domain.enumeration.Role;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class CustomerDto {
@@ -16,29 +14,13 @@ public class CustomerDto {
     private String password;
     private String email;
     private String activationCode;
-    private Role role;
     private String phoneNumber;
-    private Date dateOfBirth;
     private String cardNumber;
     private String passportInfo;
-    private List<Tour> listOfTours;
+    private Date dateOfBirth;
+    private Role role;
 
     public CustomerDto() {
-    }
-
-    public CustomerDto(String id, String firstName, String lastName, String username, String password, String email, String activationCode, Role role, String phoneNumber, Date dateOfBirth, String cardNumber, String passportInfo) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.activationCode = activationCode;
-        this.role = role;
-        this.phoneNumber = phoneNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.cardNumber = cardNumber;
-        this.passportInfo = passportInfo;
     }
 
     public String getId() {
@@ -129,14 +111,6 @@ public class CustomerDto {
         this.passportInfo = passportInfo;
     }
 
-    public List<Tour> getListOfTours() {
-        return listOfTours;
-    }
-
-    public void setListOfTours(List<Tour> listOfTours) {
-        this.listOfTours = listOfTours;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -155,7 +129,6 @@ public class CustomerDto {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId());
     }
 
