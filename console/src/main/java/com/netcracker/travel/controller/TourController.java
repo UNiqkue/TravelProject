@@ -6,7 +6,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,11 +49,22 @@ public class TourController {
     @ApiOperation(value = "Update tour", nickname = "TourController.updateTour")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Tour is updated")})
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateTour(@PathVariable("id") TourDto tourDtoToChange, @RequestBody TourDto tourDto) {
+    public ResponseEntity<String> updateTour(@PathVariable("id") String id, @RequestBody TourDto tourDto) {
         try {
-            BeanUtils.copyProperties(tourDto, tourDtoToChange, "id");
-            String id = tourService.addTour(tourDto).getId();
-            return new ResponseEntity<>(id, HttpStatus.CREATED);
+            TourDto tourDtoToChange = tourService.getTour(id);
+            tourDtoToChange.setName(tourDto.getName());
+            tourDtoToChange.setDescription(tourDto.getDescription());
+            tourDtoToChange.setCountry(tourDto.getCountry());
+            tourDtoToChange.setPrice(tourDto.getPrice());
+            tourDtoToChange.setType(String.valueOf(tourDto.getType()));
+            tourDtoToChange.setStartDate(tourDto.getStartDate());
+            tourDtoToChange.setEndDate(tourDto.getEndDate());
+            tourDtoToChange.setFree(tourDto.isFree());
+            tourDtoToChange.setTravelAgency(tourDto.getTravelAgency());
+            tourDtoToChange.setCustomer(tourDto.getCustomer());
+          //  BeanUtils.copyProperties(tourDto, tourDtoToChange, "id");
+            tourDto = tourService.updateTour(tourDtoToChange);
+            return new ResponseEntity<>(tourDto.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation tour", HttpStatus.BAD_REQUEST);
         }
@@ -91,4 +101,7 @@ fetch('/tours',{ method: 'POST', headers: { 'Content-Type': 'application/json' }
  fetch('/tours/1').then(response => response.json().then(console.log))
 
  fetch('/tours/4', { method: 'DELETE' }).then(result => console.log(result))
+
+ fetch('/tours/4028e4c1679f78ad01679f8165650000',{ method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: 'Tour on Italy', description: '3 person', price: 200, type: 'EXCURSION', country: 'italy', startDate: '2019-06-06', endDate: '2019-06-29', id: '4028e4c1679f78ad01679f8165650000'})}).then(result => result.json().then(console.log))
+
  */

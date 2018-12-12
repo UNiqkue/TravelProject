@@ -35,6 +35,11 @@ public class TourServiceImpl {
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     }
 
+    public TourDto updateTour(TourDto tourDto) {
+        return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
+    }
+
+
     public TourDto getTour(String id) {
         Tour tour = tourRepository.findOne(id);
         return tour != null ? tourConverter.convert(tour) : null;

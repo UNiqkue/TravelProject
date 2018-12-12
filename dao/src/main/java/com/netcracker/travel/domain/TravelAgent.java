@@ -3,9 +3,7 @@ package com.netcracker.travel.domain;
 import com.netcracker.travel.domain.abstracts.User;
 import com.netcracker.travel.domain.enumeration.Role;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -50,17 +48,18 @@ public class TravelAgent extends User {
         this.position = position;
     }
 
- /*   @ManyToOne(*//*fetch = FetchType.EAGER*//*)
+   /* @ElementCollection(targetClass=TravelAgent.class)
+    @ManyToOne()
     @JoinColumn(name = "travel_agency_id")
-   // @Access(AccessType.PROPERTY)
+    @Access(AccessType.PROPERTY)
     public TravelAgency getTravelAgency() {
         return travelAgency;
     }
 
     public void setTravelAgency(TravelAgency travelAgency) {
         this.travelAgency = travelAgency;
-    }*/
-
+    }
+*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

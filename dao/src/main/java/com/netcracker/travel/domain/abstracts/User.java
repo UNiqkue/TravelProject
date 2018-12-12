@@ -3,10 +3,12 @@ package com.netcracker.travel.domain.abstracts;
 import com.netcracker.travel.domain.enumeration.Role;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Objects;
 
+@Entity
 public abstract class User extends BaseEntity {
 
     @Column(name = "first_name")
