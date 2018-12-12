@@ -14,9 +14,8 @@ public class TravelAgency extends BaseEntity {
     @Column(name = "name")
     private String name;
     //  @OneToMany(mappedBy = "travel_agency", fetch = FetchType.EAGER)
-    //   private List<Tour> tours;
+    //private List<Tour> tours;
 
-    //    @Access(AccessType.PROPERTY)
     @OneToMany(mappedBy = "travelAgency", fetch = FetchType.EAGER)
     private Set<TravelAgent> travelAgents;
 
@@ -37,8 +36,6 @@ public class TravelAgency extends BaseEntity {
     public void setTours(List<Tour> tours) {
         this.tours = tours;
     }*/
-
-    //  @ElementCollection(targetClass=TravelAgent.class)
 
     public Set<TravelAgent> getTravelAgents() {
         return travelAgents;
