@@ -19,4 +19,5 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationServiceImpl authenticationService) {
         this.authenticationService = authenticationService;
     }
+
 }

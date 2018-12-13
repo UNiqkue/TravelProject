@@ -76,7 +76,7 @@ public class TravelAgentController {
     @ApiOperation(value = "Delete travelAgent", nickname = "TravelAgentController.deleteTravelAgent")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgent is deleted")})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteTravelAgent(@PathVariable("id") String id) {
         try {
             travelAgentService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);

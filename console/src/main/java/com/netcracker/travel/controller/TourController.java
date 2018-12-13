@@ -86,7 +86,7 @@ public class TourController {
     @ApiOperation(value = "Delete tour", nickname = "TourController.deleteTour")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is deleted")})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteTour(@PathVariable("id") String id) {
         try {
             tourService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);

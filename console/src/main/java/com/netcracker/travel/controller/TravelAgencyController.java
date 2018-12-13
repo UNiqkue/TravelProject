@@ -30,7 +30,7 @@ public class TravelAgencyController {
     @ApiOperation(value = "Gets all travelAgencies", nickname = "TravelAgencyController.getAllTravelAgencies")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgencies")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TravelAgencyDto>> getAllTravelAgencys() {
+    public ResponseEntity<List<TravelAgencyDto>> getAllTravelAgencies() {
         List<TravelAgencyDto> travelAgencies = travelAgencyService.getAll();
         return new ResponseEntity<>(travelAgencies, HttpStatus.OK);
     }
@@ -77,7 +77,7 @@ public class TravelAgencyController {
     @ApiOperation(value = "Delete travelAgency", nickname = "TravelAgencyController.deleteTravelAgency")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgency is deleted")})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteTravelAgency(@PathVariable("id") String id) {
         try {
             travelAgencyService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
