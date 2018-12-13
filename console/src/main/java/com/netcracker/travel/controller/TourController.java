@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,18 +53,7 @@ public class TourController {
     public ResponseEntity<String> updateTour(@PathVariable("id") String id, @RequestBody TourDto tourDto) {
         try {
             TourDto tourDtoToChange = tourService.get(id);
-            tourDtoToChange.setName(tourDto.getName());
-            tourDtoToChange.setDescription(tourDto.getDescription());
-            tourDtoToChange.setCountry(tourDto.getCountry());
-            tourDtoToChange.setPrice(tourDto.getPrice());
-            tourDtoToChange.setType(String.valueOf(tourDto.getType()));
-            tourDtoToChange.setStartDate(tourDto.getStartDate());
-            tourDtoToChange.setEndDate(tourDto.getEndDate());
-            tourDtoToChange.setFree(tourDto.isFree());
-            tourDtoToChange.setTravelAgency(tourDto.getTravelAgency());
-            tourDtoToChange.setCustomer(tourDto.getCustomer());
-            // todo rewrite to mapstruct
-          //  BeanUtils.copyProperties(tourDto, tourDtoToChange, "id");
+            BeanUtils.copyProperties(tourDto, tourDtoToChange, "id");
             tourDto = tourService.update(tourDtoToChange);
             return new ResponseEntity<>(tourDto.getId(), HttpStatus.OK);
         } catch (Exception e) {

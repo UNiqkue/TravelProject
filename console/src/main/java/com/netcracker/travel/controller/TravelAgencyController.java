@@ -53,7 +53,6 @@ public class TravelAgencyController {
     public ResponseEntity<String> updateTravelAgency(@PathVariable("id") String id, @RequestBody TravelAgencyDto travelAgencyDto) {
         try {
             TravelAgencyDto travelAgencyDtoToChange = travelAgencyService.getById(id);
-            // todo rewrite to mapstruct
             BeanUtils.copyProperties(travelAgencyDto, travelAgencyDtoToChange, "id");
             travelAgencyDto = travelAgencyService.update(travelAgencyDtoToChange);
             return new ResponseEntity<>(travelAgencyDto.getId(), HttpStatus.OK);
