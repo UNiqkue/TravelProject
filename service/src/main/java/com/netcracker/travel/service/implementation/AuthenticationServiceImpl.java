@@ -1,69 +1,70 @@
 package com.netcracker.travel.service.implementation;
 
-import com.netcracker.travel.converter.AdminConverter;
-import com.netcracker.travel.converter.CustomerConverter;
-import com.netcracker.travel.converter.TravelAgentConverter;
+import com.netcracker.travel.dto.AdminDto;
+import com.netcracker.travel.dto.CustomerDto;
 import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.repository.AdminRepository;
-import com.netcracker.travel.repository.CustomerRepository;
-import com.netcracker.travel.repository.TravelAgentRepository;
+import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private AdminRepository adminRepository;
-    @Autowired
-    private TravelAgentRepository travelAgentRepository;
+    private final CustomerServiceImpl customerServiceImpl;
+    private final AdminServiceImpl adminServiceImpl;
+    private final TravelAgentServiceImpl travelAgentServiceImpl;
+ //   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private AdminConverter adminConverter;
-    @Autowired
-    private CustomerConverter customerConverter;
-    @Autowired
-    private TravelAgentConverter travelAgentConverter;
-
-    public AuthenticationServiceImpl() {
-    }
-    public boolean loginCustomer(LoginRequestDto loginRequestDto){
-       /* try {
-            CustomerDto customerDto = customerConverter.convert(customerRepository.findByUsername(loginRequestDto.getUsername()));
-            if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
-                return true;
-            }
-        } catch (NullPointerException e) {
-            printErrorLogin();
-        }*/
-        return false;
+    public AuthenticationServiceImpl(CustomerServiceImpl customerServiceImpl, AdminServiceImpl adminServiceImpl, TravelAgentServiceImpl travelAgentServiceImpl) {
+        this.customerServiceImpl = customerServiceImpl;
+        this.adminServiceImpl = adminServiceImpl;
+        this.travelAgentServiceImpl = travelAgentServiceImpl;
     }
 
-    public boolean loginAdmin(LoginRequestDto loginRequestDto){
-       /* try {
-            AdminDto adminDto = adminConverter.convert(adminRepository.findByUsername(loginRequestDto.getUsername()));
-            if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
-                return true;
-            }
-        } catch (NullPointerException e) {
-            printErrorLogin();
-        }*/
-        return false;
+    @Transactional
+    public CustomerDto loginCustomer(LoginRequestDto loginRequestDto) {
+  //      bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (customerServiceImpl.getByUsername(loginRequestDto.getUsername()) == null) {
+            return null;
+        } else {
+//            if (bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), customerServiceImpl.getByUsername(loginRequestDto.getUsername()).getPassword())) {
+//                return customerServiceImpl.getByUsername(loginRequestDto.getUsername());
+//            } else {
+                return null;
+          //  }
+        }
     }
 
-    public boolean loginTravelAgent(LoginRequestDto loginRequestDto){
-      /*  try {
-            TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentRepository.findByUsername(loginRequestDto.getUsername()));
-            if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
-                return true;
-            }
-        } catch (NullPointerException e) {
-            printErrorLogin();
-        }*/
-        return false;
+    @Transactional
+    public AdminDto loginAdmin(LoginRequestDto loginRequestDto) {
+    //    bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (adminServiceImpl.getByUsername(loginRequestDto.getUsername()) == null) {
+            return null;
+        } else {
+//            if (bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), adminServiceImpl.getByUsername(loginRequestDto.getUsername()).getPassword())) {
+//                return adminServiceImpl.getByUsername(loginRequestDto.getUsername());
+//            } else {
+                return null;
+//            }
+        }
+    }
+
+    @Transactional
+    public TravelAgentDto loginTravelAgent(LoginRequestDto loginRequestDto) {
+//        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (travelAgentServiceImpl.getByUsername(loginRequestDto.getUsername()) == null) {
+            return null;
+        } else {
+//            if (bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), travelAgentServiceImpl.getByUsername(loginRequestDto.getUsername()).getPassword())) {
+//                return travelAgentServiceImpl.getByUsername(loginRequestDto.getUsername());
+//            } else {
+                return null;
+//            }
+        }
     }
 
     private void printErrorLogin(){

@@ -6,6 +6,7 @@ import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.service.BaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,29 +25,35 @@ public class AdminServiceImpl implements BaseEntityService<AdminDto> {
         this.adminConverter = adminConverter;
     }
 
+    @Transactional
     public AdminDto getByUsername(String username) {
         return adminConverter.convert(adminRepository.findByUsername(username));
     }
 
+    @Transactional
     public List<AdminDto> getAll() {
         return StreamSupport.stream(adminRepository.findAll().spliterator(), false)
                 .map(adminConverter::convert)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public AdminDto getById(String id) {
         return adminConverter.convert(adminRepository.findByUsername(id));
     }
 
+    @Transactional
     public AdminDto save(AdminDto adminDto) {
         adminDto.setId(UUID.randomUUID().toString());
         return adminConverter.convert(adminRepository.save(adminConverter.convert(adminDto)));
     }
 
+    @Transactional
     public AdminDto update(AdminDto adminDto) {
         return adminConverter.convert(adminRepository.save(adminConverter.convert(adminDto)));
     }
 
+    @Transactional
     public void delete(String id) {
         adminRepository.delete(id);
     }

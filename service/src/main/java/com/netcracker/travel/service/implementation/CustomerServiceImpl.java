@@ -11,6 +11,7 @@ import com.netcracker.travel.service.BaseEntityService;
 import com.netcracker.travel.service.SearchTourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -36,37 +37,45 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
         this.tourConverter = tourConverter;
     }
 
-    public CustomerDto getByUsername(String username) {
-        return customerConverter.convert(customerRepository.findByUsername(username));
-    }
-
+    @Transactional
     public List<CustomerDto> getAll() {
         return StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                 .map(customerConverter::convert)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public CustomerDto getById(String id) {
-         return customerConverter.convert(customerRepository.findOne(id));
+        return customerConverter.convert(customerRepository.findOne(id));
     }
 
+    @Transactional
+    public CustomerDto getByUsername(String username) {
+        return customerConverter.convert(customerRepository.findByUsername(username));
+    }
 
-    @Override
+    @Transactional
     public CustomerDto save(CustomerDto customerDto) {
-        return null;
+        customerDto.setId(UUID.randomUUID().toString());
+        return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
+    @Transactional
     public void delete(String id) {
         customerRepository.delete(id);
     }
 
+    @Transactional
     public CustomerDto update(CustomerDto customerDto) {
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
+
     /**
      * viewOrderedTours
      **/
+
+    @Transactional
     public List<TourDto> watchTours(UUID id) {
         return/* tourRepository.findAllByCustomerId(id)
                 .stream()
@@ -74,6 +83,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
                 .collect(Collectors.toList());*/ null;
     }
 
+    @Transactional
     public TourDto buyTour(UUID id, UUID customerId) {
         TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         if (customerId.equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
@@ -87,6 +97,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
         return tourDto;
     }
 
+    @Transactional
     public TourDto cancelTour(UUID tourId, UUID userId) {
         TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId.toString()));
         if (userId.equals(tourDto.getCustomer().getId())) {
@@ -97,6 +108,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
         return tourDto;
     }
 
+    @Transactional
     public List<TourDto> searchTourByName(String name) {
         return tourRepository.findByName(name)
                 .stream()
@@ -104,6 +116,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<TourDto> searchTourByStartDate(Date startDate) {
         return tourRepository.findByStartDate(startDate)
                 .stream()
@@ -111,6 +124,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<TourDto> searchTourByEndDate(Date endDate) {
         return tourRepository.findByEndDate(endDate)
                 .stream()
@@ -118,6 +132,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<TourDto> searchTourByType(String type) {
         return tourRepository.findByType(type)
                 .stream()
@@ -125,6 +140,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<TourDto> searchTourByCountry(String country) {
         return tourRepository.findByCountry(country)
                 .stream()
@@ -132,6 +148,7 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<TourDto> searchTourByTravelAgency(String name) {
         return/* tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
                 .stream()
@@ -149,8 +166,5 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
             throw new PhoneNumberException("Invalid phone number");
         }
     }
-
-
-
 
 }

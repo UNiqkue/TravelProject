@@ -16,6 +16,7 @@ import com.netcracker.travel.service.RegistrationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -41,6 +42,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.customerConverter = customerConverter;
     }
 
+    @Transactional
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
         if (checkExisting(registrationRequestDto)) {
             CustomerDto customerDto = new CustomerDto();

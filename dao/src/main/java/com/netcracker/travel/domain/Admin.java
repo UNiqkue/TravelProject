@@ -1,7 +1,6 @@
 package com.netcracker.travel.domain;
 
 import com.netcracker.travel.domain.abstracts.User;
-import com.netcracker.travel.domain.enumeration.Role;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,11 +14,6 @@ public class Admin extends User {
 
     public Admin(String id, String firstName, String lastName, String username, String password, String email, String activationCode) {
         super(id, firstName, lastName, username, password, email, activationCode);
-    }
-
-    @Override
-    public void setRole(Role role) {
-        super.setRole(role);
     }
 
     @Override

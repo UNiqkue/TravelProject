@@ -35,17 +35,17 @@ public class TravelAgentController {
         return new ResponseEntity<>(travelAgents, HttpStatus.OK);
     }
 
-//    @ApiOperation(value = "Creates travelAgent", nickname = "TravelAgentController.addTravelAgent")
-//    @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is created")})
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> addTravelAgent(@RequestBody TravelAgentDto travelAgentDto) {
-//        try {
-//            String id = travelAgentService.add(travelAgentDto).getId();
-//            return new ResponseEntity<>(id, HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @ApiOperation(value = "Creates travelAgent", nickname = "TravelAgentController.addTravelAgent")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is created")})
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addTravelAgent(@RequestBody TravelAgentDto travelAgentDto) {
+        try {
+            String id = travelAgentService.save(travelAgentDto).getId();
+            return new ResponseEntity<>(id, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @ApiOperation(value = "Update travelAgent", nickname = "TravelAgentController.updateTravelAgent")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is updated")})

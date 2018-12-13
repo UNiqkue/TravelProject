@@ -1,4 +1,4 @@
-package com.netcracker.travel.util;
+package com.netcracker.travel.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

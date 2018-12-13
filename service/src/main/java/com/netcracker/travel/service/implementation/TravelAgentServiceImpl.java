@@ -6,6 +6,7 @@ import com.netcracker.travel.repository.TravelAgentRepository;
 import com.netcracker.travel.service.BaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,29 +25,35 @@ public class TravelAgentServiceImpl implements BaseEntityService<TravelAgentDto>
         this.travelAgentConverter = travelAgentConverter;
     }
 
+    @Transactional
     public List<TravelAgentDto> getAll() {
         return StreamSupport.stream(travelAgentRepository.findAll().spliterator(), false)
                 .map(travelAgentConverter::convert)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public TravelAgentDto getByUsername(String username) {
         return travelAgentConverter.convert(travelAgentRepository.findByUsername(username));
     }
 
+    @Transactional
     public TravelAgentDto getById(String id) {
         return travelAgentConverter.convert(travelAgentRepository.findById(id));
     }
 
+    @Transactional
     public TravelAgentDto save(TravelAgentDto travelAgentDto) {
         travelAgentDto.setId(UUID.randomUUID().toString());
         return travelAgentConverter.convert(travelAgentRepository.save(travelAgentConverter.convert(travelAgentDto)));
     }
 
+    @Transactional
     public TravelAgentDto update(TravelAgentDto travelAgentDto) {
         return travelAgentConverter.convert(travelAgentRepository.save(travelAgentConverter.convert(travelAgentDto)));
     }
 
+    @Transactional
     public void delete(String id) {
         travelAgentRepository.delete(id);
     }

@@ -1,4 +1,4 @@
-package com.netcracker.travel.util;
+package com.netcracker.travel.config;
 
 import org.apache.log4j.Logger;
 
