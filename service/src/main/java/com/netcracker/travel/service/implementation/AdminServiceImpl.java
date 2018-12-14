@@ -5,6 +5,9 @@ import com.netcracker.travel.dto.AdminDto;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.service.BaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class AdminServiceImpl implements BaseEntityService<AdminDto> {
+public class AdminServiceImpl implements UserDetailsService, BaseEntityService<AdminDto> {
 
     private final AdminRepository adminRepository;
     private final AdminConverter adminConverter;
@@ -26,7 +29,7 @@ public class AdminServiceImpl implements BaseEntityService<AdminDto> {
     }
 
     @Transactional
-    public AdminDto getByUsername(String username) {
+    public AdminDto getByName(String username) {
         return adminConverter.convert(adminRepository.findByUsername(username));
     }
 
@@ -56,5 +59,10 @@ public class AdminServiceImpl implements BaseEntityService<AdminDto> {
     @Transactional
     public void delete(String id) {
         adminRepository.delete(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return (UserDetails) adminRepository.findByUsername(s);
     }
 }

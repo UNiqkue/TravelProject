@@ -27,7 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public CustomerDto loginCustomer(LoginRequestDto loginRequestDto) {
   //      bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if (customerServiceImpl.getByUsername(loginRequestDto.getUsername()) == null) {
+        if (customerServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
             return null;
         } else {
 //            if (bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), customerServiceImpl.getByUsername(loginRequestDto.getUsername()).getPassword())) {
@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public AdminDto loginAdmin(LoginRequestDto loginRequestDto) {
     //    bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if (adminServiceImpl.getByUsername(loginRequestDto.getUsername()) == null) {
+        if (adminServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
             return null;
         } else {
 //            if (bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), adminServiceImpl.getByUsername(loginRequestDto.getUsername()).getPassword())) {
@@ -55,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public TravelAgentDto loginTravelAgent(LoginRequestDto loginRequestDto) {
 //        bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if (travelAgentServiceImpl.getByUsername(loginRequestDto.getUsername()) == null) {
+        if (travelAgentServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
             return null;
         } else {
 //            if (bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), travelAgentServiceImpl.getByUsername(loginRequestDto.getUsername()).getPassword())) {

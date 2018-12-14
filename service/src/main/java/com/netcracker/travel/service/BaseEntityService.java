@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface BaseEntityService<T> {
+public interface BaseEntityService<T>{
 
     List<T> getAll();
 
-    T getByUsername(String username);
+    T getByName(String username);
 
     T getById(String id);
 
@@ -18,5 +18,7 @@ public interface BaseEntityService<T> {
     T update(T t);
 
     void delete(String id);
+
+
 
 }

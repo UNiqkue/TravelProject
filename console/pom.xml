@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>console</artifactId>
+    <artifactId>controller</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.netcracker</groupId>

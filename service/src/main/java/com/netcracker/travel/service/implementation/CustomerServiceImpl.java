@@ -10,6 +10,9 @@ import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.service.BaseEntityService;
 import com.netcracker.travel.service.SearchTourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, SearchTourService {
+public class CustomerServiceImpl implements UserDetailsService, BaseEntityService<CustomerDto>, SearchTourService {
 
     private final TourRepository tourRepository;
     private final CustomerRepository customerRepository;
@@ -50,8 +53,13 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
     }
 
     @Transactional
-    public CustomerDto getByUsername(String username) {
+    public CustomerDto getByName(String username) {
         return customerConverter.convert(customerRepository.findByUsername(username));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return null;
     }
 
     @Transactional
@@ -166,5 +174,6 @@ public class CustomerServiceImpl implements BaseEntityService<CustomerDto>, Sear
             throw new PhoneNumberException("Invalid phone number");
         }
     }
+
 
 }

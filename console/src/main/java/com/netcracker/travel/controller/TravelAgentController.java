@@ -17,7 +17,7 @@ import java.util.List;
 
 @Api
 @RestController
-@RequestMapping("/travelAgents")
+@RequestMapping("/agents")
 public class TravelAgentController {
 
     private final TravelAgentServiceImpl travelAgentService;
