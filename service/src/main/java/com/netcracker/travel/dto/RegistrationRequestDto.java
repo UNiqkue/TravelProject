@@ -1,5 +1,7 @@
 package com.netcracker.travel.dto;
 
+import lombok.Data;
+
 import java.sql.Date;
 
 public class RegistrationRequestDto {

@@ -1,5 +1,6 @@
 package com.netcracker.travel.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.netcracker.travel.domain.abstracts.User;
 import com.netcracker.travel.domain.enumeration.Role;
 
@@ -24,6 +25,7 @@ public class Customer extends User {
     @Column(name = "passport_info")
     private String passportInfo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Tour> tours;
 

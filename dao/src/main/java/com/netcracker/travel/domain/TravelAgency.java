@@ -1,5 +1,6 @@
 package com.netcracker.travel.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.netcracker.travel.domain.abstracts.BaseEntity;
 
 import javax.persistence.*;
@@ -13,9 +14,11 @@ public class TravelAgency extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "travelAgency")
     private List<TravelAgent> travelAgents;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "travelAgency")
     private List<Tour> tours;
 

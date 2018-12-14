@@ -9,6 +9,9 @@ import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.service.BaseEntityService;
 import com.netcracker.travel.service.SearchTourService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,12 +27,18 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 @Service
 public class CustomerServiceImpl implements UserDetailsService, BaseEntityService<CustomerDto>, SearchTourService {
 
+    private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+
     private final TourRepository tourRepository;
+
     private final CustomerRepository customerRepository;
+
     private final CustomerConverter customerConverter;
+
     private final TourConverter tourConverter;
 
     @Autowired
@@ -42,6 +51,7 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
 
     @Transactional
     public List<CustomerDto> getAll() {
+        logger.info("CustomerServiceImpl findAll");
         return StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                 .map(customerConverter::convert)
                 .collect(Collectors.toList());
@@ -49,33 +59,40 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
 
     @Transactional
     public CustomerDto getById(String id) {
+        logger.info("CustomerServiceImpl getById user with id: {} ", id);
         return customerConverter.convert(customerRepository.findOne(id));
     }
 
     @Transactional
     public CustomerDto getByName(String username) {
+        logger.info("CustomerServiceImpl getByName user with username: {}", username);
         return customerConverter.convert(customerRepository.findByUsername(username));
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
     }
 
     @Transactional
     public CustomerDto save(CustomerDto customerDto) {
+        logger.info("CustomerServiceImpl save user: {}", customerDto.toString());
         customerDto.setId(UUID.randomUUID().toString());
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
     @Transactional
-    public void delete(String id) {
-        customerRepository.delete(id);
+    public CustomerDto update(CustomerDto customerDto) {
+        logger.info("CustomerServiceImpl update user: {}", customerDto.toString());
+        return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
     @Transactional
-    public CustomerDto update(CustomerDto customerDto) {
-        return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
+    public void delete(String id) {
+        logger.info("CustomerServiceImpl delete user with id: {} ", id);
+        customerRepository.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("CustomerServiceImpl loadUserByUsername customer with username: {}", username);
+        return (UserDetails) customerRepository.findByUsername(username);
     }
 
 

@@ -13,6 +13,9 @@ import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TravelAgentRepository;
 import com.netcracker.travel.service.RegistrationService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +25,22 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
 
+    private final Logger logger = LoggerFactory.getLogger(RegistrationServiceImpl.class);
+
     private final AdminRepository adminRepository;
+
     private final TravelAgentRepository travelAgentRepository;
+
     private final AdminConverter adminConverter;
+
     private final TravelAgentConverter travelAgentConverter;
+
     private final CustomerRepository customerRepository;
+
     private final CustomerConverter customerConverter;
 
     @Autowired
@@ -44,6 +55,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Transactional
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
+        logger.info("RegistrationServiceImpl registration customer");
         if (checkExisting(registrationRequestDto)) {
             CustomerDto customerDto = new CustomerDto();
             BeanUtils.copyProperties(registrationRequestDto, customerDto);
@@ -61,11 +73,11 @@ public class RegistrationServiceImpl implements RegistrationService {
             checkEmailExist(registrationRequestDto.getEmail());
             return true;
         } catch (UsernameExistException e) {
-            System.out.println("User with such username exists");
+            logger.info("User with such username exists");
         } catch (EmailExistException e) {
-            System.out.println("User with such email exists");
+            logger.info("User with such email exists");
         } catch (NoExistUserException e) {
-            System.out.println("You can't register (invalid username, email or other user data)");
+            logger.info("You can't register (invalid username, email or other user data)");
         }
         return false;
     }
