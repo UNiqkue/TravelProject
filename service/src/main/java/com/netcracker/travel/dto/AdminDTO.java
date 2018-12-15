@@ -1,6 +1,5 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.domain.TravelAgency;
 import com.netcracker.travel.domain.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TravelAgentDto {
+public class AdminDTO {
 
     private String id;
 
@@ -27,12 +26,6 @@ public class TravelAgentDto {
 
     private String activationCode;
 
-    private String phoneNumber;
-
-    private String position;
-
     private Role role;
-
-    private TravelAgency travelAgency;
 
 }

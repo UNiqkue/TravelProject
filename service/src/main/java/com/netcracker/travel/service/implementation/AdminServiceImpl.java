@@ -1,7 +1,7 @@
 package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.AdminConverter;
-import com.netcracker.travel.dto.AdminDto;
+import com.netcracker.travel.dto.AdminDTO;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Service
 @Transactional
-public class AdminServiceImpl implements BaseService<AdminDto> {
+public class AdminServiceImpl implements BaseService<AdminDTO> {
 
     private final AdminRepository adminRepository;
 
@@ -29,30 +29,30 @@ public class AdminServiceImpl implements BaseService<AdminDto> {
         this.adminConverter = adminConverter;
     }
 
-    public List<AdminDto> getAll() {
+    public List<AdminDTO> getAll() {
         log.info("AdminServiceImpl findAll");
         return StreamSupport.stream(adminRepository.findAll().spliterator(), false)
                 .map(adminConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    public AdminDto getByName(String username) {
+    public AdminDTO getByName(String username) {
         log.info("AdminServiceImpl getByName admin with username: {}", username);
         return adminConverter.convert(adminRepository.findByUsername(username));
     }
 
-    public AdminDto getById(String id) {
+    public AdminDTO getById(String id) {
         log.info("AdminServiceImpl getById admin with id: {} ", id);
         return adminConverter.convert(adminRepository.findByUsername(id));
     }
 
-    public AdminDto save(AdminDto adminDto) {
+    public AdminDTO save(AdminDTO adminDto) {
         log.info("AdminServiceImpl save admin: {}", adminDto.toString());
         adminDto.setId(UUID.randomUUID().toString());
         return adminConverter.convert(adminRepository.save(adminConverter.convert(adminDto)));
     }
 
-    public AdminDto update(AdminDto adminDto) {
+    public AdminDTO update(AdminDTO adminDto) {
         log.info("AdminServiceImpl update admin: {}", adminDto.toString());
         return adminConverter.convert(adminRepository.save(adminConverter.convert(adminDto)));
     }

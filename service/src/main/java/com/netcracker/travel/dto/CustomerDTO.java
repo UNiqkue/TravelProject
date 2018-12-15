@@ -1,5 +1,6 @@
 package com.netcracker.travel.dto;
 
+import com.netcracker.travel.domain.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,9 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationRequestDto {
+public class CustomerDTO {
+
+    private String id;
 
     private String firstName;
 
@@ -32,5 +35,7 @@ public class RegistrationRequestDto {
     private String passportInfo;
 
     private Date dateOfBirth;
+
+    private Role role;
 
 }

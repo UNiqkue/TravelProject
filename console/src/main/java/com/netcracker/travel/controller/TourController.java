@@ -1,13 +1,12 @@
 package com.netcracker.travel.controller;
 
-import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.dto.TourDTO;
 import com.netcracker.travel.service.implementation.TourServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,16 +31,16 @@ public class TourController {
     @ApiOperation(value = "Gets all tours", nickname = "TourController.getAllTours")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tours")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TourDto>> getAllTours() {
+    public ResponseEntity<List<TourDTO>> getAllTours() {
         log.info("TourController getAllTours");
-        List<TourDto> tours = tourService.getAll();
+        List<TourDTO> tours = tourService.getAll();
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Creates tour", nickname = "TourController.addTour")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Tour is created")})
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addTour(@RequestBody TourDto tourDto) {
+    public ResponseEntity<String> addTour(@RequestBody TourDTO tourDto) {
         log.info("TourController addTour: {}", tourDto.toString());
         try {
             String id = tourService.save(tourDto).getId();
@@ -54,7 +53,7 @@ public class TourController {
     @ApiOperation(value = "Update tour", nickname = "TourController.updateTour")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Tour is updated")})
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateTour(@PathVariable("id") String id, @RequestBody TourDto tourDto) {
+    public ResponseEntity<String> updateTour(@PathVariable("id") String id, @RequestBody TourDTO tourDto) {
         log.info("TourController update tour: {}", tourDto.toString());
         try {
             tourDto.setId(id);
@@ -69,9 +68,9 @@ public class TourController {
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getTour")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TourDto> getTour(@PathVariable("id") String id) {
+    public ResponseEntity<TourDTO> getTour(@PathVariable("id") String id) {
         log.info("TourController getTour by id: {} ", id);
-        TourDto tour = tourService.getById(id);
+        TourDTO tour = tourService.getById(id);
         if(tour == null){
             return new ResponseEntity<>(tour, HttpStatus.NOT_FOUND);
         }

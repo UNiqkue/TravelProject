@@ -1,13 +1,13 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.domain.TravelAgent;
-import com.netcracker.travel.dto.TravelAgentDto;
+import com.netcracker.travel.dto.TravelAgentDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TravelAgentConverter {
 
-    public TravelAgent convert(TravelAgentDto travelAgentDto) {
+    public TravelAgent convert(TravelAgentDTO travelAgentDto) {
         TravelAgent travelAgent = new TravelAgent();
         travelAgent.setId(travelAgentDto.getId());
         travelAgent.setFirstName(travelAgentDto.getFirstName());
@@ -22,8 +22,8 @@ public class TravelAgentConverter {
         return travelAgent;
     }
 
-    public TravelAgentDto convert(TravelAgent travelAgent) {
-        TravelAgentDto travelAgentDto = new TravelAgentDto();
+    public TravelAgentDTO convert(TravelAgent travelAgent) {
+        TravelAgentDTO travelAgentDto = new TravelAgentDTO();
         travelAgentDto.setId(travelAgent.getId());
         travelAgentDto.setFirstName(travelAgent.getFirstName());
         travelAgentDto.setLastName(travelAgent.getLastName());

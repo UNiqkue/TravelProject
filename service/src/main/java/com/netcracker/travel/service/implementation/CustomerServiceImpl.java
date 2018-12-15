@@ -2,8 +2,8 @@ package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
-import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.dto.CustomerDTO;
+import com.netcracker.travel.dto.TourDTO;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TourRepository;
@@ -25,7 +25,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Transactional
 @Service
-public class CustomerServiceImpl implements BaseService<CustomerDto>, SearchTourService {
+public class CustomerServiceImpl implements BaseService<CustomerDTO>, SearchTourService {
 
     private final TourRepository tourRepository;
 
@@ -43,30 +43,30 @@ public class CustomerServiceImpl implements BaseService<CustomerDto>, SearchTour
         this.tourConverter = tourConverter;
     }
 
-    public List<CustomerDto> getAll() {
+    public List<CustomerDTO> getAll() {
         log.info("CustomerServiceImpl findAll");
         return StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                 .map(customerConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    public CustomerDto getById(String id) {
+    public CustomerDTO getById(String id) {
         log.info("CustomerServiceImpl getById user with id: {} ", id);
         return customerConverter.convert(customerRepository.findOne(id));
     }
 
-    public CustomerDto getByName(String username) {
+    public CustomerDTO getByName(String username) {
         log.info("CustomerServiceImpl getByName user with username: {}", username);
         return customerConverter.convert(customerRepository.findByUsername(username));
     }
 
-    public CustomerDto save(CustomerDto customerDto) {
+    public CustomerDTO save(CustomerDTO customerDto) {
         log.info("CustomerServiceImpl save user: {}", customerDto.toString());
         customerDto.setId(UUID.randomUUID().toString());
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
-    public CustomerDto update(CustomerDto customerDto) {
+    public CustomerDTO update(CustomerDTO customerDto) {
         log.info("CustomerServiceImpl update user: {}", customerDto.toString());
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
@@ -80,15 +80,15 @@ public class CustomerServiceImpl implements BaseService<CustomerDto>, SearchTour
     /**
      * viewOrderedTours
      **/
-    public List<TourDto> watchTours(UUID id) {
+    public List<TourDTO> watchTours(UUID id) {
         return/* tourRepository.findAllByCustomerId(id)
                 .stream()
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());*/ null;
     }
 
-    public TourDto buyTour(UUID id, UUID customerId) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
+    public TourDTO buyTour(UUID id, UUID customerId) {
+        TourDTO tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         if (customerId.equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
             tourDto.setCustomer(customerRepository.findById(customerId.toString()));
             tourDto.setFree(false);
@@ -100,8 +100,8 @@ public class CustomerServiceImpl implements BaseService<CustomerDto>, SearchTour
         return tourDto;
     }
 
-    public TourDto cancelTour(UUID tourId, UUID userId) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId.toString()));
+    public TourDTO cancelTour(UUID tourId, UUID userId) {
+        TourDTO tourDto = tourConverter.convert(tourRepository.getById(tourId.toString()));
         if (userId.equals(tourDto.getCustomer().getId())) {
             tourDto = tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
         } else {
@@ -110,42 +110,42 @@ public class CustomerServiceImpl implements BaseService<CustomerDto>, SearchTour
         return tourDto;
     }
 
-    public List<TourDto> searchTourByName(String name) {
+    public List<TourDTO> searchTourByName(String name) {
         return tourRepository.findByName(name)
                 .stream()
                 .map(tourConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByStartDate(Date startDate) {
+    public List<TourDTO> searchTourByStartDate(Date startDate) {
         return tourRepository.findByStartDate(startDate)
                 .stream()
                 .map(tourConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByEndDate(Date endDate) {
+    public List<TourDTO> searchTourByEndDate(Date endDate) {
         return tourRepository.findByEndDate(endDate)
                 .stream()
                 .map(tourConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByType(String type) {
+    public List<TourDTO> searchTourByType(String type) {
         return tourRepository.findByType(type)
                 .stream()
                 .map(tourConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByCountry(String country) {
+    public List<TourDTO> searchTourByCountry(String country) {
         return tourRepository.findByCountry(country)
                 .stream()
                 .map(tourConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    public List<TourDto> searchTourByTravelAgency(String name) {
+    public List<TourDTO> searchTourByTravelAgency(String name) {
         return/* tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
                 .stream()
                 .map(tourConverter::convert)

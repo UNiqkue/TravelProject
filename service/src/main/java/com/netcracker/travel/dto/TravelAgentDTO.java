@@ -1,18 +1,17 @@
 package com.netcracker.travel.dto;
 
+import com.netcracker.travel.domain.TravelAgency;
 import com.netcracker.travel.domain.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDto {
+public class TravelAgentDTO {
 
     private String id;
 
@@ -30,12 +29,10 @@ public class CustomerDto {
 
     private String phoneNumber;
 
-    private String cardNumber;
-
-    private String passportInfo;
-
-    private Date dateOfBirth;
+    private String position;
 
     private Role role;
+
+    private TravelAgency travelAgency;
 
 }

@@ -23,7 +23,7 @@ public class AuthenticationController {
 //    @ApiOperation(value = "Login Customer", nickname = "AuthenticationController.addCustomer")
 //    @ApiResponses(value = {@ApiResponse(code = 200, message = "Good")})
 //    @RequestMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-//    public ResponseEntity<CustomerDto> addCustomer(@RequestBody LoginRequestDto loginRequestDto) {
+//    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody LoginRequestDTO loginRequestDto) {
 //        System.out.println(loginRequestDto.getPassword() + " " + loginRequestDto.getUsername());
 //        authenticationService.loginCustomer(loginRequestDto);
 //        return new ResponseEntity<>(HttpStatus.OK);
@@ -32,7 +32,7 @@ public class AuthenticationController {
 //    @ApiOperation(value = "Login Admin", nickname = "AuthenticationController.addAdmin")
 //    @ApiResponses(value = {@ApiResponse(code = 200, message = "Good")})
 //    @RequestMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-//    public ResponseEntity<AdminDto> addAdmin(@RequestBody LoginRequestDto loginRequestDto) {
+//    public ResponseEntity<AdminDTO> addAdmin(@RequestBody LoginRequestDTO loginRequestDto) {
 //        System.out.println(loginRequestDto.getPassword() + " " + loginRequestDto.getUsername());
 //        authenticationService.loginAdmin(loginRequestDto);
 //        return new ResponseEntity<>(HttpStatus.OK);
@@ -41,7 +41,7 @@ public class AuthenticationController {
 //    @ApiOperation(value = "Login TravelAgent", nickname = "AuthenticationController.addTravelAgent")
 //    @ApiResponses(value = {@ApiResponse(code = 200, message = "Good")})
 //    @RequestMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-//    public ResponseEntity<TravelAgentDto> addTravelAgent(@RequestBody LoginRequestDto loginRequestDto) {
+//    public ResponseEntity<TravelAgentDTO> addTravelAgent(@RequestBody LoginRequestDTO loginRequestDto) {
 //        System.out.println(loginRequestDto.getPassword() + " " + loginRequestDto.getUsername());
 //        authenticationService.loginTravelAgent(loginRequestDto);
 //        return new ResponseEntity<>(HttpStatus.OK);

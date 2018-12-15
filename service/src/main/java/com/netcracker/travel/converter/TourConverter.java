@@ -1,13 +1,13 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.domain.Tour;
-import com.netcracker.travel.dto.TourDto;
+import com.netcracker.travel.dto.TourDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TourConverter {
 
-    public Tour convert(TourDto tourDto) {
+    public Tour convert(TourDTO tourDto) {
         Tour tour = new Tour();
         tour.setId(tourDto.getId());
         tour.setName(tourDto.getName());
@@ -25,8 +25,8 @@ public class TourConverter {
         return tour;
     }
 
-    public TourDto convert(Tour tour) {
-        TourDto tourDto = new TourDto();
+    public TourDTO convert(Tour tour) {
+        TourDTO tourDto = new TourDTO();
         tourDto.setId(tour.getId());
         tourDto.setName(tour.getName());
         tourDto.setDescription(tour.getDescription());

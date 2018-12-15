@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TravelAgencyDto {
+public class TravelAgencyDTO {
 
     private String id;
 

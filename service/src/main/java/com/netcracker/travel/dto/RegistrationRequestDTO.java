@@ -1,18 +1,17 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.domain.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
-
-    private String id;
+public class RegistrationRequestDTO {
 
     private String firstName;
 
@@ -26,6 +25,12 @@ public class AdminDto {
 
     private String activationCode;
 
-    private Role role;
+    private String phoneNumber;
+
+    private String cardNumber;
+
+    private String passportInfo;
+
+    private Date dateOfBirth;
 
 }

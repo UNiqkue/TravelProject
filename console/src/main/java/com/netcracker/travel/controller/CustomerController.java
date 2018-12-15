@@ -1,7 +1,7 @@
 package com.netcracker.travel.controller;
 
-import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.RegistrationRequestDto;
+import com.netcracker.travel.dto.CustomerDTO;
+import com.netcracker.travel.dto.RegistrationRequestDTO;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import com.netcracker.travel.service.implementation.RegistrationServiceImpl;
 import io.swagger.annotations.Api;
@@ -36,16 +36,16 @@ public class CustomerController {
     @ApiOperation(value = "Gets all customers", nickname = "CustomerController.getAllCustomers")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Customers")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CustomerDto>> getAllCustomers() {
+    public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
         log.info("CustomerController getAllCustomers");
-        List<CustomerDto> tours = customerService.getAll();
+        List<CustomerDTO> tours = customerService.getAll();
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Creates customer", nickname = "CustomerController.addCustomer")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Customer is created")})
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addCustomer(@RequestBody RegistrationRequestDto registrationRequestDto) {
+    public ResponseEntity<String> addCustomer(@RequestBody RegistrationRequestDTO registrationRequestDto) {
         log.info("CustomerController addCustomer: {}", registrationRequestDto.toString());
         try {
             String id = registrationService.registration(registrationRequestDto).getId();
@@ -58,7 +58,7 @@ public class CustomerController {
     @ApiOperation(value = "Update customer", nickname = "CustomerController.updateCustomer")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Customer is updated")})
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateCustomer(@PathVariable("id") String id, @RequestBody CustomerDto customerDto) {
+    public ResponseEntity<String> updateCustomer(@PathVariable("id") String id, @RequestBody CustomerDTO customerDto) {
         log.info("CustomerController update user: {}", customerDto.toString());
         try {
             customerDto.setId(id);
@@ -72,9 +72,9 @@ public class CustomerController {
     @ApiOperation(value = "Gets specific customer", nickname = "CustomerController.getCustomer")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Customer")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomerDto> getCustomer(@PathVariable("id") String id) {
+    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable("id") String id) {
         log.info("CustomerController getCustomer by id: {} ", id);
-        CustomerDto customerDto = customerService.getById(id);
+        CustomerDTO customerDto = customerService.getById(id);
         if(customerDto == null){
             return new ResponseEntity<>(customerDto, HttpStatus.NOT_FOUND);
         }

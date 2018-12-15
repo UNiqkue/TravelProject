@@ -1,12 +1,12 @@
 package com.netcracker.travel.service;
 
-import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.RegistrationRequestDto;
+import com.netcracker.travel.dto.CustomerDTO;
+import com.netcracker.travel.dto.RegistrationRequestDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface RegistrationService {
 
-    CustomerDto registration(RegistrationRequestDto registrationRequestDto);
+    CustomerDTO registration(RegistrationRequestDTO registrationRequestDto);
 
 }

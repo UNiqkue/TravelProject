@@ -1,14 +1,14 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.domain.Customer;
-import com.netcracker.travel.dto.CustomerDto;
+import com.netcracker.travel.dto.CustomerDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CustomerConverter {
 
-    public Customer convert(CustomerDto customerDto) {
+    public Customer convert(CustomerDTO customerDto) {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
      /*   customer.setId(customerDto.getId());
@@ -25,8 +25,8 @@ public class CustomerConverter {
         return customer;
     }
 
-    public CustomerDto convert(Customer customer) {
-        CustomerDto customerDto = new CustomerDto();
+    public CustomerDTO convert(Customer customer) {
+        CustomerDTO customerDto = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDto);
       /*  customerDto.setId(customer.getId());
         customerDto.setFirstName(customer.getFirstName());

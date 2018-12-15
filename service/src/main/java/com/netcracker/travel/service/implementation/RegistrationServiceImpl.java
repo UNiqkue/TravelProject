@@ -4,8 +4,8 @@ import com.netcracker.travel.converter.AdminConverter;
 import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TravelAgentConverter;
 import com.netcracker.travel.domain.enumeration.Role;
-import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.RegistrationRequestDto;
+import com.netcracker.travel.dto.CustomerDTO;
+import com.netcracker.travel.dto.RegistrationRequestDTO;
 import com.netcracker.travel.exception.EmailExistException;
 import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.UsernameExistException;
@@ -50,10 +50,10 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.customerConverter = customerConverter;
     }
 
-    public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
+    public CustomerDTO registration(RegistrationRequestDTO registrationRequestDto) {
         log.info("RegistrationServiceImpl registration customer");
         if (checkExisting(registrationRequestDto)) {
-            CustomerDto customerDto = new CustomerDto();
+            CustomerDTO customerDto = new CustomerDTO();
             BeanUtils.copyProperties(registrationRequestDto, customerDto);
             customerDto.setId(UUID.randomUUID().toString());
             customerDto.setRole(Role.GUEST);
@@ -63,7 +63,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
     }
 
-    private boolean checkExisting(RegistrationRequestDto registrationRequestDto) {
+    private boolean checkExisting(RegistrationRequestDTO registrationRequestDto) {
         try {
             checkUsernameExist(registrationRequestDto.getUsername());
             checkEmailExist(registrationRequestDto.getEmail());

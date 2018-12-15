@@ -1,13 +1,13 @@
 package com.netcracker.travel.converter;
 
 import com.netcracker.travel.domain.Admin;
-import com.netcracker.travel.dto.AdminDto;
+import com.netcracker.travel.dto.AdminDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AdminConverter {
 
-    public Admin convert(AdminDto adminDto) {
+    public Admin convert(AdminDTO adminDto) {
         Admin admin = new Admin();
         admin.setId(adminDto.getId());
         admin.setFirstName(adminDto.getFirstName());
@@ -20,8 +20,8 @@ public class AdminConverter {
         return admin;
     }
 
-    public AdminDto convert(Admin admin) {
-        AdminDto adminDto = new AdminDto();
+    public AdminDTO convert(Admin admin) {
+        AdminDTO adminDto = new AdminDTO();
         adminDto.setId(admin.getId());
         adminDto.setFirstName(admin.getFirstName());
         adminDto.setLastName(admin.getLastName());

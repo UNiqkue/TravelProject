@@ -1,9 +1,9 @@
 package com.netcracker.travel.service.implementation;
 
-import com.netcracker.travel.dto.AdminDto;
-import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.dto.TravelAgentDto;
+import com.netcracker.travel.dto.AdminDTO;
+import com.netcracker.travel.dto.CustomerDTO;
+import com.netcracker.travel.dto.LoginRequestDTO;
+import com.netcracker.travel.dto.TravelAgentDTO;
 import com.netcracker.travel.service.AuthenticationService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public CustomerDto loginCustomer(@NonNull LoginRequestDto loginRequestDto) {
+    public CustomerDTO loginCustomer(@NonNull LoginRequestDTO loginRequestDto) {
 //        bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        if (customerServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
 //            return null;
@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        }
     }
 
-    public AdminDto loginAdmin(@NonNull LoginRequestDto loginRequestDto) {
+    public AdminDTO loginAdmin(@NonNull LoginRequestDTO loginRequestDto) {
 //        bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        if (adminServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
 //            return null;
@@ -62,7 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        }
     }
 
-    public TravelAgentDto loginTravelAgent(@NonNull LoginRequestDto loginRequestDto) {
+    public TravelAgentDTO loginTravelAgent(@NonNull LoginRequestDTO loginRequestDto) {
 //        bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        if (travelAgentServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
 //            return null;

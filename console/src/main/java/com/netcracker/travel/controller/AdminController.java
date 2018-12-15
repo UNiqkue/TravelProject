@@ -1,6 +1,6 @@
 package com.netcracker.travel.controller;
 
-import com.netcracker.travel.dto.AdminDto;
+import com.netcracker.travel.dto.AdminDTO;
 import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,16 +32,16 @@ public class AdminController {
     @ApiOperation(value = "Gets all admins", nickname = "AdminController.getAllAdmins")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Admins")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<AdminDto>> getAllAdmins() {
+    public ResponseEntity<List<AdminDTO>> getAllAdmins() {
         log.info("AdminController getAllAdmins");
-        List<AdminDto> tours = adminService.getAll();
+        List<AdminDTO> tours = adminService.getAll();
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Creates admin", nickname = "AdminController.addAdmin")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Admin is created")})
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addAdmin(@RequestBody AdminDto adminDto) {
+    public ResponseEntity<String> addAdmin(@RequestBody AdminDTO adminDto) {
         try {
             log.info("AdminController addAdmin: {}", adminDto.toString());
             String id = adminService.save(adminDto).getId();
@@ -54,10 +54,10 @@ public class AdminController {
     @ApiOperation(value = "Update Admin", nickname = "AdminController.updateAdmin")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Admin is updated")})
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateAdmin(@PathVariable("id") String id, @RequestBody AdminDto adminDto) {
+    public ResponseEntity<String> updateAdmin(@PathVariable("id") String id, @RequestBody AdminDTO adminDto) {
         try {
             log.info("AdminController update admin: {}", adminDto.toString());
-            AdminDto adminFromDb = adminService.getById(id);
+            AdminDTO adminFromDb = adminService.getById(id);
             BeanUtils.copyProperties(adminDto, adminFromDb, "id");
             adminDto = adminService.update(adminFromDb);
             return new ResponseEntity<>(adminDto.getId(), HttpStatus.OK);
@@ -69,9 +69,9 @@ public class AdminController {
     @ApiOperation(value = "Gets specific admin", nickname = "AdminController.getAdmin")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Admin")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AdminDto> getAdmin(@PathVariable("id") String id) {
+    public ResponseEntity<AdminDTO> getAdmin(@PathVariable("id") String id) {
         log.info("AdminController getAdmin with id: {} ", id);
-        AdminDto adminDto = adminService.getById(id);
+        AdminDTO adminDto = adminService.getById(id);
         if(adminDto == null){
             return new ResponseEntity<>(adminDto, HttpStatus.NOT_FOUND);
         }

@@ -1,6 +1,6 @@
 package com.netcracker.travel.controller;
 
-import com.netcracker.travel.dto.TravelAgencyDto;
+import com.netcracker.travel.dto.TravelAgencyDTO;
 import com.netcracker.travel.service.implementation.TravelAgencyServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,16 +31,16 @@ public class TravelAgencyController {
     @ApiOperation(value = "Gets all travelAgencies", nickname = "TravelAgencyController.getAllTravelAgencies")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgencies")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TravelAgencyDto>> getAllTravelAgencies() {
+    public ResponseEntity<List<TravelAgencyDTO>> getAllTravelAgencies() {
         log.info("TravelAgencyController getAllTravelAgencies");
-        List<TravelAgencyDto> travelAgencies = travelAgencyService.getAll();
+        List<TravelAgencyDTO> travelAgencies = travelAgencyService.getAll();
         return new ResponseEntity<>(travelAgencies, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Creates travelAgency", nickname = "TravelAgencyController.addTravelAgency")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgency is created")})
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addTravelAgency(@RequestBody TravelAgencyDto travelAgencyDto) {
+    public ResponseEntity<String> addTravelAgency(@RequestBody TravelAgencyDTO travelAgencyDto) {
         log.info("TravelAgencyController addTravelAgency: {}", travelAgencyDto.toString());
         try {
             String id = travelAgencyService.save(travelAgencyDto).getId();
@@ -55,7 +55,7 @@ public class TravelAgencyController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateTravelAgency(
             @PathVariable String id,
-            @RequestBody TravelAgencyDto travelAgencyDto) {
+            @RequestBody TravelAgencyDTO travelAgencyDto) {
         log.info("TravelAgencyController update travelAgency: {}", travelAgencyDto.toString());
         try {
             travelAgencyDto.setId(id);
@@ -69,9 +69,9 @@ public class TravelAgencyController {
     @ApiOperation(value = "Gets specific travelAgency", nickname = "TravelAgencyController.getTravelAgency")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgency")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TravelAgencyDto> getTravelAgency(@PathVariable("id") String id) {
+    public ResponseEntity<TravelAgencyDTO> getTravelAgency(@PathVariable("id") String id) {
         log.info("TravelAgencyController getTravelAgency by id: {} ", id);
-        TravelAgencyDto travelAgency = travelAgencyService.getById(id);
+        TravelAgencyDTO travelAgency = travelAgencyService.getById(id);
         if (travelAgency == null) {
             return new ResponseEntity<>(travelAgency, HttpStatus.NOT_FOUND);
         }

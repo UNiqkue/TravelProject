@@ -14,7 +14,7 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TourDto {
+public class TourDTO {
 
     private String id;
 

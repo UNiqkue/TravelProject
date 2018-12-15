@@ -1,18 +1,18 @@
 package com.netcracker.travel.service;
 
-import com.netcracker.travel.dto.AdminDto;
-import com.netcracker.travel.dto.CustomerDto;
-import com.netcracker.travel.dto.LoginRequestDto;
-import com.netcracker.travel.dto.TravelAgentDto;
+import com.netcracker.travel.dto.AdminDTO;
+import com.netcracker.travel.dto.CustomerDTO;
+import com.netcracker.travel.dto.LoginRequestDTO;
+import com.netcracker.travel.dto.TravelAgentDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface AuthenticationService {
 
-    CustomerDto loginCustomer(LoginRequestDto loginRequestDto);
+    CustomerDTO loginCustomer(LoginRequestDTO loginRequestDto);
 
-    AdminDto loginAdmin(LoginRequestDto loginRequestDto);
+    AdminDTO loginAdmin(LoginRequestDTO loginRequestDto);
 
-    TravelAgentDto loginTravelAgent(LoginRequestDto loginRequestDto);
+    TravelAgentDTO loginTravelAgent(LoginRequestDTO loginRequestDto);
 
 }
