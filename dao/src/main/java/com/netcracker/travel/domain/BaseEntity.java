@@ -1,11 +1,16 @@
 package com.netcracker.travel.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class BaseEntity {
 
     @Id
@@ -13,20 +18,5 @@ public abstract class BaseEntity {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 36)
     private String id;
-
-    public BaseEntity() {
-    }
-
-    public BaseEntity(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
 }

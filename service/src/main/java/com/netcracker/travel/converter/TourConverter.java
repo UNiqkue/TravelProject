@@ -31,7 +31,7 @@ public class TourConverter {
         tourDto.setName(tour.getName());
         tourDto.setDescription(tour.getDescription());
         tourDto.setPrice(tour.getPrice());
-        tourDto.setType(tour.getType().toString());
+        tourDto.setType(tour.getType());
         tourDto.setCountry(tour.getCountry());
         tourDto.setStartDate(tour.getStartDate());
         tourDto.setEndDate(tour.getEndDate());
