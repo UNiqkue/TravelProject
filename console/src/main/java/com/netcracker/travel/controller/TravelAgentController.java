@@ -7,9 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,8 +21,6 @@ import java.util.List;
 @RequestMapping("/agents")
 public class TravelAgentController {
 
-    private final Logger logger = LoggerFactory.getLogger(TravelAgentController.class);
-
     private final TravelAgentServiceImpl travelAgentService;
 
     @Autowired
@@ -37,7 +32,7 @@ public class TravelAgentController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgents")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TravelAgentDto>> getAllTravelAgents() {
-        logger.info("TravelAgentController getAllTravelAgents");
+        log.info("TravelAgentController getAllTravelAgents");
         List<TravelAgentDto> travelAgents = travelAgentService.getAll();
         return new ResponseEntity<>(travelAgents, HttpStatus.OK);
     }
@@ -46,7 +41,7 @@ public class TravelAgentController {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is created")})
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addTravelAgent(@RequestBody TravelAgentDto travelAgentDto) {
-        logger.info("TravelAgentController addTravelAgent: {}", travelAgentDto.toString());
+        log.info("TravelAgentController addTravelAgent: {}", travelAgentDto.toString());
         try {
             String id = travelAgentService.save(travelAgentDto).getId();
             return new ResponseEntity<>(id, HttpStatus.CREATED);
@@ -59,11 +54,10 @@ public class TravelAgentController {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is updated")})
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateTravelAgent(@PathVariable("id") String id, @RequestBody TravelAgentDto travelAgentDto) {
-        logger.info("TravelAgentController updateTravelAgent: {}", travelAgentDto.toString());
+        log.info("TravelAgentController updateTravelAgent: {}", travelAgentDto.toString());
         try {
-            TravelAgentDto travelAgentDtoToChange = travelAgentService.getById(id);
-            BeanUtils.copyProperties(travelAgentDto, travelAgentDtoToChange, "id");
-            travelAgentDto = travelAgentService.update(travelAgentDtoToChange);
+            travelAgentDto.setId(id);
+            travelAgentDto = travelAgentService.update(travelAgentDto);
             return new ResponseEntity<>(travelAgentDto.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
@@ -74,7 +68,7 @@ public class TravelAgentController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgent")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TravelAgentDto> getTravelAgent(@PathVariable("id") String id) {
-        logger.info("TravelAgentController getTravelAgent by id: {} ", id);
+        log.info("TravelAgentController getTravelAgent by id: {} ", id);
         TravelAgentDto travelAgent = travelAgentService.getById(id);
         if(travelAgent == null){
             return new ResponseEntity<>(travelAgent, HttpStatus.NOT_FOUND);
@@ -86,7 +80,7 @@ public class TravelAgentController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgent is deleted")})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteTravelAgent(@PathVariable("id") String id) {
-        logger.info("TravelAgentController delete travelAgent by id: {} ", id);
+        log.info("TravelAgentController delete travelAgent by id: {} ", id);
         try {
             travelAgentService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);

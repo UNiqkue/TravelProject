@@ -1,4 +1,4 @@
-package com.netcracker.travel.domain.abstracts;
+package com.netcracker.travel.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 

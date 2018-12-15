@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface BaseEntityService<T>{
+public interface BaseService<T>{
 
     List<T> getAll();
 

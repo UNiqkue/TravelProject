@@ -7,8 +7,6 @@ import com.netcracker.travel.dto.TravelAgentDto;
 import com.netcracker.travel.service.AuthenticationService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,9 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
+@Transactional
 public class AuthenticationServiceImpl implements AuthenticationService {
-
-    private final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
     private final CustomerServiceImpl customerServiceImpl;
    
@@ -39,7 +36,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    @Transactional
     public CustomerDto loginCustomer(@NonNull LoginRequestDto loginRequestDto) {
 //        bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        if (customerServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
@@ -53,7 +49,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        }
     }
 
-    @Transactional
     public AdminDto loginAdmin(@NonNull LoginRequestDto loginRequestDto) {
 //        bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        if (adminServiceImpl.getByName(loginRequestDto.getUsername()) == null) {
@@ -67,7 +62,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        }
     }
 
-    @Transactional
     public TravelAgentDto loginTravelAgent(@NonNull LoginRequestDto loginRequestDto) {
 //        bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        if (travelAgentServiceImpl.getByName(loginRequestDto.getUsername()) == null) {

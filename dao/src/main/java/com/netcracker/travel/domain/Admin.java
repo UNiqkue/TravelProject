@@ -1,7 +1,5 @@
 package com.netcracker.travel.domain;
 
-import com.netcracker.travel.domain.abstracts.User;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

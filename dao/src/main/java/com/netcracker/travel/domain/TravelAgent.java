@@ -1,6 +1,5 @@
 package com.netcracker.travel.domain;
 
-import com.netcracker.travel.domain.abstracts.User;
 import com.netcracker.travel.domain.enumeration.Role;
 
 import javax.persistence.*;

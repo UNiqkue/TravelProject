@@ -24,4 +24,5 @@ public interface SearchTourService<T> {
     T buyTour(UUID id, UUID customerId);
 
     T cancelTour(UUID tourId, UUID customerId);
+
 }

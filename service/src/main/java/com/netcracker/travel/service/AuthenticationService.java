@@ -14,4 +14,5 @@ public interface AuthenticationService {
     AdminDto loginAdmin(LoginRequestDto loginRequestDto);
 
     TravelAgentDto loginTravelAgent(LoginRequestDto loginRequestDto);
+
 }

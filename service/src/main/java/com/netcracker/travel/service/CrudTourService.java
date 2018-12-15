@@ -19,4 +19,5 @@ public interface CrudTourService<T> {
     T makeDiscount(UUID id, Double price);
 
     T editTour(UUID id, String description);
+
 }

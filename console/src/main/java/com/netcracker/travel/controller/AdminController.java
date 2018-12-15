@@ -7,8 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +22,6 @@ import java.util.List;
 @RequestMapping("/admins")
 public class AdminController {
 
-    private final Logger logger = LoggerFactory.getLogger(AdminController.class);
-
     private final AdminServiceImpl adminService;
 
     @Autowired
@@ -37,7 +33,7 @@ public class AdminController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Admins")})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AdminDto>> getAllAdmins() {
-        logger.info("AdminController getAllAdmins");
+        log.info("AdminController getAllAdmins");
         List<AdminDto> tours = adminService.getAll();
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
@@ -47,7 +43,7 @@ public class AdminController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAdmin(@RequestBody AdminDto adminDto) {
         try {
-            logger.info("AdminController addAdmin: {}", adminDto.toString());
+            log.info("AdminController addAdmin: {}", adminDto.toString());
             String id = adminService.save(adminDto).getId();
             return new ResponseEntity<>(id, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -60,7 +56,7 @@ public class AdminController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateAdmin(@PathVariable("id") String id, @RequestBody AdminDto adminDto) {
         try {
-            logger.info("AdminController update admin: {}", adminDto.toString());
+            log.info("AdminController update admin: {}", adminDto.toString());
             AdminDto adminFromDb = adminService.getById(id);
             BeanUtils.copyProperties(adminDto, adminFromDb, "id");
             adminDto = adminService.update(adminFromDb);
@@ -74,7 +70,7 @@ public class AdminController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Admin")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminDto> getAdmin(@PathVariable("id") String id) {
-        logger.info("AdminController getAdmin with id: {} ", id);
+        log.info("AdminController getAdmin with id: {} ", id);
         AdminDto adminDto = adminService.getById(id);
         if(adminDto == null){
             return new ResponseEntity<>(adminDto, HttpStatus.NOT_FOUND);
@@ -86,7 +82,7 @@ public class AdminController {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Admin is deleted")})
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteAdmin(@PathVariable("id") String id) {
-        logger.info("AdminController delete admin with id: {} ", id);
+        log.info("AdminController delete admin with id: {} ", id);
         try {
             adminService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);

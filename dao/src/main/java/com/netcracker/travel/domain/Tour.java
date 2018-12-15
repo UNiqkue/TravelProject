@@ -1,6 +1,5 @@
 package com.netcracker.travel.domain;
 
-import com.netcracker.travel.domain.abstracts.BaseEntity;
 import com.netcracker.travel.domain.enumeration.TypeTour;
 
 import javax.persistence.*;

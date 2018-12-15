@@ -7,15 +7,10 @@ import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TourRepository;
-import com.netcracker.travel.service.BaseEntityService;
+import com.netcracker.travel.service.BaseService;
 import com.netcracker.travel.service.SearchTourService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,10 +23,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Slf4j
+@Transactional
 @Service
-public class CustomerServiceImpl implements UserDetailsService, BaseEntityService<CustomerDto>, SearchTourService {
-
-    private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
+public class CustomerServiceImpl implements BaseService<CustomerDto>, SearchTourService {
 
     private final TourRepository tourRepository;
 
@@ -49,58 +43,43 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
         this.tourConverter = tourConverter;
     }
 
-    @Transactional
     public List<CustomerDto> getAll() {
-        logger.info("CustomerServiceImpl findAll");
+        log.info("CustomerServiceImpl findAll");
         return StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                 .map(customerConverter::convert)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public CustomerDto getById(String id) {
-        logger.info("CustomerServiceImpl getById user with id: {} ", id);
+        log.info("CustomerServiceImpl getById user with id: {} ", id);
         return customerConverter.convert(customerRepository.findOne(id));
     }
 
-    @Transactional
     public CustomerDto getByName(String username) {
-        logger.info("CustomerServiceImpl getByName user with username: {}", username);
+        log.info("CustomerServiceImpl getByName user with username: {}", username);
         return customerConverter.convert(customerRepository.findByUsername(username));
     }
 
-    @Transactional
     public CustomerDto save(CustomerDto customerDto) {
-        logger.info("CustomerServiceImpl save user: {}", customerDto.toString());
+        log.info("CustomerServiceImpl save user: {}", customerDto.toString());
         customerDto.setId(UUID.randomUUID().toString());
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
-    @Transactional
     public CustomerDto update(CustomerDto customerDto) {
-        logger.info("CustomerServiceImpl update user: {}", customerDto.toString());
+        log.info("CustomerServiceImpl update user: {}", customerDto.toString());
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
-    @Transactional
     public void delete(String id) {
-        logger.info("CustomerServiceImpl delete user with id: {} ", id);
+        log.info("CustomerServiceImpl delete user with id: {} ", id);
         customerRepository.delete(id);
-    }
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("CustomerServiceImpl loadUserByUsername customer with username: {}", username);
-        return (UserDetails) customerRepository.findByUsername(username);
     }
 
 
     /**
      * viewOrderedTours
      **/
-
-    @Transactional
     public List<TourDto> watchTours(UUID id) {
         return/* tourRepository.findAllByCustomerId(id)
                 .stream()
@@ -108,7 +87,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
                 .collect(Collectors.toList());*/ null;
     }
 
-    @Transactional
     public TourDto buyTour(UUID id, UUID customerId) {
         TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         if (customerId.equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
@@ -122,7 +100,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
         return tourDto;
     }
 
-    @Transactional
     public TourDto cancelTour(UUID tourId, UUID userId) {
         TourDto tourDto = tourConverter.convert(tourRepository.getById(tourId.toString()));
         if (userId.equals(tourDto.getCustomer().getId())) {
@@ -133,7 +110,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
         return tourDto;
     }
 
-    @Transactional
     public List<TourDto> searchTourByName(String name) {
         return tourRepository.findByName(name)
                 .stream()
@@ -141,7 +117,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public List<TourDto> searchTourByStartDate(Date startDate) {
         return tourRepository.findByStartDate(startDate)
                 .stream()
@@ -149,7 +124,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public List<TourDto> searchTourByEndDate(Date endDate) {
         return tourRepository.findByEndDate(endDate)
                 .stream()
@@ -157,7 +131,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public List<TourDto> searchTourByType(String type) {
         return tourRepository.findByType(type)
                 .stream()
@@ -165,7 +138,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public List<TourDto> searchTourByCountry(String country) {
         return tourRepository.findByCountry(country)
                 .stream()
@@ -173,7 +145,6 @@ public class CustomerServiceImpl implements UserDetailsService, BaseEntityServic
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public List<TourDto> searchTourByTravelAgency(String name) {
         return/* tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
                 .stream()

@@ -1,7 +1,6 @@
 package com.netcracker.travel.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.netcracker.travel.domain.abstracts.BaseEntity;
 
 import javax.persistence.*;
 import java.util.List;

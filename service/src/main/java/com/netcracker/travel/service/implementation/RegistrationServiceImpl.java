@@ -14,8 +14,6 @@ import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TravelAgentRepository;
 import com.netcracker.travel.service.RegistrationService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +24,9 @@ import java.util.UUID;
 import java.util.stream.StreamSupport;
 
 @Slf4j
+@Transactional
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
-
-    private final Logger logger = LoggerFactory.getLogger(RegistrationServiceImpl.class);
 
     private final AdminRepository adminRepository;
 
@@ -53,9 +50,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         this.customerConverter = customerConverter;
     }
 
-    @Transactional
     public CustomerDto registration(RegistrationRequestDto registrationRequestDto) {
-        logger.info("RegistrationServiceImpl registration customer");
+        log.info("RegistrationServiceImpl registration customer");
         if (checkExisting(registrationRequestDto)) {
             CustomerDto customerDto = new CustomerDto();
             BeanUtils.copyProperties(registrationRequestDto, customerDto);
@@ -73,11 +69,11 @@ public class RegistrationServiceImpl implements RegistrationService {
             checkEmailExist(registrationRequestDto.getEmail());
             return true;
         } catch (UsernameExistException e) {
-            logger.info("User with such username exists");
+            log.info("User with such username exists");
         } catch (EmailExistException e) {
-            logger.info("User with such email exists");
+            log.info("User with such email exists");
         } catch (NoExistUserException e) {
-            logger.info("You can't register (invalid username, email or other user data)");
+            log.info("You can't register (invalid username, email or other user data)");
         }
         return false;
     }
