@@ -1,6 +1,9 @@
 package com.netcracker.travel.repository;
 
+import com.netcracker.travel.entity.Customer;
 import com.netcracker.travel.entity.Tour;
+import com.netcracker.travel.entity.TravelAgency;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +14,7 @@ import java.util.List;
 public interface TourRepository extends CrudRepository<Tour, String> {
     List<Tour> findByName(String name);
 
-    List<Tour> findByType(String type);
+    List<Tour> findByType(TypeTour type);
 
     List<Tour> findByCountry(String country);
 
@@ -20,6 +23,8 @@ public interface TourRepository extends CrudRepository<Tour, String> {
     List<Tour> findByEndDate(Date endDate);
 
     Tour getById(String id);
-  /*  List<Tour> findByTravelAgencyId(UUID id);
-    List<Tour> findAllByCustomerId(UUID id);*/
+
+    List<Tour> findByTravelAgency(TravelAgency travelAgency);
+
+    List<Tour> findAllByCustomer(Customer customer);
 }

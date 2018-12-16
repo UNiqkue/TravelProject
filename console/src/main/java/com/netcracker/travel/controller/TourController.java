@@ -89,6 +89,33 @@ public class TourController {
         }
     }
 
+//    @ApiOperation(value = "Gets all tours of customer", nickname = "CustomerController.getAllCustomerTours")
+//    @ApiResponses(value = {@ApiResponse(code = 200, message = "Customers")})
+//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<TourDTO>> getAllCustomerTours(@RequestBody CustomerDTO customerDto) {
+//        log.info("CustomerController getAllCustomerTours");
+//        List<TourDTO> tours = tourService.watchCustomerTours(customerDto);
+//        return new ResponseEntity<>(tours, HttpStatus.OK);
+//    }
+//
+//    @ApiOperation(value = "Buy Tour", nickname = "CustomerController.buyTour")
+//    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is bought")})
+//    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<TourDTO> buyTour(@PathVariable("id") String tourId, @RequestBody CustomerDTO customerDto) {
+//        log.info("CustomerController buyTour");
+//        TourDTO tour = tourService.buyTour(tourId, customerDto);
+//        return new ResponseEntity<>(tour, HttpStatus.OK);
+//    }
+//
+//    @ApiOperation(value = "Cancel Tour", nickname = "CustomerController.cancelTour")
+//    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is canceled")})
+//    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<TourDTO> cancelTour(@PathVariable("id") String tourId, @RequestBody CustomerDTO customerDto) {
+//        log.info("CustomerController cancelTour");
+//        TourDTO tour = tourService.cancelTour(tourId, customerDto.getId());
+//        return new ResponseEntity<>(tour, HttpStatus.OK);
+//    }
+
 }
 /*
 fetch('/tours',{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: 'Something', type: 'CRUISE'})}).then(result => result.json().then(console.log))

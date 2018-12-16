@@ -1,10 +1,11 @@
 package com.netcracker.travel.service;
 
+import com.netcracker.travel.dto.CustomerDTO;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public interface SearchTourService<T> {
@@ -15,14 +16,16 @@ public interface SearchTourService<T> {
 
     List<T> searchTourByEndDate(Date endDate);
 
-    List<T> searchTourByType(String type);
+    List<T> searchTourByType(TypeTour type);
 
     List<T> searchTourByCountry(String country);
 
     List<T> searchTourByTravelAgency(String name);
 
-    T buyTour(UUID id, UUID customerId);
+    T buyTour(String id, CustomerDTO customerDTO);
 
-    T cancelTour(UUID tourId, UUID customerId);
+    T cancelTour(String tourId, String customerId);
+
+    List<T> watchCustomerTours(CustomerDTO customerDTO);
 
 }

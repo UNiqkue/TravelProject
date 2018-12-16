@@ -8,6 +8,7 @@ import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TourRepository;
+import com.netcracker.travel.repository.TravelAgencyRepository;
 import com.netcracker.travel.service.BaseService;
 import com.netcracker.travel.service.SearchTourService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,21 +29,16 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Transactional
 @Service
-public class CustomerServiceImpl implements BaseService<CustomerDTO>, SearchTourService {
-
-    private final TourRepository tourRepository;
+public class CustomerServiceImpl implements BaseService<CustomerDTO> {
 
     private final CustomerRepository customerRepository;
-
-    private TourMapper tourMapper = Mappers.getMapper(TourMapper.class);
 
     private CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomerServiceImpl(TourRepository tourRepository, CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
-        this.tourRepository = tourRepository;
+    public CustomerServiceImpl(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -81,79 +77,6 @@ public class CustomerServiceImpl implements BaseService<CustomerDTO>, SearchTour
     public void delete(String id) {
         log.info("CustomerServiceImpl delete user with id: {} ", id);
         customerRepository.delete(id);
-    }
-
-
-    public List<TourDTO> watchTours(UUID id) {
-        return/* tourRepository.findAllByCustomerId(id)
-                .stream()
-                .map(tour -> tourConverter.convert(tour))
-                .collect(Collectors.toList());*/ null;
-    }
-
-    public TourDTO buyTour(UUID id, UUID customerId) {
-        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(id.toString()));
-        if (customerId.equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
-            tourDto.setCustomer(customerRepository.findById(customerId.toString()));
-            tourDto.setFree(false);
-            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
-            System.out.println("You bought tour");
-        } else {
-            System.out.println("You can't do it!!!");
-        }
-        return tourDto;
-    }
-
-    public TourDTO cancelTour(UUID tourId, UUID userId) {
-        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId.toString()));
-        if (userId.equals(tourDto.getCustomer().getId())) {
-            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
-        } else {
-            System.out.println("You can't do it!!!");
-        }
-        return tourDto;
-    }
-
-    public List<TourDTO> searchTourByName(String name) {
-        return tourRepository.findByName(name)
-                .stream()
-                .map(tourMapper::tourToTourDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TourDTO> searchTourByStartDate(Date startDate) {
-        return tourRepository.findByStartDate(startDate)
-                .stream()
-                .map(tourMapper::tourToTourDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TourDTO> searchTourByEndDate(Date endDate) {
-        return tourRepository.findByEndDate(endDate)
-                .stream()
-                .map(tourMapper::tourToTourDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TourDTO> searchTourByType(String type) {
-        return tourRepository.findByType(type)
-                .stream()
-                .map(tourMapper::tourToTourDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TourDTO> searchTourByCountry(String country) {
-        return tourRepository.findByCountry(country)
-                .stream()
-                .map(tourMapper::tourToTourDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TourDTO> searchTourByTravelAgency(String name) {
-        return/* tourRepository.findByTravelAgencyId(travelAgencyRepository.findByName(name).get(0).getId())
-                .stream()
-                .map(tourConverter::convert)
-                .collect(Collectors.toList());*/ null;
     }
 
     public void verifyPhoneNumber(String phoneNumber) throws PhoneNumberException {
