@@ -1,6 +1,5 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.entity.TravelAgency;
 import com.netcracker.travel.entity.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +31,5 @@ public class TravelAgentDTO {
     private String position;
 
     private Role role;
-
-    private TravelAgency travelAgency;
 
 }

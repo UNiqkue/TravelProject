@@ -1,9 +1,7 @@
 package com.netcracker.travel.converter;
 
-import com.netcracker.travel.entity.TravelAgency;
-import com.netcracker.travel.entity.TravelAgent;
-import com.netcracker.travel.dto.TravelAgencyDTO;
 import com.netcracker.travel.dto.TravelAgentDTO;
+import com.netcracker.travel.entity.TravelAgent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -35,9 +33,5 @@ public interface TravelAgentMapper {
             @Mapping(target="position", source = "travelAgentDTO.position"),
             @Mapping(target="role", source = "travelAgentDTO.role")})
     TravelAgent travelAgentDTOtoTravelAgent(TravelAgentDTO travelAgentDTO);
-
-    TravelAgency travelAgencyDTOtoTravelAgency(TravelAgencyDTO travelAgencyDto);
-
-    TravelAgencyDTO travelAgencyToTravelAgencyDTO(TravelAgency travelAgency);
 
 }

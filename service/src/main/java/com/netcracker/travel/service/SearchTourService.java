@@ -1,6 +1,5 @@
 package com.netcracker.travel.service;
 
-import com.netcracker.travel.dto.CustomerDTO;
 import com.netcracker.travel.entity.enumeration.TypeTour;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +21,10 @@ public interface SearchTourService<T> {
 
     List<T> searchTourByTravelAgency(String name);
 
-    T buyTour(String id, CustomerDTO customerDTO);
+//    T buyTour(String id, CustomerDTO customerDTO);
 
-    T cancelTour(String tourId, String customerId);
+//    T cancelTour(String tourId, String customerId);
 
-    List<T> watchCustomerTours(CustomerDTO customerDTO);
+//    List<T> watchCustomerTours(CustomerDTO customerDTO);
 
 }

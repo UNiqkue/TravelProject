@@ -60,14 +60,14 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
     }
 
     public TourDTO save(TourDTO tourDto) {
-        log.info("TourServiceImpl save tour: {}", tourDto.toString());
         tourDto.setId(UUID.randomUUID().toString());
+        log.info("TourServiceImpl save tour: {}", tourDto.toString());
         return tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
     }
 
     public TourDTO update(String id, TourDTO tourDto) {
-        log.info("TourServiceImpl update tour: {}", tourDto.toString());
         tourDto.setId(id);
+        log.info("TourServiceImpl update tour: {}", tourDto.toString());
         return tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
     }
 
@@ -83,30 +83,30 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
                 .collect(Collectors.toList());
     }
 
-    public TourDTO buyTour(String tourId, CustomerDTO customerDTO) {
-        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
-        if (customerDTO.getId().equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
-            tourDto.setCustomer(customerMapper.customerDTOtoCustomer(customerDTO));
-            tourDto.setFree(false);
-            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
-            System.out.println("You bought tour");
-        } else {
-            System.out.println("You can't do it!!!");
-        }
-        return tourDto;
-    }
-
-    public TourDTO cancelTour(String tourId, String userId) {
-        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
-        if (userId.equals(tourDto.getCustomer().getId())) {
-            tourDto.setFree(true);
-            tourDto.setCustomer(null);
-            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
-        } else {
-            System.out.println("You can't do it!!!");
-        }
-        return tourDto;
-    }
+//    public TourDTO buyTour(String tourId, CustomerDTO customerDTO) {
+//        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
+//        if (customerDTO.getId().equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
+//            tourDto.setCustomer(customerMapper.customerDTOtoCustomer(customerDTO));
+//            tourDto.setFree(false);
+//            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
+//            System.out.println("You bought tour");
+//        } else {
+//            System.out.println("You can't do it!!!");
+//        }
+//        return tourDto;
+//    }
+//
+//    public TourDTO cancelTour(String tourId, String userId) {
+//        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
+//        if (userId.equals(tourDto.getCustomer().getId())) {
+//            tourDto.setFree(true);
+//            tourDto.setCustomer(null);
+//            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
+//        } else {
+//            System.out.println("You can't do it!!!");
+//        }
+//        return tourDto;
+//    }
 
     public List<TourDTO> searchTourByName(String name) {
         return tourRepository.findByName(name)

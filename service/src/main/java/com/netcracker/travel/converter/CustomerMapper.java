@@ -40,7 +40,4 @@ public interface CustomerMapper {
             @Mapping(target="role", source = "customerDTO.role")})
     Customer customerDTOtoCustomer(CustomerDTO customerDTO);
 
-    Tour tourDTOtoTour(TourDTO tourDto);
-
-    TourDTO tourToTourDTO(Tour tour);
 }

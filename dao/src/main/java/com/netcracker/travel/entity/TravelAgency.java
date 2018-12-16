@@ -1,6 +1,5 @@
 package com.netcracker.travel.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,11 +22,9 @@ public class TravelAgency extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "travelAgency")
     private List<TravelAgent> travelAgents;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "travelAgency")
     private List<Tour> tours;
 

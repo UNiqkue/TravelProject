@@ -30,7 +30,6 @@ public class Customer extends User {
     @Column(name = "passport_info")
     private String passportInfo;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Tour> tours;
 
