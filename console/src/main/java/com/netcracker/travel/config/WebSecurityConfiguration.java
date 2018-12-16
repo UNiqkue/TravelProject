@@ -1,17 +1,14 @@
 package com.netcracker.travel.config;
 
-import com.netcracker.travel.service.implementation.AdminServiceImpl;
-import com.netcracker.travel.service.implementation.CustomerServiceImpl;
-import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
+import com.netcracker.travel.model.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -19,18 +16,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final AdminServiceImpl adminService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    private final TravelAgentServiceImpl travelAgentService;
-
-    private final CustomerServiceImpl customerService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public WebSecurityConfiguration(AdminServiceImpl adminService, TravelAgentServiceImpl travelAgentService, CustomerServiceImpl customerService) {
-        this.adminService = adminService;
-        this.travelAgentService = travelAgentService;
-        this.customerService = customerService;
+    public WebSecurityConfiguration(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,16 +42,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(adminService).passwordEncoder(getPasswordEncoder());
-//        auth.userDetailsService(travelAgentService).passwordEncoder(getPasswordEncoder());
-//        auth.userDetailsService(customerService).passwordEncoder(getPasswordEncoder());
-//    }
-
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder(9);
+    @Override
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
 }
