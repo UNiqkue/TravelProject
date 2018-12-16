@@ -1,8 +1,7 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.domain.Customer;
-import com.netcracker.travel.domain.TravelAgency;
-import com.netcracker.travel.domain.enumeration.TypeTour;
+import com.netcracker.travel.entity.Customer;
+import com.netcracker.travel.entity.enumeration.TypeTour;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +30,6 @@ public class TourDTO {
     private Double price;
 
     private TypeTour type;
-
-    private TravelAgency travelAgency;
 
     private Customer customer;
 

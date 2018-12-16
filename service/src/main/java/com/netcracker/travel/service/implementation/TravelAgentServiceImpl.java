@@ -1,11 +1,12 @@
 package com.netcracker.travel.service.implementation;
 
-import com.netcracker.travel.converter.TravelAgentConverter;
-import com.netcracker.travel.domain.enumeration.Role;
+import com.netcracker.travel.converter.TravelAgentMapper;
 import com.netcracker.travel.dto.TravelAgentDTO;
+import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.repository.TravelAgentRepository;
 import com.netcracker.travel.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,32 +24,31 @@ public class TravelAgentServiceImpl implements BaseService<TravelAgentDTO> {
 
     private final TravelAgentRepository travelAgentRepository;
 
-    private final TravelAgentConverter travelAgentConverter;
+    private TravelAgentMapper travelAgentMapper = Mappers.getMapper(TravelAgentMapper.class);
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public TravelAgentServiceImpl(TravelAgentRepository travelAgentRepository, TravelAgentConverter travelAgentConverter, PasswordEncoder passwordEncoder) {
+    public TravelAgentServiceImpl(TravelAgentRepository travelAgentRepository, PasswordEncoder passwordEncoder) {
         this.travelAgentRepository = travelAgentRepository;
-        this.travelAgentConverter = travelAgentConverter;
         this.passwordEncoder = passwordEncoder;
     }
 
     public List<TravelAgentDTO> getAll() {
         log.info("TravelAgentServiceImpl getAll");
         return StreamSupport.stream(travelAgentRepository.findAll().spliterator(), false)
-                .map(travelAgentConverter::convert)
+                .map(travelAgentMapper::travelAgentToTravelAgentDTO)
                 .collect(Collectors.toList());
     }
 
     public TravelAgentDTO getByName(String username) {
         log.info("TravelAgentServiceImpl getByName travelAgent with username: {}", username);
-        return travelAgentConverter.convert(travelAgentRepository.findByUsername(username));
+        return travelAgentMapper.travelAgentToTravelAgentDTO(travelAgentRepository.findByUsername(username));
     }
 
     public TravelAgentDTO getById(String id) {
         log.info("TravelAgentServiceImpl getById travelAgent with id: {} ", id);
-        return travelAgentConverter.convert(travelAgentRepository.findById(id));
+        return travelAgentMapper.travelAgentToTravelAgentDTO(travelAgentRepository.findById(id));
     }
 
     public TravelAgentDTO save(TravelAgentDTO travelAgentDto) {
@@ -56,13 +56,13 @@ public class TravelAgentServiceImpl implements BaseService<TravelAgentDTO> {
         travelAgentDto.setId(UUID.randomUUID().toString());
         travelAgentDto.setRole(Role.TRAVELAGENT);
         travelAgentDto.setPassword(passwordEncoder.encode(travelAgentDto.getPassword()));
-        return travelAgentConverter.convert(travelAgentRepository.save(travelAgentConverter.convert(travelAgentDto)));
+        return travelAgentMapper.travelAgentToTravelAgentDTO(travelAgentRepository.save(travelAgentMapper.travelAgentDTOtoTravelAgent(travelAgentDto)));
     }
 
     public TravelAgentDTO update(String id, TravelAgentDTO travelAgentDto) {
         log.info("TravelAgentServiceImpl update travelAgent: {}", travelAgentDto.toString());
         travelAgentDto.setId(id);
-        return travelAgentConverter.convert(travelAgentRepository.save(travelAgentConverter.convert(travelAgentDto)));
+        return travelAgentMapper.travelAgentToTravelAgentDTO(travelAgentRepository.save(travelAgentMapper.travelAgentDTOtoTravelAgent(travelAgentDto)));
     }
 
     public void delete(String id) {

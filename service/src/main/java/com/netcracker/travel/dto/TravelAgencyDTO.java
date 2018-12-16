@@ -1,7 +1,7 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.domain.Tour;
-import com.netcracker.travel.domain.TravelAgent;
+import com.netcracker.travel.entity.Tour;
+import com.netcracker.travel.entity.TravelAgent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
