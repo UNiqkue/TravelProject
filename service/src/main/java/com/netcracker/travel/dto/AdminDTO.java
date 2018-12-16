@@ -1,6 +1,6 @@
 package com.netcracker.travel.dto;
 
-import com.netcracker.travel.domain.enumeration.Role;
+import com.netcracker.travel.entity.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

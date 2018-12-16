@@ -1,15 +1,18 @@
-package com.netcracker.travel.domain;
+package com.netcracker.travel.entity;
 
-import com.netcracker.travel.domain.enumeration.Role;
+import com.netcracker.travel.entity.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)

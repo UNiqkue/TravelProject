@@ -1,4 +1,4 @@
-package com.netcracker.travel.domain;
+package com.netcracker.travel.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

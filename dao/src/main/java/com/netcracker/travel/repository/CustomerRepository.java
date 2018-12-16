@@ -1,6 +1,6 @@
 package com.netcracker.travel.repository;
 
-import com.netcracker.travel.domain.Customer;
+import com.netcracker.travel.entity.Customer;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +9,5 @@ public interface CustomerRepository extends CrudRepository<Customer, String> {
     Customer findByUsername(String username);
 
     Customer findById(String id);
+
 }
