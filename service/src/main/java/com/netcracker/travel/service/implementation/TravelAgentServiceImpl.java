@@ -1,11 +1,13 @@
 package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.TravelAgentConverter;
+import com.netcracker.travel.domain.enumeration.Role;
 import com.netcracker.travel.dto.TravelAgentDTO;
 import com.netcracker.travel.repository.TravelAgentRepository;
 import com.netcracker.travel.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +25,13 @@ public class TravelAgentServiceImpl implements BaseService<TravelAgentDTO> {
 
     private final TravelAgentConverter travelAgentConverter;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public TravelAgentServiceImpl(TravelAgentRepository travelAgentRepository, TravelAgentConverter travelAgentConverter) {
+    public TravelAgentServiceImpl(TravelAgentRepository travelAgentRepository, TravelAgentConverter travelAgentConverter, PasswordEncoder passwordEncoder) {
         this.travelAgentRepository = travelAgentRepository;
         this.travelAgentConverter = travelAgentConverter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<TravelAgentDTO> getAll() {
@@ -49,11 +54,14 @@ public class TravelAgentServiceImpl implements BaseService<TravelAgentDTO> {
     public TravelAgentDTO save(TravelAgentDTO travelAgentDto) {
         log.info("TravelAgentServiceImpl save travelAgent: {}", travelAgentDto.toString());
         travelAgentDto.setId(UUID.randomUUID().toString());
+        travelAgentDto.setRole(Role.TRAVELAGENT);
+        travelAgentDto.setPassword(passwordEncoder.encode(travelAgentDto.getPassword()));
         return travelAgentConverter.convert(travelAgentRepository.save(travelAgentConverter.convert(travelAgentDto)));
     }
 
-    public TravelAgentDTO update(TravelAgentDTO travelAgentDto) {
+    public TravelAgentDTO update(String id, TravelAgentDTO travelAgentDto) {
         log.info("TravelAgentServiceImpl update travelAgent: {}", travelAgentDto.toString());
+        travelAgentDto.setId(id);
         return travelAgentConverter.convert(travelAgentRepository.save(travelAgentConverter.convert(travelAgentDto)));
     }
 

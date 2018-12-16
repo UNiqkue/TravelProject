@@ -56,9 +56,8 @@ public class TravelAgentController {
     public ResponseEntity<String> updateTravelAgent(@PathVariable("id") String id, @RequestBody TravelAgentDTO travelAgentDto) {
         log.info("TravelAgentController updateTravelAgent: {}", travelAgentDto.toString());
         try {
-            travelAgentDto.setId(id);
-            travelAgentDto = travelAgentService.update(travelAgentDto);
-            return new ResponseEntity<>(travelAgentDto.getId(), HttpStatus.OK);
+            travelAgentService.update(id, travelAgentDto);
+            return new ResponseEntity<>(id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
         }
@@ -71,7 +70,7 @@ public class TravelAgentController {
         log.info("TravelAgentController getTravelAgent by id: {} ", id);
         TravelAgentDTO travelAgent = travelAgentService.getById(id);
         if(travelAgent == null){
-            return new ResponseEntity<>(travelAgent, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(travelAgent, HttpStatus.OK);
     }

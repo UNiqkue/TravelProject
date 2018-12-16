@@ -13,7 +13,7 @@ public interface BaseService<T>{
 
     T save(T t);
 
-    T update(T t);
+    T update(String id, T t);
 
     void delete(String id);
 

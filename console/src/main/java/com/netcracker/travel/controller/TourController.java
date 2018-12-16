@@ -56,8 +56,7 @@ public class TourController {
     public ResponseEntity<String> updateTour(@PathVariable("id") String id, @RequestBody TourDTO tourDto) {
         log.info("TourController update tour: {}", tourDto.toString());
         try {
-            tourDto.setId(id);
-            tourDto = tourService.update(tourDto);
+            tourDto = tourService.update(id, tourDto);
             return new ResponseEntity<>(tourDto.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation tour", HttpStatus.BAD_REQUEST);
@@ -72,7 +71,7 @@ public class TourController {
         log.info("TourController getTour by id: {} ", id);
         TourDTO tour = tourService.getById(id);
         if(tour == null){
-            return new ResponseEntity<>(tour, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }

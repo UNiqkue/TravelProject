@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,10 +56,8 @@ public class AdminController {
     public ResponseEntity<String> updateAdmin(@PathVariable("id") String id, @RequestBody AdminDTO adminDto) {
         try {
             log.info("AdminController update admin: {}", adminDto.toString());
-            AdminDTO adminFromDb = adminService.getById(id);
-            BeanUtils.copyProperties(adminDto, adminFromDb, "id");
-            adminDto = adminService.update(adminFromDb);
-            return new ResponseEntity<>(adminDto.getId(), HttpStatus.OK);
+            adminService.update(id, adminDto);
+            return new ResponseEntity<>(id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation admin", HttpStatus.BAD_REQUEST);
         }
@@ -73,7 +70,7 @@ public class AdminController {
         log.info("AdminController getAdmin with id: {} ", id);
         AdminDTO adminDto = adminService.getById(id);
         if(adminDto == null){
-            return new ResponseEntity<>(adminDto, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(adminDto, HttpStatus.OK);
     }

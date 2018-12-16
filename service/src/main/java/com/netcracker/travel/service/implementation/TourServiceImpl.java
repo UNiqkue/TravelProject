@@ -54,8 +54,9 @@ public class TourServiceImpl implements BaseService<TourDTO> {
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     }
 
-    public TourDTO update(TourDTO tourDto) {
+    public TourDTO update(String id, TourDTO tourDto) {
         log.info("TourServiceImpl update tour: {}", tourDto.toString());
+        tourDto.setId(id);
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
     }
 

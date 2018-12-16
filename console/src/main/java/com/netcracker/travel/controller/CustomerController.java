@@ -61,9 +61,8 @@ public class CustomerController {
     public ResponseEntity<String> updateCustomer(@PathVariable("id") String id, @RequestBody CustomerDTO customerDto) {
         log.info("CustomerController update user: {}", customerDto.toString());
         try {
-            customerDto.setId(id);
-            customerDto = customerService.update(customerDto);
-            return new ResponseEntity<>(customerDto.getId(), HttpStatus.CREATED);
+            customerService.update(id, customerDto);
+            return new ResponseEntity<>(id, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error in creation customer", HttpStatus.BAD_REQUEST);
         }
@@ -76,7 +75,7 @@ public class CustomerController {
         log.info("CustomerController getCustomer by id: {} ", id);
         CustomerDTO customerDto = customerService.getById(id);
         if(customerDto == null){
-            return new ResponseEntity<>(customerDto, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customerDto, HttpStatus.OK);
     }

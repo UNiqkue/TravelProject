@@ -1,11 +1,13 @@
 package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.AdminConverter;
+import com.netcracker.travel.domain.enumeration.Role;
 import com.netcracker.travel.dto.AdminDTO;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +25,13 @@ public class AdminServiceImpl implements BaseService<AdminDTO> {
 
     private final AdminConverter adminConverter;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public AdminServiceImpl(AdminRepository adminRepository, AdminConverter adminConverter) {
+    public AdminServiceImpl(AdminRepository adminRepository, AdminConverter adminConverter, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
         this.adminConverter = adminConverter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<AdminDTO> getAll() {
@@ -49,11 +54,14 @@ public class AdminServiceImpl implements BaseService<AdminDTO> {
     public AdminDTO save(AdminDTO adminDto) {
         log.info("AdminServiceImpl save admin: {}", adminDto.toString());
         adminDto.setId(UUID.randomUUID().toString());
+        adminDto.setRole(Role.ADMIN);
+        adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
         return adminConverter.convert(adminRepository.save(adminConverter.convert(adminDto)));
     }
 
-    public AdminDTO update(AdminDTO adminDto) {
+    public AdminDTO update(String id, AdminDTO adminDto) {
         log.info("AdminServiceImpl update admin: {}", adminDto.toString());
+        adminDto.setId(id);
         return adminConverter.convert(adminRepository.save(adminConverter.convert(adminDto)));
     }
 

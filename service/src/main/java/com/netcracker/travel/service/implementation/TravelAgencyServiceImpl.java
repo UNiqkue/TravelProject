@@ -54,8 +54,9 @@ public class TravelAgencyServiceImpl implements BaseService<TravelAgencyDTO> {
         return travelAgencyConverter.convert(travelAgencyRepository.save(travelAgencyConverter.convert(travelAgencyDto)));
     }
 
-    public TravelAgencyDTO update(TravelAgencyDTO travelAgencyDto) {
+    public TravelAgencyDTO update(String id, TravelAgencyDTO travelAgencyDto) {
         log.info("TravelAgencyServiceImpl update travelAgency: {}", travelAgencyDto.toString());
+        travelAgencyDto.setId(id);
         return travelAgencyConverter.convert(travelAgencyRepository.save(travelAgencyConverter.convert(travelAgencyDto)));
     }
 

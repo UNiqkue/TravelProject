@@ -2,6 +2,7 @@ package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.CustomerConverter;
 import com.netcracker.travel.converter.TourConverter;
+import com.netcracker.travel.domain.enumeration.Role;
 import com.netcracker.travel.dto.CustomerDTO;
 import com.netcracker.travel.dto.TourDTO;
 import com.netcracker.travel.exception.PhoneNumberException;
@@ -11,6 +12,7 @@ import com.netcracker.travel.service.BaseService;
 import com.netcracker.travel.service.SearchTourService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,12 +37,15 @@ public class CustomerServiceImpl implements BaseService<CustomerDTO>, SearchTour
 
     private final TourConverter tourConverter;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public CustomerServiceImpl(TourRepository tourRepository, CustomerRepository customerRepository, CustomerConverter customerConverter, TourConverter tourConverter) {
+    public CustomerServiceImpl(TourRepository tourRepository, CustomerRepository customerRepository, CustomerConverter customerConverter, TourConverter tourConverter, PasswordEncoder passwordEncoder) {
         this.tourRepository = tourRepository;
         this.customerRepository = customerRepository;
         this.customerConverter = customerConverter;
         this.tourConverter = tourConverter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<CustomerDTO> getAll() {
@@ -63,11 +68,14 @@ public class CustomerServiceImpl implements BaseService<CustomerDTO>, SearchTour
     public CustomerDTO save(CustomerDTO customerDto) {
         log.info("CustomerServiceImpl save user: {}", customerDto.toString());
         customerDto.setId(UUID.randomUUID().toString());
+        customerDto.setRole(Role.CUSTOMER);
+        customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
-    public CustomerDTO update(CustomerDTO customerDto) {
+    public CustomerDTO update(String id, CustomerDTO customerDto) {
         log.info("CustomerServiceImpl update user: {}", customerDto.toString());
+        customerDto.setId(id);
         return customerConverter.convert(customerRepository.save(customerConverter.convert(customerDto)));
     }
 
@@ -77,9 +85,6 @@ public class CustomerServiceImpl implements BaseService<CustomerDTO>, SearchTour
     }
 
 
-    /**
-     * viewOrderedTours
-     **/
     public List<TourDTO> watchTours(UUID id) {
         return/* tourRepository.findAllByCustomerId(id)
                 .stream()
