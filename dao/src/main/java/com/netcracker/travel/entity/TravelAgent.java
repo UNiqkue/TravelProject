@@ -1,6 +1,5 @@
 package com.netcracker.travel.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +13,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "travel_agent")
-public class TravelAgent extends User {
+public class TravelAgent extends Admin {
 
     @Column(name = "phone_number")
     private String phoneNumber;

@@ -37,18 +37,18 @@ public class AdminController {
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Creates admin", nickname = "AdminController.addAdmin")
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "Admin is created")})
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addAdmin(@RequestBody AdminDTO adminDto) {
-        try {
-            log.info("AdminController addAdmin: {}", adminDto.toString());
-            String id = adminService.save(adminDto).getId();
-            return new ResponseEntity<>(id, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error in creation Admin", HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @ApiOperation(value = "Creates admin", nickname = "AdminController.addAdmin")
+//    @ApiResponses(value = {@ApiResponse(code = 201, message = "Admin is created")})
+//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<String> addAdmin(@RequestBody AdminDTO adminDto) {
+//        try {
+//            log.info("AdminController addAdmin: {}", adminDto.toString());
+//            String id = adminService.save(adminDto).getId();
+//            return new ResponseEntity<>(id, HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("Error in creation Admin", HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @ApiOperation(value = "Update Admin", nickname = "AdminController.updateAdmin")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Admin is updated")})

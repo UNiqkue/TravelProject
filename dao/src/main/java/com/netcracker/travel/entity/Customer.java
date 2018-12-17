@@ -16,7 +16,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "customer")
-public class Customer extends User {
+public class Customer extends Admin {
 
     @Column(name = "phone_number")
     private String phoneNumber;

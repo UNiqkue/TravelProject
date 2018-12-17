@@ -17,10 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Transactional
@@ -33,6 +36,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final CustomerRepository customerRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     private CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
     private AdminMapper adminMapper = Mappers.getMapper(AdminMapper.class);
@@ -40,10 +45,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     private TravelAgentMapper travelAgentMapper = Mappers.getMapper(TravelAgentMapper.class);
 
     @Autowired
-    public RegistrationServiceImpl(AdminRepository adminRepository, TravelAgentRepository travelAgentRepository, CustomerRepository customerRepository) {
+    public RegistrationServiceImpl(AdminRepository adminRepository, TravelAgentRepository travelAgentRepository, CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
         this.travelAgentRepository = travelAgentRepository;
         this.customerRepository = customerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public CustomerDTO registration(RegistrationRequestDTO registrationRequestDto) {
@@ -52,7 +58,8 @@ public class RegistrationServiceImpl implements RegistrationService {
             CustomerDTO customerDto = new CustomerDTO();
             BeanUtils.copyProperties(registrationRequestDto, customerDto);
             customerDto.setId(UUID.randomUUID().toString());
-            customerDto.setRole(Role.GUEST);
+            customerDto.setRole(Role.CUSTOMER);
+            customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
             return customerMapper.customerToCustomerDTO(customerRepository.save(customerMapper.customerDTOtoCustomer(customerDto)));
         } else {
             return null;
@@ -61,8 +68,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private boolean checkExisting(RegistrationRequestDTO registrationRequestDto) {
         try {
-//            checkUsernameExist(registrationRequestDto.getUsername());
-//            checkEmailExist(registrationRequestDto.getEmail());
+            checkUsernameExist(registrationRequestDto.getUsername());
+            checkEmailExist(registrationRequestDto.getEmail());
             return true;
         } catch (UsernameExistException e) {
             log.info("User with such username exists");
@@ -74,87 +81,28 @@ public class RegistrationServiceImpl implements RegistrationService {
         return false;
     }
 
-//    private void checkUsernameExist(String username) {
-////        checkCustomerUsername(username);
-////        checkAdminUsername(username);
-////        checkTravelAgentUsername(username);
-//    }
+    private void checkUsernameExist(String username) {
+        try {
+            StreamSupport.stream(adminRepository.findAll().spliterator(), false)
+                    .filter(user -> user.getUsername().equals(username))
+                    .map(adminMapper::adminToAdminDTO)
+                    .findFirst().get();
+            throw new UsernameExistException();
+        } catch (NoSuchElementException e) {
+            System.out.println("Checking");
+        }
+    }
 
-//    private void checkAdminUsername(String username) {
-//        try {
-//            StreamSupport.stream(adminRepository.findAll().spliterator(), false)
-//                    .filter(user -> user.getUsername().equals(username))
-//                    .map(adminMapper::adminToAdminDTO)
-//                    .findFirst().get();
-//            throw new UsernameExistException();
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Checking");
-//        }
-//    }
-//
-//    private void checkCustomerUsername(String username) {
-//        try {
-//            StreamSupport.stream(customerRepository.findAll().spliterator(), false)
-//                    .filter(user -> user.getUsername().equals(username))
-//                    .map(customerMapper::)
-//                    .findFirst().get();
-//            throw new UsernameExistException();
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Checking");
-//        }
-//    }
-//
-//    private void checkTravelAgentUsername(String username) {
-//        try {
-//            StreamSupport.stream(travelAgentRepository.findAll().spliterator(), false)
-//                    .filter(user -> user.getUsername().equals(username))
-//                    .map(travelAgentConverter::convert)
-//                    .findFirst().get();
-//            throw new UsernameExistException();
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Checking");
-//        }
-//    }
-//
-//    private void checkEmailExist(String email) {
-//        checkCustomerEmail(email);
-//        checkAdminEmail(email);
-//        checkTravelAgentEmail(email);
-//    }
-//
-//    private void checkTravelAgentEmail(String email) {
-//        try {
-//            StreamSupport.stream(travelAgentRepository.findAll().spliterator(), false)
-//                    .filter(user -> user.getEmail().equals(email))
-//                    .map(travelAgentConverter::convert)
-//                    .findFirst().get();
-//            throw new EmailExistException();
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Checking");
-//        }
-//    }
-//
-//    private void checkAdminEmail(String email) {
-//        try {
-//            StreamSupport.stream(adminRepository.findAll().spliterator(), false)
-//                    .filter(user -> user.getEmail().equals(email))
-//                    .map(adminConverter::convert)
-//                    .findFirst().get();
-//            throw new EmailExistException();
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Checking");
-//        }
-//    }
-//
-//    private void checkCustomerEmail(String email) {
-//        try {
-//            StreamSupport.stream(customerRepository.findAll().spliterator(), false)
-//                    .filter(user -> user.getEmail().equals(email))
-//                    .map(customerConverter::convert)
-//                    .findFirst().get();
-//            throw new EmailExistException();
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Checking");
-//        }
-//    }
+    private void checkEmailExist(String email) {
+        try {
+            StreamSupport.stream(adminRepository.findAll().spliterator(), false)
+                    .filter(user -> user.getEmail().equals(email))
+                    .map(adminMapper::adminToAdminDTO)
+                    .findFirst().get();
+            throw new EmailExistException();
+        } catch (NoSuchElementException e) {
+            System.out.println("Checking");
+        }
+    }
+
 }

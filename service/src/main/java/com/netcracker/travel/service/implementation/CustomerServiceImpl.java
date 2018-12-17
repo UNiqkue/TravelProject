@@ -61,10 +61,10 @@ public class CustomerServiceImpl implements BaseService<CustomerDTO> {
     }
 
     public CustomerDTO save(CustomerDTO customerDto) {
-        log.info("CustomerServiceImpl save user: {}", customerDto.toString());
-        customerDto.setId(UUID.randomUUID().toString());
-        customerDto.setRole(Role.CUSTOMER);
-        customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+//        log.info("CustomerServiceImpl save user: {}", customerDto.toString());
+//        customerDto.setId(UUID.randomUUID().toString());
+//        customerDto.setRole(Role.CUSTOMER);
+//        customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
         return customerMapper.customerToCustomerDTO(customerRepository.save(customerMapper.customerDTOtoCustomer(customerDto)));
     }
 

@@ -1,7 +1,6 @@
 package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.AdminMapper;
-import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.dto.AdminDTO;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.service.BaseService;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -52,10 +50,10 @@ public class AdminServiceImpl implements BaseService<AdminDTO> {
     }
 
     public AdminDTO save(AdminDTO adminDto) {
-        log.info("AdminServiceImpl save admin: {}", adminDto.toString());
-        adminDto.setId(UUID.randomUUID().toString());
-        adminDto.setRole(Role.ADMIN);
-        adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+//        log.info("AdminServiceImpl save admin: {}", adminDto.toString());
+//        adminDto.setId(UUID.randomUUID().toString());
+//        adminDto.setRole(Role.ADMIN);
+//        adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
         return adminMapper.adminToAdminDTO(adminRepository.save(adminMapper.adminDTOtoAdmin(adminDto)));
     }
 
