@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface AdminRepository extends CrudRepository<Admin, String> {
-    Admin findByUsername(String username);
+    Optional<Admin> findByUsername(String username);
 
     Optional<Admin> findById(String id);
 }

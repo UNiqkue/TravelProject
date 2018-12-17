@@ -35,7 +35,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/agency/all/**", "/customers/{id}", "/tours/all/**").hasRole("CUSTOMER")
 //                .antMatchers("/agency/all/**", "/tours/**").hasRole("TRAVELAGENT")
                 .antMatchers( "/users/**", "/agency/**", "/tours/**").permitAll()//.hasRole("ADMIN") //  .hasAuthority(Role.ADMIN.name())
-                .anyRequest().authenticated()
+ //               .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
     }

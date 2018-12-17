@@ -83,8 +83,8 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
                 .collect(Collectors.toList());
     }
 
-//    public TourDTO buyTour(String tourId, CustomerDTO customerDTO) {
-//        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
+    public TourDTO buyTour(String tourId, CustomerDTO customerDTO) {
+        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
 //        if (customerDTO.getId().equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
 //            tourDto.setCustomer(customerMapper.customerDTOtoCustomer(customerDTO));
 //            tourDto.setFree(false);
@@ -93,11 +93,11 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
 //        } else {
 //            System.out.println("You can't do it!!!");
 //        }
-//        return tourDto;
-//    }
-//
-//    public TourDTO cancelTour(String tourId, String userId) {
-//        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
+        return tourDto;
+    }
+
+    public TourDTO cancelTour(String tourId, String userId) {
+        TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
 //        if (userId.equals(tourDto.getCustomer().getId())) {
 //            tourDto.setFree(true);
 //            tourDto.setCustomer(null);
@@ -105,8 +105,8 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
 //        } else {
 //            System.out.println("You can't do it!!!");
 //        }
-//        return tourDto;
-//    }
+        return tourDto;
+    }
 
     public List<TourDTO> searchTourByName(String name) {
         return tourRepository.findByName(name)

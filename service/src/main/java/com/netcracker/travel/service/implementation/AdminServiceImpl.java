@@ -47,12 +47,12 @@ public class AdminServiceImpl implements BaseService<AdminDTO> {
 
     public AdminDTO getByName(String username) {
         log.info("AdminServiceImpl getByName admin with username: {}", username);
-        return adminMapper.adminToAdminDTO(adminRepository.findByUsername(username));
+        return adminMapper.adminToAdminDTO(adminRepository.findByUsername(username).get());
     }
 
     public AdminDTO getById(String id) {
         log.info("AdminServiceImpl getById admin with id: {} ", id);
-        return adminMapper.adminToAdminDTO(adminRepository.findByUsername(id));
+        return adminMapper.adminToAdminDTO(adminRepository.findById(id).get());
     }
 
     public AdminDTO save(AdminDTO adminDto) {
