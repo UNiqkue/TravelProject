@@ -1,5 +1,6 @@
 package com.netcracker.travel.controller;
 
+import com.netcracker.travel.dto.CustomerDTO;
 import com.netcracker.travel.dto.TourDTO;
 import com.netcracker.travel.entity.enumeration.TypeTour;
 import com.netcracker.travel.service.implementation.TourServiceImpl;
@@ -94,7 +95,7 @@ public class TourController {
 
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getToursByName")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
-    @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/tour_name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TourDTO>> getToursByName(@PathVariable("name") String name) {
         log.info("TourController getTours by name: {} ", name);
         List<TourDTO> tours = tourService.searchTourByName(name);
@@ -103,7 +104,7 @@ public class TourController {
 
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getToursByCountry")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
-    @GetMapping(value = "/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/countryname/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TourDTO>> getToursByCountry(@PathVariable("country") String country) {
         log.info("TourController getTours by country: {} ", country);
         List<TourDTO> tours = tourService.searchTourByCountry(country);
@@ -112,7 +113,7 @@ public class TourController {
 
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getToursByStartDate")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
-    @GetMapping(value = "/{startDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/bystartdate/{startDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TourDTO>> getToursByStartDate(@PathVariable("startDate") Date startDate) {
         log.info("TourController getTours by startDate: {} ", startDate);
         List<TourDTO> tours = tourService.searchTourByStartDate(startDate);
@@ -121,7 +122,7 @@ public class TourController {
 
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getToursByEndDate")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
-    @GetMapping(value = "/{endDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/byenddate/{endDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TourDTO>> getToursByEndDate(@PathVariable("endDate") Date endDate) {
         log.info("TourController getTours by endDate: {} ", endDate);
         List<TourDTO> tours = tourService.searchTourByEndDate(endDate);
@@ -130,7 +131,7 @@ public class TourController {
 
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getToursByType")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
-    @GetMapping(value = "/{type}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/typetour/{type}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TourDTO>> getToursByType(@PathVariable("type") TypeTour type) {
         log.info("TourController getTours by type: {} ", type);
         List<TourDTO> tours = tourService.searchTourByType(type);
@@ -139,39 +140,39 @@ public class TourController {
 
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getToursByTravelAgencyName")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
-    @GetMapping(value = "/{travelAgencyName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/agencyname/{travelAgencyName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TourDTO>> getToursByTravelAgencyName(@PathVariable("travelAgencyName") String travelAgencyName) {
         log.info("TourController getTours by travelAgencyName: {} ", travelAgencyName);
         List<TourDTO> tours = tourService.searchTourByTravelAgency(travelAgencyName);
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
-//    @ApiOperation(value = "Gets all tours of customer", nickname = "CustomerController.getAllCustomerTours")
-//    @ApiResponses(value = {@ApiResponse(code = 200, message = "Customers")})
-//    @GetMapping(value = "/customer/tours",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<TourDTO>> getAllCustomerTours(@RequestBody CustomerDTO customerDto) {
-//        log.info("CustomerController getAllCustomerTours");
-//        List<TourDTO> tours = tourService.watchCustomerTours(customerDto);
-//        return new ResponseEntity<>(tours, HttpStatus.OK);
-//    }
-//
-//    @ApiOperation(value = "Buy Tour", nickname = "CustomerController.buyTour")
-//    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is bought")})
-//    @GetMapping(value = "/buy/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<TourDTO> buyTour(@PathVariable("id") String tourId, @RequestBody CustomerDTO customerDto) {
-//        log.info("CustomerController buyTour");
-//        TourDTO tour = tourService.buyTour(tourId, customerDto);
-//        return new ResponseEntity<>(tour, HttpStatus.OK);
-//    }
-//
-//    @ApiOperation(value = "Cancel Tour", nickname = "CustomerController.cancelTour")
-//    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is canceled")})
-//    @GetMapping(value = "/cancel/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<TourDTO> cancelTour(@PathVariable("id") String tourId, @RequestBody CustomerDTO customerDto) {
-//        log.info("CustomerController cancelTour");
-//        TourDTO tour = tourService.cancelTour(tourId, customerDto.getId());
-//        return new ResponseEntity<>(tour, HttpStatus.OK);
-//    }
+    @ApiOperation(value = "Gets all tours of customer", nickname = "CustomerController.getAllCustomerTours")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Customers")})
+    @GetMapping(value = "/customer/tours",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TourDTO>> getAllCustomerTours(@RequestBody CustomerDTO customerDto) {
+        log.info("CustomerController getAllCustomerTours");
+        List<TourDTO> tours = tourService.watchCustomerTours(customerDto);
+        return new ResponseEntity<>(tours, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Buy Tour", nickname = "CustomerController.buyTour")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is bought")})
+    @GetMapping(value = "/buy/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TourDTO> buyTour(@PathVariable("id") String tourId, @RequestBody CustomerDTO customerDto) {
+        log.info("CustomerController buyTour");
+        TourDTO tour = tourService.buyTour(tourId, customerDto);
+        return new ResponseEntity<>(tour, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Cancel Tour", nickname = "CustomerController.cancelTour")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour is canceled")})
+    @GetMapping(value = "/cancel/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TourDTO> cancelTour(@PathVariable("id") String tourId, @RequestBody CustomerDTO customerDto) {
+        log.info("CustomerController cancelTour");
+        TourDTO tour = tourService.cancelTour(tourId, customerDto.getId());
+        return new ResponseEntity<>(tour, HttpStatus.OK);
+    }
 
 }
 /*

@@ -1,7 +1,7 @@
 package com.netcracker.travel.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.netcracker.travel.entity.Customer;
-import com.netcracker.travel.entity.TravelAgency;
 import com.netcracker.travel.entity.enumeration.TypeTour;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +31,9 @@ public class TourDTO {
     private Double price;
 
     private TypeTour type;
+
+    @JsonIgnore
+    private Customer customer;
 
     private boolean free;
 

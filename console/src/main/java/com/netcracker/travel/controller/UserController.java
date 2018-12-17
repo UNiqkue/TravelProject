@@ -85,11 +85,11 @@ public class UserController {
     @ApiOperation(value = "Make user admin", nickname = "UserController.updateToAdmin")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Your rate is updated")})
     @PutMapping(
-            value = "/agent",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateToTravelAgent(
-            @RequestBody String userId, Authentication authentication) {
+            value = "/agent/role/{userId}",
+            consumes = MediaType.TEXT_PLAIN_VALUE,
+            produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity updateToTravelAgent(
+            @PathVariable String userId, Authentication authentication) {
         if (authentication != null) {
             if (adminService.makeTravelAgent(userId)) {
                 return new ResponseEntity<>(
