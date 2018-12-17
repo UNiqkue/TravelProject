@@ -52,16 +52,27 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/agency/all/**",
                         "/customers/{id}",
-                        "/tours/all/**"
+                        "/tours/all/**",
+                        "/tours/catalog/**",
+                        "/tours/customer/**",
+                        "/tours/booking/**"
                 ).hasAuthority(Role.CUSTOMER.name())
                 .antMatchers(
                         "/agency/all/**",
-                        "/tours/**"
+                        "/tours/**",
+                        "/tours/all/**",
+                        "/tours/catalog/**"
                 ).hasAuthority(Role.TRAVELAGENT.name())
                 .antMatchers(
-                        "/agency/**",
                         "/tours/**",
-                        "/users/**"
+                        "/tours/all/**",
+                        "/tours/catalog/**",
+                        "/agency/**",
+                        "/agency/all/**",
+                        "/users/**",
+                        "/users/role/admin/**",
+                        "/users/role/agent/**",
+                        "/users/customer/**"
                 ).hasAuthority(Role.ADMIN.name())
                 .anyRequest()
                 .authenticated()

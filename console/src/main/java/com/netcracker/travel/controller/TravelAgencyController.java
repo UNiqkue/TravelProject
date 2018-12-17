@@ -28,7 +28,10 @@ public class TravelAgencyController {
         this.travelAgencyService = travelAgencyService;
     }
 
-    @ApiOperation(value = "Gets all travelAgencies", nickname = "TravelAgencyController.getAllTravelAgencies")
+    @ApiOperation(
+            value = "Gets all travelAgencies",
+            nickname = "TravelAgencyController.getAllTravelAgencies"
+    )
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgencies")})
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TravelAgencyDTO>> getAllTravelAgencies() {
@@ -39,7 +42,7 @@ public class TravelAgencyController {
 
     @ApiOperation(value = "Creates travelAgency", nickname = "TravelAgencyController.addTravelAgency")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgency is created")})
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<String> addTravelAgency(@RequestBody TravelAgencyDTO travelAgencyDto) {
         log.info("TravelAgencyController addTravelAgency: {}", travelAgencyDto.toString());
         try {
@@ -52,7 +55,7 @@ public class TravelAgencyController {
 
     @ApiOperation(value = "Update travelAgency", nickname = "TravelAgencyController.updateTravelAgency")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgency is updated")})
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<String> updateTravelAgency(
             @PathVariable String id,
             @RequestBody TravelAgencyDTO travelAgencyDto) {
@@ -65,9 +68,12 @@ public class TravelAgencyController {
         }
     }
 
-    @ApiOperation(value = "Gets specific travelAgency", nickname = "TravelAgencyController.getTravelAgency")
+    @ApiOperation(
+            value = "Gets specific travelAgency",
+            nickname = "TravelAgencyController.getTravelAgency"
+    )
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgency")})
-    @GetMapping(value = "/all/get-{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/all/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TravelAgencyDTO> getTravelAgency(@PathVariable("id") String id) {
         log.info("TravelAgencyController getTravelAgency by id: {} ", id);
         TravelAgencyDTO travelAgency = travelAgencyService.getById(id);
@@ -77,9 +83,15 @@ public class TravelAgencyController {
         return new ResponseEntity<>(travelAgency, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete travelAgency", nickname = "TravelAgencyController.deleteTravelAgency")
+    @ApiOperation(
+            value = "Delete travelAgency",
+            nickname = "TravelAgencyController.deleteTravelAgency"
+    )
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgency is deleted")})
-    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(
+            value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public ResponseEntity<Void> deleteTravelAgency(@PathVariable("id") String id) {
         log.info("TravelAgencyController deleteTravelAgency by id: {} ", id);
         try {

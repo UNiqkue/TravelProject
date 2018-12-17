@@ -1,8 +1,6 @@
 package com.netcracker.travel.controller;
 
 import com.netcracker.travel.dto.AdminDTO;
-import com.netcracker.travel.dto.CustomerDTO;
-import com.netcracker.travel.dto.TravelAgentDTO;
 import com.netcracker.travel.service.implementation.AdminServiceImpl;
 import com.netcracker.travel.service.implementation.CustomerServiceImpl;
 import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
@@ -48,9 +46,21 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Get user by id", nickname = "UserController.getUser")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User")})
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AdminDTO> getUser(@PathVariable("id") String id) {
+        log.info("UserController getUser with id: {} ", id);
+        AdminDTO adminDto = adminService.getById(id);
+        if (adminDto == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(adminDto, HttpStatus.OK);
+    }
+
     @ApiOperation(value = "Creates user", nickname = "UserController.addUser")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Admin is created")})
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<String> addUser(@RequestBody AdminDTO adminDto) {
         try {
             log.info("UserController addUser: {}", adminDto.toString());
@@ -61,15 +71,15 @@ public class UserController {
         }
     }
 
-
-    @ApiOperation(value = "Make user admin", nickname = "UserController.updateToAdmin")
+    @ApiOperation(value = "Make user Admin", nickname = "UserController.updateToAdmin")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Your rate is updated")})
     @PutMapping(
-            value = "/admin",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            value = "/role/admin/{userId}",
+            consumes = MediaType.TEXT_PLAIN_VALUE,
+            produces = MediaType.TEXT_PLAIN_VALUE
+    )
     public ResponseEntity<String> updateToAdmin(
-            @RequestBody String userId, Authentication authentication) {
+            @PathVariable String userId, Authentication authentication) {
         if (authentication != null) {
             if (adminService.makeAdmin(userId)) {
                 return new ResponseEntity<>(
@@ -85,9 +95,10 @@ public class UserController {
     @ApiOperation(value = "Make user TravelAgent", nickname = "UserController.updateToTravelAgent")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Your rate is updated")})
     @PutMapping(
-            value = "/agent/role/{userId}",
+            value = "/role/agent/{userId}",
             consumes = MediaType.TEXT_PLAIN_VALUE,
-            produces = MediaType.TEXT_PLAIN_VALUE)
+            produces = MediaType.TEXT_PLAIN_VALUE
+    )
     public ResponseEntity updateToTravelAgent(
             @PathVariable String userId, Authentication authentication) {
         if (authentication != null) {
@@ -104,7 +115,7 @@ public class UserController {
 
     @ApiOperation(value = "Update User", nickname = "UserController.updateUser")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User is updated")})
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<String> updateUser(@PathVariable("id") String id, @RequestBody AdminDTO adminDto) {
         try {
             log.info("UserController update user: {}", adminDto.toString());
@@ -115,43 +126,31 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "Update customer", nickname = "CustomerController.updateCustomer")
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "Customer is updated")})
-    @PutMapping(value = "/customer/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateCustomer(@PathVariable("id") String id, @RequestBody CustomerDTO customerDto) {
-        log.info("CustomerController update user: {}", customerDto.toString());
-        try {
-            customerService.update(id, customerDto);
-            return new ResponseEntity<>(id, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error in creation customer", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @ApiOperation(value = "Update travelAgent", nickname = "TravelAgentController.updateTravelAgent")
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is updated")})
-    @PutMapping(value = "/agent/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateTravelAgent(@PathVariable("id") String id, @RequestBody TravelAgentDTO travelAgentDto) {
-        log.info("TravelAgentController updateTravelAgent: {}", travelAgentDto.toString());
-        try {
-            travelAgentService.update(id, travelAgentDto);
-            return new ResponseEntity<>(id, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @ApiOperation(value = "Get user by id", nickname = "UserController.getUser")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "User")})
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AdminDTO> getUser(@PathVariable("id") String id) {
-        log.info("UserController getUser with id: {} ", id);
-        AdminDTO adminDto = adminService.getById(id);
-        if (adminDto == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(adminDto, HttpStatus.OK);
-    }
+//    @ApiOperation(value = "Update customer", nickname = "CustomerController.updateCustomer")
+//    @ApiResponses(value = {@ApiResponse(code = 201, message = "Customer is updated")})
+//    @PutMapping(value = "/customer/{id}")
+//    public ResponseEntity<String> updateCustomer(@PathVariable("id") String id, @RequestBody CustomerDTO customerDto) {
+//        log.info("CustomerController update user: {}", customerDto.toString());
+//        try {
+//            customerService.update(id, customerDto);
+//            return new ResponseEntity<>(id, HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("Error in creation customer", HttpStatus.BAD_REQUEST);
+//        }
+//    }
+//
+//    @ApiOperation(value = "Update travelAgent", nickname = "TravelAgentController.updateTravelAgent")
+//    @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is updated")})
+//    @PutMapping(value = "/agent/{id}")
+//    public ResponseEntity<String> updateTravelAgent(@PathVariable("id") String id, @RequestBody TravelAgentDTO travelAgentDto) {
+//        log.info("TravelAgentController updateTravelAgent: {}", travelAgentDto.toString());
+//        try {
+//            travelAgentService.update(id, travelAgentDto);
+//            return new ResponseEntity<>(id, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @ApiOperation(value = "Delete user", nickname = "UserController.deleteUser")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "User is deleted")})
