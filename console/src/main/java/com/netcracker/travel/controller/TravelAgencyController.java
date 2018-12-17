@@ -30,7 +30,7 @@ public class TravelAgencyController {
 
     @ApiOperation(value = "Gets all travelAgencies", nickname = "TravelAgencyController.getAllTravelAgencies")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgencies")})
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TravelAgencyDTO>> getAllTravelAgencies() {
         log.info("TravelAgencyController getAllTravelAgencies");
         List<TravelAgencyDTO> travelAgencies = travelAgencyService.getAll();
@@ -67,7 +67,7 @@ public class TravelAgencyController {
 
     @ApiOperation(value = "Gets specific travelAgency", nickname = "TravelAgencyController.getTravelAgency")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "TravelAgency")})
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/all/get-{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TravelAgencyDTO> getTravelAgency(@PathVariable("id") String id) {
         log.info("TravelAgencyController getTravelAgency by id: {} ", id);
         TravelAgencyDTO travelAgency = travelAgencyService.getById(id);

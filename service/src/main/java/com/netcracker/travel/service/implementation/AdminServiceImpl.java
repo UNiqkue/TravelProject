@@ -2,6 +2,10 @@ package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.AdminMapper;
 import com.netcracker.travel.dto.AdminDTO;
+import com.netcracker.travel.entity.Admin;
+import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.exception.ResourceNotFoundException;
+import com.netcracker.travel.exception.UnnecessaryActionException;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -68,4 +73,45 @@ public class AdminServiceImpl implements BaseService<AdminDTO> {
         adminRepository.delete(id);
     }
 
+    public boolean makeAdmin(String userId) {
+        log.debug("Start change user role with id {}", userId);
+        Optional<Admin> findUser = adminRepository.findById(userId);
+        if (findUser.isPresent()) {
+            Admin user = findUser.get();
+            log.debug("user with id exist");
+            if (user.getRole().equals(Role.ADMIN)) {
+                log.debug("Unnecessary actions, this user {} already admin", user);
+                throw new UnnecessaryActionException("User with id " + user.getId() + " already admin");
+            } else {
+                user.setRole(Role.ADMIN);
+                adminRepository.save(user);
+                log.debug("Role updated on user with id {}", user.getId());
+                return true;
+            }
+        } else {
+            log.debug("User with id {} not found", userId);
+            throw new ResourceNotFoundException("User with id " + userId + " not found");
+        }
+    }
+
+    public boolean makeTravelAgent(String userId) {log.debug("Start change user role with id {}", userId);
+        Optional<Admin> findUser = adminRepository.findById(userId);
+        if (findUser.isPresent()) {
+            Admin user = findUser.get();
+            log.debug("user with id exist");
+            if (user.getRole().equals(Role.TRAVELAGENT)) {
+                log.debug("Unnecessary actions, this user {} already TravelAgent", user);
+                throw new UnnecessaryActionException("User with id " + user.getId() + " already TravelAgent");
+            } else {
+                user.setRole(Role.TRAVELAGENT);
+                adminRepository.save(user);
+                log.debug("Role updated on user with id {}", user.getId());
+                return true;
+            }
+        } else {
+            log.debug("User with id {} not found", userId);
+            throw new ResourceNotFoundException("User with id " + userId + " not found");
+        }
+
+    }
 }

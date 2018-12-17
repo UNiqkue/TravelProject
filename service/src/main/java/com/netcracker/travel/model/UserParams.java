@@ -1,27 +1,44 @@
 package com.netcracker.travel.model;
 
+import com.netcracker.travel.entity.Admin;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class UserParams implements UserDetails {
 
-    private GrantedAuthority authorities;
+    private Admin admin;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Admin getUser() {
+        return admin;
+    }
+
+    public void setUser(Admin admin) {
+        this.admin = admin;
+    }
+
+    public UserParams(Admin admin) {
+        this.admin = admin;
     }
 
     @Override
-    public String getPassword() {
-        return getPassword();
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String userRole = admin.getRole().name();
+        SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(userRole);
+        return Collections.singletonList(grantedAuthority);
     }
 
     @Override
     public String getUsername() {
-        return getUsername();
+        return admin.getUsername();
+    }
+
+    @Override
+    public String getPassword() {
+        return admin.getPassword();
     }
 
     @Override

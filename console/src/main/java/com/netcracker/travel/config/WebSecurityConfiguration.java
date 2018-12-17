@@ -30,8 +30,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and()
                 .authorizeRequests()
-                .antMatchers("/tours/**", "/admins/**", "/customers/**", "/agency/**", "/agents/**")
-                .permitAll()
+//                .antMatchers("/tours/all", "/reg")
+//                .permitAll()
+//                .antMatchers("/agency/all/**", "/customers/{id}", "/tours/all/**").hasRole("CUSTOMER")
+//                .antMatchers("/agency/all/**", "/tours/**").hasRole("TRAVELAGENT")
+                .antMatchers( "/users/**", "/agency/**", "/tours/**").permitAll()//.hasRole("ADMIN") //  .hasAuthority(Role.ADMIN.name())
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
     }
