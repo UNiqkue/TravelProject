@@ -30,7 +30,7 @@ public class RegistrationController {
 
     @ApiOperation(value = "Add user", nickname = "RegistrationController.addUser")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "User")})
-    @PostMapping("/reg")
+    @PostMapping("/register")
     public ResponseEntity<CustomerDTO> addUser(RegistrationRequestDTO registrationRequestDTO) {
         registrationRequestDTO.setPassword(passwordEncoder.encode(registrationRequestDTO.getPassword()));
         CustomerDTO customerDTO = registrationService.registration(registrationRequestDTO);

@@ -1,4 +1,4 @@
-package com.netcracker.travel.model;
+package com.netcracker.travel.util;
 
 import com.netcracker.travel.entity.Admin;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +29,10 @@ public class UserParams implements UserDetails {
         String userRole = admin.getRole().name();
         SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(userRole);
         return Collections.singletonList(grantedAuthority);
+    }
+
+    public String getId(){
+        return admin.getId();
     }
 
     @Override

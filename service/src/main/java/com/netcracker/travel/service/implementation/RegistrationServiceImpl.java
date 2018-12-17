@@ -48,6 +48,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             BeanUtils.copyProperties(registrationRequestDto, customerDto);
             customerDto.setId(UUID.randomUUID().toString());
             customerDto.setRole(Role.CUSTOMER);
+            customerDto.setActivationCode(UUID.randomUUID().toString());
             return customerMapper.customerToCustomerDTO(customerRepository.save(customerMapper.customerDTOtoCustomer(customerDto)));
         } else {
             return null;

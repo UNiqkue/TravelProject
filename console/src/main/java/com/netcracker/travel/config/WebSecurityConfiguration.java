@@ -1,6 +1,7 @@
 package com.netcracker.travel.config;
 
-import com.netcracker.travel.model.UserDetailsServiceImpl;
+import com.netcracker.travel.entity.enumeration.Role;
+import com.netcracker.travel.util.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,7 +21,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public WebSecurityConfiguration(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
+    public WebSecurityConfiguration(
+            UserDetailsServiceImpl userDetailsService,
+            PasswordEncoder passwordEncoder
+    ) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -40,16 +44,30 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/webjars/**")
                 .permitAll()
                 .and()
-//                .antMatchers("/tours/all", "/reg")
-//                .permitAll()
-//                .antMatchers("/agency/all/**", "/customers/{id}", "/tours/all/**").hasRole("CUSTOMER")
-//                .antMatchers("/agency/all/**", "/tours/**").hasRole("TRAVELAGENT")
                 .authorizeRequests()
-                .antMatchers(  "/agency/**", "/tours/**")
-                .permitAll()//.hasRole("ADMIN") //  .hasAuthority(Role.ADMIN.name())
-                .anyRequest().authenticated()
+                .antMatchers(
+                        "/tours/all",
+                        "/register"
+                ).permitAll()
+                .antMatchers(
+                        "/agency/all/**",
+                        "/customers/{id}",
+                        "/tours/all/**"
+                ).hasAuthority(Role.CUSTOMER.name())
+                .antMatchers(
+                        "/agency/all/**",
+                        "/tours/**"
+                ).hasAuthority(Role.TRAVELAGENT.name())
+                .antMatchers(
+                        "/agency/**",
+                        "/tours/**",
+                        "/users/**"
+                ).hasAuthority(Role.ADMIN.name())
+                .anyRequest()
+                .authenticated()
                 .and()
-                .csrf().disable();
+                .csrf()
+                .disable();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.netcracker.travel.model;
+package com.netcracker.travel.util;
 
 import com.netcracker.travel.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;

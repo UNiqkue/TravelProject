@@ -1,5 +1,6 @@
 package com.netcracker.travel.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class RegistrationRequestDTO {
 
     private String email;
 
+    @ApiModelProperty(hidden = true)
     private String activationCode;
 
     private String phoneNumber;

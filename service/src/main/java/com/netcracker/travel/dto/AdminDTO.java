@@ -25,9 +25,13 @@ public class AdminDTO {
 
     private String email;
 
-    @JsonIgnore
     private String activationCode;
 
     private Role role;
+
+    @JsonIgnore
+    public String getActivationCode() {
+        return this.activationCode;
+    }
 
 }

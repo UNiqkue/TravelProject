@@ -44,8 +44,8 @@ public class UserController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AdminDTO>> getAllUsers() {
         log.info("UserController getAllUsers");
-        List<AdminDTO> tours = adminService.getAll();
-        return new ResponseEntity<>(tours, HttpStatus.OK);
+        List<AdminDTO> users = adminService.getAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Creates user", nickname = "UserController.addUser")
@@ -82,7 +82,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "Make user admin", nickname = "UserController.updateToAdmin")
+    @ApiOperation(value = "Make user TravelAgent", nickname = "UserController.updateToTravelAgent")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Your rate is updated")})
     @PutMapping(
             value = "/agent/role/{userId}",
@@ -93,7 +93,7 @@ public class UserController {
         if (authentication != null) {
             if (adminService.makeTravelAgent(userId)) {
                 return new ResponseEntity<>(
-                        "User with id" + userId + "now admin!", HttpStatus.OK);
+                        "User with id" + userId + "now TravelAgent!", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
             }

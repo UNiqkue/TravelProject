@@ -5,6 +5,7 @@ import com.netcracker.travel.converter.TourMapper;
 import com.netcracker.travel.dto.CustomerDTO;
 import com.netcracker.travel.dto.TourDTO;
 import com.netcracker.travel.entity.enumeration.TypeTour;
+import com.netcracker.travel.repository.CustomerRepository;
 import com.netcracker.travel.repository.TourRepository;
 import com.netcracker.travel.repository.TravelAgencyRepository;
 import com.netcracker.travel.service.BaseService;
@@ -30,14 +31,17 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
 
     private final TravelAgencyRepository travelAgencyRepository;
 
+    private final CustomerRepository customerRepository;
+
     private TourMapper tourMapper = Mappers.getMapper(TourMapper.class);
 
     private CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
     @Autowired
-    public TourServiceImpl(TourRepository tourRepository, TravelAgencyRepository travelAgencyRepository) {
+    public TourServiceImpl(TourRepository tourRepository, TravelAgencyRepository travelAgencyRepository, CustomerRepository customerRepository) {
         this.tourRepository = tourRepository;
         this.travelAgencyRepository = travelAgencyRepository;
+        this.customerRepository = customerRepository;
     }
 
     public List<TourDTO> getAll() {
@@ -83,28 +87,29 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
                 .collect(Collectors.toList());
     }
 
-    public TourDTO buyTour(String tourId, CustomerDTO customerDTO) {
+    public TourDTO buyTour(String tourId, String userId) {
         TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
-//        if (customerDTO.getId().equals(tourDto.getCustomer().getId()) || tourDto.isFree()) {
-//            tourDto.setCustomer(customerMapper.customerDTOtoCustomer(customerDTO));
-//            tourDto.setFree(false);
-//            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
-//            System.out.println("You bought tour");
-//        } else {
-//            System.out.println("You can't do it!!!");
-//        }
+        CustomerDTO customerDto = customerMapper.customerToCustomerDTO(customerRepository.findById(userId));
+        if (tourDto.isFree()) {
+            tourDto.setCustomer(customerMapper.customerDTOtoCustomer(customerDto));
+            tourDto.setFree(false);
+            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
+            System.out.println("You bought tour");
+        } else {
+            System.out.println("You can't do it!!!");
+        }
         return tourDto;
     }
 
     public TourDTO cancelTour(String tourId, String userId) {
         TourDTO tourDto = tourMapper.tourToTourDTO(tourRepository.getById(tourId));
-//        if (userId.equals(tourDto.getCustomer().getId())) {
-//            tourDto.setFree(true);
-//            tourDto.setCustomer(null);
-//            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
-//        } else {
-//            System.out.println("You can't do it!!!");
-//        }
+        if (userId.equals(tourDto.getCustomer().getId())) {
+            tourDto.setFree(true);
+            tourDto.setCustomer(null);
+            tourDto = tourMapper.tourToTourDTO(tourRepository.save(tourMapper.tourDTOtoTour(tourDto)));
+        } else {
+            System.out.println("You can't do it!!!");
+        }
         return tourDto;
     }
 

@@ -1,5 +1,6 @@
 package com.netcracker.travel.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.netcracker.travel.entity.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +33,8 @@ public class TravelAgentDTO {
 
     private Role role;
 
+    @JsonIgnore
+    public String getActivationCode() {
+        return this.activationCode;
+    }
 }
