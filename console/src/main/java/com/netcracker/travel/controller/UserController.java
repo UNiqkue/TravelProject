@@ -48,6 +48,20 @@ public class UserController {
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Creates user", nickname = "UserController.addUser")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Admin is created")})
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addUser(@RequestBody AdminDTO adminDto) {
+        try {
+            log.info("UserController addUser: {}", adminDto.toString());
+            String id = adminService.save(adminDto).getId();
+            return new ResponseEntity<>(id, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error in creation User", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
     @ApiOperation(value = "Make user admin", nickname = "UserController.updateToAdmin")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Your rate is updated")})
     @PutMapping(
@@ -126,14 +140,14 @@ public class UserController {
             return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     @ApiOperation(value = "Get user by id", nickname = "UserController.getUser")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "User")})
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminDTO> getUser(@PathVariable("id") String id) {
         log.info("UserController getUser with id: {} ", id);
         AdminDTO adminDto = adminService.getById(id);
-        if(adminDto == null){
+        if (adminDto == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(adminDto, HttpStatus.OK);

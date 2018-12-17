@@ -122,7 +122,7 @@ public class TourController {
     @ApiOperation(value = "Gets specific tour", nickname = "TourController.getToursByEndDate")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Tour")})
     @GetMapping(value = "/{endDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TourDTO>> getToursByEndDate(@PathVariable("startDate") Date endDate) {
+    public ResponseEntity<List<TourDTO>> getToursByEndDate(@PathVariable("endDate") Date endDate) {
         log.info("TourController getTours by endDate: {} ", endDate);
         List<TourDTO> tours = tourService.searchTourByEndDate(endDate);
         return new ResponseEntity<>(tours, HttpStatus.OK);

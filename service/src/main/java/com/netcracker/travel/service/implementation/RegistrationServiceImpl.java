@@ -2,7 +2,6 @@ package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.AdminMapper;
 import com.netcracker.travel.converter.CustomerMapper;
-import com.netcracker.travel.converter.TravelAgentMapper;
 import com.netcracker.travel.dto.CustomerDTO;
 import com.netcracker.travel.dto.RegistrationRequestDTO;
 import com.netcracker.travel.entity.enumeration.Role;
@@ -11,13 +10,11 @@ import com.netcracker.travel.exception.NoExistUserException;
 import com.netcracker.travel.exception.UsernameExistException;
 import com.netcracker.travel.repository.AdminRepository;
 import com.netcracker.travel.repository.CustomerRepository;
-import com.netcracker.travel.repository.TravelAgentRepository;
 import com.netcracker.travel.service.RegistrationService;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,24 +29,16 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final AdminRepository adminRepository;
 
-    private final TravelAgentRepository travelAgentRepository;
-
     private final CustomerRepository customerRepository;
-
-    private final PasswordEncoder passwordEncoder;
 
     private CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
     private AdminMapper adminMapper = Mappers.getMapper(AdminMapper.class);
 
-    private TravelAgentMapper travelAgentMapper = Mappers.getMapper(TravelAgentMapper.class);
-
     @Autowired
-    public RegistrationServiceImpl(AdminRepository adminRepository, TravelAgentRepository travelAgentRepository, CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public RegistrationServiceImpl(AdminRepository adminRepository, CustomerRepository customerRepository) {
         this.adminRepository = adminRepository;
-        this.travelAgentRepository = travelAgentRepository;
         this.customerRepository = customerRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public CustomerDTO registration(RegistrationRequestDTO registrationRequestDto) {

@@ -35,12 +35,9 @@ public class CustomerServiceImpl implements BaseService<CustomerDTO> {
 
     private CustomerMapper customerMapper = Mappers.getMapper(CustomerMapper.class);
 
-    private final PasswordEncoder passwordEncoder;
-
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<CustomerDTO> getAll() {
@@ -55,16 +52,10 @@ public class CustomerServiceImpl implements BaseService<CustomerDTO> {
         return customerMapper.customerToCustomerDTO(customerRepository.findOne(id));
     }
 
-    public CustomerDTO getByName(String username) {
-        log.info("CustomerServiceImpl getByName user with username: {}", username);
-        return customerMapper.customerToCustomerDTO(customerRepository.findByUsername(username));
-    }
-
     public CustomerDTO save(CustomerDTO customerDto) {
-//        log.info("CustomerServiceImpl save user: {}", customerDto.toString());
-//        customerDto.setId(UUID.randomUUID().toString());
-//        customerDto.setRole(Role.CUSTOMER);
-//        customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+        log.info("CustomerServiceImpl save user: {}", customerDto.toString());
+        customerDto.setId(UUID.randomUUID().toString());
+        customerDto.setRole(Role.CUSTOMER);
         return customerMapper.customerToCustomerDTO(customerRepository.save(customerMapper.customerDTOtoCustomer(customerDto)));
     }
 
