@@ -1,9 +1,7 @@
 package com.netcracker.travel.converter;
 
-import com.netcracker.travel.entity.Customer;
-import com.netcracker.travel.entity.Tour;
 import com.netcracker.travel.dto.CustomerDTO;
-import com.netcracker.travel.dto.TourDTO;
+import com.netcracker.travel.entity.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

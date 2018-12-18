@@ -1,24 +1,17 @@
 package com.netcracker.travel.service.implementation;
 
 import com.netcracker.travel.converter.CustomerMapper;
-import com.netcracker.travel.converter.TourMapper;
 import com.netcracker.travel.dto.CustomerDTO;
-import com.netcracker.travel.dto.TourDTO;
 import com.netcracker.travel.entity.enumeration.Role;
 import com.netcracker.travel.exception.PhoneNumberException;
 import com.netcracker.travel.repository.CustomerRepository;
-import com.netcracker.travel.repository.TourRepository;
-import com.netcracker.travel.repository.TravelAgencyRepository;
 import com.netcracker.travel.service.BaseService;
-import com.netcracker.travel.service.SearchTourService;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
