@@ -35,6 +35,8 @@ public class TourDTO {
     @JsonIgnore
     private Customer customer;
 
+    private String travelAgencyId;
+
     private boolean free;
 
 }

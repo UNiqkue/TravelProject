@@ -2,8 +2,6 @@ package com.netcracker.travel.controller;
 
 import com.netcracker.travel.dto.AdminDTO;
 import com.netcracker.travel.service.implementation.AdminServiceImpl;
-import com.netcracker.travel.service.implementation.CustomerServiceImpl;
-import com.netcracker.travel.service.implementation.TravelAgentServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -26,15 +24,9 @@ public class UserController {
 
     private final AdminServiceImpl adminService;
 
-    private final TravelAgentServiceImpl travelAgentService;
-
-    private final CustomerServiceImpl customerService;
-
     @Autowired
-    public UserController(AdminServiceImpl adminService, TravelAgentServiceImpl travelAgentService, CustomerServiceImpl customerService) {
+    public UserController(AdminServiceImpl adminService) {
         this.adminService = adminService;
-        this.travelAgentService = travelAgentService;
-        this.customerService = customerService;
     }
 
     @ApiOperation(value = "Gets all users", nickname = "UserController.getAllUsers")
@@ -125,32 +117,6 @@ public class UserController {
             return new ResponseEntity<>("Error in creation user", HttpStatus.BAD_REQUEST);
         }
     }
-
-//    @ApiOperation(value = "Update customer", nickname = "CustomerController.updateCustomer")
-//    @ApiResponses(value = {@ApiResponse(code = 201, message = "Customer is updated")})
-//    @PutMapping(value = "/customer/{id}")
-//    public ResponseEntity<String> updateCustomer(@PathVariable("id") String id, @RequestBody CustomerDTO customerDto) {
-//        log.info("CustomerController update user: {}", customerDto.toString());
-//        try {
-//            customerService.update(id, customerDto);
-//            return new ResponseEntity<>(id, HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("Error in creation customer", HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//    @ApiOperation(value = "Update travelAgent", nickname = "TravelAgentController.updateTravelAgent")
-//    @ApiResponses(value = {@ApiResponse(code = 201, message = "TravelAgent is updated")})
-//    @PutMapping(value = "/agent/{id}")
-//    public ResponseEntity<String> updateTravelAgent(@PathVariable("id") String id, @RequestBody TravelAgentDTO travelAgentDto) {
-//        log.info("TravelAgentController updateTravelAgent: {}", travelAgentDto.toString());
-//        try {
-//            travelAgentService.update(id, travelAgentDto);
-//            return new ResponseEntity<>(id, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("Error in creation travelAgent", HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
     @ApiOperation(value = "Delete user", nickname = "UserController.deleteUser")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "User is deleted")})

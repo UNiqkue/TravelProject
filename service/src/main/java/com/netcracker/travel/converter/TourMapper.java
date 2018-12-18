@@ -32,4 +32,5 @@ public interface TourMapper {
             @Mapping(target="free", source = "dto.free")})
     Tour tourDTOtoTour(TourDTO dto);
 
+
 }

@@ -1,7 +1,7 @@
 package com.netcracker.travel.controller;
 
 import com.netcracker.travel.dto.TravelAgencyDTO;
-import com.netcracker.travel.service.implementation.TravelAgencyServiceImpl;
+import com.netcracker.travel.service.BaseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping("/agency")
 public class TravelAgencyController {
 
-    private final TravelAgencyServiceImpl travelAgencyService;
+    private final BaseService<TravelAgencyDTO> travelAgencyService;
 
     @Autowired
-    public TravelAgencyController(TravelAgencyServiceImpl travelAgencyService) {
+    public TravelAgencyController(BaseService<TravelAgencyDTO> travelAgencyService) {
         this.travelAgencyService = travelAgencyService;
     }
 

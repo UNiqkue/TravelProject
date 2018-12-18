@@ -80,8 +80,8 @@ public class TourServiceImpl implements BaseService<TourDTO>, SearchTourService 
         tourRepository.delete(id);
     }
 
-    public List<TourDTO> watchCustomerTours(CustomerDTO customerDTO) {
-        return tourRepository.findAllByCustomer(customerMapper.customerDTOtoCustomer(customerDTO))
+    public List<TourDTO> watchCustomerTours(String id) {
+        return tourRepository.findAllByCustomer(customerRepository.findById(id))
                 .stream()
                 .map(tour -> tourMapper.tourToTourDTO(tour))
                 .collect(Collectors.toList());

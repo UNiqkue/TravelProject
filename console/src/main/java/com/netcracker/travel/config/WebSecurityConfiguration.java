@@ -44,14 +44,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/webjars/**")
                 .permitAll()
                 .and()
+
                 .authorizeRequests()
                 .antMatchers(
                         "/tours/all",
                         "/register"
                 ).permitAll()
+
                 .antMatchers(
                         "/agency/all/**",
-                        "/customers/{id}",
+                        "/customers/*",
                         "/tours/all/**",
                         "/tours/catalog/**",
                         "/tours/customer/**",
@@ -74,6 +76,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/users/role/agent/**",
                         "/users/customer/**"
                 ).hasAuthority(Role.ADMIN.name())
+
+
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -87,3 +91,37 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                .antMatchers(
+//                        "/agency/all",
+//                        "/tours/all/**",
+//                        "/tours/catalog/**"
+//                ).hasAnyRole(Role.CUSTOMER.name(), Role.TRAVELAGENT.name(), Role.ADMIN.name())
+//
+//                .antMatchers(
+//                        "/tours/customer/**",
+//                        "/tours/booking/**",
+//                        "/customers/*"
+//                ).hasRole(Role.CUSTOMER.name())
+//
+//                .antMatchers(
+//                        "/tours/**"
+//                ).hasRole(Role.TRAVELAGENT.name())
