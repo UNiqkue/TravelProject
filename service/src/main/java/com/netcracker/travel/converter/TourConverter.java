@@ -1,7 +1,7 @@
 package com.netcracker.travel.converter;
 
-import com.netcracker.travel.dto.TourDto;
 import com.netcracker.travel.domain.Tour;
+import com.netcracker.travel.dto.TourDto;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

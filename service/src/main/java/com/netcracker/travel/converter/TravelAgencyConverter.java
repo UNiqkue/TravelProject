@@ -1,7 +1,7 @@
 package com.netcracker.travel.converter;
 
-import com.netcracker.travel.dto.TravelAgencyDto;
 import com.netcracker.travel.domain.TravelAgency;
+import com.netcracker.travel.dto.TravelAgencyDto;
 
 import java.util.UUID;
 

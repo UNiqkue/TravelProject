@@ -3,7 +3,9 @@ package com.netcracker.travel.domain;
 import com.netcracker.travel.domain.abstracts.User;
 import com.netcracker.travel.domain.enumeration.Role;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
