@@ -24,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private CustomerConverter customerConverter;
     private TravelAgentConverter travelAgentConverter;
 
-    public AuthenticationServiceImpl(){
+    public AuthenticationServiceImpl() {
     }
 
     @Autowired
@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.travelAgentConverter = travelAgentConverter;
     }
 
-    public boolean loginCustomer(LoginRequestDto loginRequestDto){
+    public boolean loginCustomer(LoginRequestDto loginRequestDto) {
         try {
             CustomerDto customerDto = customerConverter.convert(customerRepository.findByUsername(loginRequestDto.getUsername()));
             if (customerDto.getPassword().equals(loginRequestDto.getPassword())) {
@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return false;
     }
 
-    public boolean loginAdmin(LoginRequestDto loginRequestDto){
+    public boolean loginAdmin(LoginRequestDto loginRequestDto) {
         try {
             AdminDto adminDto = adminConverter.convert(adminRepository.findByUsername(loginRequestDto.getUsername()));
             if (adminDto.getPassword().equals(loginRequestDto.getPassword())) {
@@ -61,7 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return false;
     }
 
-    public boolean loginTravelAgent(LoginRequestDto loginRequestDto){
+    public boolean loginTravelAgent(LoginRequestDto loginRequestDto) {
         try {
             TravelAgentDto travelAgentDto = travelAgentConverter.convert(travelAgentRepository.findByUsername(loginRequestDto.getUsername()));
             if (travelAgentDto.getPassword().equals(loginRequestDto.getPassword())) {
@@ -73,7 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return false;
     }
 
-    private void printErrorLogin(){
+    private void printErrorLogin() {
         System.out.println("You input not corrected username");
     }
 

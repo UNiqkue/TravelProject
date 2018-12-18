@@ -31,5 +31,5 @@ public class StaticContextInitializer {
     @PostConstruct
     public void init() {
         Menu.setConfigMenu(adminService, customerService, travelAgentService, authenticationController, registrationController);
-        }
+    }
 }

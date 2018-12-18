@@ -78,7 +78,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
     }
 
     public TourDto buyTour(UUID id, UUID customerId) {
-        TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString().replaceFirst( "([0-9a-fA-F]{8})-([0-9a-fA-F]{4})-([0-9a-fA-F]{4})-([0-9a-fA-F]{4})-([0-9a-fA-F]+)", "$1$2$3$4$5" )));
+        TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString().replaceFirst("([0-9a-fA-F]{8})-([0-9a-fA-F]{4})-([0-9a-fA-F]{4})-([0-9a-fA-F]{4})-([0-9a-fA-F]+)", "$1$2$3$4$5")));
 
         if (customerId.equals(tourDto.getCustomerId()) || tourDto.isFree()) {
             tourDto.setCustomerId(customerId);
@@ -116,6 +116,7 @@ public class CustomerServiceImpl implements AbstractService<CustomerDto>, Regist
                 .map(tour -> tourConverter.convert(tour))
                 .collect(Collectors.toList());
     }
+
     public List<TourDto> searchTourByEndDate(Date endDate) {
         return tourRepository.findByEndDate(endDate)
                 .stream()

@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AbstractService<AdminDto> {
     private AdminConverter adminConverter;
     private TourConverter tourConverter;
 
-    public AdminServiceImpl(){
+    public AdminServiceImpl() {
     }
 
     @Autowired

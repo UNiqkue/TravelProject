@@ -64,13 +64,21 @@ public class TravelAgentServiceImpl implements AbstractService<TravelAgentDto>, 
         TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         tourDto.setPrice(price);
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
-    } /**updatePrice**/
+    }
+
+    /**
+     * updatePrice
+     **/
 
     public TourDto editTour(UUID id, String description) {
         TourDto tourDto = tourConverter.convert(tourRepository.getById(id.toString()));
         tourDto.setDescription(description);
         return tourConverter.convert(tourRepository.save(tourConverter.convert(tourDto)));
-    }/**updateDescription**/
+    }
+
+    /**
+     * updateDescription
+     **/
 
     public void deleteTour(UUID id) {
         tourRepository.delete(id);
