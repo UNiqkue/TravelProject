@@ -11,11 +11,19 @@ The administrator manages customers, travel agents, agencies and tours.
 4. Run and navigate to http://localhost:8080/swagger-ui.html
 
 Project has 8 branches:
+
 task1 - docs, where you can see arсhitecture (uml and use case)
+
 task2 - structure the project
+
 task3 - console application with file storage
+
 task4 - console application with support JDBC on MySQL
+
 task5 - refactoring
+
 task6 - add test JUnit
+
 task7 - console spring application
+
 task8(master) - web application on spring
