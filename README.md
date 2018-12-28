@@ -12,9 +12,9 @@ The administrator manages customers, travel agents, agencies and tours.
 
 Project has also 8 branches:
 
-task1 - docs, where you can see 3 module arсhitecture (uml and use case)
+task1 - docs, where you can see arсhitecture (uml and use case)
 
-task2 - structure the project 3 module (dao - service - console)
+task2 - structure the 3 module project (dao - service - console)
 
 task3 - console application with file storage
 
