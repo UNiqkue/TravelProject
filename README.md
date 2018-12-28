@@ -5,10 +5,10 @@ The agent can create, update, delete the tours.
 The administrator manages customers, travel agents, agencies and tours.
 
 **_Run application_**
-1. Clone and open in IDE(InteliJ IDEA)
+1. Clone and open in IDE(InteliJ IDEA, Eclipse)
 2. Create mysql table name "mydb", user "root", password "12345". Check file application.properties console - src - main - java - resources 
 3. Git clone swagger https://github.com/swagger-api/swagger-ui 
-4. Run Main.class in console and navigate to http://localhost:8080/swagger-ui.html
+4. Run Main.java in console and navigate to http://localhost:8080/swagger-ui.html
 
 Project has also 8 branches:
 
