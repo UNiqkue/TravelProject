@@ -8,13 +8,13 @@ The administrator manages customers, travel agents, agencies and tours.
 1. Clone and open in IDE(InteliJ IDEA)
 2. Create mysql table name "mydb", user "root", password "12345". Check file application.properties console - src - main - java - resources 
 3. Git clone swagger https://github.com/swagger-api/swagger-ui 
-4. Run and navigate to http://localhost:8080/swagger-ui.html
+4. Run Main.class in console and navigate to http://localhost:8080/swagger-ui.html
 
 Project has also 8 branches:
 
-task1 - docs, where you can see arсhitecture (uml and use case)
+task1 - docs, where you can see 3 module arсhitecture (uml and use case)
 
-task2 - structure the project
+task2 - structure the project 3 module (dao - service - console)
 
 task3 - console application with file storage
 
