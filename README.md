@@ -10,7 +10,7 @@ The administrator manages customers, travel agents, agencies and tours.
 3. Git clone swagger https://github.com/swagger-api/swagger-ui 
 4. Run and navigate to http://localhost:8080/swagger-ui.html
 
-Project has 8 branches:
+Project has also 8 branches:
 
 task1 - docs, where you can see arсhitecture (uml and use case)
 
